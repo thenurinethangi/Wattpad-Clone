@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wattpad - Genre Selection</title>
+    <link rel="icon" type="image/ico" href="assets/image/wattpad-icon-2-removebg-preview.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Thenuri Nethangi">
+    <meta name="keywords" content="online stories, read stories, write stories, wattpad alternative, fiction platform, storytelling, novels, short stories, creative writing, user-generated stories">
+    <meta name="description" content="Discover and share captivating stories on our platform. Read novels, write your own tales, and connect with a community of passionate readers and writers.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton+SC&family=Cinzel+Decorative:wght@400;700;900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Roboto:ital,wght@1,800&family=Rubik:ital@0;1&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style/variables.css">
+    <link rel="stylesheet" href="assets/style/genre-selection-page-style.css">
+</head>
+<body>
+
+<!-- --------------------header of landing page---------------------- -->
+<header>
+    <div class="header-left-side">
+        <nav class="navigation-left">
+            <ul class="navigation-left-list">
+                <li class="navigation-left-list-item"><a href="landing-page.html" title="Wattpad Home" aria-label="Home"><img src="assets/image/wattpad-logo.svg" alt="Wattpad Logo"></a></li>
+                <li class="navigation-left-list-item"><div id="discover-dropdown"><button>Browse<img class="drop-down-icon" src="assets/image/wp-chevron-down.svg" alt=""></button></div></li>
+                <li class="navigation-left-list-item"><div id="community-dropdown"><button>Community<img class="drop-down-icon" src="assets/image/wp-chevron-down.svg" alt=""></button></div></li>
+            </ul>
+        </nav>
+        <div class="search-input-container">
+            <form class="search-form">
+                <button aria-label="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5999 6.49844C1.5999 3.79224 3.79371 1.59844 6.4999 1.59844C9.2061 1.59844 11.3999 3.79224 11.3999 6.49844C11.3999 9.20463 9.2061 11.3984 6.4999 11.3984C3.79371 11.3984 1.5999 9.20463 1.5999 6.49844ZM6.4999 0.398438C3.13097 0.398438 0.399902 3.1295 0.399902 6.49844C0.399902 9.86737 3.13097 12.5984 6.4999 12.5984C7.99441 12.5984 9.36338 12.061 10.4241 11.1688C10.4515 11.2618 10.5019 11.3494 10.5752 11.4227L13.0501 13.8976C13.2844 14.1319 13.6643 14.1319 13.8986 13.8976C14.133 13.6633 14.133 13.2834 13.8986 13.0491L11.4238 10.5742C11.3504 10.5008 11.2629 10.4505 11.1699 10.423C12.0623 9.36227 12.5999 7.99313 12.5999 6.49844C12.5999 3.1295 9.86884 0.398438 6.4999 0.398438Z" fill="#121212" fill-opacity="0.64"></path></svg>
+                </button>
+                <input class="search-input" type="text" placeholder="Search" name="query" autocomplete="off">
+            </form>
+        </div>
+    </div>
+    <div class="header-right-side">
+        <ul class="navigation-right-list-one">
+            <li><div id="writer-opportunities-dropdown"><button>Write<img src="assets/image/wp-chevron-down.svg" alt=""></button></div></li>
+            <li class="try-premium"><button><span><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M9.38562 11.778L8.95363 16.0545C8.89557 16.6292 9.64434 16.8996 9.96699 16.4205L14.9043 9.08896C15.1528 8.72003 14.8884 8.2233 14.4436 8.2233H10.6144L11.0464 3.94683C11.1044 3.37214 10.3557 3.10166 10.033 3.58077L5.09567 10.9123C4.84721 11.2813 5.11159 11.778 5.55639 11.778H9.38562Z" fill="#3b19a9"></path></svg></span>Try Premium</button></li>
+        </ul>
+        <div class="navigation-right-list-two-container">
+            <ul class="navigation-right-list-two">
+                <li><img src="assets/image/my-image-01.jpg" style="width: 32px; border-radius: 100%; background-color: #eee; box-shadow: 0.5px 0.5px 10px rgba(211,211,211,0.37);" alt="profile picture"></li>
+                <li><img class="S1mMa" src="assets/image/wp-chevron-down.svg" alt="" data-testid="wp_chevron_down"></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+
+<!-- ------------------------main content-------------------------- -->
+<main class="main-content">
+    <h1 class="title">What are your 3 favorite genres to read?</h1>
+    <p class="subtitle">Choose at least 1 genre to get started with personalized recommendations.</p>
+
+    <div class="genres-wrapper">
+        <!--        <button class="nav-arrows nav-arrow-left">❮</button>-->
+        <div class="genres-container">
+            <button class="genre-btn selected romance">Romance</button>
+            <button class="genre-btn">Fanfiction</button>
+            <button class="genre-btn">LGBTQ+</button>
+            <button class="genre-btn selected werewolf">Werewolf</button>
+            <button class="genre-btn selected new-adult">New Adult</button>
+
+            <button class="genre-btn">Fantasy</button>
+            <button class="genre-btn">Short Story</button>
+            <button class="genre-btn">Teen Fiction</button>
+            <button class="genre-btn">Historical Fiction</button>
+
+            <button class="genre-btn">Paranormal</button>
+            <button class="genre-btn">Humor</button>
+            <button class="genre-btn">Horror</button>
+            <button class="genre-btn">Contemporary Lit</button>
+
+            <button class="genre-btn">Diverse Lit</button>
+            <button class="genre-btn">Mystery</button>
+            <button class="genre-btn">Thriller</button>
+            <button class="genre-btn">Science Fiction</button>
+
+            <button class="genre-btn">Adventure</button>
+            <button class="genre-btn">Non-Fiction</button>
+            <button class="genre-btn">Poetry</button>
+        </div>
+        <!--        <button class="nav-arrows nav-arrow-right">❯</button>-->
+    </div>
+    <button class="continue-btn">Continue</button>
+</main>
+</body>
+</html>

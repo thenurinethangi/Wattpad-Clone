@@ -1,0 +1,226 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    overflow-x: hidden;
+    background-color: rgb(255, 255, 255);
+    font-family: var(--primary-font-face);
+}
+
+/*header style*/
+header{
+    background-color: white;
+    padding: 1.1em 2em 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #eee;
+    height: 10.75vh;
+
+}
+
+.navigation-left{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.navigation-left-list{
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.5em;
+}
+
+.navigation-left-list-item button{
+    border: none;
+    background-color: var(--white-color);
+    font-weight: var(--font-weight-semi-bold);
+    color: var(--black-text-color);
+}
+
+.drop-down-icon{
+    margin-left: 2px;
+}
+
+.header-left-side{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.3em;
+}
+
+.search-input-container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    transform: translateY(-5px);
+}
+
+.search-form>button{
+    border: none;
+    background-color: var(--white-color);
+    color: var(--black-text-color);
+    transform: translateX(29px);
+}
+
+.search-form>input{
+    width: 310px;
+    padding: 8px 32px;
+    border: 1px solid lightgray;
+    border-radius: 6px;
+}
+
+.header-right-side{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.navigation-right-list-one{
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1em;
+    transform: translateX(17px);
+}
+
+.navigation-right-list-one button{
+    border: none;
+    background-color: var(--white-color);
+    font-weight: var(--font-weight-semi-bold);
+    color: var(--black-text-color);
+}
+
+.try-premium button{
+    color: #3b19a9;
+    background-color: #f6f2ff;
+    padding: 8px 20px;
+    border-radius: 24px;
+}
+
+.navigation-right-list-two{
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2px;
+    transform: translateY(-2px);
+}
+
+
+/*main content*/
+.main-content {
+    max-width: 605px;
+    margin: 35px auto;
+    padding: 0 20px;
+    text-align: left;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 27px;
+}
+
+.genres-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 60px;
+}
+
+.genre-btn {
+    padding: 12.7px 20.5px;
+    border: 1px solid #000000;
+    border-radius: 25px;
+    background-color: white;
+    color: #333;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.genre-btn:hover {
+    border-color: #ff6500;
+    color: #ff6500;
+}
+
+.genre-btn.selected {
+    background-color: #333;
+    color: white;
+    border-color: #333;
+}
+
+.genre-btn.selected.romance {
+    background-color: #000000;
+}
+
+.genre-btn.selected.werewolf {
+    background-color: #000000;
+}
+
+.genre-btn.selected.new-adult {
+    background-color: #000000;
+}
+
+.continue-btn {
+    max-width: 605px;
+    background-color: #000000;
+    color: white;
+    padding: 14px 0;
+    border: none;
+    border-radius: 35px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+}
+
+.continue-btn:hover {
+    background-color: #222;
+}
+
+.genres-wrapper {
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .search-input {
+        width: 200px;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+
+    .genres-container {
+        gap: 8px;
+    }
+
+    .genre-btn {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+}
