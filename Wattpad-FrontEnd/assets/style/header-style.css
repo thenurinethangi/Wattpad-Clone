@@ -1,0 +1,102 @@
+/*header style*/
+header{
+    background-color: white;
+    padding: 1.1em 2em 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #eee;
+    height: 10.75vh;
+
+}
+
+.navigation-left{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.navigation-left-list{
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.5em;
+}
+
+.navigation-left-list-item button{
+    border: none;
+    background-color: var(--white-color);
+    font-weight: var(--font-weight-semi-bold);
+    color: var(--black-text-color);
+}
+
+.drop-down-icon{
+    margin-left: 2px;
+}
+
+.header-left-side{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.3em;
+}
+
+.search-input-container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    transform: translateY(-5px);
+}
+
+.search-form>button{
+    border: none;
+    background-color: var(--white-color);
+    color: var(--black-text-color);
+    transform: translateX(29px);
+}
+
+.search-form>input{
+    width: 310px;
+    padding: 8px 32px;
+    border: 1px solid lightgray;
+    border-radius: 6px;
+}
+
+.header-right-side{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.navigation-right-list-one{
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1em;
+    transform: translateX(17px);
+}
+
+.navigation-right-list-one button{
+    border: none;
+    background-color: var(--white-color);
+    font-weight: var(--font-weight-semi-bold);
+    color: var(--black-text-color);
+}
+
+.try-premium button{
+    color: #3b19a9;
+    background-color: #f6f2ff;
+    padding: 8px 20px;
+    border-radius: 24px;
+}
+
+.navigation-right-list-two{
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2px;
+    transform: translateY(-2px);
+}
