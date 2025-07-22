@@ -1,5 +1,5 @@
 /*header style*/
-header{
+#header{
     background-color: white;
     padding: 1.1em 2em 0 0;
     display: flex;
@@ -7,7 +7,13 @@ header{
     align-items: flex-start;
     border-bottom: 1px solid #eee;
     height: 10.75vh;
-
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 1000;
 }
 
 .navigation-left{
