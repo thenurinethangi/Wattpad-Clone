@@ -1,6 +1,5 @@
 package lk.ijse.wattpadbackend.entity;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 

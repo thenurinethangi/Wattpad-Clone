@@ -67,6 +67,12 @@ public class Story {
 
     @ManyToMany(mappedBy = "stories")
     private List<Library> libraries;
+
+    @ManyToMany(mappedBy = "stories")
+    private List<ReadingList> readingLists;
+
+    @OneToMany(mappedBy = "story")
+    private List<Chapter> chapters;
 }
 
 
