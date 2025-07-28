@@ -1,0 +1,141 @@
+:root {
+    --ds-neutral-100: rgb(18, 18, 18);
+    --ds-neutral-80: rgba(18, 18, 18, .64);
+    --ds-neutral-60: rgba(18, 18, 18, .32);
+    --ds-neutral-40: rgba(18, 18, 18, .12);
+    --ds-neutral-20: rgba(18, 18, 18, .04);
+    --ds-neutral-00: rgb(255, 255, 255);
+    --ds-neutral-100-solid: #121212;
+    --ds-neutral-80-solid: #686868;
+    --ds-neutral-60-solid: #b3b3b3;
+    --ds-neutral-40-solid: #e2e2e2;
+    --ds-neutral-20-solid: #f6f6f6;
+    --ds-neutral-00-solid: #fff;
+    --ds-base-1-accent: #ff500a;
+    --ds-base-1-80: #602b1c;
+    --ds-base-1-60: #a93e19;
+    --ds-base-1-40: #ffd9ca;
+    --ds-base-1-20: #fff6f2;
+    --ds-base-2-accent: #5c10ff;
+    --ds-base-2-80: #2a1c60;
+    --ds-base-2-60: #3b19a9;
+    --ds-base-2-40: #d7caff;
+    --ds-base-2-20: #f6f2ff;
+    --ds-base-3-accent: #18a599;
+    --ds-base-3-80: #18403a;
+    --ds-base-3-60: #1c6f65;
+    --ds-base-3-40: #caf6f5;
+    --ds-base-3-20: #f2fdfd;
+    --ds-base-4-accent: #e81249;
+    --ds-base-4-80: #5a1d30;
+    --ds-base-4-60: #9e1d42;
+    --ds-base-4-40: #ffcacd;
+    --ds-base-4-20: #fff2f2;
+    --ds-base-5-accent: #d67d00;
+    --ds-base-5-80: #503414;
+    --ds-base-5-60: #8d5610;
+    --ds-base-5-40: #ffecca;
+    --ds-base-5-20: #fffbf2;
+    --ds-base-6-accent: #00a1b3;
+    --ds-base-6-80: #114143;
+    --ds-base-6-60: #0d6f76;
+    --ds-base-6-40: #caf1fc;
+    --ds-base-6-20: #f2fcff;
+    --ds-base-7-accent: #51a800;
+    --ds-base-7-80: #293f10;
+    --ds-base-7-60: #3f6f0c;
+    --ds-base-7-40: #d6f9ca;
+    --ds-base-7-20: #f5fef2;
+    --ds-base-7-accent-dark: #72a136;
+    --ds-base-7-80-dark: #cee0bc;
+    --ds-base-7-60-dark: #9fc079;
+    --ds-base-7-40-dark: #44532e;
+    --ds-base-7-20-dark: #25291f;
+    --ds-success: #00854e;
+    --ds-warning: #ffc922;
+    --ds-alert: #e00000;
+    --ds-disabled: rgba(18, 18, 18, .32);
+    --ds-disabled-solid: #b3b3b3;
+    --wp-wattys-tag: #322864
+}
+
+:root[data-theme=dark] {
+    --ds-neutral-100: rgb(255, 255, 255);
+    --ds-neutral-80: rgba(255, 255, 255, .64);
+    --ds-neutral-60: rgba(255, 255, 255, .32);
+    --ds-neutral-40: rgba(255, 255, 255, .12);
+    --ds-neutral-20: rgba(255, 255, 255, .04);
+    --ds-neutral-00: rgb(18, 18, 18);
+    --ds-neutral-100-solid: #fff;
+    --ds-neutral-80-solid: #a9a9a9;
+    --ds-neutral-60-solid: #5e5e5e;
+    --ds-neutral-40-solid: #2f2f2f;
+    --ds-neutral-20-solid: #1b1b1b;
+    --ds-neutral-00-solid: #121212;
+    --ds-base-1-accent: #ef6c39;
+    --ds-base-1-80: #fad1bd;
+    --ds-base-1-60: #f4a07b;
+    --ds-base-1-40: #784839;
+    --ds-base-1-20: #3a2c29;
+    --ds-base-2-accent: #8070db;
+    --ds-base-2-80: #d7cff3;
+    --ds-base-2-60: #aca0e7;
+    --ds-base-2-40: #555176;
+    --ds-base-2-20: #33323c;
+    --ds-base-3-accent: #37a49b;
+    --ds-base-3-80: #bce1e0;
+    --ds-base-3-60: #7ac2be;
+    --ds-base-3-40: #2f5550;
+    --ds-base-3-20: #1f2a28;
+    --ds-base-4-accent: #f54f78;
+    --ds-base-4-80: #fcc4cf;
+    --ds-base-4-60: #f88aa2;
+    --ds-base-4-40: #843e53;
+    --ds-base-4-20: #442831;
+    --ds-base-5-accent: #b88b3a;
+    --ds-base-5-80: #e7dbbd;
+    --ds-base-5-60: #d0b47c;
+    --ds-base-5-40: #5e4d33;
+    --ds-base-5-20: #2f2922;
+    --ds-base-6-accent: #39a2ac;
+    --ds-base-6-80: #bddee3;
+    --ds-base-6-60: #7bbfc8;
+    --ds-base-6-40: #315759;
+    --ds-base-6-20: #212c2c;
+    --ds-base-7-accent: #72a136;
+    --ds-base-7-80: #cee0bc;
+    --ds-base-7-60: #9fc079;
+    --ds-base-7-40: #44532e;
+    --ds-base-7-20: #25291f
+}
+
+:root {
+    --Corner-corner-00: 0;
+    --Corner-corner-01: 2px;
+    --Corner-corner-02: 4px;
+    --Corner-corner-03: 8px;
+    --Corner-corner-04: 12px;
+    --Corner-corner-05: 16px;
+    --Corner-corner-06: 24px;
+    --Corner-corner-99: 9999px
+}
+
+:root {
+    --primary-font-face: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+    --font-weight-semibold: 600;
+    --font-size-xl: 32px;
+    --font-size-l: 22px;
+    --font-size-m: 18px;
+    --font-size-sm: 16px;
+    --font-size-xs: 14px;
+    --font-size-xxs: 12px;
+    --font-color-primary: var(--ds-neutral-100);
+    --line-height-xl: 40px;
+    --line-height-l: 28px;
+    --line-height-m: 24px;
+    --line-height-sm: 22px;
+    --line-height-xs: 20px;
+    --line-height-xxs: 16px
+}

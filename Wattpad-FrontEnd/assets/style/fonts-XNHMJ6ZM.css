@@ -1,0 +1,54 @@
+@font-face {
+    font-family: Source Sans Pro;
+    font-style: normal;
+    font-weight: 400;
+    src: local("Source Sans Pro"),url(../fonts/SourceSansPro-Regular.ttf) format("woff2");
+    font-display: swap
+}
+
+@font-face {
+    font-family: Source Sans Pro;
+    font-style: italic;
+    font-weight: 400;
+    src: local("Source Sans Pro"),url(../fonts/source-sans-pro.italic.ttf) format("woff2");
+    font-display: swap
+}
+
+@font-face {
+    font-family: Source Sans Pro;
+    font-style: normal;
+    font-weight: 600;
+    src: local("Source Sans Pro"),url(../fonts/SourceSansPro-SemiBold.ttf) format("woff2");
+    font-display: swap
+}
+
+@font-face {
+    font-family: Source Sans Pro;
+    font-style: italic;
+    font-weight: 600;
+    src: local("Source Sans Pro"),url(../fonts/source-sans-pro.semibold-italic.ttf) format("woff2");
+    font-display: swap
+}
+
+@font-face {
+    font-family: Source Sans Pro;
+    font-style: normal;
+    font-weight: 700;
+    src: local("Source Sans Pro"),url(../fonts/SourceSansPro-Bold.ttf) format("woff2");
+    font-display: swap
+}
+
+@font-face {
+    font-family: Source Sans Pro;
+    font-style: italic;
+    font-weight: 700;
+    src: local("Source Sans Pro"),url(../fonts/source-sans-pro.bold-italic.ttf) format("woff2");
+    font-display: swap
+}
+
+@font-face {
+    font-family: wp-web-icons;
+    font-style: normal;
+    font-weight: 400;
+    src: url(/wp-web-assets/fonts/wp-web-icons.woff)
+}
