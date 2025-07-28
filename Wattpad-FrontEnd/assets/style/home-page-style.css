@@ -35,7 +35,7 @@ button {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-top: 79px;
+    margin-top: 12px;
 }
 
 .-Gg0X {
@@ -1062,7 +1062,6 @@ button {
     z-index: 1;
 }
 /*arrow btn styles- end*/
-
 
 
 
