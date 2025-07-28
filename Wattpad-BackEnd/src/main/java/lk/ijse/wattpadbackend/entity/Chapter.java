@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -12,31 +13,39 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class ReadingList {
+public class Chapter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger id;
 
     @Column(nullable = false)
-    private String listName;
+    private String title;
 
     @Column(nullable = false)
-    private long storyCount = 0;
+    private LocalDateTime publishedDate = LocalDateTime.now();
+
+    private String coverImagePath;
 
     @Column(nullable = false)
-    private long votes = 0;
+    private BigInteger views = BigInteger.valueOf(0);
 
     @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private BigInteger likes = BigInteger.valueOf(0);
+
+    @Column(nullable = false)
+    private BigInteger comments = BigInteger.valueOf(0);
+
+    @Column(nullable = false)
+    private int publishedOrDraft = 0;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToMany(mappedBy = "readingLists")
-    private List<Story> stories;
+    @JoinColumn(name = "story_id")
+    private Story story;
 }
+
+
+
 
 
 
