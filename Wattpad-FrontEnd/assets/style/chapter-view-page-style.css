@@ -108,6 +108,24 @@ body{
 /*    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);*/
 /*}*/
 
+
+/*header*/
+.search-sm-screen{
+    /*display: none;*/
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 12px;
+    display: none;
+}
+
+.search-sm-screen>p{
+    font-size: 16px;
+    color: #222;
+    font-weight: 600;
+}
+
+
 /*main container*/
 #app-container {
     padding-bottom: 12px;
@@ -956,6 +974,14 @@ a:not([class*=button__]):not([class*=btn]):not([class*=learn-more-link]):not([cl
 }
 
 /*b1*/
+#chapter-text-body{
+    width: 70%;
+}
+
+#chapter-text-body>pre{
+    padding-left: 62px;
+}
+
 #story-reading #parts-container-new .panel-reading {
     padding: 0;
     margin-bottom: 0;
@@ -1015,6 +1041,7 @@ pre {
 
 /*comment section and story recommendation section*/
 /*comment section*/
+
 
 /*continue to next part or story over button or text*/
 #story-reading .part-content {
@@ -1615,213 +1642,131 @@ a.tag-item {
 }
 
 
+/*comment style after responsive*/
+.footer-comment{
+    width: 100%;
+}
 
+.container-1{
+    width: 51%;
+    padding: 0;
+    margin-left: 205px;
+}
 
 
+/*story recommendation section style after responsive*/
+.part-recommendations-container{
+}
 
+.discover-rows{
+    width: 87%;
+    margin: 0 auto;
+}
 
+/*static box author style after responsive*/
+.author{
+    transform: translateX(38px);
+}
 
 
+/*media query*/
+@media all and (max-width: 1147px) {
 
+    .container-1{
+        width: 51%;
+        padding: 0;
+        margin-left: 192px;
+    }
+}
 
 
+@media all and (max-width: 1077px) {
 
+    .container-1{
+        width: 49%;
+        padding: 0;
+        margin-left: 180px;
+    }
 
+    /*here story recommendation should make 580px height*/
+}
 
 
+@media all and (max-width: 1030px) {
 
+    .community-dropdown{
+        display: none;
+    }
 
+    .search-form{
+        display: none;
+    }
 
+    .navigation-right-list-one{
+        display: none;
+    }
 
+    .search-sm-screen{
+        display: flex;
+        /*background-color: #00b2b2;*/
+        margin-left: 10px;
+        transform: translateY(-1px);
+    }
 
+    #header{
+        padding: 1.1em 1.5em 0 0;
+    }
 
 
+    /*make responsive chapter content*/
+    #social-share-box{
+        display: none;
+    }
 
+    #side-recommendation-box{
+        display: none;
+    }
 
+    #chapter-text-body{
+        width: 100%;
+    }
 
+    #chapter-text-body>pre{
+        padding-left: 0;
+    }
 
+    .container-1{
+        width: 78%;
+        padding: 0;
+        margin: 0 auto;
+        /*margin-left: 120px;*/
+    }
+}
 
 
+@media all and (max-width: 767px) {
 
+    .author{
+        transform: translateX(0);
+    }
+}
 
 
+@media all and (max-width: 700px) {
 
+    .discover-module-stories-large{
+        display: flex;
+        flex-direction: column;
+    }
 
+    .send-cover-event{
+        display: block;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    .content{
+        display: block;
+    }
+}
 
 
 
