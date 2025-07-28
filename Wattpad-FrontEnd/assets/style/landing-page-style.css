@@ -19,7 +19,6 @@ header{
     align-items: flex-start;
     border-bottom: 1px solid #eee;
     height: 10.75vh;
-
 }
 
 .navigation-left{
@@ -45,6 +44,14 @@ header{
 
 .drop-down-icon{
     margin-left: 2px;
+}
+
+.wattpad-logo-sm-screen{
+    display: none;
+}
+
+.search-icon-sm-screen{
+    display: none;
 }
 
 .header-left-side{
@@ -1022,6 +1029,746 @@ ul li button{
 }
 
 
+/* ------------------ MEDIA QUERIES --------------------- */
 
+/* Large Tablets and Small Desktops (992px - 1199px) */
+@media (max-width: 1199px) {
+    .hero-section-container {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+
+    .hero-section-text-box {
+        margin-left: 80px;
+        width: 85%;
+    }
+
+    .hero-section-text-box h2 {
+        font-size: 50px;
+        width: 90%;
+    }
+
+    .hero-section-image-box {
+        width: 95%;
+    }
+
+    .second-section-middle-content-container,
+    .second-section-bottom-content-container {
+        max-width: 90%;
+        padding: 0 20px;
+    }
+
+    .how-wattpad-work-content-container {
+        width: 90%;
+        max-width: 900px;
+    }
+
+    .jE0YQ {
+        width: 90%;
+        max-width: 1000px;
+    }
+}
+
+
+@media all and (max-width: 1075px) {
+
+    .navigation-left{
+        display: none;
+    }
+
+    .search-input-container{
+        display: none;
+    }
+
+    .wattpad-logo-sm-screen{
+        display: block;
+        padding-left: 20px;
+    }
+
+    .navigation-right-list-one{
+        display: none;
+    }
+
+    .navigation-right-list-two-container{
+        display: none;
+    }
+
+    .search-icon-sm-screen{
+        display: block;
+    }
+
+    header{
+        padding: 1.1em 2.5em 0 0;
+        height: 8.5vh;
+
+    }
+}
+
+
+/* Tablets (768px - 991px) */
+@media (max-width: 991px) {
+    .hero-section-content-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        height: fit-content;
+        padding-top: 0;
+        padding-bottom: 5em;
+    }
+
+    .hero-section-text-box {
+        margin-left: 0;
+        width: 100%;
+        text-align: left;
+        order: 2;
+        padding: 0 20px;
+        padding-top: 9em;
+        background: url("../image/topRightPortal-QF27QM47.svg");
+        background-size: contain;
+        background-position: right;
+        background-repeat: no-repeat;
+    }
+
+    .hero-section-text-box h2 {
+        font-size: 47px;
+        width: 100%;
+    }
+
+    .hero-section-text-box h3 {
+        font-size: 24px;
+    }
+
+    .hero-section-text-box h4 {
+        width: 60%;
+        font-size: 19px;
+    }
+
+    .hero-section-image-box {
+        order: 1;
+        width: 100%;
+        justify-content: center;
+        background-position: center;
+        margin-top: 20px;
+    }
+
+    .hero-section-image-box {
+        display: none;
+    }
+
+    .hero-section-image-box img {
+        display: none;
+    }
+
+    .services-container {
+        flex-direction: row;
+        width: 100%;
+        gap: 10px;
+        /*background-color: #00b2b2;*/
+        padding-inline: 20px;
+    }
+
+    .service {
+        padding: 0 20px;
+    }
+
+    .second-section-middle-content-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .wattpad-studio-content {
+        margin-left: 0;
+        order: 2;
+    }
+
+    .wattpad-studio-content p {
+        max-width: 100%;
+    }
+
+    .second-section-bottom-content-container {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .wattpad-book-content {
+        text-align: center;
+        margin-right: 0;
+        margin-top: 0;
+    }
+
+    .wattpad-book-content p {
+        margin-left: 0;
+        max-width: 100%;
+    }
+
+    .three-steps-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .three-steps-box {
+        flex-basis: auto;
+    }
+
+    .three-steps-box-content {
+        height: auto;
+        margin-bottom: 30px;
+        text-align: left;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .step-no {
+        margin: 0 0 20px 0;
+        font-size: 80px;
+    }
+
+    .slider-container {
+        height: 700px;
+    }
+
+    .slide {
+        padding: 0 15px;
+    }
+
+    ._0U5a- {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding-top: 0;
+        gap: 20px;
+        transform: translateY(-150px);
+    }
+
+    .PD7CG {
+        flex: 0 0 auto;
+        order: 1;
+    }
+
+    .LKLGK {
+        width: 100%;
+        padding: 20px 30px 0 30px;
+        order: 2;
+        transform: translateY(-130px);
+    }
+
+    .QWHLk:before {
+        left: 50%;
+        transform: translateX(-50%);
+        top: -60px;
+    }
+
+    ._66HNU{
+        font-size: 16px;
+    }
+
+    .Sof-d{
+        font-size: 16px;
+    }
+
+    .HveGI{
+        display: none;
+    }
+
+    .LKLGK>a{
+        display: none;
+    }
+
+    .fDzF9 {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .bkmGs {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        max-width: 550px;
+    }
+
+    .sDvpP{
+        height: 100%;
+        align-self: center;
+    }
+
+    .middle-text-container{
+        margin: 100px 0;
+    }
+}
+
+/* Large Mobile Devices (481px - 767px) */
+@media (max-width: 767px) {
+    .hero-section-container {
+        min-height: auto;
+        padding: 0 0 30px 0;
+    }
+
+    .hero-section-text-box {
+        padding-top: 6.7em;
+    }
+
+    .hero-section-content-container{
+        justify-content: center;
+        align-items: center;
+        /*background-color: #2a1c60;*/
+    }
+
+    .hero-section-text-box {
+        justify-content: center;
+        align-items: center;
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+        order: 2;
+        padding: 0 20px;
+        padding-top: 9em;
+        background: url("../image/topRightPortal-QF27QM47.svg");
+        background-size: contain;
+        background-position: right,bottom;
+        background-repeat: no-repeat;
+    }
+
+    .hero-section-text-box h2 {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+
+    .hero-section-text-box h3 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    .hero-section-text-box h4 {
+        font-size: 18px;
+        width: 90%;
+        margin-bottom: 15px;
+    }
+
+    .sm-hidden-1{
+        display: none;
+    }
+
+    .hero-section-button-box {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 7px;
+        width: 100%;
+    }
+
+    .hero-section-button-box button {
+        width: 130px;
+        max-width: 150px;
+    }
+
+    .second-section-top-content-container h3 {
+        margin: 40px 0 30px;
+        font-size: 28px;
+        padding: 0 20px;
+    }
+
+    .second-section-middle-content-container,
+    .second-section-bottom-content-container {
+        margin-top: 50px;
+        padding: 0 15px;
+    }
+
+    .services-container{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 52px;
+        padding-top: 20px;
+    }
+
+    .wattpad-studio-content h3,
+    .wattpad-book-content h3 {
+        font-size: 24px;
+    }
+
+    .wattpad-studio-content img,
+    .wattpad-book-content img {
+        margin-right: 15px;
+    }
+
+    .how-wattpad-work-section-container {
+        padding: 40px 0;
+    }
+
+    .how-wattpad-work-content-container > h2 {
+        font-size: 28px;
+        padding: 0 20px;
+    }
+
+    .how-wattpad-work-content-container > p {
+        padding: 0 20px;
+        margin-bottom: 40px;
+    }
+
+    .step-no {
+        font-size: 60px;
+    }
+
+    .slider-container {
+        height: 700px;
+    }
+
+    .slider-control-centerright {
+        right: 10px;
+    }
+
+    .slider-control-bottomright {
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .controls {
+        padding-right: 10px;
+    }
+
+    ._77eHp {
+        width: 35px;
+        height: 8px;
+    }
+
+    .LKLGK {
+        padding: 20px 15px 0 15px;
+    }
+
+    ._66HNU {
+        font-size: 20px;
+    }
+
+    .Sof-d {
+        font-size: 16px;
+    }
+
+    .HveGI {
+        font-size: 14px;
+    }
+
+    .jE0YQ h3 {
+        font-size: 28px;
+        margin-bottom: 40px;
+        padding: 0 20px;
+    }
+
+    .LCXab>img{
+        width: 280px;
+    }
+
+    .LCXab:after {
+        width: 250px;
+        height: 250px;
+    }
+
+    .sDvpP {
+        max-width: 250px;
+    }
+
+    .-tHcT {
+        height: 220px;
+    }
+
+    .S-lpU {
+        width: 500px;
+    }
+
+    .tGDnG {
+        font-size: 20px;
+        padding: 0 20px;
+        text-align: center;
+    }
+
+    .ff70s {
+        padding: 0 20px;
+        text-align: center;
+    }
+
+    .Zb9zg {
+        margin-bottom: 40px;
+    }
+
+    ._7IpSO {
+        transform: translateY(60px);
+        padding: 0 20px;
+    }
+
+    .Zb9zg h3 {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .Zb9zg p {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .dK7-Z {
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 0;
+        width: 100%;
+    }
+
+    .MziYf {
+        width: 160px;
+        max-width: 160px;
+    }
+}
+
+
+@media all and (max-width: 532px) {
+
+    .bkmGs{
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 2px;
+    }
+
+    .LCXab{
+        margin-bottom: 0;
+    }
+
+    .sDvpP{
+        margin: 0;
+        margin-top: 5px;
+    }
+
+    .hero-section-text-box h2 {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+
+    .hero-section-text-box h3 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    .hero-section-text-box h4 {
+        font-size: 18px;
+        width: 90%;
+        margin-bottom: 19px;
+    }
+}
+
+
+/* Small Mobile Devices (320px - 480px) */
+@media (max-width: 480px) {
+    .hero-section-text-box {
+        padding: 0 15px;
+    }
+
+    .hero-section-text-box h2 {
+        font-size: 32px;
+        line-height: 1.2;
+    }
+
+    .hero-section-text-box h3 {
+        font-size: 18px;
+    }
+
+    .hero-section-text-box h4 {
+        font-size: 15px;
+    }
+
+    .hero-section-button-box button {
+        font-size: 14px;
+        padding: 8px 20px;
+        min-width: auto;
+    }
+
+    .service {
+        font-size: 14px;
+    }
+
+    .second-section-top-content-container h3 {
+        font-size: 24px;
+    }
+
+    .wattpad-studio-content h3,
+    .wattpad-book-content h3 {
+        font-size: 20px;
+    }
+
+    .wattpad-studio-content p,
+    .wattpad-book-content p {
+        font-size: 14px;
+    }
+
+    .how-wattpad-work-content-container > h2 {
+        font-size: 24px;
+    }
+
+    .three-steps-box-content h3 {
+        font-size: 18px;
+    }
+
+    .three-steps-box-content p {
+        font-size: 13px;
+    }
+
+    .step-no {
+        font-size: 50px;
+    }
+
+    .slider-container {
+        height: 750px;
+    }
+
+    .slide {
+        padding: 0 10px;
+    }
+
+    .PD7CG img {
+        width: 280px;
+    }
+
+    ._66HNU {
+        font-size: 18px;
+        line-height: 1.3;
+    }
+
+    .Sof-d {
+        font-size: 14px;
+    }
+
+    .HveGI {
+        font-size: 13px;
+        line-height: 1.4;
+    }
+
+    .jE0YQ h3 {
+        font-size: 24px;
+    }
+
+    .sDvpP h4 {
+        font-size: 18px;
+    }
+
+    .sDvpP p {
+        font-size: 14px;
+    }
+
+    .LCXab>img{
+        width: 200px;
+    }
+
+    .LCXab:after {
+        width: 200px;
+        height: 200px;
+    }
+
+    .sDvpP {
+        max-width: 200px;
+    }
+
+    .-tHcT {
+        height: 180px;
+    }
+
+    .S-lpU {
+        width: 400px;
+    }
+
+    .tGDnG {
+        font-size: 18px;
+    }
+
+    .ff70s {
+        font-size: 13px;
+    }
+
+    ._7IpSO {
+        transform: translateY(40px);
+    }
+
+    .Zb9zg h3 {
+        font-size: 18px;
+    }
+
+    .Zb9zg p {
+        font-size: 14px;
+    }
+
+    .MziYf {
+        font-size: 14px;
+        padding: 8px 20px;
+    }
+}
+
+/* Extra Small Devices (up to 319px) */
+@media (max-width: 319px) {
+    .hero-section-text-box h2 {
+        font-size: 28px;
+    }
+
+    .hero-section-text-box h3 {
+        font-size: 16px;
+    }
+
+    .hero-section-text-box h4 {
+        font-size: 14px;
+    }
+
+    .second-section-top-content-container h3 {
+        font-size: 20px;
+    }
+
+    .how-wattpad-work-content-container > h2 {
+        font-size: 20px;
+    }
+
+    .step-no {
+        font-size: 40px;
+    }
+
+    .slider-container {
+        height: 800px;
+    }
+
+    .PD7CG img {
+        width: 240px;
+    }
+
+    ._66HNU {
+        font-size: 16px;
+    }
+
+    .jE0YQ h3 {
+        font-size: 20px;
+    }
+
+    .LCXab:after {
+        width: 180px;
+        height: 180px;
+    }
+
+    .sDvpP {
+        max-width: 180px;
+    }
+
+    .sDvpP h4 {
+        font-size: 16px;
+    }
+
+    .S-lpU {
+        width: 300px;
+    }
+
+    .tGDnG {
+        font-size: 16px;
+    }
+}
 
 
