@@ -695,3 +695,75 @@ ul li button{
 }
 
 
+/*media query*/
+@media (min-width: 1400px) {
+    .container {
+        width: 1200px;
+        max-width: 1200px;
+    }
+
+    .center-text {
+        width: 600px;
+    }
+
+    #phone-image {
+        max-width: 600px;
+    }
+
+    .login-page-form-header {
+        width: 450px;
+    }
+}
+
+@media (max-width: 1399px) and (min-width: 1200px) {
+    .container {
+        width: 90%;
+    }
+
+    .center-text {
+        width: 540px;
+    }
+
+    #phone-image {
+        max-width: 540px;
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+    .container {
+        width: 95%;
+    }
+
+    .center-text {
+        width: 450px;
+        margin-right: 15px;
+    }
+
+    #phone-image {
+        max-width: 450px;
+    }
+
+    .login-page-form-header {
+        width: 380px;
+    }
+
+    .login-modal-wrapper .auth-form-padding,
+    .login-modal-wrapper-new .auth-form-padding {
+        padding: 50px 30px;
+    }
+}
+
+@media all and (max-width: 994px) {
+
+    .center-text{
+        display: none;
+    }
+
+    .row{
+        justify-content: center;
+    }
+
+    .login-page-form-header {
+        width: 380px;
+    }
+}
