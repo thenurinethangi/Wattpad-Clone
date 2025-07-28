@@ -80,7 +80,7 @@
     --wp-neutral-27: rgba(0, 0, 0, .075);
     --wp-neutral-28: #ff7b3c;
     --wp-neutral-29: rgba(0, 0, 0, .5);
-    --wp-neutral-30: rgba(18, 18, 18, .16);
+    --wp-neutral-30: rgba(18, 18, 18, 0.27);
     --wp-neutral-31: rgba(18, 18, 18, .64);
     --wp-neutral-32: #555;
     --wp-neutral-33: rgba(0, 0, 0, .12);
@@ -104,6 +104,7 @@
     --ds-base-2-40: #d7caff;
     --ds-base-2-60: #3b19a9;
     --ds-neutral-60-solid: #b3b3b3;
+    --ds-base-7-accent: #51a800;
     --ds-neutral-20: rgba(18, 18, 18, .04);
     --wp-background-1: lightgray;
     --Corner-corner-00: 0;
