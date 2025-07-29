@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,6 +37,12 @@ public class ParagraphComment {
     @ManyToOne
     @JoinColumn(name = "paragraph_id")
     private Paragraph paragraph;
+
+    @OneToMany(mappedBy = "paragraphComment")
+    private List<Reply> replies;
+
+    @OneToMany(mappedBy = "paragraphComment")
+    private List<CommentLike> commentLikes;
 }
 
 

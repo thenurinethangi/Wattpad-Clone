@@ -12,34 +12,30 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class ChapterComment {
+public class CommentLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger id;
 
     @Column(nullable = false)
-    private String commentMessage;
-
-    @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    @Column(nullable = false)
-    private BigInteger likes = BigInteger.valueOf(0);
+    private LocalDateTime likedAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "chapter_id")
-    private Chapter chapter;
+    @JoinColumn(name = "chapter_comment_id")
+    private ChapterComment chapterComment;
 
-    @OneToMany(mappedBy = "chapterComment")
-    private List<Reply> replies;
+    @ManyToOne
+    @JoinColumn(name = "paragraph_comment_id")
+    private ParagraphComment paragraphComment;
 
-    @OneToMany(mappedBy = "chapterComment")
-    private List<CommentLike> commentLikes;
+    @ManyToOne
+    @JoinColumn(name = "reply_id")
+    private Reply reply;
 }
 
 
