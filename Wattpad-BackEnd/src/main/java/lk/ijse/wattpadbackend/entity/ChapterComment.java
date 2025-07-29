@@ -28,11 +28,11 @@ public class ChapterComment {
     private BigInteger likes = BigInteger.valueOf(0);
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "chapter_id")
+    @JoinColumn(name = "chapter_id", nullable = false)
     private Chapter chapter;
 
     @OneToMany(mappedBy = "chapterComment")

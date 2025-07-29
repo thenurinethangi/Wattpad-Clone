@@ -39,7 +39,7 @@ public class Chapter {
     private int publishedOrDraft = 0;
 
     @ManyToOne
-    @JoinColumn(name = "story_id")
+    @JoinColumn(name = "story_id", nullable = false)
     private Story story;
 
     @OneToMany(mappedBy = "chapter")

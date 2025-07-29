@@ -28,7 +28,7 @@ public class Paragraph {
     private int sequenceNo;
 
     @ManyToOne
-    @JoinColumn(name = "chapter_id")
+    @JoinColumn(name = "chapter_id", nullable = false)
     private Chapter chapter;
 
     @OneToMany(mappedBy = "paragraph")

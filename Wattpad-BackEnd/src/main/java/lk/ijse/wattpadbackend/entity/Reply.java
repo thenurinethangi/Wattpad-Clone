@@ -28,7 +28,7 @@ public class Reply {
     private long likes = 0;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne

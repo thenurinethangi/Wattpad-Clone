@@ -22,11 +22,11 @@ public class ReadingListLike {
     private LocalDateTime likedAt = LocalDateTime.now();
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "reading_list_id")
+    @JoinColumn(name = "reading_list_id", nullable = false)
     private ReadingList readingList;
 }
 

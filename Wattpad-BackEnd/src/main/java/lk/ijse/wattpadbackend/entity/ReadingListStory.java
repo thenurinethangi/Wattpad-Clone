@@ -18,11 +18,11 @@ public class ReadingListStory {
     private BigInteger id;
 
     @ManyToOne
-    @JoinColumn(name = "reading_list_id")
+    @JoinColumn(name = "reading_list_id", nullable = false)
     private ReadingList readingList;
 
     @ManyToOne
-    @JoinColumn(name = "story_id")
+    @JoinColumn(name = "story_id", nullable = false)
     private Story story;
 }
 

@@ -31,11 +31,11 @@ public class ParagraphComment {
     private long replyCount = 0;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "paragraph_id")
+    @JoinColumn(name = "paragraph_id", nullable = false)
     private Paragraph paragraph;
 
     @OneToMany(mappedBy = "paragraphComment")
