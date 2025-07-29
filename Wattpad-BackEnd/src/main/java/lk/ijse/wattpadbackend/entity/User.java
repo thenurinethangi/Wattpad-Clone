@@ -56,6 +56,15 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<ReadingList> readingLists;
+
+    @OneToMany(mappedBy = "user")
+    private List<ChapterComment> chapterComments;
+
+    @OneToMany(mappedBy = "user")
+    private List<ChapterLike> chapterLikes;
+
+    @OneToMany(mappedBy = "user")
+    private List<ParagraphComment> paragraphComments;
 }
 
 
