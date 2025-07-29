@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -42,6 +41,12 @@ public class Chapter {
     @ManyToOne
     @JoinColumn(name = "story_id")
     private Story story;
+
+    @OneToMany(mappedBy = "chapter")
+    private List<Paragraph> paragraphs;
+
+    @OneToMany(mappedBy = "chapter")
+    private List<ChapterComment> chapterComments;
 }
 
 

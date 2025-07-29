@@ -1,0 +1,70 @@
+package lk.ijse.wattpadbackend.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.math.BigInteger;
+import java.time.LocalDateTime;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
+public class Paragraph {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private BigInteger id;
+
+    @Column(nullable = false)
+    private String contentType;
+
+    @Column(nullable = false)
+    private String content;
+
+    @Column(nullable = false)
+    private int sequenceNo;
+
+    @ManyToOne
+    @JoinColumn(name = "chapter_id")
+    private Chapter chapter;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
