@@ -12,34 +12,55 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class ReadingList {
+public class Reply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger id;
 
     @Column(nullable = false)
-    private String listName;
+    private String replyMessage;
 
     @Column(nullable = false)
-    private long storyCount = 0;
+    private LocalDateTime createAt = LocalDateTime.now();
 
     @Column(nullable = false)
-    private long votes = 0;
-
-    @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private long likes = 0;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(mappedBy = "readingLists")
-    private List<Story> stories;
+    @ManyToOne
+    @JoinColumn(name = "chapter_comment_id")
+    private ChapterComment chapterComment;
 
-    @OneToMany(mappedBy = "readingList")
-    private List<ReadingListLike> readingListLikes;
- }
+    @ManyToOne
+    @JoinColumn(name = "paragraph_comment_id")
+    private ParagraphComment paragraphComment;
+
+    @OneToMany(mappedBy = "reply")
+    private List<CommentLike> commentLikes;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

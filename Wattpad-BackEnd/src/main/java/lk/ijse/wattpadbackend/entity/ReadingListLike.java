@@ -12,34 +12,36 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class ReadingList {
+public class ReadingListLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger id;
 
     @Column(nullable = false)
-    private String listName;
-
-    @Column(nullable = false)
-    private long storyCount = 0;
-
-    @Column(nullable = false)
-    private long votes = 0;
-
-    @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime likedAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(mappedBy = "readingLists")
-    private List<Story> stories;
+    @ManyToOne
+    @JoinColumn(name = "reading_list_id")
+    private ReadingList readingList;
+}
 
-    @OneToMany(mappedBy = "readingList")
-    private List<ReadingListLike> readingListLikes;
- }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
