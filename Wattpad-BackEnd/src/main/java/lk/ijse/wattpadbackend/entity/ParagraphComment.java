@@ -5,35 +5,49 @@ import lombok.*;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-public class Paragraph {
+public class ParagraphComment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger id;
 
     @Column(nullable = false)
-    private String contentType;
+    private String commentMessage;
 
     @Column(nullable = false)
-    private String content;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(nullable = false)
-    private int sequenceNo;
+    private long likes = 0;
+
+    @Column(nullable = false)
+    private long replyCount = 0;
 
     @ManyToOne
-    @JoinColumn(name = "chapter_id")
-    private Chapter chapter;
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @OneToMany(mappedBy = "paragraph")
-    private List<ParagraphComment> paragraphComments;
+    @ManyToOne
+    @JoinColumn(name = "paragraph_id")
+    private Paragraph paragraph;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

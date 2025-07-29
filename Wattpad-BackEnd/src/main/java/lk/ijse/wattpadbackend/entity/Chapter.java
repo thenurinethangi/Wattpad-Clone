@@ -47,6 +47,9 @@ public class Chapter {
 
     @OneToMany(mappedBy = "chapter")
     private List<ChapterComment> chapterComments;
+
+    @OneToMany(mappedBy = "chapter")
+    private List<ChapterLike> chapterLikes;
 }
 
 

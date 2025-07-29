@@ -12,33 +12,23 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Paragraph {
+public class ChapterLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger id;
 
     @Column(nullable = false)
-    private String contentType;
+    private LocalDateTime likedAt = LocalDateTime.now();
 
-    @Column(nullable = false)
-    private String content;
-
-    @Column(nullable = false)
-    private int sequenceNo;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "chapter_id")
     private Chapter chapter;
-
-    @OneToMany(mappedBy = "paragraph")
-    private List<ParagraphComment> paragraphComments;
 }
-
-
-
-
-
 
 
 
