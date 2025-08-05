@@ -15,13 +15,13 @@ public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private long id;
 
     @Column(nullable = false, unique = true)
     private String tagName;
 
-    @ManyToMany(mappedBy = "tags")
-    private List<Story> stories;
+    @OneToMany(mappedBy = "tag")
+    private List<StoryTag> storyTags;
 }
 
 

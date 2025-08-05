@@ -16,7 +16,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private long id;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -48,8 +48,8 @@ public class User {
 
     private String coverPicPath;
 
-    @ManyToMany(mappedBy = "users")
-    private List<Role> users;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<UserRole> userRoles;
 
     @OneToMany(mappedBy = "user")
     private List<Story> stories;
@@ -75,8 +75,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<ReadingListLike> readingListLikes;
 
-    @ManyToMany(mappedBy = "users")
-    private List<Genre> genres;
+    @OneToMany(mappedBy = "user")
+    private List<UserGenre> userGenres;
 }
 
 

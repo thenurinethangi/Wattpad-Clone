@@ -15,13 +15,13 @@ public class Genre {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private long id;
 
     @Column(nullable = false, unique = true)
     private String genre;
 
-    @ManyToMany(mappedBy = "genres")
-    private List<User> users;
+    @OneToMany(mappedBy = "genre")
+    private List<UserGenre> userGenres;
 }
 
 

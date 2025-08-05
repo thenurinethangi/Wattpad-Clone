@@ -16,7 +16,7 @@ public class CommentLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private long id;
 
     @Column(nullable = false)
     private LocalDateTime likedAt = LocalDateTime.now();

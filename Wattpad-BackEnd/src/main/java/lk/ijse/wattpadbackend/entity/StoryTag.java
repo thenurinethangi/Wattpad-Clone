@@ -14,7 +14,7 @@ public class StoryTag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "story_id",nullable = false)

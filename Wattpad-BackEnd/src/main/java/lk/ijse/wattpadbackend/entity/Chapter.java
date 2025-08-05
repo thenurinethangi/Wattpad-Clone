@@ -16,7 +16,7 @@ public class Chapter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private long id;
 
     @Column(nullable = false)
     private String title;
@@ -27,13 +27,13 @@ public class Chapter {
     private String coverImagePath;
 
     @Column(nullable = false)
-    private BigInteger views = BigInteger.valueOf(0);
+    private long views = 0;
 
     @Column(nullable = false)
-    private BigInteger likes = BigInteger.valueOf(0);
+    private long likes = 0;
 
     @Column(nullable = false)
-    private BigInteger comments = BigInteger.valueOf(0);
+    private long comments = 0;
 
     @Column(nullable = false)
     private int publishedOrDraft = 0;

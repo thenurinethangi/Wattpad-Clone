@@ -16,14 +16,14 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private long id;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
     private Roles role;
 
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    @OneToMany(mappedBy = "role")
+    private List<UserRole> userRoles;
 }
 
 

@@ -16,7 +16,7 @@ public class ChapterComment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private long id;
 
     @Column(nullable = false)
     private String commentMessage;
@@ -25,7 +25,7 @@ public class ChapterComment {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(nullable = false)
-    private BigInteger likes = BigInteger.valueOf(0);
+    private long likes = 0;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

@@ -15,7 +15,7 @@ public class Story {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private long id;
 
     @Column(nullable = false)
     private String title;
@@ -62,14 +62,14 @@ public class Story {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToMany(mappedBy = "stories")
-    private List<Tag> tags;
+    @OneToMany(mappedBy = "story")
+    private List<StoryTag> storyTags;
 
-    @ManyToMany(mappedBy = "stories")
-    private List<Library> libraries;
+    @OneToMany(mappedBy = "story")
+    private List<LibraryStory> libraryStories;
 
-    @ManyToMany(mappedBy = "stories")
-    private List<ReadingList> readingLists;
+    @OneToMany(mappedBy = "story")
+    private List<ReadingListStory> readingListStories;
 
     @OneToMany(mappedBy = "story")
     private List<Chapter> chapters;

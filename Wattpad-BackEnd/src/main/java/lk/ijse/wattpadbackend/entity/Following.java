@@ -14,10 +14,10 @@ public class Following {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private long id;
 
     @Column(nullable = false)
-    private BigInteger followedUserId;
+    private long followedUserId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

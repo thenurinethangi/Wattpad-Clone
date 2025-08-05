@@ -14,7 +14,7 @@ public class LibraryStory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "library_id", nullable = false)

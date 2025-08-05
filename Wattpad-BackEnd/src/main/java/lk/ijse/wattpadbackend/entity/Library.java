@@ -15,14 +15,14 @@ public class Library {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private long id;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToMany(mappedBy = "libraries")
-    private List<Story> stories;
+    @OneToMany(mappedBy = "library")
+    private List<LibraryStory> libraryStories;
 }
 
 

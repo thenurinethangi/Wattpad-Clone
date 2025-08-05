@@ -16,7 +16,7 @@ public class ReadingList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private long id;
 
     @Column(nullable = false)
     private String listName;
@@ -34,8 +34,8 @@ public class ReadingList {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToMany(mappedBy = "readingLists")
-    private List<Story> stories;
+    @OneToMany(mappedBy = "readingList")
+    private List<ReadingListStory> readingListStories;
 
     @OneToMany(mappedBy = "readingList")
     private List<ReadingListLike> readingListLikes;
