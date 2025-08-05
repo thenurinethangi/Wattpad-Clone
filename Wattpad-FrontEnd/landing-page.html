@@ -48,21 +48,11 @@
         </ul>
         <div class="navigation-right-list-two-container">
             <ul class="navigation-right-list-two">
-                <li><button>Log in</button></li>
-                <li><button>Sign Up</button></li>
+                <li><button class="log-in-btn">Log in</button></li>
+                <li><button class="sign-up-btn">Sign Up</button></li>
             </ul>
-            <!--            <a href="https://www.wattpad.com/login" rel="noopener noreferrer"><button class="undefined _2WhP9 "><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6f6f6f" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></button></a>-->
         </div>
     </div>
-    <!--    -----------------mobile header------------------ -->
-    <!--    <nav data-testid="mobile-header" class="a3z5F">-->
-    <!--        <div class="_0C3Ar">-->
-    <!--            <a class="AmI6Y" href="https://www.wattpad.com" aria-label="Home">-->
-    <!--                <img class="v0iVI" width="32" height="25" src="../static/assets/image/wattpad-logo.svg" alt="Wattpad Logo" data-testid="logo"></a>-->
-    <!--            <a class="AmI6Y" href="https://www.wattpad.com/search" data-testid="search" aria-label="Search">-->
-    <!--                <img src="/wp-web-assets/images/wp-search.svg" alt=""></a>-->
-    <!--        </div>-->
-    <!--    </nav>-->
 </header>
 
 
@@ -124,7 +114,6 @@
             <h3>Your voice belongs on bookshelves</h3>
             <p>Wattpad Books aspires to recognize and reflect diverse voices by taking Wattpad stories to published book and onto bookshelves around the world.</p>
             <p>Wattpad Books works with partners such as:</p>
-            <img alt="" src="assets/image/macmillan.png" width="110">
             <img alt="" src="assets/image/anvil.png" width="87">
             <img alt="" src="assets/image/penguin.png" width="97">
         </div>
@@ -401,18 +390,21 @@
 
 
 
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="assets/js/landing-page-script.js"></script>
+
+<!--customer feedback slider animation-->
 <script>
-    let currentSlide = 2; // Start at slide 3 (index 2)
-    let direction = 1; // 1 for right, -1 for left
+    let currentSlide = 2;
+    let direction = 1;
     const totalSlides = 5;
     const sliderList = document.getElementById('sliderList');
     const indicators = document.querySelectorAll('._77eHp');
 
     function updateSlider() {
-        const translateX = -currentSlide * 20; // Each slide is 20% wide
+        const translateX = -currentSlide * 20;
         sliderList.style.transform = `translateX(${translateX}%)`;
 
-        // Update indicators
         indicators.forEach((indicator, index) => {
             indicator.classList.toggle('vk602', index === currentSlide);
         });
@@ -421,11 +413,10 @@
     function nextSlide() {
         currentSlide += direction;
 
-        // Reverse direction when reaching the ends
         if (currentSlide >= totalSlides - 1) {
-            direction = -1; // Start going left
+            direction = -1;
         } else if (currentSlide <= 0) {
-            direction = 1; // Start going right
+            direction = 1;
         }
 
         updateSlider();
@@ -436,10 +427,8 @@
         updateSlider();
     }
 
-    // Auto-slide functionality
-    setInterval(nextSlide, 5000); // Change slide every 5 seconds
+    setInterval(nextSlide, 5000);
 
-    // Initialize
     updateSlider();
 </script>
 </body>
