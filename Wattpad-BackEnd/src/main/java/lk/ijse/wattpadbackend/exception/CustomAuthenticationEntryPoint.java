@@ -41,3 +41,4 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         new ObjectMapper().writeValue(response.getOutputStream(),apiResponse);
     }
 }
+
