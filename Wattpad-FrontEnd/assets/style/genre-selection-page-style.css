@@ -8,13 +8,16 @@ body{
     overflow-x: hidden;
     background-color: rgb(255, 255, 255);
     font-family: var(--primary-font-face);
+    display: none;
+    visibility: hidden;
+    opacity: 0;
 }
 
 
 /*main content*/
 .main-content {
     max-width: 605px;
-    margin: 100px auto 35px;
+    margin: 35px auto 35px;
     padding: 0 20px;
     text-align: left;
 }
@@ -54,26 +57,15 @@ body{
 }
 
 .genre-btn:hover {
-    border-color: #ff6500;
-    color: #ff6500;
+    border-color: #000000;
+    background-color: #000000;
+    color: #fff;
 }
 
-.genre-btn.selected {
-    background-color: #333;
+.selected {
+    background-color: #000000;
     color: white;
     border-color: #333;
-}
-
-.genre-btn.selected.romance {
-    background-color: #000000;
-}
-
-.genre-btn.selected.werewolf {
-    background-color: #000000;
-}
-
-.genre-btn.selected.new-adult {
-    background-color: #000000;
 }
 
 .continue-btn {
