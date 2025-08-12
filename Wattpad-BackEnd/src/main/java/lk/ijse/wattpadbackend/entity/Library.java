@@ -23,6 +23,10 @@ public class Library {
 
     @OneToMany(mappedBy = "library")
     private List<LibraryStory> libraryStories;
+
+    public Library(User user) {
+        this.user = user;
+    }
 }
 
 

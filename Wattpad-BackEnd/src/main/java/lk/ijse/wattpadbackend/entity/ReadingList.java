@@ -39,7 +39,12 @@ public class ReadingList {
 
     @OneToMany(mappedBy = "readingList")
     private List<ReadingListLike> readingListLikes;
- }
+
+    public ReadingList(String listName, User user) {
+        this.listName = listName;
+        this.user = user;
+    }
+}
 
 
 
