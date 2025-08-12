@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -21,22 +22,23 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(nullable = false)
     private String fullName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
     private String password;
 
-    private Date birthday;
+    @Column(nullable = false)
+    private LocalDate birthday;
 
     private String pronouns;
 
     private String about;
 
     @Column(nullable = false)
-    private Date joinedDate;
+    private LocalDate joinedDate = LocalDate.now();
 
     private String websiteLink;
 
@@ -47,6 +49,10 @@ public class User {
     private String profilePicPath;
 
     private String coverPicPath;
+
+    private int isVerify = 0;
+
+    private int isActive = 1;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<UserRole> userRoles;
@@ -77,6 +83,25 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<UserGenre> userGenres;
+
+    public User(String username, String fullName, String email, String password, LocalDate birthday, String pronouns, int isVerify) {
+        this.username = username;
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.birthday = birthday;
+        this.pronouns = pronouns;
+        this.isVerify = isVerify;
+    }
+
+    public User(String username, String fullName, String email, String password, LocalDate birthday, String pronouns) {
+        this.username = username;
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.birthday = birthday;
+        this.pronouns = pronouns;
+    }
 }
 
 
