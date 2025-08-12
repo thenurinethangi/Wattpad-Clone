@@ -11,29 +11,29 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <!--    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton+SC&family=Cinzel+Decorative:wght@400;700;900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Roboto:ital,wght@1,800&family=Rubik:ital@0;1&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/style/variables.css">
     <link rel="stylesheet" href="assets/style/landing-page-style.css">
+    <link rel="stylesheet" href="assets/style/header-dropdowns-style.css">
 </head>
 <body>
 
 <!-- --------------------header of landing page---------------------- -->
 <header>
     <div class="header-left-side">
-        <a class="wattpad-logo-sm-screen" href="landing-page.html" title="Wattpad Home" aria-label="Home"><img src="assets/image/wattpad-logo.svg" alt="Wattpad Logo"></a>
+        <a class="wattpad-logo-sm-screen" href="landing-page.html" title="Wattpad Home"><img src="assets/image/wattpad-logo.svg" alt="Wattpad Logo"></a>
         <nav class="navigation-left">
             <ul class="navigation-left-list">
-                <li class="navigation-left-list-item"><a href="landing-page.html" title="Wattpad Home" aria-label="Home"><img src="assets/image/wattpad-logo.svg" alt="Wattpad Logo"></a></li>
+                <li class="navigation-left-list-item"><a href="landing-page.html"><img src="assets/image/wattpad-logo.svg" alt="Wattpad Logo"></a></li>
                 <li class="navigation-left-list-item"><div id="discover-dropdown"><button>Browse<img class="drop-down-icon" src="assets/image/wp-chevron-down.svg" alt=""></button></div></li>
                 <li class="navigation-left-list-item"><div id="community-dropdown"><button>Community<img class="drop-down-icon" src="assets/image/wp-chevron-down.svg" alt=""></button></div></li>
             </ul>
         </nav>
         <div class="search-input-container">
             <form class="search-form">
-                <button aria-label="Search">
+                <button>
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5999 6.49844C1.5999 3.79224 3.79371 1.59844 6.4999 1.59844C9.2061 1.59844 11.3999 3.79224 11.3999 6.49844C11.3999 9.20463 9.2061 11.3984 6.4999 11.3984C3.79371 11.3984 1.5999 9.20463 1.5999 6.49844ZM6.4999 0.398438C3.13097 0.398438 0.399902 3.1295 0.399902 6.49844C0.399902 9.86737 3.13097 12.5984 6.4999 12.5984C7.99441 12.5984 9.36338 12.061 10.4241 11.1688C10.4515 11.2618 10.5019 11.3494 10.5752 11.4227L13.0501 13.8976C13.2844 14.1319 13.6643 14.1319 13.8986 13.8976C14.133 13.6633 14.133 13.2834 13.8986 13.0491L11.4238 10.5742C11.3504 10.5008 11.2629 10.4505 11.1699 10.423C12.0623 9.36227 12.5999 7.99313 12.5999 6.49844C12.5999 3.1295 9.86884 0.398438 6.4999 0.398438Z" fill="#121212" fill-opacity="0.64"></path></svg>
                 </button>
                 <input class="search-input" type="text" placeholder="Search" name="query" autocomplete="off">
@@ -66,8 +66,8 @@
             <h4>Home to 89 million people¹ who love original stories, Wattpad has democratized storytelling for a new generation of diverse Gen Z writers and their fans.</h4>
             <p class="sm-hidden-1">¹As of the quarter ended June 30, 2024</p>
             <div class="hero-section-button-box">
-                <button style="margin-left: 0;">Start Reading</button>
-                <button>Start Writing</button>
+                <button style="margin-left: 0;" class="sign-up-btn">Start Reading</button>
+                <button class="sign-up-btn">Start Writing</button>
             </div>
         </div>
         <div class="hero-section-image-box">
@@ -210,7 +210,7 @@
                                     <p class="Sof-d">KARA BARBIERI (@PANDEAN)</p>
                                 </div>
                                 <p class="HveGI">Kara Barbieri is a twenty-two year old author with a love for the weird and mystic. Her debut novel, WHITE STAG, will be published by Wednesday Books/Macmillan in January 2019.</p>
-                                <a href="#" target="_blank" rel="noopener noreferrer">
+                                <a href="#" target="_blank">
                                     <button class="hUGnO">Start Reading</button>
                                 </a>
                             </div>
@@ -229,7 +229,7 @@
                                     <p class="Sof-d">ALI NOVAK (@FALLZSWIMMER)</p>
                                 </div>
                                 <p class="HveGI">Ali Novak is a Wisconsin native and a graduate of the University of Wisconsin-Madison's creative writing program. She started writing her debut novel My Life with the Walter Boys when she was only fifteen. Since then, her work has received more than 150 million hits online and My Life with the Walter Boys has been optioned for television by Komixx Entertainment and Sony Pictures Television.</p>
-                                <a href="#" target="_blank" rel="noopener noreferrer">
+                                <a href="#" target="_blank">
                                     <button class="hUGnO">Start Reading</button>
                                 </a>
                             </div>
@@ -248,7 +248,7 @@
                                     <p class="Sof-d">BEN SOBIECK (@BENSOBIECK)</p>
                                 </div>
                                 <p class="HveGI">Benjamin Sobieck is a Wattpad Star and editor of "The Writer's Guide to Wattpad," published in August 2018 by Writer's Digest Books and featuring contributions by 23 Wattpad Stars, ambassadors, and staff. His stories on Wattpad, such as "When the Black-Eyed Children Knock," have drawn more than 1.5 million reads.</p>
-                                <a href="#" target="_blank" rel="noopener noreferrer">
+                                <a href="#" target="_blank">
                                     <button class="hUGnO">Start Reading</button>
                                 </a>
                             </div>
@@ -267,7 +267,7 @@
                                     <p class="Sof-d">ZOE AARSEN (@ZAARSENIST)</p>
                                 </div>
                                 <p class="HveGI">Zoe Aarsen is a graphic designer and copywriter. Her first paranormal YA novel, Light as a Feather, Stiff as a Board, is being published by Simon & Schuster and turned into a television series on Hulu.</p>
-                                <a href="#" target="_blank" rel="noopener noreferrer">
+                                <a href="#" target="_blank">
                                     <button class="hUGnO">Start Reading</button>
                                 </a>
                             </div>
@@ -286,7 +286,7 @@
                                     <p class="Sof-d">ISABELLE RONIN (@ISABELLERONIN)</p>
                                 </div>
                                 <p class="HveGI">Chasing Red was one of 2016's most-read stories on Wattpad -- and that was just the beginning for this Winnipeg-Manitoba-based writer.</p>
-                                <a href="#" target="_blank" rel="noopener noreferrer">
+                                <a href="#" target="_blank">
                                     <button class="hUGnO">Start Reading</button>
                                 </a>
                             </div>
@@ -337,6 +337,7 @@
 </div>
 
 
+
 <!-- -------------------bottom section top--------------------- -->
 <div class="-tHcT">
     <img class="S-lpU" alt="" src="assets/image/company-logo.svg">
@@ -356,8 +357,8 @@
         <h3>Take Wattpad With You</h3>
         <p>Read and write anywhere, even offline.</p>
         <div class="dK7-Z">
-            <button class="MziYf">Start Reading</button>
-            <button class="MziYf">Start Writing</button>
+            <button class="MziYf sign-up-btn">Start Reading</button>
+            <button class="MziYf sign-up-btn">Start Writing</button>
         </div>
         <img alt="" class="devices" src="assets/image/footer-devices.png">
     </div>
