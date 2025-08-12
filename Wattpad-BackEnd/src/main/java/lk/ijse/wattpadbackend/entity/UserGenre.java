@@ -23,6 +23,11 @@ public class UserGenre {
     @ManyToOne
     @JoinColumn(name = "genre_id", nullable = false)
     private Genre genre;
+
+    public UserGenre(User user, Genre genre) {
+        this.user = user;
+        this.genre = genre;
+    }
 }
 
 
