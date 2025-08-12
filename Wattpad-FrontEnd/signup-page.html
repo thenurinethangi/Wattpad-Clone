@@ -24,12 +24,12 @@
         <div class="full-screen"></div>
         <div id="auth-header" class="container clearfix">
             <a href="landing-page.html">
-                <img width="123" class="wp-logo" alt="Wattpad" src="//static.wattpad.com/img/logos/wp-logo-orange.png?v=883ce90">
+                <img width="123" class="wp-logo" alt="Wattpad" src="assets/image/wp-logo-orange.png">
             </a>
             <div class="buttons-right">
-                <a class="btn btn-link" href="">Sign up</a>
+                <a class="btn btn-link" href="signup-page.html">Sign up</a>
                 <div class="button-group relative">
-                    <button class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-controls="language-options" aria-expanded="false" aria-label="more options">English
+                    <button class="btn btn-link dropdown-toggle">English
                         <span class="fa fa-down fa-wp-neutral-1 " aria-hidden="true" style="font-size:16px;"></span>
                     </button>
                     <div class="triangle"></div>
@@ -115,7 +115,9 @@
                                         <p class="title">Sign up to join the largest storytelling community</p>
                                         <div class="panel-body">
                                             <div class="signin-buttons signin-buttons-new">
-                                                <button class="btn btn-google btn-block auth-button-new">
+                                                <button class="btn btn-google btn-block auth-button-new" id="google-signup-button">
+                                                    <!-- Hidden Google button -->
+                                                    <div id="google-signin-button" style="opacity: 0; position: absolute; pointer-events: none;"></div>
                                                     <img src="assets/image/google_login_color.png" alt="Google Login" class="google-login-icon" width="18" aria-hidden="true">
                                                     <span>
                                                     <span class="auth-button-text-new">Sign up with Google</span>
@@ -133,7 +135,7 @@
                                                 <span class="or"> or </span>
                                                 <div class="horizontal-line"></div>
                                             </div>
-                                            <button class="btn-block btn-primary submit-btn-new">Sign up with email</button>
+                                            <button class="btn-block btn-primary submit-btn-new sign-up-with-email">Sign up with email</button>
                                         </div>
                                         <button class="footer-button-margin-signup button__Y70Pw tertiary-variant__Y9kWU default-accent__Pc0Pm medium-size__CLqD3 clickable__iYXtN full-width__dXWyx with-padding__cVt72">
                                             <span class="background-overlay__mCEaX"></span>
@@ -174,5 +176,10 @@
     </ul>
 </footer>
 
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="assets/js/signup-page-script.js"></script>
 </body>
 </html>
