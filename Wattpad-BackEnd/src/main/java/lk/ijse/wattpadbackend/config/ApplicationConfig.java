@@ -4,6 +4,7 @@ import lk.ijse.wattpadbackend.entity.User;
 import lk.ijse.wattpadbackend.entity.UserRole;
 import lk.ijse.wattpadbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -45,5 +46,11 @@ public class ApplicationConfig {
                     simpleGrantedAuthorityList
             );
         };
+    }
+
+    @Bean
+    public ModelMapper modelMapper(){
+
+        return new ModelMapper();
     }
 }
