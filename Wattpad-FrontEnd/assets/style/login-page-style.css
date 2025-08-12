@@ -586,7 +586,10 @@ ul {
     height: 100%;
 }
 
-
+.forgot-password{
+    font-weight: 600;
+    color: #222;
+}
 
 /*footer styles*/
 .KsomK {
@@ -696,6 +699,365 @@ ul li button{
     background-color: var(--white-color);
     border: none;
 }
+
+
+/*otp model styles*/
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.otp-modal {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    animation: slideIn 0.3s ease-out;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    margin-bottom: 30px;
+}
+
+.modal-title {
+    color: #333;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 0;
+    font-family: var(--primary-font-face);
+}
+
+.modal-subtitle {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.otp-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 35px;
+    flex-wrap: wrap;
+}
+
+.otp-input {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #e1e1e1;
+    border-radius: 10px;
+    background: #f9f9f9;
+    color: #333;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.otp-input:focus {
+    border-color: rgba(255, 101, 0, 0.63);
+    background: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 101, 0, 0.2);
+}
+
+.otp-input::placeholder {
+    color: #bbb;
+}
+
+.verify-btn {
+    width: 100%;
+    padding: 15px;
+    background: #222;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.verify-btn:hover {
+    background: rgba(34, 34, 34, 0.93);
+    transform: translateY(-2px);
+}
+
+.verify-btn:active {
+    transform: translateY(0);
+}
+
+.enter-opt-btn {
+    width: 100%;
+    padding: 15px;
+    background: #222;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.enter-opt-btn:hover {
+    background: rgba(34, 34, 34, 0.93);
+    transform: translateY(-2px);
+}
+
+.enter-opt-btn:active {
+    transform: translateY(0);
+}
+
+.resend-link {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.resend-link:hover {
+    color: #333;
+    text-decoration: underline;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #f5f5f5;
+    border: none;
+    color: #666;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #666;
+    transform: rotate(90deg);
+}
+
+
+/*form field styles*/
+.form-group, .panel-body {
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.has-feedback {
+    position: relative;
+}
+
+.form-label {
+    font-weight: 700;
+    color: #222;
+    font-size: 18px;
+}
+
+.has-feedback .field-container {
+    position: relative;
+}
+
+.form-control:not(.password-field){
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fafafa;
+    color: #222;
+    margin-top: 4px;
+    height: 48px;
+    background-image: none;
+    border: 1px solid #eee;
+    display: block;
+    width: 100%;
+    line-height: 36px;
+    padding: 12px 12px;
+}
+
+/*birthday fields style*/
+.login-modal .signup-form .panel-body .birthday-container, .signup-modal .signup-form .panel-body .birthday-container {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.login-modal .signup-form .panel-body .birthday-container .birthday-fields, .signup-modal .signup-form .panel-body .birthday-container .birthday-fields {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.login-modal .signup-form .panel-body .error-msg, .signup-modal .signup-form .panel-body .error-msg {
+    font-size: small;
+    color: #9e1d42;
+    line-height: 18px;
+    margin-top: 3px;
+}
+
+.month,.day,.year{
+    width: 30%;
+    text-align: left;
+    color: #222;
+    font-size: 18px;
+}
+
+.login-modal .signup-form .panel-body .form-group .control-label, .login-modal .signup-form .panel-body .form-group .form-label, .signup-modal .signup-form .panel-body .form-group .control-label, .signup-modal .signup-form .panel-body .form-group .form-label {
+    font-weight: 700;
+    color: #222;
+    font-size: 18px;
+}
+
+.login-modal .signup-form .panel-body .birthday-container .birthday-fields .birthday-dropdowns, .signup-modal .signup-form .panel-body .birthday-container .birthday-fields .birthday-dropdowns {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-top: 4px;
+}
+
+.login-modal .signup-form .panel-body .birthday-container .birthday-fields .birthday-dropdowns select, .signup-modal .signup-form .panel-body .birthday-container .birthday-fields .birthday-dropdowns select {
+    line-height: 20px;
+    padding-right: 0;
+}
+
+.login-modal .signup-form .panel-body .birthday-container.invalid .has-feedback select, .signup-modal .signup-form .panel-body .birthday-container.invalid .has-feedback select {
+    border-color: var(--ds-base-4-60);
+}
+
+
+/*forgot password styles*/
+.mftTh h2 {
+    font-weight: var(--font-weight-bold);
+    color: var(--wp-neutral-1);
+    margin-top: 10px;
+}
+
+.mftTh span {
+    color: var(--wp-neutral-2);
+    margin-bottom: 14px;
+    line-height: 1.4em;
+}
+
+.qLwAp hr {
+    color: var(--wp-neutral-5);
+    margin-bottom: 7px;
+}
+
+.rS0-b {
+    max-width: 420px;
+    width: inherit;
+    position: relative;
+}
+
+.Auj4- {
+    margin-bottom: 24px;
+}
+
+.HSR87 {
+    font-weight: var(--font-weight-bold);
+    color: var(--wp-neutral-1);
+    font-size: var(--font-size-m);
+}
+
+.rS0-b input{
+    width: 100%;
+    display: block;
+    background: var(--wp-neutral-15);
+    border: 1px solid var(--ds-neutral-20);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: var(--font-size-sm);
+    color: var(--ds-neutral-100);
+    font-family: inherit;
+    line-height: inherit;
+    -webkit-font-smoothing: antialiased;
+    height: 48px;
+}
+
+.rS0-b label+:not(.HSR87) {
+    display: block;
+    font-weight: var(--font-weight-normal);
+    color: var(--wp-neutral-1);
+    max-width: 100%;
+}
+
+.rS0-b input:focus {
+    outline: 0;
+    border: 1px solid var(--ds-neutral-100);
+}
+
+.hF3B- {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.HuEB9 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 0;
+    font-size: .95em;
+    border-radius: 50vh;
+    font-weight: var(--font-weight-bold);
+    white-space: nowrap;
+    cursor: pointer;
+    position: relative;
+    border: none;
+    width: 50%;
+    transition: all .1s ease-in-out;
+}
+
+._3lofP {
+    color: var(--ds-neutral-00);
+    background: var(--wp-neutral-1);
+}
+
+._7Lv9u {
+    color: var(--wp-neutral-1);
+    background: var(--wp-neutral-3);
+}
+
 
 
 /*media query*/
