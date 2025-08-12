@@ -29,9 +29,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         request.setAttribute("isExpired",false);
         String token = null;
 
+        String path = request.getServletPath();
+        if (path.startsWith("/auth")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         if (request.getCookies() != null) {
             for (Cookie cookie : request.getCookies()) {
-                System.out.println("############ "+cookie.getName()+" "+cookie.getValue());
+                System.out.println("## "+cookie.getName()+" "+cookie.getValue());
                 if ("jwtToken".equals(cookie.getName())) {
                     token = cookie.getValue();
                 }
