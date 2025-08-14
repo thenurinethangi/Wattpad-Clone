@@ -73,6 +73,14 @@ public class Story {
 
     @OneToMany(mappedBy = "story")
     private List<Chapter> chapters;
+
+    @Override
+    public String toString() {
+        return "Story{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                '}';
+    }
 }
 
 

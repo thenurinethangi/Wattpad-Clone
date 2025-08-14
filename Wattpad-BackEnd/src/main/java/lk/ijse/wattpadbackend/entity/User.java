@@ -102,6 +102,16 @@ public class User {
         this.birthday = birthday;
         this.pronouns = pronouns;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
 
 

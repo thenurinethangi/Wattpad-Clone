@@ -27,6 +27,14 @@ public class Library {
     public Library(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Library{" +
+                "id=" + id +
+                ", user=" + user +
+                '}';
+    }
 }
 
 

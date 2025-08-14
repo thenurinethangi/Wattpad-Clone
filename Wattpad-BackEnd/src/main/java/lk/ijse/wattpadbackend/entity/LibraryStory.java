@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,6 +27,19 @@ public class LibraryStory {
 
     @Column(nullable = false)
     private int lastOpenedPage = 1;
+
+    private LocalDateTime lastOpenedAt;
+
+    @Override
+    public String toString() {
+        return "LibraryStory{" +
+                "id=" + id +
+                ", library=" + library +
+                ", story=" + story +
+                ", lastOpenedPage=" + lastOpenedPage +
+                ", lastOpenedAt=" + lastOpenedAt +
+                '}';
+    }
 }
 
 
