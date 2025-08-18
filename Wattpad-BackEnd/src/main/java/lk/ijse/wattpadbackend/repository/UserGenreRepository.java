@@ -5,7 +5,11 @@ import lk.ijse.wattpadbackend.entity.UserGenre;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserGenreRepository extends JpaRepository<UserGenre,Integer> {
     void deleteAllByUser(User user);
+
+    List<UserGenre> findAllByUser(User user);
 }

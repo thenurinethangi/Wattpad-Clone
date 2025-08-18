@@ -19,6 +19,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public APIResponse handlerGenericException(Exception e){
+        e.printStackTrace();
         return new APIResponse(500,e.getMessage(),null);
     }
 

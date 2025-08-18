@@ -24,6 +24,15 @@ public class ReadingListStory {
     @ManyToOne
     @JoinColumn(name = "story_id", nullable = false)
     private Story story;
+
+    @Override
+    public String toString() {
+        return "ReadingListStory{" +
+                "id=" + id +
+                ", readingList=" + readingList +
+                ", story=" + story +
+                '}';
+    }
 }
 
 

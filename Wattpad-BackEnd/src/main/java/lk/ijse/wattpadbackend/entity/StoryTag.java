@@ -23,6 +23,14 @@ public class StoryTag {
     @ManyToOne
     @JoinColumn(name = "tag_id",nullable = false)
     private Tag tag;
+
+    @Override
+    public String toString() {
+        return "StoryTag{" +
+                "id=" + id +
+                ", tag=" + tag +
+                '}';
+    }
 }
 
 

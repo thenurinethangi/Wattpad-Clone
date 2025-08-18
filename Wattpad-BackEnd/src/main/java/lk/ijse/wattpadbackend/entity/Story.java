@@ -78,6 +78,8 @@ public class Story {
     public String toString() {
         return "Story{" +
                 "id=" + id +
+                "views="+ views +
+                "category="+ category +
                 ", title='" + title + '\'' +
                 '}';
     }

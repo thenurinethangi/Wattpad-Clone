@@ -44,6 +44,16 @@ public class ReadingList {
         this.listName = listName;
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "ReadingList{" +
+                "id=" + id +
+                ", listName='" + listName + '\'' +
+                ", storyCount=" + storyCount +
+                ", votes=" + votes +
+                '}';
+    }
 }
 
 

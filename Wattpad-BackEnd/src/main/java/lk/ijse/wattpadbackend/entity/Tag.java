@@ -22,6 +22,14 @@ public class Tag {
 
     @OneToMany(mappedBy = "tag")
     private List<StoryTag> storyTags;
+
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "id=" + id +
+                ", tagName='" + tagName + '\'' +
+                '}';
+    }
 }
 
 
