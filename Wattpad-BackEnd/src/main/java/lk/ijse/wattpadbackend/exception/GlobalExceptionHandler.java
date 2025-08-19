@@ -62,6 +62,12 @@ public class GlobalExceptionHandler {
 
         return new APIResponse(401,"Validation Failed",errors);
     }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public APIResponse handlerNotFoundException(UserNotFoundException e){
+        return new APIResponse(404,e.getMessage(),null);
+    }
 }
 
 

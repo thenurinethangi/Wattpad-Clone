@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="assets/style/variables.css">
   <!--header style apply from library-page-style css file-->
   <link rel="stylesheet" href="assets/style/css-bundle-TDTK4GB6.css"/>
+  <link rel="stylesheet" href="assets/style/header-dropdowns-style.css">
   <link rel="stylesheet" href="assets/style/story-overview-page-style.css">
   <link rel="stylesheet" href="assets/style/footer-style.css">
 </head>
@@ -121,14 +122,14 @@
     <!--a1 - story cover-->
     <div class="_4Rj99">
       <div class="coverWrapper__t2Ve8" data-testid="cover">
-        <img class="cover__BlyZa" src="https://img.wattpad.com/cover/346841138-288-k530141.jpg" alt="Story cover for Revenge [Taekook] // Short story // Completed ✔️ by moonflower_9597" data-testid="image">
+        <img id="story-cover-image" class="cover__BlyZa" src="https://img.wattpad.com/cover/346841138-288-k530141.jpg" alt="Story cover" data-testid="image">
       </div>
     </div>
     <!--a2 - story title-->
     <div class="Qm-Xt">
       <!--b1-->
       <div class="-ydhR">
-        <div class="gF-N5">Revenge [Taekook] // Short story //</div>
+        <div id="story-title" class="gF-N5">Revenge [Taekook] // Short story //</div>
       </div>
       <!--b2-->
       <div class="YPkBj" style="padding-bottom: 10px;"></div>
@@ -145,7 +146,7 @@
               <div aria-hidden="true" data-testid="stats-value-container">
                 <div data-tip="51,803" data-tooltip-id="story-stat-tooltip" data-tooltip-html="51,803" data-testid="tooltip">
                   <span class="sr-only">51,803</span>
-                  <span class="_5TZHL ixBb9" aria-hidden="true" data-testid="stats-value">51.8K</span>
+                  <span id="reads-stats" class="_5TZHL ixBb9" aria-hidden="true" data-testid="stats-value">51.8K</span>
                 </div>
               </div>
             </div>
@@ -160,7 +161,7 @@
               <div aria-hidden="true" data-testid="stats-value-container">
                 <div data-tip="2,187" data-tooltip-id="story-stat-tooltip" data-tooltip-html="2,187" data-testid="tooltip">
                   <span class="sr-only">2,187</span>
-                  <span class="_5TZHL ixBb9" aria-hidden="true" data-testid="stats-value">2.1K</span>
+                  <span id="votes-stats" class="_5TZHL ixBb9" aria-hidden="true" data-testid="stats-value">2.1K</span>
                 </div>
               </div>
             </div>
@@ -175,7 +176,7 @@
               <div aria-hidden="true" data-testid="stats-value-container">
                 <div data-tip="9" data-tooltip-id="story-stat-tooltip" data-tooltip-html="9" data-testid="tooltip">
                   <span class="sr-only">9</span>
-                  <span class="_5TZHL ixBb9" aria-hidden="true" data-testid="stats-value">9</span>
+                  <span id="parts-stats" class="_5TZHL ixBb9" aria-hidden="true" data-testid="stats-value">9</span>
                 </div>
               </div>
             </div>
@@ -219,7 +220,7 @@
   <!--middle section - where have description tag and table of content-->
   <div class="yxqu6">
     <!--description tag and table of content container-->
-    <div class="xUdRs">
+    <div class="xUdRs" style="width: 670px;">
       <!--display none-->
       <div class="bR7B3"></div>
       <!--mobile add box-->
@@ -231,30 +232,20 @@
         <!--c1-->
         <div class="_5g5R0">
           <div class="Sz3nA">
-            <img src="https://img.wattpad.com/useravatar/moonflower_9597.128.952337.jpg" aria-hidden="true" alt="" class="avatar__Ygp0_ avatar_sm__zq5iO">
+            <img id="author-profile-image" src="https://img.wattpad.com/useravatar/moonflower_9597.128.952337.jpg" aria-hidden="true" alt="" class="avatar__Ygp0_ avatar_sm__zq5iO">
             <div class="af6dp">
-              <a href="https://www.wattpad.com/user/moonflower_9597" aria-label="by moonflower_9597. Tap to go to the author's profile page." class="SjGa2">moonflower_9597</a>
+              <a id="author-profile-link" href="https://www.wattpad.com/user/moonflower_9597" class="SjGa2">moonflower_9597</a>
             </div>
           </div>
         </div>
         <!--c2-->
-        <div class="dHyYa">
-          <div class="_2-rOR" data-tooltip-id="badge-tooltip" data-tooltip-html="First published<strong>Dec 03, 2021</strong>" data-for="publish-date" aria-describedby="publish-date" aria-hidden="true" data-testid="completed-tag">
-            <div class="pill__pziVI solid-variant__RGER9 default-size__BJ5Po base-3-accent__Xrbrb square-shape__V66Yy gap-for-default-pill__d6nVx">
-              <span class="typography-label-small-semi">Complete</span>
-            </div>
-          </div>
-          <span class="sr-only">Complete, First published Dec 03, 2021</span>
-          <div class="_2-rOR OPdNU" data-testid="ismature-tag" style=" margin-left: 7px;">
-            <div class="pill__pziVI solid-variant__RGER9 default-size__BJ5Po base-4-accent__JqbdI square-shape__V66Yy gap-for-default-pill__d6nVx">
-              <span class="typography-label-small-semi" style="color: white;">Mature</span>
-            </div>
-          </div>
+        <div id="badge-box" class="dHyYa">
+          <!--complete and mature tags-->
         </div>
       </div>
       <!--text content section - description of the story-->
       <div class="glL-c">
-        <pre class="mpshL _6pPkw">Revenge .. Do you think revenge is a good thing? Will Revenge bring comfort to us?
+        <pre id="description" class="mpshL _6pPkw">Revenge .. Do you think revenge is a good thing? Will Revenge bring comfort to us?
 
 No...
 I think revenge only brings us a kind of remorse.
@@ -274,31 +265,16 @@ Edited : 2025-04-04
 Names, countries, events fiction only.
 ⚠ A ️️Taekook fanfiction. If you are not interested please go away.
 🚫 Warning: plagiarism is stealing.  Comments I view as hateful or hurtful will be deleted.
-
-          <div class="DxZKg" data-testid="copyright">
-            <span class="JP3pz" aria-hidden="true"></span>All Rights Reserved
-          </div>
         </pre>
+        <div id="copyright" style="margin: 27px 0 15px 0;">
+          <span class="JP3pz"></span>All Rights Reserved
+        </div>
       </div>
       <!--tags section-->
       <div class="F8LJw">
         <div class="Lw9oa I3p30">
-          <div class="FdZ1f" data-testid="tag-carousel">
-            <a class="no-text-decoration-on-focus no-text-decoration-on-hover _76mBx pill__pziVI default-variant__ERiYv default-size__BJ5Po default-accent__YcamO round-shape__sOoT2 clickable__llABU gap-for-default-pill__d6nVx" href="https://www.wattpad.com/stories/angst">
-              <span class="typography-label-small-semi">angst</span>
-            </a>
-            <a class="no-text-decoration-on-focus no-text-decoration-on-hover _76mBx pill__pziVI default-variant__ERiYv default-size__BJ5Po default-accent__YcamO round-shape__sOoT2 clickable__llABU gap-for-default-pill__d6nVx" href="https://www.wattpad.com/stories/bl">
-              <span class="typography-label-small-semi">bl</span>
-            </a>
-            <a class="no-text-decoration-on-focus no-text-decoration-on-hover _76mBx pill__pziVI default-variant__ERiYv default-size__BJ5Po default-accent__YcamO round-shape__sOoT2 clickable__llABU gap-for-default-pill__d6nVx" href="https://www.wattpad.com/stories/bottomkook">
-              <span class="typography-label-small-semi">bottomkook</span>
-            </a>
-            <a class="no-text-decoration-on-focus no-text-decoration-on-hover _76mBx pill__pziVI default-variant__ERiYv default-size__BJ5Po default-accent__YcamO round-shape__sOoT2 clickable__llABU gap-for-default-pill__d6nVx" href="https://www.wattpad.com/stories/btsfanfic">
-              <span class="typography-label-small-semi">btsfanfic</span>
-            </a>
-            <a class="no-text-decoration-on-focus no-text-decoration-on-hover _76mBx pill__pziVI default-variant__ERiYv default-size__BJ5Po default-accent__YcamO round-shape__sOoT2 clickable__llABU gap-for-default-pill__d6nVx" href="https://www.wattpad.com/stories/gayromance">
-              <span class="typography-label-small-semi">gayromance</span>
-            </a>
+          <div id="tags-box" class="FdZ1f">
+            <!--tags place here-->
           </div>
         </div>
       </div>
@@ -308,43 +284,8 @@ Names, countries, events fiction only.
         <div class="pPt69" data-testid="toc">
           <div class="_4dm37">Table of contents</div>
           <div class="Y26Ib">
-            <ul aria-label="story-parts">
-              <li class="">
-                <a href="https://www.wattpad.com/1161511279-revenge-taekook-short-story-completed-%E2%9C%94%EF%B8%8F-chapter-1" class="_6qJpE">
-                  <div class="vbUDq">
-                    <div class="o7jpT">
-                      <div class="a2GDZ" data-testid="new-part-icon"></div>
-                      <div class="wpYp-">Chapter 1</div>
-                    </div>
-                    <div class="f0I9e"></div>
-                  </div>
-                  <div class="bSGSB">Fri, Apr 4, 2025</div>
-                </a>
-              </li>
-              <li class="">
-                <a href="https://www.wattpad.com/1161511279-revenge-taekook-short-story-completed-%E2%9C%94%EF%B8%8F-chapter-1" class="_6qJpE">
-                  <div class="vbUDq">
-                    <div class="o7jpT">
-                      <div class="a2GDZ" data-testid="new-part-icon"></div>
-                      <div class="wpYp-">Chapter 2</div>
-                    </div>
-                    <div class="f0I9e"></div>
-                  </div>
-                  <div class="bSGSB">Fri, Apr 4, 2025</div>
-                </a>
-              </li>
-              <li class="">
-                <a href="https://www.wattpad.com/1161511279-revenge-taekook-short-story-completed-%E2%9C%94%EF%B8%8F-chapter-1" class="_6qJpE">
-                  <div class="vbUDq">
-                    <div class="o7jpT">
-                      <div class="a2GDZ" data-testid="new-part-icon"></div>
-                      <div class="wpYp-">Chapter 3</div>
-                    </div>
-                    <div class="f0I9e"></div>
-                  </div>
-                  <div class="bSGSB">Fri, Apr 4, 2025</div>
-                </a>
-              </li>
+            <ul id="chapter-box" aria-label="story-parts">
+              <!--chapters place here-->
             </ul>
           </div>
         </div>
@@ -426,5 +367,11 @@ Names, countries, events fiction only.
     <li class="uilPN">© 2025 Wattpad</li>
   </ul>
 </footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="assets/js/header-script.js"></script>
+<script src="assets/js/story-overview-page-script.js"></script>
 </body>
 </html>
