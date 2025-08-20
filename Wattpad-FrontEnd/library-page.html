@@ -16,9 +16,76 @@
     <link rel="stylesheet" href="assets/style/main-UJKFODQT.css"/>
     <link rel="stylesheet" href="assets/style/react-tooltip-HIHMAPNF.css"/>
     <link rel="stylesheet" href="assets/style/splide.min-AQNS3YPQ.css"/>
+    <link rel="stylesheet" href="assets/style/header-dropdowns-style.css">
     <link rel="stylesheet" href="assets/style/footer-style.css">
+
+    <style>
+        /* Sweet Alert Modern Wide & Short Dark Theme */
+        .swal2-popup {
+            background: #1e1e1e !important;   /* deep black */
+            color: #f5f5f5 !important;
+            font-family: var(--primary-font-face),serif;
+            border-radius: 10px !important;
+            padding: 15px 25px !important;
+            width: 450px !important;   /* wider */
+            min-height: 140px !important; /* short height */
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+        }
+
+        /* Title */
+        .swal2-title {
+            color: #fff !important;
+            font-size: 1.2rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 6px !important;
+        }
+
+        /* Text */
+        .swal2-html-container {
+            color: #aaa !important;
+            font-size: 0.93rem !important;
+            margin: 0 !important;
+        }
+
+        /* Buttons (modern black & white theme) */
+        .swal2-styled {
+            border: none !important;
+            border-radius: 6px !important;
+            padding: 8px 20px !important;
+            font-size: 0.9rem !important;
+            font-weight: 500 !important;
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* Confirm = clean white button */
+        .swal2-confirm {
+            background: #fff !important;
+            color: #111 !important;
+        }
+
+        .swal2-confirm:hover {
+            background: #e5e5e5 !important;
+        }
+
+        /* Cancel = dark gray button */
+        .swal2-cancel {
+            background: #2c2c2c !important;
+            color: #f5f5f5 !important;
+        }
+
+        .swal2-cancel:hover {
+            background: #444 !important;
+        }
+
+        /* Icons smaller + subtle */
+        .swal2-icon {
+            margin: 0 auto 5px auto !important;
+            transform: scale(0.7);
+        }
+    </style>
+
 </head>
-<body class="theme-6">
+<body class="theme-6" style="display: none; visibility: hidden; opacity: 0;">
 
 <!-- --------------------header---------------------- -->
 <header class="_07XRA">
@@ -142,367 +209,9 @@
 <div id="scroll-div">
     <h2 class="yVKdT">All Stories</h2>
     <!--library stories container-->
-    <div class="xMyGS" data-testid="library-listing">
+    <div id="library-story-container" class="xMyGS" data-testid="library-listing">
 
-        <!--single library story-->
-        <div class="hBlTa">
-            <div class="libraryStoryCard__y5_Fe">
-                <div class="libraryStoryItem__Yxev4">
-                    <div class="libraryCover__zF7AM coverWrapper__t2Ve8">
-                        <img class="cover__BlyZa" src="https://img.wattpad.com/cover/6580190-256-k446044.jpg" alt="storyCover"/>
-                    </div>
-                </div>
-                <div>
-                    <div class="progress_bar__ja0_4" style="width:100%;height:8px" role="progressbar">
-                        <div class="progress_bar_value__rnwN9 primary__efugz" style="width:0%"></div>
-                        <div class="progress_bar_value__rnwN9 default__sk_o3" style="width:100%"></div>
-                        <div class="progress_bar_value__rnwN9 success__BzCzJ" style="width:0%"></div>
-                    </div>
-                    <p id="progress-bar-label-progress-bar-label-180595293" hidden="">progress-bar-label-180595293</p>
-                </div>
-                <div class="authorWrapper__u0RFS">
-                    <div class="authorSection__GVjjz">
-                        <strong>The Phantom Touch</strong>
-                        <small>sylviaNgould</small>
-                    </div>
-                    <div>
-                        <a href="https://www.wattpad.com/user/sylviaNgould" aria-label="" title="sylviaNgould&#x27;s Profile">
-                            <img src="https://img.wattpad.com/useravatar/sylviaNgould.128.331557.jpg" aria-hidden="true" alt="" class="avatar__Ygp0_ avatar_sm__zq5iO"/>
-                        </a>
-                    </div>
-                </div>
-                <div class="statsWrapper__DqAW0">
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpView</title><path d="M1.82 10.357c-.353.545-.594.975-.723 1.233a.916.916 0 0 0 0 .82c.129.258.37.688.723 1.233a18.78 18.78 0 0 0 2.063 2.65C6.19 18.754 8.902 20.25 12 20.25c3.098 0 5.81-1.497 8.117-3.956a18.784 18.784 0 0 0 2.063-2.65c.352-.546.594-.976.723-1.234a.916.916 0 0 0 0-.82c-.129-.258-.37-.688-.723-1.233a18.786 18.786 0 0 0-2.063-2.65C17.81 5.246 15.098 3.75 12 3.75c-3.098 0-5.81 1.496-8.117 3.956a18.782 18.782 0 0 0-2.063 2.65Zm3.4 4.683A16.969 16.969 0 0 1 2.963 12a16.97 16.97 0 0 1 2.259-3.04C7.21 6.837 9.484 5.585 12 5.585c2.517 0 4.788 1.253 6.78 3.377A16.973 16.973 0 0 1 21.037 12a16.97 16.97 0 0 1-2.259 3.04c-1.99 2.122-4.262 3.376-6.779 3.376-2.516 0-4.788-1.254-6.78-3.377Z" fill="#121212"></path><path d="M8.333 12a3.667 3.667 0 1 0 7.334 0 3.667 3.667 0 0 0-7.334 0Zm5.5 0a1.833 1.833 0 1 1-3.666 0 1.833 1.833 0 0 1 3.666 0Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">18.8K</span>
-                    </span>
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpVote</title><path d="M9.807 8.703a1 1 0 0 1-.752.547l-4.907.717 3.55 3.457a1 1 0 0 1 .288.885l-.838 4.883 4.386-2.307a1 1 0 0 1 .931 0l4.387 2.307-.838-4.883a1 1 0 0 1 .288-.885l3.55-3.457-4.907-.717a1 1 0 0 1-.752-.547L12 4.259 9.807 8.703ZM8.246 7.347l2.857-5.79a1 1 0 0 1 1.794 0l2.857 5.79 6.39.934a1 1 0 0 1 .554 1.705l-4.624 4.503 1.091 6.362a1 1 0 0 1-1.45 1.054L12 18.9l-5.715 3.005a1 1 0 0 1-1.45-1.054l1.09-6.361-4.623-4.504a1 1 0 0 1 .553-1.705l6.39-.934Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">2.5K</span>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <!--single library story-->
-        <div class="hBlTa">
-            <div class="libraryStoryCard__y5_Fe">
-                <div class="libraryStoryItem__Yxev4">
-                    <div class="libraryCover__zF7AM coverWrapper__t2Ve8">
-                        <img class="cover__BlyZa" src="https://img.wattpad.com/cover/205026151-256-k752008.jpg" alt="storyCover"/>
-                    </div>
-                </div>
-                <div>
-                    <div class="progress_bar__ja0_4" style="width:100%;height:8px" role="progressbar">
-                        <div class="progress_bar_value__rnwN9 primary__efugz" style="width:0%"></div>
-                        <div class="progress_bar_value__rnwN9 default__sk_o3" style="width:100%"></div>
-                        <div class="progress_bar_value__rnwN9 success__BzCzJ" style="width:0%"></div>
-                    </div>
-                    <p id="progress-bar-label-progress-bar-label-180595293" hidden="">progress-bar-label-180595293</p>
-                </div>
-                <div class="authorWrapper__u0RFS">
-                    <div class="authorSection__GVjjz">
-                        <strong>The Phantom Touch</strong>
-                        <small>sylviaNgould</small>
-                    </div>
-                    <div>
-                        <a href="https://www.wattpad.com/user/sylviaNgould" aria-label="" title="sylviaNgould&#x27;s Profile">
-                            <img src="https://img.wattpad.com/useravatar/sylviaNgould.128.331557.jpg" aria-hidden="true" alt="" class="avatar__Ygp0_ avatar_sm__zq5iO"/>
-                        </a>
-                    </div>
-                </div>
-                <div class="statsWrapper__DqAW0">
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpView</title><path d="M1.82 10.357c-.353.545-.594.975-.723 1.233a.916.916 0 0 0 0 .82c.129.258.37.688.723 1.233a18.78 18.78 0 0 0 2.063 2.65C6.19 18.754 8.902 20.25 12 20.25c3.098 0 5.81-1.497 8.117-3.956a18.784 18.784 0 0 0 2.063-2.65c.352-.546.594-.976.723-1.234a.916.916 0 0 0 0-.82c-.129-.258-.37-.688-.723-1.233a18.786 18.786 0 0 0-2.063-2.65C17.81 5.246 15.098 3.75 12 3.75c-3.098 0-5.81 1.496-8.117 3.956a18.782 18.782 0 0 0-2.063 2.65Zm3.4 4.683A16.969 16.969 0 0 1 2.963 12a16.97 16.97 0 0 1 2.259-3.04C7.21 6.837 9.484 5.585 12 5.585c2.517 0 4.788 1.253 6.78 3.377A16.973 16.973 0 0 1 21.037 12a16.97 16.97 0 0 1-2.259 3.04c-1.99 2.122-4.262 3.376-6.779 3.376-2.516 0-4.788-1.254-6.78-3.377Z" fill="#121212"></path><path d="M8.333 12a3.667 3.667 0 1 0 7.334 0 3.667 3.667 0 0 0-7.334 0Zm5.5 0a1.833 1.833 0 1 1-3.666 0 1.833 1.833 0 0 1 3.666 0Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">18.8K</span>
-                    </span>
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpVote</title><path d="M9.807 8.703a1 1 0 0 1-.752.547l-4.907.717 3.55 3.457a1 1 0 0 1 .288.885l-.838 4.883 4.386-2.307a1 1 0 0 1 .931 0l4.387 2.307-.838-4.883a1 1 0 0 1 .288-.885l3.55-3.457-4.907-.717a1 1 0 0 1-.752-.547L12 4.259 9.807 8.703ZM8.246 7.347l2.857-5.79a1 1 0 0 1 1.794 0l2.857 5.79 6.39.934a1 1 0 0 1 .554 1.705l-4.624 4.503 1.091 6.362a1 1 0 0 1-1.45 1.054L12 18.9l-5.715 3.005a1 1 0 0 1-1.45-1.054l1.09-6.361-4.623-4.504a1 1 0 0 1 .553-1.705l6.39-.934Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">2.5K</span>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <!--single library story-->
-        <div class="hBlTa">
-            <div class="libraryStoryCard__y5_Fe">
-                <div class="libraryStoryItem__Yxev4">
-                    <div class="libraryCover__zF7AM coverWrapper__t2Ve8">
-                        <img class="cover__BlyZa" src="https://img.wattpad.com/cover/55094978-256-k779488.jpg" alt="storyCover"/>
-                    </div>
-                </div>
-                <div>
-                    <div class="progress_bar__ja0_4" style="width:100%;height:8px" role="progressbar">
-                        <div class="progress_bar_value__rnwN9 primary__efugz" style="width:0%"></div>
-                        <div class="progress_bar_value__rnwN9 default__sk_o3" style="width:100%"></div>
-                        <div class="progress_bar_value__rnwN9 success__BzCzJ" style="width:0%"></div>
-                    </div>
-                    <p id="progress-bar-label-progress-bar-label-180595293" hidden="">progress-bar-label-180595293</p>
-                </div>
-                <div class="authorWrapper__u0RFS">
-                    <div class="authorSection__GVjjz">
-                        <strong>The Phantom Touch</strong>
-                        <small>sylviaNgould</small>
-                    </div>
-                    <div>
-                        <a href="https://www.wattpad.com/user/sylviaNgould" aria-label="" title="sylviaNgould&#x27;s Profile">
-                            <img src="https://img.wattpad.com/useravatar/sylviaNgould.128.331557.jpg" aria-hidden="true" alt="" class="avatar__Ygp0_ avatar_sm__zq5iO"/>
-                        </a>
-                    </div>
-                </div>
-                <div class="statsWrapper__DqAW0">
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpView</title><path d="M1.82 10.357c-.353.545-.594.975-.723 1.233a.916.916 0 0 0 0 .82c.129.258.37.688.723 1.233a18.78 18.78 0 0 0 2.063 2.65C6.19 18.754 8.902 20.25 12 20.25c3.098 0 5.81-1.497 8.117-3.956a18.784 18.784 0 0 0 2.063-2.65c.352-.546.594-.976.723-1.234a.916.916 0 0 0 0-.82c-.129-.258-.37-.688-.723-1.233a18.786 18.786 0 0 0-2.063-2.65C17.81 5.246 15.098 3.75 12 3.75c-3.098 0-5.81 1.496-8.117 3.956a18.782 18.782 0 0 0-2.063 2.65Zm3.4 4.683A16.969 16.969 0 0 1 2.963 12a16.97 16.97 0 0 1 2.259-3.04C7.21 6.837 9.484 5.585 12 5.585c2.517 0 4.788 1.253 6.78 3.377A16.973 16.973 0 0 1 21.037 12a16.97 16.97 0 0 1-2.259 3.04c-1.99 2.122-4.262 3.376-6.779 3.376-2.516 0-4.788-1.254-6.78-3.377Z" fill="#121212"></path><path d="M8.333 12a3.667 3.667 0 1 0 7.334 0 3.667 3.667 0 0 0-7.334 0Zm5.5 0a1.833 1.833 0 1 1-3.666 0 1.833 1.833 0 0 1 3.666 0Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">18.8K</span>
-                    </span>
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpVote</title><path d="M9.807 8.703a1 1 0 0 1-.752.547l-4.907.717 3.55 3.457a1 1 0 0 1 .288.885l-.838 4.883 4.386-2.307a1 1 0 0 1 .931 0l4.387 2.307-.838-4.883a1 1 0 0 1 .288-.885l3.55-3.457-4.907-.717a1 1 0 0 1-.752-.547L12 4.259 9.807 8.703ZM8.246 7.347l2.857-5.79a1 1 0 0 1 1.794 0l2.857 5.79 6.39.934a1 1 0 0 1 .554 1.705l-4.624 4.503 1.091 6.362a1 1 0 0 1-1.45 1.054L12 18.9l-5.715 3.005a1 1 0 0 1-1.45-1.054l1.09-6.361-4.623-4.504a1 1 0 0 1 .553-1.705l6.39-.934Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">2.5K</span>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <!--single library story-->
-        <div class="hBlTa">
-            <div class="libraryStoryCard__y5_Fe">
-                <div class="libraryStoryItem__Yxev4">
-                    <div class="libraryCover__zF7AM coverWrapper__t2Ve8">
-                        <img class="cover__BlyZa" src="https://img.wattpad.com/cover/280742674-256-k188476.jpg" alt="storyCover"/>
-                    </div>
-                </div>
-                <div>
-                    <div class="progress_bar__ja0_4" style="width:100%;height:8px" role="progressbar">
-                        <div class="progress_bar_value__rnwN9 primary__efugz" style="width:0%"></div>
-                        <div class="progress_bar_value__rnwN9 default__sk_o3" style="width:100%"></div>
-                        <div class="progress_bar_value__rnwN9 success__BzCzJ" style="width:0%"></div>
-                    </div>
-                    <p id="progress-bar-label-progress-bar-label-180595293" hidden="">progress-bar-label-180595293</p>
-                </div>
-                <div class="authorWrapper__u0RFS">
-                    <div class="authorSection__GVjjz">
-                        <strong>The Phantom Touch</strong>
-                        <small>sylviaNgould</small>
-                    </div>
-                    <div>
-                        <a href="https://www.wattpad.com/user/sylviaNgould" aria-label="" title="sylviaNgould&#x27;s Profile">
-                            <img src="https://img.wattpad.com/useravatar/sylviaNgould.128.331557.jpg" aria-hidden="true" alt="" class="avatar__Ygp0_ avatar_sm__zq5iO"/>
-                        </a>
-                    </div>
-                </div>
-                <div class="statsWrapper__DqAW0">
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpView</title><path d="M1.82 10.357c-.353.545-.594.975-.723 1.233a.916.916 0 0 0 0 .82c.129.258.37.688.723 1.233a18.78 18.78 0 0 0 2.063 2.65C6.19 18.754 8.902 20.25 12 20.25c3.098 0 5.81-1.497 8.117-3.956a18.784 18.784 0 0 0 2.063-2.65c.352-.546.594-.976.723-1.234a.916.916 0 0 0 0-.82c-.129-.258-.37-.688-.723-1.233a18.786 18.786 0 0 0-2.063-2.65C17.81 5.246 15.098 3.75 12 3.75c-3.098 0-5.81 1.496-8.117 3.956a18.782 18.782 0 0 0-2.063 2.65Zm3.4 4.683A16.969 16.969 0 0 1 2.963 12a16.97 16.97 0 0 1 2.259-3.04C7.21 6.837 9.484 5.585 12 5.585c2.517 0 4.788 1.253 6.78 3.377A16.973 16.973 0 0 1 21.037 12a16.97 16.97 0 0 1-2.259 3.04c-1.99 2.122-4.262 3.376-6.779 3.376-2.516 0-4.788-1.254-6.78-3.377Z" fill="#121212"></path><path d="M8.333 12a3.667 3.667 0 1 0 7.334 0 3.667 3.667 0 0 0-7.334 0Zm5.5 0a1.833 1.833 0 1 1-3.666 0 1.833 1.833 0 0 1 3.666 0Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">18.8K</span>
-                    </span>
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpVote</title><path d="M9.807 8.703a1 1 0 0 1-.752.547l-4.907.717 3.55 3.457a1 1 0 0 1 .288.885l-.838 4.883 4.386-2.307a1 1 0 0 1 .931 0l4.387 2.307-.838-4.883a1 1 0 0 1 .288-.885l3.55-3.457-4.907-.717a1 1 0 0 1-.752-.547L12 4.259 9.807 8.703ZM8.246 7.347l2.857-5.79a1 1 0 0 1 1.794 0l2.857 5.79 6.39.934a1 1 0 0 1 .554 1.705l-4.624 4.503 1.091 6.362a1 1 0 0 1-1.45 1.054L12 18.9l-5.715 3.005a1 1 0 0 1-1.45-1.054l1.09-6.361-4.623-4.504a1 1 0 0 1 .553-1.705l6.39-.934Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">2.5K</span>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <!--single library story-->
-        <div class="hBlTa">
-            <div class="libraryStoryCard__y5_Fe">
-                <div class="libraryStoryItem__Yxev4">
-                    <div class="libraryCover__zF7AM coverWrapper__t2Ve8">
-                        <img class="cover__BlyZa" src="https://img.wattpad.com/cover/256491682-256-k290521.jpg" alt="storyCover"/>
-                    </div>
-                </div>
-                <div>
-                    <div class="progress_bar__ja0_4" style="width:100%;height:8px" role="progressbar">
-                        <div class="progress_bar_value__rnwN9 primary__efugz" style="width:0%"></div>
-                        <div class="progress_bar_value__rnwN9 default__sk_o3" style="width:100%"></div>
-                        <div class="progress_bar_value__rnwN9 success__BzCzJ" style="width:0%"></div>
-                    </div>
-                    <p id="progress-bar-label-progress-bar-label-180595293" hidden="">progress-bar-label-180595293</p>
-                </div>
-                <div class="authorWrapper__u0RFS">
-                    <div class="authorSection__GVjjz">
-                        <strong>The Phantom Touch</strong>
-                        <small>sylviaNgould</small>
-                    </div>
-                    <div>
-                        <a href="https://www.wattpad.com/user/sylviaNgould" aria-label="" title="sylviaNgould&#x27;s Profile">
-                            <img src="https://img.wattpad.com/useravatar/sylviaNgould.128.331557.jpg" aria-hidden="true" alt="" class="avatar__Ygp0_ avatar_sm__zq5iO"/>
-                        </a>
-                    </div>
-                </div>
-                <div class="statsWrapper__DqAW0">
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpView</title><path d="M1.82 10.357c-.353.545-.594.975-.723 1.233a.916.916 0 0 0 0 .82c.129.258.37.688.723 1.233a18.78 18.78 0 0 0 2.063 2.65C6.19 18.754 8.902 20.25 12 20.25c3.098 0 5.81-1.497 8.117-3.956a18.784 18.784 0 0 0 2.063-2.65c.352-.546.594-.976.723-1.234a.916.916 0 0 0 0-.82c-.129-.258-.37-.688-.723-1.233a18.786 18.786 0 0 0-2.063-2.65C17.81 5.246 15.098 3.75 12 3.75c-3.098 0-5.81 1.496-8.117 3.956a18.782 18.782 0 0 0-2.063 2.65Zm3.4 4.683A16.969 16.969 0 0 1 2.963 12a16.97 16.97 0 0 1 2.259-3.04C7.21 6.837 9.484 5.585 12 5.585c2.517 0 4.788 1.253 6.78 3.377A16.973 16.973 0 0 1 21.037 12a16.97 16.97 0 0 1-2.259 3.04c-1.99 2.122-4.262 3.376-6.779 3.376-2.516 0-4.788-1.254-6.78-3.377Z" fill="#121212"></path><path d="M8.333 12a3.667 3.667 0 1 0 7.334 0 3.667 3.667 0 0 0-7.334 0Zm5.5 0a1.833 1.833 0 1 1-3.666 0 1.833 1.833 0 0 1 3.666 0Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">18.8K</span>
-                    </span>
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpVote</title><path d="M9.807 8.703a1 1 0 0 1-.752.547l-4.907.717 3.55 3.457a1 1 0 0 1 .288.885l-.838 4.883 4.386-2.307a1 1 0 0 1 .931 0l4.387 2.307-.838-4.883a1 1 0 0 1 .288-.885l3.55-3.457-4.907-.717a1 1 0 0 1-.752-.547L12 4.259 9.807 8.703ZM8.246 7.347l2.857-5.79a1 1 0 0 1 1.794 0l2.857 5.79 6.39.934a1 1 0 0 1 .554 1.705l-4.624 4.503 1.091 6.362a1 1 0 0 1-1.45 1.054L12 18.9l-5.715 3.005a1 1 0 0 1-1.45-1.054l1.09-6.361-4.623-4.504a1 1 0 0 1 .553-1.705l6.39-.934Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">2.5K</span>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <!--single library story-->
-        <div class="hBlTa">
-            <div class="libraryStoryCard__y5_Fe">
-                <div class="libraryStoryItem__Yxev4">
-                    <div class="libraryCover__zF7AM coverWrapper__t2Ve8">
-                        <img class="cover__BlyZa" src="https://img.wattpad.com/cover/332428371-256-k114509.jpg" alt="storyCover"/>
-                    </div>
-                </div>
-                <div>
-                    <div class="progress_bar__ja0_4" style="width:100%;height:8px" role="progressbar">
-                        <div class="progress_bar_value__rnwN9 primary__efugz" style="width:0%"></div>
-                        <div class="progress_bar_value__rnwN9 default__sk_o3" style="width:100%"></div>
-                        <div class="progress_bar_value__rnwN9 success__BzCzJ" style="width:0%"></div>
-                    </div>
-                    <p id="progress-bar-label-progress-bar-label-180595293" hidden="">progress-bar-label-180595293</p>
-                </div>
-                <div class="authorWrapper__u0RFS">
-                    <div class="authorSection__GVjjz">
-                        <strong>The Phantom Touch</strong>
-                        <small>sylviaNgould</small>
-                    </div>
-                    <div>
-                        <a href="https://www.wattpad.com/user/sylviaNgould" aria-label="" title="sylviaNgould&#x27;s Profile">
-                            <img src="https://img.wattpad.com/useravatar/sylviaNgould.128.331557.jpg" aria-hidden="true" alt="" class="avatar__Ygp0_ avatar_sm__zq5iO"/>
-                        </a>
-                    </div>
-                </div>
-                <div class="statsWrapper__DqAW0">
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpView</title><path d="M1.82 10.357c-.353.545-.594.975-.723 1.233a.916.916 0 0 0 0 .82c.129.258.37.688.723 1.233a18.78 18.78 0 0 0 2.063 2.65C6.19 18.754 8.902 20.25 12 20.25c3.098 0 5.81-1.497 8.117-3.956a18.784 18.784 0 0 0 2.063-2.65c.352-.546.594-.976.723-1.234a.916.916 0 0 0 0-.82c-.129-.258-.37-.688-.723-1.233a18.786 18.786 0 0 0-2.063-2.65C17.81 5.246 15.098 3.75 12 3.75c-3.098 0-5.81 1.496-8.117 3.956a18.782 18.782 0 0 0-2.063 2.65Zm3.4 4.683A16.969 16.969 0 0 1 2.963 12a16.97 16.97 0 0 1 2.259-3.04C7.21 6.837 9.484 5.585 12 5.585c2.517 0 4.788 1.253 6.78 3.377A16.973 16.973 0 0 1 21.037 12a16.97 16.97 0 0 1-2.259 3.04c-1.99 2.122-4.262 3.376-6.779 3.376-2.516 0-4.788-1.254-6.78-3.377Z" fill="#121212"></path><path d="M8.333 12a3.667 3.667 0 1 0 7.334 0 3.667 3.667 0 0 0-7.334 0Zm5.5 0a1.833 1.833 0 1 1-3.666 0 1.833 1.833 0 0 1 3.666 0Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">18.8K</span>
-                    </span>
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpVote</title><path d="M9.807 8.703a1 1 0 0 1-.752.547l-4.907.717 3.55 3.457a1 1 0 0 1 .288.885l-.838 4.883 4.386-2.307a1 1 0 0 1 .931 0l4.387 2.307-.838-4.883a1 1 0 0 1 .288-.885l3.55-3.457-4.907-.717a1 1 0 0 1-.752-.547L12 4.259 9.807 8.703ZM8.246 7.347l2.857-5.79a1 1 0 0 1 1.794 0l2.857 5.79 6.39.934a1 1 0 0 1 .554 1.705l-4.624 4.503 1.091 6.362a1 1 0 0 1-1.45 1.054L12 18.9l-5.715 3.005a1 1 0 0 1-1.45-1.054l1.09-6.361-4.623-4.504a1 1 0 0 1 .553-1.705l6.39-.934Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">2.5K</span>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <!--single library story-->
-        <div class="hBlTa">
-            <div class="libraryStoryCard__y5_Fe">
-                <div class="libraryStoryItem__Yxev4">
-                    <div class="libraryCover__zF7AM coverWrapper__t2Ve8">
-                        <img class="cover__BlyZa" src="https://img.wattpad.com/cover/181121904-256-k922024.jpg" alt="storyCover"/>
-                    </div>
-                </div>
-                <div>
-                    <div class="progress_bar__ja0_4" style="width:100%;height:8px" role="progressbar">
-                        <div class="progress_bar_value__rnwN9 primary__efugz" style="width:0%"></div>
-                        <div class="progress_bar_value__rnwN9 default__sk_o3" style="width:100%"></div>
-                        <div class="progress_bar_value__rnwN9 success__BzCzJ" style="width:0%"></div>
-                    </div>
-                    <p id="progress-bar-label-progress-bar-label-180595293" hidden="">progress-bar-label-180595293</p>
-                </div>
-                <div class="authorWrapper__u0RFS">
-                    <div class="authorSection__GVjjz">
-                        <strong>The Phantom Touch</strong>
-                        <small>sylviaNgould</small>
-                    </div>
-                    <div>
-                        <a href="https://www.wattpad.com/user/sylviaNgould" aria-label="" title="sylviaNgould&#x27;s Profile">
-                            <img src="https://img.wattpad.com/useravatar/sylviaNgould.128.331557.jpg" aria-hidden="true" alt="" class="avatar__Ygp0_ avatar_sm__zq5iO"/>
-                        </a>
-                    </div>
-                </div>
-                <div class="statsWrapper__DqAW0">
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpView</title><path d="M1.82 10.357c-.353.545-.594.975-.723 1.233a.916.916 0 0 0 0 .82c.129.258.37.688.723 1.233a18.78 18.78 0 0 0 2.063 2.65C6.19 18.754 8.902 20.25 12 20.25c3.098 0 5.81-1.497 8.117-3.956a18.784 18.784 0 0 0 2.063-2.65c.352-.546.594-.976.723-1.234a.916.916 0 0 0 0-.82c-.129-.258-.37-.688-.723-1.233a18.786 18.786 0 0 0-2.063-2.65C17.81 5.246 15.098 3.75 12 3.75c-3.098 0-5.81 1.496-8.117 3.956a18.782 18.782 0 0 0-2.063 2.65Zm3.4 4.683A16.969 16.969 0 0 1 2.963 12a16.97 16.97 0 0 1 2.259-3.04C7.21 6.837 9.484 5.585 12 5.585c2.517 0 4.788 1.253 6.78 3.377A16.973 16.973 0 0 1 21.037 12a16.97 16.97 0 0 1-2.259 3.04c-1.99 2.122-4.262 3.376-6.779 3.376-2.516 0-4.788-1.254-6.78-3.377Z" fill="#121212"></path><path d="M8.333 12a3.667 3.667 0 1 0 7.334 0 3.667 3.667 0 0 0-7.334 0Zm5.5 0a1.833 1.833 0 1 1-3.666 0 1.833 1.833 0 0 1 3.666 0Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">18.8K</span>
-                    </span>
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpVote</title><path d="M9.807 8.703a1 1 0 0 1-.752.547l-4.907.717 3.55 3.457a1 1 0 0 1 .288.885l-.838 4.883 4.386-2.307a1 1 0 0 1 .931 0l4.387 2.307-.838-4.883a1 1 0 0 1 .288-.885l3.55-3.457-4.907-.717a1 1 0 0 1-.752-.547L12 4.259 9.807 8.703ZM8.246 7.347l2.857-5.79a1 1 0 0 1 1.794 0l2.857 5.79 6.39.934a1 1 0 0 1 .554 1.705l-4.624 4.503 1.091 6.362a1 1 0 0 1-1.45 1.054L12 18.9l-5.715 3.005a1 1 0 0 1-1.45-1.054l1.09-6.361-4.623-4.504a1 1 0 0 1 .553-1.705l6.39-.934Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">2.5K</span>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <!--single library story-->
-        <div class="hBlTa">
-            <div class="libraryStoryCard__y5_Fe">
-                <div class="libraryStoryItem__Yxev4">
-                    <div class="libraryCover__zF7AM coverWrapper__t2Ve8">
-                        <img class="cover__BlyZa" src="https://img.wattpad.com/cover/387928203-256-k435279.jpg" alt="storyCover"/>
-                    </div>
-                </div>
-                <div>
-                    <div class="progress_bar__ja0_4" style="width:100%;height:8px" role="progressbar">
-                        <div class="progress_bar_value__rnwN9 primary__efugz" style="width:0%"></div>
-                        <div class="progress_bar_value__rnwN9 default__sk_o3" style="width:100%"></div>
-                        <div class="progress_bar_value__rnwN9 success__BzCzJ" style="width:0%"></div>
-                    </div>
-                    <p id="progress-bar-label-progress-bar-label-180595293" hidden="">progress-bar-label-180595293</p>
-                </div>
-                <div class="authorWrapper__u0RFS">
-                    <div class="authorSection__GVjjz">
-                        <strong>The Phantom Touch</strong>
-                        <small>sylviaNgould</small>
-                    </div>
-                    <div>
-                        <a href="https://www.wattpad.com/user/sylviaNgould" aria-label="" title="sylviaNgould&#x27;s Profile">
-                            <img src="https://img.wattpad.com/useravatar/sylviaNgould.128.331557.jpg" aria-hidden="true" alt="" class="avatar__Ygp0_ avatar_sm__zq5iO"/>
-                        </a>
-                    </div>
-                </div>
-                <div class="statsWrapper__DqAW0">
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpView</title><path d="M1.82 10.357c-.353.545-.594.975-.723 1.233a.916.916 0 0 0 0 .82c.129.258.37.688.723 1.233a18.78 18.78 0 0 0 2.063 2.65C6.19 18.754 8.902 20.25 12 20.25c3.098 0 5.81-1.497 8.117-3.956a18.784 18.784 0 0 0 2.063-2.65c.352-.546.594-.976.723-1.234a.916.916 0 0 0 0-.82c-.129-.258-.37-.688-.723-1.233a18.786 18.786 0 0 0-2.063-2.65C17.81 5.246 15.098 3.75 12 3.75c-3.098 0-5.81 1.496-8.117 3.956a18.782 18.782 0 0 0-2.063 2.65Zm3.4 4.683A16.969 16.969 0 0 1 2.963 12a16.97 16.97 0 0 1 2.259-3.04C7.21 6.837 9.484 5.585 12 5.585c2.517 0 4.788 1.253 6.78 3.377A16.973 16.973 0 0 1 21.037 12a16.97 16.97 0 0 1-2.259 3.04c-1.99 2.122-4.262 3.376-6.779 3.376-2.516 0-4.788-1.254-6.78-3.377Z" fill="#121212"></path><path d="M8.333 12a3.667 3.667 0 1 0 7.334 0 3.667 3.667 0 0 0-7.334 0Zm5.5 0a1.833 1.833 0 1 1-3.666 0 1.833 1.833 0 0 1 3.666 0Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">18.8K</span>
-                    </span>
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpVote</title><path d="M9.807 8.703a1 1 0 0 1-.752.547l-4.907.717 3.55 3.457a1 1 0 0 1 .288.885l-.838 4.883 4.386-2.307a1 1 0 0 1 .931 0l4.387 2.307-.838-4.883a1 1 0 0 1 .288-.885l3.55-3.457-4.907-.717a1 1 0 0 1-.752-.547L12 4.259 9.807 8.703ZM8.246 7.347l2.857-5.79a1 1 0 0 1 1.794 0l2.857 5.79 6.39.934a1 1 0 0 1 .554 1.705l-4.624 4.503 1.091 6.362a1 1 0 0 1-1.45 1.054L12 18.9l-5.715 3.005a1 1 0 0 1-1.45-1.054l1.09-6.361-4.623-4.504a1 1 0 0 1 .553-1.705l6.39-.934Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">2.5K</span>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <!--single library story-->
-        <div class="hBlTa">
-            <div class="libraryStoryCard__y5_Fe">
-                <div class="libraryStoryItem__Yxev4">
-                    <div class="libraryCover__zF7AM coverWrapper__t2Ve8">
-                        <img class="cover__BlyZa" src="https://img.wattpad.com/cover/88620515-256-k15121.jpg" alt="storyCover"/>
-                    </div>
-                </div>
-                <div>
-                    <div class="progress_bar__ja0_4" style="width:100%;height:8px" role="progressbar">
-                        <div class="progress_bar_value__rnwN9 primary__efugz" style="width:0%"></div>
-                        <div class="progress_bar_value__rnwN9 default__sk_o3" style="width:100%"></div>
-                        <div class="progress_bar_value__rnwN9 success__BzCzJ" style="width:0%"></div>
-                    </div>
-                    <p id="progress-bar-label-progress-bar-label-180595293" hidden="">progress-bar-label-180595293</p>
-                </div>
-                <div class="authorWrapper__u0RFS">
-                    <div class="authorSection__GVjjz">
-                        <strong>The Phantom Touch</strong>
-                        <small>sylviaNgould</small>
-                    </div>
-                    <div>
-                        <a href="https://www.wattpad.com/user/sylviaNgould" aria-label="" title="sylviaNgould&#x27;s Profile">
-                            <img src="https://img.wattpad.com/useravatar/sylviaNgould.128.331557.jpg" aria-hidden="true" alt="" class="avatar__Ygp0_ avatar_sm__zq5iO"/>
-                        </a>
-                    </div>
-                </div>
-                <div class="statsWrapper__DqAW0">
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpView</title><path d="M1.82 10.357c-.353.545-.594.975-.723 1.233a.916.916 0 0 0 0 .82c.129.258.37.688.723 1.233a18.78 18.78 0 0 0 2.063 2.65C6.19 18.754 8.902 20.25 12 20.25c3.098 0 5.81-1.497 8.117-3.956a18.784 18.784 0 0 0 2.063-2.65c.352-.546.594-.976.723-1.234a.916.916 0 0 0 0-.82c-.129-.258-.37-.688-.723-1.233a18.786 18.786 0 0 0-2.063-2.65C17.81 5.246 15.098 3.75 12 3.75c-3.098 0-5.81 1.496-8.117 3.956a18.782 18.782 0 0 0-2.063 2.65Zm3.4 4.683A16.969 16.969 0 0 1 2.963 12a16.97 16.97 0 0 1 2.259-3.04C7.21 6.837 9.484 5.585 12 5.585c2.517 0 4.788 1.253 6.78 3.377A16.973 16.973 0 0 1 21.037 12a16.97 16.97 0 0 1-2.259 3.04c-1.99 2.122-4.262 3.376-6.779 3.376-2.516 0-4.788-1.254-6.78-3.377Z" fill="#121212"></path><path d="M8.333 12a3.667 3.667 0 1 0 7.334 0 3.667 3.667 0 0 0-7.334 0Zm5.5 0a1.833 1.833 0 1 1-3.666 0 1.833 1.833 0 0 1 3.666 0Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">18.8K</span>
-                    </span>
-                    <span class="stats_wrapper__THA2S">
-                        <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpVote</title><path d="M9.807 8.703a1 1 0 0 1-.752.547l-4.907.717 3.55 3.457a1 1 0 0 1 .288.885l-.838 4.883 4.386-2.307a1 1 0 0 1 .931 0l4.387 2.307-.838-4.883a1 1 0 0 1 .288-.885l3.55-3.457-4.907-.717a1 1 0 0 1-.752-.547L12 4.259 9.807 8.703ZM8.246 7.347l2.857-5.79a1 1 0 0 1 1.794 0l2.857 5.79 6.39.934a1 1 0 0 1 .554 1.705l-4.624 4.503 1.091 6.362a1 1 0 0 1-1.45 1.054L12 18.9l-5.715 3.005a1 1 0 0 1-1.45-1.054l1.09-6.361-4.623-4.504a1 1 0 0 1 .553-1.705l6.39-.934Z" fill="#121212"></path></svg>
-                        <span class="stats-label__text__VzfuV" aria-hidden="true">2.5K</span>
-                    </span>
-                </div>
-            </div>
-        </div>
+        <!--here library story place-->
 
     </div>
 </div>
@@ -530,5 +239,10 @@
         <li class="uilPN">© 2025 Wattpad</li>
     </ul>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="assets/js/header-script.js"></script>
+<script src="assets/js/library-page-script.js"></script>
 </body>
 </html>
