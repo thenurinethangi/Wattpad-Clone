@@ -6,6 +6,7 @@ import lk.ijse.wattpadbackend.entity.ReadingList;
 import lk.ijse.wattpadbackend.entity.ReadingListLike;
 import lk.ijse.wattpadbackend.entity.ReadingListStory;
 import lk.ijse.wattpadbackend.entity.User;
+import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
 import lk.ijse.wattpadbackend.repository.ReadingListLikeRepository;
 import lk.ijse.wattpadbackend.repository.ReadingListRepository;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -104,4 +106,41 @@ public class ReadingListsServiceImpl implements ReadingListsService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void deleteReadingListById(long id) {
+
+        try {
+            Optional<ReadingList> optionalReadingList = readingListRepository.findById((int) id);
+
+            if (!optionalReadingList.isPresent()) {
+                throw new NotFoundException("Reading list is not found.");
+            }
+
+            readingListRepository.delete(optionalReadingList.get());
+        }
+        catch (NotFoundException e) {
+            throw e;
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

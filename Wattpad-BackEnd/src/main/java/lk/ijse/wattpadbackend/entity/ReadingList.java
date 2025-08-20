@@ -34,10 +34,10 @@ public class ReadingList {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "readingList")
+    @OneToMany(mappedBy = "readingList", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReadingListStory> readingListStories;
 
-    @OneToMany(mappedBy = "readingList")
+    @OneToMany(mappedBy = "readingList", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReadingListLike> readingListLikes;
 
     public ReadingList(String listName, User user) {

@@ -21,7 +21,7 @@ public class Library {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "library")
+    @OneToMany(mappedBy = "library", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LibraryStory> libraryStories;
 
     public Library(User user) {

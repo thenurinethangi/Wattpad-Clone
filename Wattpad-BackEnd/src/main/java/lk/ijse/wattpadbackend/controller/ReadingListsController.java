@@ -6,9 +6,7 @@ import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/readingLists")
@@ -30,7 +28,31 @@ public class ReadingListsController {
 
         return new APIResponse(202,"Successfully loaded all your readingLists.",readingListsDTO);
     }
+
+    @DeleteMapping("/{id}")
+    public APIResponse deleteReadingListById(@PathVariable long id){
+        
+        readingListsService.deleteReadingListById(id);
+        return new APIResponse(202,"Successfully deleted readingList id: "+id,null);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
