@@ -62,16 +62,16 @@ public class Story {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "story")
+    @OneToMany(mappedBy = "story", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StoryTag> storyTags;
 
-    @OneToMany(mappedBy = "story")
+    @OneToMany(mappedBy = "story", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LibraryStory> libraryStories;
 
-    @OneToMany(mappedBy = "story")
+    @OneToMany(mappedBy = "story", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReadingListStory> readingListStories;
 
-    @OneToMany(mappedBy = "story")
+    @OneToMany(mappedBy = "story", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Chapter> chapters;
 
     @Override

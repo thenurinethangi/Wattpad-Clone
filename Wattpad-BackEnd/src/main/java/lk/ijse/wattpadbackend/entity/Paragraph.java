@@ -31,7 +31,7 @@ public class Paragraph {
     @JoinColumn(name = "chapter_id", nullable = false)
     private Chapter chapter;
 
-    @OneToMany(mappedBy = "paragraph")
+    @OneToMany(mappedBy = "paragraph", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ParagraphComment> paragraphComments;
 }
 

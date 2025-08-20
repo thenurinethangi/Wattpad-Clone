@@ -39,7 +39,7 @@ public class Reply {
     @JoinColumn(name = "paragraph_comment_id")
     private ParagraphComment paragraphComment;
 
-    @OneToMany(mappedBy = "reply")
+    @OneToMany(mappedBy = "reply", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommentLike> commentLikes;
 }
 

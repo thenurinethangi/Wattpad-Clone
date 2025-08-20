@@ -35,10 +35,10 @@ public class ChapterComment {
     @JoinColumn(name = "chapter_id", nullable = false)
     private Chapter chapter;
 
-    @OneToMany(mappedBy = "chapterComment")
+    @OneToMany(mappedBy = "chapterComment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reply> replies;
 
-    @OneToMany(mappedBy = "chapterComment")
+    @OneToMany(mappedBy = "chapterComment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommentLike> commentLikes;
 }
 

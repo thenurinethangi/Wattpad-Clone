@@ -38,10 +38,10 @@ public class ParagraphComment {
     @JoinColumn(name = "paragraph_id", nullable = false)
     private Paragraph paragraph;
 
-    @OneToMany(mappedBy = "paragraphComment")
+    @OneToMany(mappedBy = "paragraphComment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reply> replies;
 
-    @OneToMany(mappedBy = "paragraphComment")
+    @OneToMany(mappedBy = "paragraphComment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommentLike> commentLikes;
 }
 

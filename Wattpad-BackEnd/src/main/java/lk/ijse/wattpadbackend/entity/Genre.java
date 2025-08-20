@@ -20,7 +20,7 @@ public class Genre {
     @Column(nullable = false, unique = true)
     private String genre;
 
-    @OneToMany(mappedBy = "genre")
+    @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserGenre> userGenres;
 }
 

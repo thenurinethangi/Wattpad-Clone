@@ -22,7 +22,7 @@ public class Role {
     @Column(nullable = false, unique = true)
     private Roles role;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRole> userRoles;
 }
 

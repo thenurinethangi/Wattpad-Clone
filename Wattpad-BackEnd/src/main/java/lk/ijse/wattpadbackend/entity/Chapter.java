@@ -42,13 +42,13 @@ public class Chapter {
     @JoinColumn(name = "story_id", nullable = false)
     private Story story;
 
-    @OneToMany(mappedBy = "chapter")
+    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Paragraph> paragraphs;
 
-    @OneToMany(mappedBy = "chapter")
+    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChapterComment> chapterComments;
 
-    @OneToMany(mappedBy = "chapter")
+    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChapterLike> chapterLikes;
 }
 

@@ -212,7 +212,8 @@ $(document).on('click', '.delete-btn', function (event) {
                     console.log(response);
                 });
 
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
+        }
+        else if (result.dismiss === Swal.DismissReason.cancel) {
             console.log("Cancelled!");
         }
     });
