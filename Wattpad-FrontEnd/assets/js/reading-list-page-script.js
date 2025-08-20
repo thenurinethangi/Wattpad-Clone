@@ -1,7 +1,7 @@
 //check user register or not
 window.onload = function () {
 
-    fetch('http://localhost:8080/api/v1/readingLists', {
+    fetch('http://localhost:8080/api/v1/readingList', {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -37,7 +37,7 @@ window.onload = function () {
 //load all reading lists from backend
 async function loadReadingLists() {
 
-    await fetch('http://localhost:8080/api/v1/readingLists/all', {
+    await fetch('http://localhost:8080/api/v1/readingList/all', {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -186,7 +186,7 @@ $(document).on('click', '.delete-btn', function (event) {
 
             let readingListId = $(this).data('reading-list-id');
 
-            fetch('http://localhost:8080/api/v1/readingLists/'+readingListId, {
+            fetch('http://localhost:8080/api/v1/readingList/'+readingListId, {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {
