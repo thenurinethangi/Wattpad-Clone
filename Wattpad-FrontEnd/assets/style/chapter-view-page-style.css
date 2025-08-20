@@ -13,8 +13,9 @@ body{
     -webkit-font-smoothing: antialiased;
     background-color: rgb(255, 255, 255);
     font-family: var(--primary-font-face);
-    display: block;
-
+    display: none;
+    visibility: hidden;
+    opacity: 0;
 }
 
 /*.btn {*/
@@ -374,13 +375,6 @@ body{
     border-top: 1px solid #eee;
 }
 
-#funbar-story .dropdown-menu>ul li.active a {
-    color: #ff6122;
-    border-left: 4px solid #ff6122;
-    -webkit-box-shadow: inset 0 0 9px rgba(0,0,0,.04);
-    box-shadow: inset 0 0 9px rgba(0,0,0,.04);
-}
-
 #funbar-story .dropdown-menu>ul li a {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -395,6 +389,13 @@ body{
     background-color: #fafafa;
 }
 
+#funbar-story .dropdown-menu>ul li.active a {
+    color: #ff6122;
+    border-left: 4px solid #ff6122;
+    -webkit-box-shadow: inset 0 0 9px rgba(0,0,0,.04);
+    box-shadow: inset 0 0 9px rgba(0,0,0,.04);
+}
+
 #funbar-story .dropdown-menu>ul li .part-title {
     width: 100%;
     float: left;
@@ -405,7 +406,6 @@ body{
 #funbar-story .dropdown-menu>ul li .part-meta {
     font-weight: 400;
 }
-
 
 
 /*top bar -> vote/add library side*/

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Story title - chapter name</title>
+    <link rel="icon" type="image/ico" href="assets/image/wattpad-icon-2-removebg-preview.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Thenuri Nethangi">
+    <meta name="keywords" content="online stories, read stories, write stories, wattpad alternative, fiction platform, storytelling, novels, short stories, creative writing, user-generated stories">
+    <meta name="description" content="Discover and share captivating stories on our platform. Read novels, write your own tales, and connect with a community of passionate readers and writers.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton+SC&family=Cinzel+Decorative:wght@400;700;900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Roboto:ital,wght@1,800&family=Rubik:ital@0;1&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style/variables.css">
+    <link rel="stylesheet" href="assets/style/helper.css">
+    <link rel="stylesheet" href="assets/style/header-style.css">
+    <link rel="stylesheet" href="assets/style/chapter-view-page-style.css">
+    <link rel="stylesheet" href="assets/style/footer-style.css">
+</head>
+<body>
+
+<!-- --------------------header---------------------- -->
+<header id="header" style="border-bottom: 1px solid transparent;">
+    <div class="header-left-side">
+        <nav class="navigation-left">
+            <ul class="navigation-left-list">
+                <li class="navigation-left-list-item"><a href="landing-page.html" title="Wattpad Home" aria-label="Home"><img src="assets/image/wattpad-logo.svg" alt="Wattpad Logo"></a></li>
+                <li class="navigation-left-list-item discover-dropdown"><div id="discover-dropdown"><button>Browse<img class="drop-down-icon" src="assets/image/wp-chevron-down.svg" alt=""></button></div></li>
+                <li class="navigation-left-list-item community-dropdown"><div id="community-dropdown"><button>Community<img class="drop-down-icon" src="assets/image/wp-chevron-down.svg" alt=""></button></div></li>
+            </ul>
+        </nav>
+        <div class="search-input-container">
+            <div class="search-sm-screen">
+                <i class="fa-solid fa-magnifying-glass" style="color: rgba(34,34,34,0.9); font-size: 18px;"></i>
+                <p>Search</p>
+            </div>
+            <form class="search-form">
+                <button aria-label="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5999 6.49844C1.5999 3.79224 3.79371 1.59844 6.4999 1.59844C9.2061 1.59844 11.3999 3.79224 11.3999 6.49844C11.3999 9.20463 9.2061 11.3984 6.4999 11.3984C3.79371 11.3984 1.5999 9.20463 1.5999 6.49844ZM6.4999 0.398438C3.13097 0.398438 0.399902 3.1295 0.399902 6.49844C0.399902 9.86737 3.13097 12.5984 6.4999 12.5984C7.99441 12.5984 9.36338 12.061 10.4241 11.1688C10.4515 11.2618 10.5019 11.3494 10.5752 11.4227L13.0501 13.8976C13.2844 14.1319 13.6643 14.1319 13.8986 13.8976C14.133 13.6633 14.133 13.2834 13.8986 13.0491L11.4238 10.5742C11.3504 10.5008 11.2629 10.4505 11.1699 10.423C12.0623 9.36227 12.5999 7.99313 12.5999 6.49844C12.5999 3.1295 9.86884 0.398438 6.4999 0.398438Z" fill="#121212" fill-opacity="0.64"></path></svg>
+                </button>
+                <input class="search-input" type="text" placeholder="Search" name="query" autocomplete="off">
+            </form>
+        </div>
+    </div>
+    <div class="header-right-side">
+        <ul class="navigation-right-list-one">
+            <li><div id="writer-opportunities-dropdown"><button>Write<img src="assets/image/wp-chevron-down.svg" alt=""></button></div></li>
+            <li class="try-premium"><button><span><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M9.38562 11.778L8.95363 16.0545C8.89557 16.6292 9.64434 16.8996 9.96699 16.4205L14.9043 9.08896C15.1528 8.72003 14.8884 8.2233 14.4436 8.2233H10.6144L11.0464 3.94683C11.1044 3.37214 10.3557 3.10166 10.033 3.58077L5.09567 10.9123C4.84721 11.2813 5.11159 11.778 5.55639 11.778H9.38562Z" fill="#3b19a9"></path></svg></span>Try Premium</button></li>
+        </ul>
+        <div class="navigation-right-list-two-container">
+            <ul class="navigation-right-list-two">
+                <li><img src="assets/image/my-image-01.jpg" style="width: 32px; border-radius: 100%; background-color: #eee; box-shadow: 0.5px 0.5px 10px rgba(211,211,211,0.37);" alt="profile picture"></li>
+                <li><img class="S1mMa" src="assets/image/wp-chevron-down.svg" alt="" data-testid="wp_chevron_down"></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+
+
+<!--main container-->
+<div id="app-container" style="width: 100vw; user-select: none; touch-action: pan-y; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <div id="story-reading" class="container" oncontextmenu="return false;" style="width: 100%">
+        <!--top bar container-->
+        <div id="funbar-container" class="row">
+            <div id="funbar">
+                <!--top bar -> drop down side-->
+                <!--a1-->
+                <div id="funbar-story" class="dropdown">
+                    <!--drop down button-->
+                    <button id="funbar-part-details" type="button" class="btn btn-toc dropdown-toggle" data-toggle="modal" data-target="#table-of-contents">
+                        <!--b1-->
+                        <span class="toc-full">
+                            <span class="cover cover-xxs">
+                                <img src="https://img.wattpad.com/cover/353771202-64-k85442.jpg" alt="𝕃𝕠𝕧𝕖 𝔼𝕞𝕓𝕣𝕒𝕔𝕖 ᵒⁿʰᵒˡᵈ">
+                            </span>
+                            <!--b2-->
+                            <span class="info">
+                                <h2 class="title h5">𝕃𝕠𝕧𝕖 𝔼𝕞𝕓𝕣𝕒𝕔𝕖 ᵒⁿʰᵒˡᵈ</h2>
+                                <span class="author h6">by Minki__04</span>
+                            </span>
+                            <!--b3-->
+                            <span class="fa fa-down fa-wp-neutral-2 " aria-hidden="true" style="font-size:20px;"></span>
+                        </span>
+                    </button> <!--drop down button end-->
+
+                    <!--table of content hidden container(chapter list)-->
+                    <div class="dropdown-menu pull-left">
+                        <!--c1-->
+                        <div class="toc-header text-center">
+                            <h6><a class="on-navigate" href="">𝕃𝕠𝕧𝕖 𝔼𝕞𝕓𝕣𝕒𝕔𝕖 ᵒⁿʰᵒˡᵈ</a></h6>
+                            <small>Table of contents</small>
+                        </div>
+                        <!--c2-->
+                        <ul class="table-of-contents">
+                            <li class="active">
+                                <a class="on-navigate" href="/1388504625-introduction">
+                                    <div class="part-title">introduction
+                                        <div class="part-meta"></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a class="on-navigate" href="/1394938115-chapter-1">
+                                    <div class="part-title">Chapter 1
+                                        <div class="part-meta"></div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div><!--table of content hidden container(chapter list) end-->
+                </div><!--top bar -> drop down side end-->
+
+
+                <!--top bar -> vote/add library side-->
+                <!--a2-->
+                <div id="funbar-controls" style="display: flex;">
+                    <!--plus btn-->
+                    <div class="button-group relative inline-block" style="border-left: 1px solid transparent;">
+                        <!--plus icon-->
+                        <button class="btn btn-story-lists btn-sm btn-orange on-lists-add-clicked" data-component-name="top_right_add" data-story-id="353771202" aria-label="Add to List">
+                            <span class="fa fa-plus fa-wp-neutral-5 " aria-hidden="true" style="font-size:10px;"></span>
+                        </button>
+                        <div class="triangle"></div>
+                        <!--add to reading list container-->
+                        <div class="dropdown-menu dropdown-menu-right add-to-library">
+                            <ul class="lists-menu" data-story-id="353771202"></ul>
+                            <div class="inputs">
+                                <label for="new-reading-list" class="sr-only">New Reading List</label>
+                                <span class="fa fa-warning fa-wp-errorbackground error-feedback " aria-hidden="true" style="font-size:12px;"></span>
+                                <input id="new-reading-list" type="text" class="form-control list-name list-error-placeholder" placeholder="Add new reading list...">
+                                <button class="btn btn-orange on-create-list" type="button" data-story-id="353771202">
+                                    <span class="fa fa-plus fa-wp-neutral-5 " aria-hidden="true" style="font-size:9px;"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--vote btn-->
+                    <div class="button-group relative inline-block">
+                        <button class="btn btn-link on-vote" data-component-name="top_right_vote" data-story-id="1388504625">
+                            <i class="fa-solid fa-star fa-wp-neutral-2" style="font-size:14px; transform: translateY(-1.5px)"></i>
+                            <span class="hidden-mobile hidden-xs hidden-sm story-vote" style="text-decoration: none; padding-left: 7px;">Vote</span>
+                        </button>
+                        <div id="vote-tool-tip" data-toggle="tooltip" data-placement="bottom" data-original-title="There was an error registering your vote"></div>
+                    </div>
+                </div> <!--top bar -> vote/add library side end-->
+
+                <!--a3-->
+                <div id="funbar-reading-progress">
+                    <div id="progressbar"></div>
+                    <div id="progresstooltip" data-toggle="tooltip" data-placement="bottom"></div>
+                </div>
+            </div>
+        </div><!--top bar container end-->
+
+
+        <!--chapter main content - chapter title,chapter cover image,chapter text and images,below comment box,recommendation stories-->
+        <main id="parts-container-new" style="width: 100vw; margin-top: 70px; position: absolute; left: 0; top: 0; transform: translateY(-17px);">
+            <!--chapter article-->
+            <article class="story-part">
+
+                <!--where chapter cover image have this can be exits or not-->
+                <div id="media-container">
+                    <!--hidden attribute should remove if chapter have cover image-->
+                    <div class="media-wrapper">
+                        <div class="hover-wrapper" style="background-image: url(https://img.wattpad.com/bcover/353771202-1920-k85442.jpg);">
+                            <div class="background-lg media background" style="display: flex; justify-content: center; align-items: center;">
+                                <span class="fa fa-left fa-wp-neutral-5 btn btn-link on-prev-media hidden-xs invisible" aria-hidden="true" style="font-size:24px;"></span>
+                                <div class="media-item image   on-full-size-banner ">
+                                    <img data-index="0" src="https://d.wattpad.com/story_parts/327861289/images/149ae6a135cbded8815964547162.jpg" alt="">
+                                </div>
+                                <span class="fa fa-right fa-wp-neutral-5 btn btn-link on-next-media hidden-xs invisible" aria-hidden="true" style="font-size:24px;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--chapter title and statics box-->
+                <div class="container" style="display: flex; justify-content: center; padding-top: 24px;">
+                    <div class="row part-header">
+                        <div class="col-sm-12 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
+                            <header class="panel panel-reading text-center" style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;width: 100%;">
+                                <!--d1-->
+                                <h1 class="h2" style="font-size: 32px; font-weight: 600; color: #222; margin: 48px 0 30px 24px;width: 100%;">introduction</h1>
+                                <!--d2-->
+                                <div class="story-stats" style="display: flex; width: 100%; transform: translateX(16px);">
+                                    <span class="reads" data-toggle="tooltip" data-placement="bottom" title="1,924 Read" style="font-size:16px; display: flex; justify-content: center; align-items: center; gap: 3px;">
+                                        <i class="fa-solid fa-star fa-wp-neutral-2" style="font-size: 12px;"></i> 1.9K
+                                    </span>
+
+                                    <span class="votes" style="font-size:16px; display: flex; justify-content: center; align-items: center; gap: 3px;">
+                                        <i class="fa-solid fa-star fa-wp-neutral-2" style="font-size: 12px;"></i> 197
+                                    </span>
+
+                                    <span class="comments on-comments" style="font-size:16px; display: flex; justify-content: center; align-items: center; gap: 3px;">
+                                        <i class="fa-solid fa-star fa-wp-neutral-2" style="font-size: 12px;"></i>
+                                        <a href="#">102</a>
+                                    </span>
+                                </div>
+
+                                <!--d3-->
+                                <div class="author hidden-lg" style="margin: 10px auto 18px; font-size: 16px; font-weight: 400; width: 100%;">
+                                    <a class="on-navigate avatar avatar-sm center-block" href="/user/Minki__04">
+                                        <img class="on-hover" data-toggle="tooltip" data-placement="right" title="" alt="Writer: Minki__04" src="https://img.wattpad.com/useravatar/Minki__04.32.661189.jpg" data-original-title="Writer: Minki__04">
+                                    </a>
+                                    by <a class="on-navigate" href="/user/Minki__04">Minki__04</a>
+                                </div>
+
+                                <!--d4-->
+                                <div class="meta">
+                                    <ul class="story-extras"></ul>
+                                </div>
+                            </header>
+                        </div>
+                    </div>
+                </div>
+
+                <!--chapter text and image content-->
+                <div class="container" id="sticky-end" style="position: relative; margin-top: 2em; width: 77%;">
+                    <div oncontextmenu="return false;" class="row part-content" style="display: flex;">
+                        <!-- --------------------------a1--------------------------- -->
+                        <div id="social-share-box" class="col-md-1 col-lg-3 hidden-sm hidden-xs left-rail affixed" style="position: fixed; top: 657px; width: 60px;">
+                            <div id="sticky-nav">
+                                <div class="share-tools vertical hidden-xs hidden-sm">
+                                    <div class="title">Share</div>
+                                    <a data-gtm-action="share:facebook" class="share-facebook social-share" target="_blank" aria-hidden="true" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.wattpad.com%2F1388504625-introduction%3Futm_source%3Dweb%26utm_medium%3Dfacebook%26utm_content%3Dshare_reading" data-share-channel="facebook">
+                                        <span class="fa fa-facebook fa-wp-neutral-5 " aria-hidden="true" style="font-size:24px;"></span>
+                                    </a>
+                                    <a data-gtm-action="share:twitter" class="share-twitter social-share" target="_blank" aria-hidden="true" href="https://twitter.com/intent/tweet?text=%F0%9D%95%83%F0%9D%95%A0%F0%9D%95%A7%F0%9D%95%96+%F0%9D%94%BC%F0%9D%95%9E%F0%9D%95%93%F0%9D%95%A3%F0%9D%95%92%F0%9D%95%94%F0%9D%95%96+%E1%B5%92%E2%81%BF%CA%B0%E1%B5%92%CB%A1%E1%B5%88+-+introduction++%23wattpad&amp;url=https%3A%2F%2Fwww.wattpad.com%2F1388504625-introduction%3Futm_source%3Dweb%26utm_medium%3Dtwitter%26utm_content%3Dshare_reading" data-share-channel="twitter" data-share-url="https%3A%2F%2Ftwitter.com%2Fintent%2Ftweet%3Ftext%3D%25s%26url%3D%25s" data-url="https%3A%2F%2Fwww.wattpad.com%2F1388504625-introduction" data-share-text="%F0%9D%95%83%F0%9D%95%A0%F0%9D%95%A7%F0%9D%95%96+%F0%9D%94%BC%F0%9D%95%9E%F0%9D%95%93%F0%9D%95%A3%F0%9D%95%92%F0%9D%95%94%F0%9D%95%96+%E1%B5%92%E2%81%BF%CA%B0%E1%B5%92%CB%A1%E1%B5%88+-+introduction++%23wattpad" data-share-content="share_reading">
+                                        <span class="fa fa-twitter fa-wp-neutral-5 " aria-hidden="true" style="font-size:24px;"></span>
+                                    </a>
+                                    <a data-gtm-action="share:pinterest" class="share-pinterest social-share" target="_blank" aria-hidden="true" href="https://www.pinterest.com/pin/create/button/?media=https%3A%2F%2Fimg.wattpad.com%2Fcover%2F353771202-256-k85442.jpg&amp;description=+%23wattpad+%23historical-fiction+%E0%B6%91%E0%B7%80%E0%B6%BB%E0%B6%B1%E0%B6%B8%E0%B7%8A+%E0%B6%B4%E0%B7%94%E0%B6%82%E0%B6%A0%E0%B7%92+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94%E0%B6%A7+%E0%B6%AF%E0%B7%90%E0%B6%B1%E0%B7%94%E0%B6%B1%E0%B7%9A+%E0%B6%BD%E0%B7%90%E0%B6%A2%E0%B7%8A%E0%B6%A2%E0%B7%8F%E0%B7%80%E0%B6%9A%E0%B7%8A+%E0%B6%94%E0%B7%84%E0%B7%94+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94+%E0%B6%A2%E0%B6%B1%E0%B7%8A%E0%B6%9A%E0%B7%94%E0%B6%9A%E0%B7%8A%E0%B6%9C%E0%B7%99%E0%B6%B1%E0%B7%8A+%E0%B6%B8%E0%B7%94%E0%B7%84%E0%B7%94%E0%B6%AB+%E0%B7%83%E0%B6%9C%E0%B7%80%E0%B7%8F+%E0%B6%9C%E0%B7%90%E0%B6%B1%E0%B7%93%E0%B6%B8%E0%B6%A7+%E0%B6%8B%E0%B6%AD%E0%B7%8A%E0%B7%83%E0%B7%8F%E0%B7%84+%E0%B6%9A%E0%B6%BB%E0%B6%AF%E0%B7%8A%E0%B6%AF%E0%B7%93+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94+%E0%B6%A2%E0%B6%B1%E0%B7%8A%E0%B6%9A%E0%B7%94%E0%B6%9A%E0%B7%8A%E0%B6%9C%E0%B7%9A+%E0%B7%81%E0%B6%9A%E0%B7%8A%E0%B6%AD%E0%B7%92%E0%B6%B8%E0%B6%AD%E0%B7%8A+%E0%B6%AF%E0%B7%91%E0%B6%AD%E0%B6%9A%E0%B7%8A+%E0%B6%B4%E0%B7%94%E0%B6%82%E0%B6%A0%E0%B7%92+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94%E0%B6%9C%E0%B7%9A+%E0%B6%89%E0%B6%AB+%E0%B7%80%E0%B6%A7%E0%B7%8F+%E0%B6%9C%E0%B7%9C%E0%B7%83%E0%B7%8A+%E0%B6%94%E0%B7%84%E0%B7%94%E0%B7%80+%E0%B6%AD%E0%B6%B8%E0%B6%B1%E0%B7%8A+%E0%B7%80%E0%B7%99%E0%B6%AD%E0%B6%A7+%E0%B6%87%E0%B6%AF%E0%B6%BD%E0%B7%8F+%E0%B6%9C%E0%B6%B1%E0%B7%92%E0%B6%AF%E0%B7%8A%E0%B6%AF%E0%B7%93+%E0%B6%B4%E0%B7%94%E0%B6%82%E0%B6%A0%E0%B7%92+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94%E0%B6%A7+%E0%B6%AD%E0%B7%9A%E0%B6%BB%E0%B7%94%E0%B6%B1%E0%B7%8F+%E0%B7%80%E0%B7%99%E0%B6%B1%E0%B7%83%E0%B6%9A%E0%B7%8A..+%E0%B6%87%E0%B6%AD%E0%B7%8A%E0%B6%AD%E0%B7%99%E0%B6%B1%E0%B7%8A%E0%B6%B8+%E0%B6%B8%E0%B7%9A+%E0%B6%8B%E0%B6%AB%E0%B7%94%E0%B7%83%E0%B7%94%E0%B6%B8+%E0%B7%80%E0%B7%99%E0%B6%B1%E0%B6%AF%E0%B6%A7%E0%B6%AD%E0%B7%8A+%E0%B7%80%E0%B6%A9%E0%B7%8F+%E0%B7%80%E0%B7%99%E0%B6%B1%E0%B7%83%E0%B7%8A+%E0%B6%92+%E0%B6%B1%E0%B7%92%E0%B7%83%E0%B7%8F%E0%B6%B8%E0%B6%AF+%E0%B6%B8%E0%B6%B1%E0%B7%8A%E0%B6%AF+%E0%B6%92+%E0%B6%AF%E0%B7%91%E0%B7%83%E0%B7%8A+%E0%B7%84%E0%B6%BB%E0%B7%92+%E0%B6%89%E0%B6%9A%E0%B7%8A%E0%B6%B8%E0%B6%B1%E0%B6%A7+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94%E0%B6%9C%E0%B7%9A+%E0%B6%AF%E0%B7%91%E0%B7%83%E0%B7%8A+%E0%B7%83%E0%B6%B8%E0%B6%9C+%E0%B6%B4%E0%B7%90%E0%B6%A7%E0%B6%BD%E0%B7%99%E0%B6%AF%E0%B7%8A%E0%B6%AF...&amp;url=https%3A%2F%2Fwww.wattpad.com%2F1388504625-introduction%3Futm_source%3Dweb%26utm_medium%3Dpinterest%26utm_content%3Dshare_reading" data-share-channel="pinterest">
+                                        <span class="fa fa-pinterest fa-wp-neutral-5 " aria-hidden="true" style="font-size:24px;"></span>
+                                    </a>
+                                    <a data-gtm-action="share:tumblr" class="share-tumblr social-share" target="_blank" aria-hidden="true" href="https://tumblr.com/widgets/share/tool?posttype=photo&amp;content=https%3A%2F%2Fwww.wattpad.com%2Fbanner%3Fid%3D353771202&amp;caption=%3Cb%3E%F0%9D%95%83%F0%9D%95%A0%F0%9D%95%A7%F0%9D%95%96+%F0%9D%94%BC%F0%9D%95%9E%F0%9D%95%93%F0%9D%95%A3%F0%9D%95%92%F0%9D%95%94%F0%9D%95%96+%E1%B5%92%E2%81%BF%CA%B0%E1%B5%92%CB%A1%E1%B5%88+-+introduction+%3C%2Fb%3E+%28on+Wattpad%29+https%3A%2F%2Fwww.wattpad.com%2F1388504625-introduction%3Futm_source%3Dweb%26utm_medium%3Dtumblr%26utm_content%3Dshare_reading%0A%0A%E0%B6%91%E0%B7%80%E0%B6%BB%E0%B6%B1%E0%B6%B8%E0%B7%8A+%E0%B6%B4%E0%B7%94%E0%B6%82%E0%B6%A0%E0%B7%92+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94%E0%B6%A7+%E0%B6%AF%E0%B7%90%E0%B6%B1%E0%B7%94%E0%B6%B1%E0%B7%9A+%E0%B6%BD%E0%B7%90%E0%B6%A2%E0%B7%8A%E0%B6%A2%E0%B7%8F%E0%B7%80%E0%B6%9A%E0%B7%8A+%E0%B6%94%E0%B7%84%E0%B7%94+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94+%E0%B6%A2%E0%B6%B1%E0%B7%8A%E0%B6%9A%E0%B7%94%E0%B6%9A%E0%B7%8A%E0%B6%9C%E0%B7%99%E0%B6%B1%E0%B7%8A+%E0%B6%B8%E0%B7%94%E0%B7%84%E0%B7%94%E0%B6%AB+%E0%B7%83%E0%B6%9C%E0%B7%80%E0%B7%8F+%E0%B6%9C%E0%B7%90%E0%B6%B1%E0%B7%93%E0%B6%B8%E0%B6%A7+%E0%B6%8B%E0%B6%AD%E0%B7%8A%E0%B7%83%E0%B7%8F%E0%B7%84+%E0%B6%9A%E0%B6%BB%E0%B6%AF%E0%B7%8A%E0%B6%AF%E0%B7%93+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94+%E0%B6%A2%E0%B6%B1%E0%B7%8A%E0%B6%9A%E0%B7%94%E0%B6%9A%E0%B7%8A%E0%B6%9C%E0%B7%9A+%E0%B7%81%E0%B6%9A%E0%B7%8A%E0%B6%AD%E0%B7%92%E0%B6%B8%E0%B6%AD%E0%B7%8A+%E0%B6%AF%E0%B7%91%E0%B6%AD%E0%B6%9A%E0%B7%8A+%E0%B6%B4%E0%B7%94%E0%B6%82%E0%B6%A0%E0%B7%92+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94%E0%B6%9C%E0%B7%9A+%E0%B6%89%E0%B6%AB+%E0%B7%80%E0%B6%A7%E0%B7%8F+%E0%B6%9C%E0%B7%9C%E0%B7%83%E0%B7%8A+%E0%B6%94%E0%B7%84%E0%B7%94%E0%B7%80+%E0%B6%AD%E0%B6%B8%E0%B6%B1%E0%B7%8A+%E0%B7%80%E0%B7%99%E0%B6%AD%E0%B6%A7+%E0%B6%87%E0%B6%AF%E0%B6%BD%E0%B7%8F+%E0%B6%9C%E0%B6%B1%E0%B7%92%E0%B6%AF%E0%B7%8A%E0%B6%AF%E0%B7%93+%E0%B6%B4%E0%B7%94%E0%B6%82%E0%B6%A0%E0%B7%92+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94%E0%B6%A7+%E0%B6%AD%E0%B7%9A%E0%B6%BB%E0%B7%94%E0%B6%B1%E0%B7%8F+%E0%B7%80%E0%B7%99%E0%B6%B1%E0%B7%83%E0%B6%9A%E0%B7%8A..+%E0%B6%87%E0%B6%AD%E0%B7%8A%E0%B6%AD%E0%B7%99%E0%B6%B1%E0%B7%8A%E0%B6%B8+%E0%B6%B8%E0%B7%9A+%E0%B6%8B%E0%B6%AB%E0%B7%94%E0%B7%83%E0%B7%94%E0%B6%B8+%E0%B7%80%E0%B7%99%E0%B6%B1%E0%B6%AF%E0%B6%A7%E0%B6%AD%E0%B7%8A+%E0%B7%80%E0%B6%A9%E0%B7%8F+%E0%B7%80%E0%B7%99%E0%B6%B1%E0%B7%83%E0%B7%8A+%E0%B6%92+%E0%B6%B1%E0%B7%92%E0%B7%83%E0%B7%8F%E0%B6%B8%E0%B6%AF+%E0%B6%B8%E0%B6%B1%E0%B7%8A%E0%B6%AF+%E0%B6%92+%E0%B6%AF%E0%B7%91%E0%B7%83%E0%B7%8A+%E0%B7%84%E0%B6%BB%E0%B7%92+%E0%B6%89%E0%B6%9A%E0%B7%8A%E0%B6%B8%E0%B6%B1%E0%B6%A7+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94%E0%B6%9C%E0%B7%9A+%E0%B6%AF%E0%B7%91%E0%B7%83%E0%B7%8A+%E0%B7%83%E0%B6%B8%E0%B6%9C+%E0%B6%B4%E0%B7%90%E0%B6%A7%E0%B6%BD%E0%B7%99%E0%B6%AF%E0%B7%8A%E0%B6%AF%E0%B7%93+%E0%B6%94%E0%B7%84%E0%B7%94%E0%B6%A7+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94+%E0%B6%A2%E0%B7%92%E0%B6%B8%E0%B7%92%E0%B6%B1%E0%B7%8A%E0%B6%9C%E0%B7%9A+%E0%B7%83%E0%B6%B8%E0%B7%84%E0%B6%BB%E0%B6%9A%E0%B7%8A+%E0%B7%80%E0%B6%AF%E0%B6%B1%E0%B7%8A+%E0%B6%B8%E0%B6%AD%E0%B6%9A%E0%B7%99%E0%B6%A7+%E0%B6%B4%E0%B7%90%E0%B6%B8%E0%B7%92%E0%B6%AB%E0%B7%92%E0%B6%BA%E0%B7%8F..%0A%22%E0%B6%B8%E0%B7%9A+%E0%B6%B4%E0%B7%94%E0%B7%82%E0%B7%8A%E0%B6%B4%E0%B6%BA%E0%B6%A7%E0%B6%AD%E0%B7%8A+%E0%B7%80%E0%B6%A9%E0%B7%8F+%E0%B6%B4%E0%B6%BB%E0%B7%92%E0%B7%83%E0%B7%8A%E0%B7%83%E0%B6%B8%E0%B6%A7+%E0%B6%B8%E0%B6%B8+%E0%B6%B8%E0%B7%9A++%E0%B7%83%E0%B7%92%E0%B6%BA%E0%B7%94%E0%B6%B8%E0%B7%90%E0%B6%BD%E0%B7%92+%E0%B6%B4%E0%B7%94%E0%B7%82%E0%B7%8A%E0%B6%B4%E0%B6%BA%E0%B7%9A+%E0%B6%B4%E0%B7%99%E0%B6%AD%E0%B7%92+%E0%B6%AF%E0%B7%92%E0%B6%9C%E0%B7%84%E0%B6%BB%E0%B7%92%E0%B6%B1%E0%B7%8A%E0%B6%B1%E0%B6%AF+%E0%B6%B8%E0%B7%8A%E0%B6%B8%E0%B7%8A%E0%B6%B8%E0%B7%8A...%3F+%0A%E0%B6%85%E0%B6%B1%E0%B7%92%E0%B7%80%E0%B7%8F%E0%B6%BB%E0%B7%8A%E0%B6%BA%E0%B7%99%E0%B6%B1%E0%B7%8A+%E0%B6%B6%E0%B7%9D%E0%B6%BD+%E0%B6%AF%E0%B7%94%E0%B6%B6%E0%B7%94%E0%B6%BB%E0%B7%94+%E0%B6%AF%E0%B7%91%E0%B7%83%E0%B7%8A+%E0%B6%AD%E0%B7%80+%E0%B6%A7%E0%B7%92%E0%B6%9A%E0%B6%9A%E0%B7%8A+%E0%B6%B6%E0%B7%9D%E0%B6%BD+%E0%B7%80%E0%B7%99%E0%B6%B1%E0%B7%8A%E0%B6%B1+%E0%B6%87%E0%B6%AD%E0%B7%92+%E0%B6%91%E0%B7%80%E0%B7%90%E0%B6%B1%E0%B7%92+%E0%B6%B4%E0%B7%8A%E2%80%8D%E0%B6%BB%E0%B7%9A%E0%B6%B8%E0%B6%BA%E0%B6%A7+%E0%B6%B6%E0%B6%BB%E0%B7%80%E0%B7%94%E0%B6%AB%E0%B7%94+%E0%B7%80%E0%B6%AF%E0%B6%B1%E0%B7%8A+%E0%B6%9A%E0%B7%99%E0%B6%BD%E0%B7%99%E0%B7%83+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94+%E0%B6%A2%E0%B6%B1%E0%B7%8A%E0%B6%9A%E0%B7%94%E0%B6%9A%E0%B7%8A%E0%B6%9C%E0%B7%9A+%E0%B6%9A%E0%B6%A7%E0%B7%92%E0%B6%B1%E0%B7%8A+%E0%B6%B4%E0%B7%92%E0%B6%A7%E0%B7%80%E0%B7%94%E0%B6%B1%E0%B7%8F%E0%B6%AF+%E0%B6%BA%E0%B7%90%E0%B6%BA%E0%B7%92+%E0%B6%B4%E0%B7%94%E0%B6%82%E0%B6%A0%E0%B7%92+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94%E0%B6%A7+%E0%B6%87%E0%B6%AD%E0%B7%8A%E0%B6%AD%E0%B7%99%E0%B6%B1%E0%B7%8A%E0%B6%B8+%E0%B7%83%E0%B7%92%E0%B6%AD%E0%B7%8F%E0%B6%9C%E0%B6%B1%E0%B7%8A%E0%B6%B1+%E0%B6%B6%E0%B7%90..+%E0%B7%83%E0%B7%92%E0%B6%BA%E0%B6%BD%E0%B7%8A%E0%B6%BD%E0%B6%A7+%E0%B6%91%E0%B7%84%E0%B7%8F+%E0%B6%9C%E0%B7%92%E0%B6%BA+%E0%B6%92+%E0%B6%9C%E0%B7%90%E0%B6%B6%E0%B7%94%E0%B6%BB%E0%B7%94+%E0%B6%B8%E0%B7%92%E0%B6%B8%E0%B7%92%E0%B6%AB%E0%B7%92%E0%B6%BD%E0%B7%8A%E0%B6%BD+%E0%B7%83%E0%B6%B8%E0%B6%9C+%E0%B6%92+%E0%B6%B8%E0%B6%AD%E0%B7%8A%E0%B7%80%E0%B7%94%E0%B6%AB%E0%B7%94+%E0%B6%AF%E0%B7%91%E0%B7%83%E0%B7%8A+%E0%B7%80%E0%B6%BD+%E0%B6%B6%E0%B7%90%E0%B6%BD%E0%B7%8A%E0%B6%B8%E0%B7%99%E0%B6%B1%E0%B7%8A+%E0%B6%B4%E0%B7%94%E0%B6%82%E0%B6%A0%E0%B7%92+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94+%E0%B6%AF%E0%B7%90%E0%B6%B1%E0%B6%A7%E0%B6%B8%E0%B6%AD%E0%B7%8A+%E0%B6%AF%E0%B7%92%E0%B6%BA%E0%B7%80%E0%B7%99%E0%B6%BD%E0%B7%8F+%E0%B6%9C%E0%B7%92%E0%B7%84%E0%B7%92%E0%B6%B1%E0%B7%8A+%E0%B6%87%E0%B6%AD%E0%B7%92..%0Ajust+a+fanfiction%21%21%0Astarted+%3D2023.9.1%0Aend%3D%3F%0Acovered+by+czish_77%0Awritten+by+minki04&amp;tags=bl%2Ccaring%2Ccoldjungkook%2Cfanfiction%2Cgaylove%2Chistorical%2Cinnocenttaehyung%2Cloving%2Cmalepregnancy%2Cpossessive%2Cromance%2Csl%2Ctaekook%2Chistorical-fiction%2Cbooks%2Cwattpad%2Camreading&amp;canonicalUrl=https%3A%2F%2Fwww.wattpad.com%2F1388504625-introduction&amp;clickthroughUrl=https%3A%2F%2Fwww.wattpad.com%2F1388504625-introduction%3Futm_source%3Dweb%26utm_medium%3Dtumblr%26utm_content%3Dshare_reading" data-share-channel="tumblr" data-share-url="https%3A%2F%2Ftumblr.com%2Fwidgets%2Fshare%2Ftool%3Fposttype%3Dphoto%26content%3Dhttps%253A%252F%252Fimg.wattpad.com%252Fcover%252F353771202-256-k85442.jpg%26caption%3D%25s%26tags%3Dbl%252Ccaring%252Ccoldjungkook%252Cfanfiction%252Cgaylove%252Chistorical%252Cinnocenttaehyung%252Cloving%252Cmalepregnancy%252Cpossessive%252Cromance%252Csl%252Ctaekook%252Chistorical-fiction%252Cbooks%252Cwattpad%252Camreading%26canonicalUrl%3Dhttps%253A%252F%252Fwww.wattpad.com%252F1388504625-introduction%26clickthroughUrl%3D%25s" data-url="https%3A%2F%2Fwww.wattpad.com%2F1388504625-introduction" data-share-text="%3Cb%3E%F0%9D%95%83%F0%9D%95%A0%F0%9D%95%A7%F0%9D%95%96+%F0%9D%94%BC%F0%9D%95%9E%F0%9D%95%93%F0%9D%95%A3%F0%9D%95%92%F0%9D%95%94%F0%9D%95%96+%E1%B5%92%E2%81%BF%CA%B0%E1%B5%92%CB%A1%E1%B5%88+-+introduction+%3C%2Fb%3E+%28on+Wattpad%29+%25s%0A%0A%E0%B6%91%E0%B7%80%E0%B6%BB%E0%B6%B1%E0%B6%B8%E0%B7%8A+%E0%B6%B4%E0%B7%94%E0%B6%82%E0%B6%A0%E0%B7%92+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94%E0%B6%A7+%E0%B6%AF%E0%B7%90%E0%B6%B1%E0%B7%94%E0%B6%B1%E0%B7%9A+%E0%B6%BD%E0%B7%90%E0%B6%A2%E0%B7%8A%E0%B6%A2%E0%B7%8F%E0%B7%80%E0%B6%9A%E0%B7%8A+%E0%B6%94%E0%B7%84%E0%B7%94+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94+%E0%B6%A2%E0%B6%B1%E0%B7%8A%E0%B6%9A%E0%B7%94%E0%B6%9A%E0%B7%8A%E0%B6%9C%E0%B7%99%E0%B6%B1%E0%B7%8A+%E0%B6%B8%E0%B7%94%E0%B7%84%E0%B7%94%E0%B6%AB+%E0%B7%83%E0%B6%9C%E0%B7%80%E0%B7%8F+%E0%B6%9C%E0%B7%90%E0%B6%B1%E0%B7%93%E0%B6%B8%E0%B6%A7+%E0%B6%8B%E0%B6%AD%E0%B7%8A%E0%B7%83%E0%B7%8F%E0%B7%84+%E0%B6%9A%E0%B6%BB%E0%B6%AF%E0%B7%8A%E0%B6%AF%E0%B7%93+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94+%E0%B6%A2%E0%B6%B1%E0%B7%8A%E0%B6%9A%E0%B7%94%E0%B6%9A%E0%B7%8A%E0%B6%9C%E0%B7%9A+%E0%B7%81%E0%B6%9A%E0%B7%8A%E0%B6%AD%E0%B7%92%E0%B6%B8%E0%B6%AD%E0%B7%8A+%E0%B6%AF%E0%B7%91%E0%B6%AD%E0%B6%9A%E0%B7%8A+%E0%B6%B4%E0%B7%94%E0%B6%82%E0%B6%A0%E0%B7%92+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94%E0%B6%9C%E0%B7%9A+%E0%B6%89%E0%B6%AB+%E0%B7%80%E0%B6%A7%E0%B7%8F+%E0%B6%9C%E0%B7%9C%E0%B7%83%E0%B7%8A+%E0%B6%94%E0%B7%84%E0%B7%94%E0%B7%80+%E0%B6%AD%E0%B6%B8%E0%B6%B1%E0%B7%8A+%E0%B7%80%E0%B7%99%E0%B6%AD%E0%B6%A7+%E0%B6%87%E0%B6%AF%E0%B6%BD%E0%B7%8F+%E0%B6%9C%E0%B6%B1%E0%B7%92%E0%B6%AF%E0%B7%8A%E0%B6%AF%E0%B7%93+%E0%B6%B4%E0%B7%94%E0%B6%82%E0%B6%A0%E0%B7%92+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94%E0%B6%A7+%E0%B6%AD%E0%B7%9A%E0%B6%BB%E0%B7%94%E0%B6%B1%E0%B7%8F+%E0%B7%80%E0%B7%99%E0%B6%B1%E0%B7%83%E0%B6%9A%E0%B7%8A..+%E0%B6%87%E0%B6%AD%E0%B7%8A%E0%B6%AD%E0%B7%99%E0%B6%B1%E0%B7%8A%E0%B6%B8+%E0%B6%B8%E0%B7%9A+%E0%B6%8B%E0%B6%AB%E0%B7%94%E0%B7%83%E0%B7%94%E0%B6%B8+%E0%B7%80%E0%B7%99%E0%B6%B1%E0%B6%AF%E0%B6%A7%E0%B6%AD%E0%B7%8A+%E0%B7%80%E0%B6%A9%E0%B7%8F+%E0%B7%80%E0%B7%99%E0%B6%B1%E0%B7%83%E0%B7%8A+%E0%B6%92+%E0%B6%B1%E0%B7%92%E0%B7%83%E0%B7%8F%E0%B6%B8%E0%B6%AF+%E0%B6%B8%E0%B6%B1%E0%B7%8A%E0%B6%AF+%E0%B6%92+%E0%B6%AF%E0%B7%91%E0%B7%83%E0%B7%8A+%E0%B7%84%E0%B6%BB%E0%B7%92+%E0%B6%89%E0%B6%9A%E0%B7%8A%E0%B6%B8%E0%B6%B1%E0%B6%A7+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94%E0%B6%9C%E0%B7%9A+%E0%B6%AF%E0%B7%91%E0%B7%83%E0%B7%8A+%E0%B7%83%E0%B6%B8%E0%B6%9C+%E0%B6%B4%E0%B7%90%E0%B6%A7%E0%B6%BD%E0%B7%99%E0%B6%AF%E0%B7%8A%E0%B6%AF%E0%B7%93+%E0%B6%94%E0%B7%84%E0%B7%94%E0%B6%A7+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94+%E0%B6%A2%E0%B7%92%E0%B6%B8%E0%B7%92%E0%B6%B1%E0%B7%8A%E0%B6%9C%E0%B7%9A+%E0%B7%83%E0%B6%B8%E0%B7%84%E0%B6%BB%E0%B6%9A%E0%B7%8A+%E0%B7%80%E0%B6%AF%E0%B6%B1%E0%B7%8A+%E0%B6%B8%E0%B6%AD%E0%B6%9A%E0%B7%99%E0%B6%A7+%E0%B6%B4%E0%B7%90%E0%B6%B8%E0%B7%92%E0%B6%AB%E0%B7%92%E0%B6%BA%E0%B7%8F..%0A%22%E0%B6%B8%E0%B7%9A+%E0%B6%B4%E0%B7%94%E0%B7%82%E0%B7%8A%E0%B6%B4%E0%B6%BA%E0%B6%A7%E0%B6%AD%E0%B7%8A+%E0%B7%80%E0%B6%A9%E0%B7%8F+%E0%B6%B4%E0%B6%BB%E0%B7%92%E0%B7%83%E0%B7%8A%E0%B7%83%E0%B6%B8%E0%B6%A7+%E0%B6%B8%E0%B6%B8+%E0%B6%B8%E0%B7%9A++%E0%B7%83%E0%B7%92%E0%B6%BA%E0%B7%94%E0%B6%B8%E0%B7%90%E0%B6%BD%E0%B7%92+%E0%B6%B4%E0%B7%94%E0%B7%82%E0%B7%8A%E0%B6%B4%E0%B6%BA%E0%B7%9A+%E0%B6%B4%E0%B7%99%E0%B6%AD%E0%B7%92+%E0%B6%AF%E0%B7%92%E0%B6%9C%E0%B7%84%E0%B6%BB%E0%B7%92%E0%B6%B1%E0%B7%8A%E0%B6%B1%E0%B6%AF+%E0%B6%B8%E0%B7%8A%E0%B6%B8%E0%B7%8A%E0%B6%B8%E0%B7%8A...%3F+%0A%E0%B6%85%E0%B6%B1%E0%B7%92%E0%B7%80%E0%B7%8F%E0%B6%BB%E0%B7%8A%E0%B6%BA%E0%B7%99%E0%B6%B1%E0%B7%8A+%E0%B6%B6%E0%B7%9D%E0%B6%BD+%E0%B6%AF%E0%B7%94%E0%B6%B6%E0%B7%94%E0%B6%BB%E0%B7%94+%E0%B6%AF%E0%B7%91%E0%B7%83%E0%B7%8A+%E0%B6%AD%E0%B7%80+%E0%B6%A7%E0%B7%92%E0%B6%9A%E0%B6%9A%E0%B7%8A+%E0%B6%B6%E0%B7%9D%E0%B6%BD+%E0%B7%80%E0%B7%99%E0%B6%B1%E0%B7%8A%E0%B6%B1+%E0%B6%87%E0%B6%AD%E0%B7%92+%E0%B6%91%E0%B7%80%E0%B7%90%E0%B6%B1%E0%B7%92+%E0%B6%B4%E0%B7%8A%E2%80%8D%E0%B6%BB%E0%B7%9A%E0%B6%B8%E0%B6%BA%E0%B6%A7+%E0%B6%B6%E0%B6%BB%E0%B7%80%E0%B7%94%E0%B6%AB%E0%B7%94+%E0%B7%80%E0%B6%AF%E0%B6%B1%E0%B7%8A+%E0%B6%9A%E0%B7%99%E0%B6%BD%E0%B7%99%E0%B7%83+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94+%E0%B6%A2%E0%B6%B1%E0%B7%8A%E0%B6%9A%E0%B7%94%E0%B6%9A%E0%B7%8A%E0%B6%9C%E0%B7%9A+%E0%B6%9A%E0%B6%A7%E0%B7%92%E0%B6%B1%E0%B7%8A+%E0%B6%B4%E0%B7%92%E0%B6%A7%E0%B7%80%E0%B7%94%E0%B6%B1%E0%B7%8F%E0%B6%AF+%E0%B6%BA%E0%B7%90%E0%B6%BA%E0%B7%92+%E0%B6%B4%E0%B7%94%E0%B6%82%E0%B6%A0%E0%B7%92+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94%E0%B6%A7+%E0%B6%87%E0%B6%AD%E0%B7%8A%E0%B6%AD%E0%B7%99%E0%B6%B1%E0%B7%8A%E0%B6%B8+%E0%B7%83%E0%B7%92%E0%B6%AD%E0%B7%8F%E0%B6%9C%E0%B6%B1%E0%B7%8A%E0%B6%B1+%E0%B6%B6%E0%B7%90..+%E0%B7%83%E0%B7%92%E0%B6%BA%E0%B6%BD%E0%B7%8A%E0%B6%BD%E0%B6%A7+%E0%B6%91%E0%B7%84%E0%B7%8F+%E0%B6%9C%E0%B7%92%E0%B6%BA+%E0%B6%92+%E0%B6%9C%E0%B7%90%E0%B6%B6%E0%B7%94%E0%B6%BB%E0%B7%94+%E0%B6%B8%E0%B7%92%E0%B6%B8%E0%B7%92%E0%B6%AB%E0%B7%92%E0%B6%BD%E0%B7%8A%E0%B6%BD+%E0%B7%83%E0%B6%B8%E0%B6%9C+%E0%B6%92+%E0%B6%B8%E0%B6%AD%E0%B7%8A%E0%B7%80%E0%B7%94%E0%B6%AB%E0%B7%94+%E0%B6%AF%E0%B7%91%E0%B7%83%E0%B7%8A+%E0%B7%80%E0%B6%BD+%E0%B6%B6%E0%B7%90%E0%B6%BD%E0%B7%8A%E0%B6%B8%E0%B7%99%E0%B6%B1%E0%B7%8A+%E0%B6%B4%E0%B7%94%E0%B6%82%E0%B6%A0%E0%B7%92+%E0%B6%9A%E0%B7%94%E0%B6%B8%E0%B6%BB%E0%B7%94+%E0%B6%AF%E0%B7%90%E0%B6%B1%E0%B6%A7%E0%B6%B8%E0%B6%AD%E0%B7%8A+%E0%B6%AF%E0%B7%92%E0%B6%BA%E0%B7%80%E0%B7%99%E0%B6%BD%E0%B7%8F+%E0%B6%9C%E0%B7%92%E0%B7%84%E0%B7%92%E0%B6%B1%E0%B7%8A+%E0%B6%87%E0%B6%AD%E0%B7%92..%0Ajust+a+fanfiction%21%21%0Astarted+%3D2023.9.1%0Aend%3D%3F%0Acovered+by+czish_77%0Awritten+by+minki04" data-share-content="share_reading">
+                                        <span class="fa fa-tumblr fa-wp-neutral-5 " aria-hidden="true" style="font-size:24px;"></span>
+                                    </a>
+                                    <a data-gtm-action="share:embed" class="share-embed" aria-hidden="true" href="https://embed.wattpad.com/story/353771202" data-share-channel="embed">
+                                        <span class="fa fa-code fa-wp-neutral-5 " aria-hidden="true" style="font-size:24px;"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- --------------------------a2--------------------------- -->
+                        <div id="sp1388504625-pg1" data-page-number="1" class="page highlighter first-page last-page" style="display: flex;">
+
+                            <!-- -----------------------b1--------------------------- -->
+                            <!--where chapter paragraphs and images videos include-->
+                            <div id="chapter-text-body" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-7 col-md-offset-1 col-lg-6 col-lg-offset-3 panel panel-reading" dir="ltr">
+                                      <pre>
+                                          <!--if there any audio this is the place where it place - optional-->
+                                          <div class="trinityAudioPlaceholder"></div>
+                                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A dignissimos dolor dolorem enim impedit labore libero maxime natus nemo praesentium, provident quam quisquam quo quos repudiandae sed tempore voluptates voluptatibus!</p>
+                                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A dignissimos dolor dolorem enim impedit labore libero maxime natus nemo praesentium, provident quam quisquam quo quos repudiandae sed tempore voluptates voluptatibus!</p>
+                                      </pre>
+                            </div>
+
+                            <!-- -----------------------b2--------------------------- -->
+                            <!--side recommendation container-->
+                            <div id="side-recommendation-box" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-4 col-md-offset-0 col-lg-3 col-lg-offset-0 right-rail " style="width: 31.5%;">
+                                <!--add - remove this-->
+                                <div class="row" id="reading-top-ad">
+                                    <div class="reading-widget col-xs-12">
+                                        <div class="component-wrapper" id="component-adcontainer-reading-top-%2f1388504625-introduction"></div>
+                                    </div>
+                                </div>
+                                <!--place here recommendation story when need-->
+                                <div class="row"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--comment section and story recommendation section-->
+                <footer class="footer-comment">
+                    <!--comment section-->
+                    <div class="container container-1">
+                        <!--continue to next part or story over button or text-->
+                        <div class="row part-content" style="width: 100%;">
+                            <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-7 col-md-offset-1 col-lg-6 col-lg-offset-3 part-col part-navigation" style="width: 100%; padding-inline: 0; margin-left: 0">
+                                <div class="component-wrapper" id="component-storypartnavigation-story-part-navigation-%2f1388504625-introduction" style="width: 100%;">
+                                    <div id="story-part-navigation">
+                                        <a href="https://www.wattpad.com/1394938115-chapter-1" class="button__Y70Pw primary-variant__NO4pv default-accent__Pc0Pm medium-size__CLqD3 clickable__iYXtN full-width__dXWyx with-padding__cVt72">
+                                            <span class="background-overlay__mCEaX"></span>Continue to next part
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--comments-->
+                        <div class="row part-content part-comments" style=" width: 100%;">
+                            <!------------------- c1------------------------ -->
+                            <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-7 col-md-offset-1 col-lg-6 col-lg-offset-3 part-col" style="width: 100%; padding-inline: 0;">
+                                <div class="component-wrapper" id="component-storypartcomments-story-part-%2f1388504625-introduction">
+                                    <div id="story-part-comments">
+                                        <div class="comments-list">
+
+                                            <!--comment input box-->
+                                            <div class="new-comment-field">
+                                                <div>
+                                                    <div class="textboxContainer__mbQss">
+                                                        <textarea placeholder="Write a comment..." class="text-body-sm defaultHeight__PP_LO" aria-label="Post new comment" style="height: 48px;"></textarea>
+                                                        <button type="button" disabled="" aria-label="send">
+                                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.2424 13.7576L1.59386 9.91382C0.766235 9.54598 0.81481 8.35534 1.66965 8.05615L21.6485 1.06354C21.6779 1.05253 21.7077 1.04296 21.7378 1.03481C22.096 0.935758 22.4419 1.04489 22.6811 1.26776C22.6899 1.27595 22.6985 1.28433 22.7071 1.29289C22.7157 1.30146 22.7241 1.31014 22.7322 1.31893C22.9554 1.55835 23.0645 1.90478 22.9649 2.26344C22.9568 2.29301 22.9474 2.32229 22.9366 2.35116L15.9439 22.3304C15.6447 23.1852 14.454 23.2338 14.0862 22.4061L10.2424 13.7576ZM18.1943 4.39148L4.71107 9.11061L10.7785 11.8073L18.1943 4.39148ZM12.1927 13.2215L14.8894 19.2889L19.6085 5.80568L12.1927 13.2215Z" fill="#111111"></path></svg>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--single comment-->
+                                            <div class="comment-card-container" style="padding-inline: 12px;">
+                                                <div>
+                                                    <div class="dsContainer__RRG6K commentCardContainer__P0qWo">
+                                                        <div class="dsColumn__PqDUP">
+                                                            <a href="/user/Lio_tiger007" aria-label="Lio_tiger007">
+                                                                <img src="https://a.wattpad.com/useravatar/Lio_tiger007.256.105349.jpg" aria-hidden="true" alt="Lio_tiger007" class="avatar__Ygp0_ comment_card_avatar__zKv1t">
+                                                            </a>
+                                                        </div>
+                                                        <div class="dsColumn__PqDUP commentCardContentContainer__F9gGk gap8__gx3K6">
+                                                            <div class="dsRow__BXK6n gap8__gx3K6 authorProfileRow__GMsIH">
+                                                                <h3 aria-hidden="true" class="dsMargin__Gs6Tj title-action">Lio_tiger007</h3>
+                                                                <div class="dsRow__BXK6n badgeRow__bzi6i"></div>
+                                                            </div>
+                                                            <div class="dsRow__BXK6n commentCardContent__Vc9vg">
+                                                                <pre class="text-body-sm">😩❤️</pre>
+                                                            </div>
+                                                            <div class="dsRow__BXK6n commentCardContent__Vc9vg commentCardMeta__Xy9U9">
+                                                                <p class="postedDate__xcq5D text-caption">1y ago</p>
+                                                                <button class="replyButton__kdyts button__Meavz title-action" aria-label="Reply to comment">Reply</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="dsColumn__PqDUP likeColumn__bveEu">
+                                                            <button class="button__Meavz" aria-label="More options">
+                                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z" fill="#686868"></path></svg>
+                                                            </button>
+                                                            <div class="dsColumn__PqDUP">
+                                                                <button class="button__Meavz" aria-label="Like this comment">
+                                                                    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>
+                                                                </button>
+                                                                <span class="text-caption">1</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--show more comment button-->
+                                            <div class="show-more-btn">
+                                                <button class="button__Y70Pw secondary-variant__KvdoY default-accent__Pc0Pm medium-size__CLqD3 clickable__iYXtN full-width__dXWyx with-padding__cVt72">
+                                                    <span class="background-overlay__mCEaX"></span>Show more
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!------------------- c2 ------------------------ -->
+                            <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-4 col-md-offset-0 col-lg-3 col-lg-offset-0 comments right-rail">
+                                <div class="reading-widget comments-ad-unit">
+                                    <div class="component-wrapper" id="component-adcontainer-comments-ad-%2f1388504625-introduction"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--recommendation section after comment section-->
+                    <div class="part-recommendations-container">
+                        <div class="row">
+                            <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-11 col-md-offset-1 col-lg-11 col-lg-offset-1 discover-rows">
+                                <div class="collection">
+                                    <div class="colWrap no-promoted-section" style="padding: 0;">
+                                        <div class="discover-module recommended-stories-view">
+                                            <!--title-->
+                                            <div class="module-header-story-reading">
+                                                <div class="module-title">Recommendations</div>
+                                            </div>
+                                            <div style="direction:ltr" class="collection" data-target="storiesReadingRecommended">
+
+                                                <!--single recommendation story-->
+                                                <div style="margin-right: 5px;" class="discover-module-stories-large on-discover-module-item">
+                                                    <a class="send-cover-event on-story-preview cover cover-home" data-story-id="294868496" href="/story/294868496-faking-it-lando-norris-ln">
+                                                        <div class="fixed-ratio fixed-ratio-cover">
+                                                            <img src="https://img.wattpad.com/cover/294868496-288-k574189.jpg" alt="Faking it || Lando Norris LN by inkaxis">
+                                                        </div>
+                                                    </a>
+                                                    <div class="content">
+                                                        <a class="title meta on-story-preview" href="" style="font-size: 18px; font-weight: 600; color: #222;">
+                                                            Faking it || Lando Norris LN
+                                                        </a>
+                                                        <a class="username meta on-navigate" href="/user/inkaxis" style="font-size: 15px; color: #222;">
+                                                            by inkaxis
+                                                        </a>
+                                                        <div class="meta social-meta">
+                                                            <span class="read-count" data-toggle="tooltip" data-placement="top" title="5,811,852 Reads">
+                                                                <span class="fa fa-view fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 5.8M
+                                                            </span>
+                                                            <span class="vote-count" data-toggle="tooltip" data-placement="top" title="125,450 Votes">
+                                                                <span class="fa fa-vote fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 125K
+                                                            </span>
+                                                            <span class="part-count">
+                                                                <span class="fa fa-list fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 7
+                                                            </span>
+                                                        </div>
+                                                        <div class="description">"The only thing i want from you is to see your name under mine when the race is over."
+                                                            "Pretty sure you want me under you more than you want that."
+                                                            ✼ When the ground sta...</div>
+                                                        <div class="tag-meta clearfix">
+                                                            <ul class="tag-items">
+                                                                <li>
+                                                                    <a class="tag-item on-navigate" href="/stories/ricciardo">ricciardo</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="tag-item on-navigate" href="/stories/danielricciardo">danielricciardo</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="tag-item on-navigate" href="/stories/charlesleclerc">charlesleclerc</a>
+                                                                </li>
+                                                            </ul>
+
+                                                            <span class="num-not-shown on-story-preview" data-story-id="294868496">+23 more</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="discover-module-stories-large on-discover-module-item"><a class="send-cover-event on-story-preview cover cover-home" data-story-id="294868496" href="/story/294868496-faking-it-lando-norris-ln">
+                                                    <div class="fixed-ratio fixed-ratio-cover">
+                                                        <img src="https://img.wattpad.com/cover/294868496-288-k574189.jpg" alt="Faking it || Lando Norris LN by inkaxis">
+                                                    </div>
+                                                </a>
+                                                    <div class="content" data-target="294868496" data-type="stories">
+                                                        <a class="title meta on-story-preview" href="" style="font-size: 18px; font-weight: 600; color: #222;">
+                                                            Faking it || Lando Norris LN
+                                                        </a>
+                                                        <a class="username meta on-navigate" href="/user/inkaxis" style="font-size: 15px; color: #222;">
+                                                            by inkaxis
+                                                        </a>
+                                                        <div class="meta social-meta">
+                                                            <span class="read-count" data-toggle="tooltip" data-placement="top" title="5,811,852 Reads">
+                                                                <span class="fa fa-view fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 5.8M
+                                                            </span>
+                                                            <span class="vote-count" data-toggle="tooltip" data-placement="top" title="125,450 Votes">
+                                                                <span class="fa fa-vote fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 125K
+                                                            </span>
+                                                            <span class="part-count">
+                                                                <span class="fa fa-list fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 7
+                                                            </span>
+                                                        </div>
+                                                        <div class="description">"The only thing i want from you is to see your name under mine when the race is over."
+                                                            "Pretty sure you want me under you more than you want that."
+                                                            ✼ When the ground sta...</div>
+                                                        <div class="tag-meta clearfix">
+                                                            <ul class="tag-items">
+                                                                <li>
+                                                                    <a class="tag-item on-navigate" href="/stories/ricciardo">ricciardo</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="tag-item on-navigate" href="/stories/danielricciardo">danielricciardo</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="tag-item on-navigate" href="/stories/charlesleclerc">charlesleclerc</a>
+                                                                </li>
+                                                            </ul>
+
+                                                            <span class="num-not-shown on-story-preview" data-story-id="294868496">+23 more</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </article>
+        </main>
+
+
+    </div>
+</div> <!--main container end-->
+
+
+<!-- --------------------------footer---------------------------- -->
+<!--<footer class="KsomK _3iH-u">-->
+<!--  <ul class="la6-S ehTVt _96aZR PUdBR _3iH-u" aria-label="Wattpad links">-->
+<!--    <li><a class="u5f7- sB6J0 _58Jsq" href="">Wattpad Originals</a></li>-->
+<!--    <li><a class="u5f7- sB6J0 _58Jsq" href="">Try Premium</a></li>-->
+<!--    <li><a class="u5f7- sB6J0 _58Jsq" href="">Get the App</a></li>-->
+<!--    <li><button class="u5f7- sB6J0 _58Jsq">Language</button></li>-->
+<!--    <li><a class="u5f7- sB6J0 _58Jsq" href="">Writers</a></li>-->
+<!--    <li class="HAG5T">|</li>-->
+<!--    <li><a class="u5f7- sB6J0 _58Jsq" href="">Brand Partnerships</a></li>-->
+<!--    <li><a class="u5f7- sB6J0 _58Jsq" href="">Jobs</a></li>-->
+<!--    <li><a class="u5f7- sB6J0 _58Jsq" href="">Press</a></li>-->
+<!--  </ul>-->
+<!--  <ul class="VT-tn ehTVt _96aZR PUdBR _3iH-u" aria-label="Legal links">-->
+<!--    <li><a class="_7TWJ4 sB6J0 _58Jsq" href="" rel="nofollow">Terms</a></li>-->
+<!--    <li><a class="_7TWJ4 sB6J0 _58Jsq" href="" rel="nofollow">Privacy</a></li>-->
+<!--    <li><a class="_7TWJ4 sB6J0 _58Jsq" href="" rel="nofollow">Payment Policy</a></li>-->
+<!--    <li><a class="_7TWJ4 sB6J0 _58Jsq" href="" rel="nofollow">Accessibility</a></li>-->
+<!--    <li><a class="_7TWJ4 sB6J0 _58Jsq" href="">Help</a></li>-->
+<!--    <li class="uilPN">© 2025 Wattpad</li>-->
+<!--  </ul>-->
+<!--</footer>-->
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</body>
+</html>

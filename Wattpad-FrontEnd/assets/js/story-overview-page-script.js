@@ -22,7 +22,6 @@ window.onload = function () {
             const params = new URLSearchParams(window.location.search);
 
             if (params.has("storyId")) {
-                storyId = params.get("storyId");
 
                 document.body.style.display = 'block';
                 document.body.style.visibility = 'visible';
