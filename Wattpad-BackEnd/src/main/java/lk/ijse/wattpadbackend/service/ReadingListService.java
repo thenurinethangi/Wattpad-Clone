@@ -13,4 +13,6 @@ public interface ReadingListService {
     ReadingListEditResponseDTO getAllStoriesOfReadingListById(long id);
 
     void updateAReadingList(ReadingListEditRequestDTO readingListEditRequestDTO);
+
+    ReadingListEditResponseDTO getAllStoriesInAReadingListById(long id);
 }

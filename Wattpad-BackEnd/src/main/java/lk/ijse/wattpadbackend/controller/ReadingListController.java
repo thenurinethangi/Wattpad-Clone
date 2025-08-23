@@ -53,6 +53,13 @@ public class ReadingListController {
         readingListService.updateAReadingList(readingListEditRequestDTO);
         return new APIResponse(202,"Successfully update the reading list", null);
     }
+
+    @GetMapping("/single/all/{id}")
+    public APIResponse getAllStoriesInAReadingListById(@PathVariable long id){
+
+        ReadingListEditResponseDTO readingListEditResponseDTO = readingListService.getAllStoriesInAReadingListById(id);
+        return new APIResponse(202,"Successfully loaded all stories of readingList id: "+id, readingListEditResponseDTO);
+    }
 }
 
 
