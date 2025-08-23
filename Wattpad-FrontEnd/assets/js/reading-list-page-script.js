@@ -99,7 +99,7 @@ async function loadReadingLists() {
                         <!--a3 - reading list name and count of stories in the reading list -->
                         <div class="rII7T">
                             <div class="_5kbPA">
-                                <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/reading-list-edit-page.html?readingListId=${singleReadingList.readingListId}">${singleReadingList.readingListName}</a>
+                                <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/single-reading-list-page.html?readingListId=${singleReadingList.readingListId}">${singleReadingList.readingListName}</a>
                             </div>
                             <div class="L7Od7">${singleReadingList.storyCount+ ' stories'}</div>
                         </div>

@@ -1,5 +1,6 @@
 package lk.ijse.wattpadbackend.controller;
 
+import lk.ijse.wattpadbackend.dto.ReadingListEditRequestDTO;
 import lk.ijse.wattpadbackend.dto.ReadingListEditResponseDTO;
 import lk.ijse.wattpadbackend.dto.ReadingListsDTO;
 import lk.ijse.wattpadbackend.service.ReadingListService;
@@ -42,6 +43,15 @@ public class ReadingListController {
 
         ReadingListEditResponseDTO readingListEditResponseDTO = readingListService.getAllStoriesOfReadingListById(id);
         return new APIResponse(202,"Successfully loaded all stories from readingList id: "+id,readingListEditResponseDTO);
+    }
+
+    @PostMapping("/update")
+    public APIResponse updateAReadingList(@RequestBody ReadingListEditRequestDTO readingListEditRequestDTO){
+
+        System.out.println(readingListEditRequestDTO);
+
+        readingListService.updateAReadingList(readingListEditRequestDTO);
+        return new APIResponse(202,"Successfully update the reading list", null);
     }
 }
 

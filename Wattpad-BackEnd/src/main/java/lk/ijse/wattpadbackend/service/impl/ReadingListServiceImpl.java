@@ -1,9 +1,6 @@
 package lk.ijse.wattpadbackend.service.impl;
 
-import lk.ijse.wattpadbackend.dto.ReadingListEditResponseDTO;
-import lk.ijse.wattpadbackend.dto.ReadingListEditStoryDTO;
-import lk.ijse.wattpadbackend.dto.ReadingListsDTO;
-import lk.ijse.wattpadbackend.dto.SingleReadingListDTO;
+import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.entity.ReadingList;
 import lk.ijse.wattpadbackend.entity.ReadingListLike;
 import lk.ijse.wattpadbackend.entity.ReadingListStory;
@@ -12,10 +9,12 @@ import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
 import lk.ijse.wattpadbackend.repository.ReadingListLikeRepository;
 import lk.ijse.wattpadbackend.repository.ReadingListRepository;
+import lk.ijse.wattpadbackend.repository.ReadingListStoryRepository;
 import lk.ijse.wattpadbackend.repository.UserRepository;
 import lk.ijse.wattpadbackend.service.ReadingListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +27,7 @@ public class ReadingListServiceImpl implements ReadingListService {
     private final ReadingListRepository readingListRepository;
     private final UserRepository userRepository;
     private final ReadingListLikeRepository readingListLikeRepository;
+    private final ReadingListStoryRepository readingListStoryRepository;
 
     @Override
     public ReadingListsDTO getAllReadingLists(String name) {
@@ -222,6 +222,45 @@ public class ReadingListServiceImpl implements ReadingListService {
 
         }
         catch (NotFoundException e) {
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updateAReadingList(ReadingListEditRequestDTO readingListEditRequestDTO) {
+
+        try{
+            Optional<ReadingList> optionalReadingList = readingListRepository.findById((int) readingListEditRequestDTO.getReadingListId());
+
+            if(!optionalReadingList.isPresent()){
+               throw new NotFoundException("Reading List not found.");
+            }
+
+            ReadingList readingList = optionalReadingList.get();
+
+            if(!readingListEditRequestDTO.getReadingListName().isEmpty()){
+                readingList.setListName(readingListEditRequestDTO.getReadingListName());
+            }
+            readingList.setStoryCount(readingListEditRequestDTO.getReadingListStoryCount());
+            readingListRepository.save(readingList);
+
+            List<ReadingListStory> toDelete = new ArrayList<>();
+            for (ReadingListStory x : readingList.getReadingListStories()) {
+                for (Long y : readingListEditRequestDTO.getStoryDeleteQueue()) {
+                    if (y.equals(x.getStory().getId())) {
+                        toDelete.add(x);
+                        break;
+                    }
+                }
+            }
+            readingList.getReadingListStories().removeAll(toDelete);
+
+        }
+        catch (NotFoundException e){
             throw e;
         }
         catch (RuntimeException e) {

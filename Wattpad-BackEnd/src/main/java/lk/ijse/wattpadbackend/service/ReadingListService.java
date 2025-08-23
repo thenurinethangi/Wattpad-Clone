@@ -1,5 +1,6 @@
 package lk.ijse.wattpadbackend.service;
 
+import lk.ijse.wattpadbackend.dto.ReadingListEditRequestDTO;
 import lk.ijse.wattpadbackend.dto.ReadingListEditResponseDTO;
 import lk.ijse.wattpadbackend.dto.ReadingListsDTO;
 
@@ -10,4 +11,6 @@ public interface ReadingListService {
     void deleteReadingListById(long id);
 
     ReadingListEditResponseDTO getAllStoriesOfReadingListById(long id);
+
+    void updateAReadingList(ReadingListEditRequestDTO readingListEditRequestDTO);
 }
