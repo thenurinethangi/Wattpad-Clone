@@ -155,6 +155,15 @@ async function loadAllStoriesInReadingList() {
             $('#reading-list-name').text(readingList.readingListName);
             $('#story-count').text(readingList.storyCount+' stories');
 
+            if(readingList.likes!=='0'){
+                $('#like-btn').contents().last()[0].nodeValue = readingList.likes;
+            }
+
+            if(readingList.isCurrentUserLikedOrNot){
+                $('#like-icon path').attr('fill', '#ff6122');
+                $('#like-icon path').attr('stroke', '#ff6122');
+            }
+
             L1: for (let i = 0; i < readingList.readingListEditStoryDTOList.length; i++) {
 
                 let story = readingList.readingListEditStoryDTOList[i];
