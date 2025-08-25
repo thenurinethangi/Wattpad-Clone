@@ -17,4 +17,6 @@ public interface ReadingListService {
     ReadingListEditResponseDTO getAllStoriesInAReadingListById(String username, long id);
 
     boolean checkIfReadingListOwnedByCurrentUser(String name, long readingListId);
+
+    String addOrRemoveLikeFromTheReadingList(String name, long readingListId);
 }

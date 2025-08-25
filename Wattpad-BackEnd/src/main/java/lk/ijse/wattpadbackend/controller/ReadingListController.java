@@ -48,8 +48,6 @@ public class ReadingListController {
     @PostMapping("/update")
     public APIResponse updateAReadingList(@RequestBody ReadingListEditRequestDTO readingListEditRequestDTO){
 
-        System.out.println(readingListEditRequestDTO);
-
         readingListService.updateAReadingList(readingListEditRequestDTO);
         return new APIResponse(202,"Successfully update the reading list", null);
     }
@@ -70,6 +68,15 @@ public class ReadingListController {
 
         Boolean result = readingListService.checkIfReadingListOwnedByCurrentUser(auth.getName(),readingListId);
         return new APIResponse(202,"Successfully get the result of reading list owned by current user or not", result);
+    }
+
+    @PostMapping("/like/{id}")
+    public APIResponse addOrRemoveLikeFromTheReadingList(@PathVariable("id") long readingListId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        String result = readingListService.addOrRemoveLikeFromTheReadingList(auth.getName(),readingListId);
+        return new APIResponse(202,"Successfully add or remove the like from a reading list id : "+readingListId, result);
     }
 }
 

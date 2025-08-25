@@ -158,11 +158,17 @@ async function loadAllStoriesInReadingList() {
             if(readingList.likes!=='0'){
                 $('#like-btn').contents().last()[0].nodeValue = readingList.likes;
             }
+            else{
+                $('#like-btn').contents().last()[0].nodeValue = 'Like';
+            }
 
-            if(readingList.isCurrentUserLikedOrNot){
+            if(readingList.currentUserLikedOrNot === true){
+                console.log(100000000000)
                 $('#like-icon path').attr('fill', '#ff6122');
                 $('#like-icon path').attr('stroke', '#ff6122');
             }
+
+            $('#reading-list-stories-container').empty();
 
             L1: for (let i = 0; i < readingList.readingListEditStoryDTOList.length; i++) {
 
@@ -272,6 +278,7 @@ async function loadAllStoriesInReadingList() {
 
             $('#edit-btn').attr('href', `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/reading-list-edit-page.html?readingListId=${readingList.readingListId}`);
             $('#delete-btn').attr('data-reading-list-id', readingList.readingListId);
+            $('#like-btn').attr('data-reading-list-id', readingList.readingListId);
 
             if(readingList.storyCount<=0){
                 let box = `<div style="width: 100%; height: 370px;">
@@ -346,6 +353,57 @@ $(document).on('click','#delete-btn',function (event) {
     });
 });
 
+
+
+
+//when click on the like icon add or remove the like by user
+let likeBtn = $('#like-btn')[0];
+likeBtn.addEventListener('click',async function (event) {
+
+    let readingListId = $(this).data('reading-list-id');
+
+    await fetch('http://localhost:8080/api/v1/readingList/like/' + readingListId, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            let result = data.data;
+
+            if(result==='add'){
+                $('#like-icon path').attr('fill', '#ff6122');
+                $('#like-icon path').attr('stroke', '#ff6122');
+            }
+            else {
+                $('#like-icon path').attr('fill', 'none');
+                $('#like-icon path').attr('stroke', '#222');
+            }
+
+            loadAllStoriesInReadingList();
+
+        })
+        .catch(error => {
+            try {
+                let errorResponse = JSON.parse(error.message);
+                console.error('Error:', errorResponse);
+            } catch (e) {
+                console.error('Error:', error.message);
+            }
+        });
+});
 
 
 

@@ -13,9 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -443,6 +441,45 @@ public class ReadingListServiceImpl implements ReadingListService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    @Transactional
+    public String addOrRemoveLikeFromTheReadingList(String name, long readingListId) {
+
+        User user = userRepository.findByUsername(name);
+        if (user == null) {
+            throw new UserNotFoundException("User not found");
+        }
+
+        ReadingList readingList = readingListRepository.findById((int) readingListId).orElseThrow(() -> new NotFoundException("Reading list not found."));
+
+        for (Iterator<ReadingListLike> it = readingList.getReadingListLikes().iterator(); it.hasNext();) {
+            ReadingListLike like = it.next();
+            if (Objects.equals(like.getUser().getId(), user.getId())) {
+                it.remove();
+                readingListLikeRepository.delete(like);
+                long likes = readingList.getVotes();
+                likes--;
+                if(likes>=0){
+                    readingList.setVotes(likes);
+                }
+                return "remove";
+            }
+        }
+
+        ReadingListLike newLike = new ReadingListLike();
+        newLike.setUser(user);
+        newLike.setReadingList(readingList);
+        readingList.getReadingListLikes().add(newLike);
+        readingListLikeRepository.save(newLike);
+        long likes = readingList.getVotes();
+        likes++;
+        if(likes>0){
+            readingList.setVotes(likes);
+        }
+        return "add";
+    }
+
 }
 
 
