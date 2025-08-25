@@ -24,7 +24,6 @@ public class ReadingListServiceImpl implements ReadingListService {
     private final ReadingListRepository readingListRepository;
     private final UserRepository userRepository;
     private final ReadingListLikeRepository readingListLikeRepository;
-    private final ReadingListStoryRepository readingListStoryRepository;
 
     @Override
     public ReadingListsDTO getAllReadingLists(String name) {
@@ -266,7 +265,7 @@ public class ReadingListServiceImpl implements ReadingListService {
     }
 
     @Override
-    public ReadingListEditResponseDTO getAllStoriesInAReadingListById(long id) {
+    public ReadingListEditResponseDTO getAllStoriesInAReadingListById(String username, long id) {
 
         try{
             Optional<ReadingList> optionalReadingList = readingListRepository.findById((int) id);
@@ -282,6 +281,49 @@ public class ReadingListServiceImpl implements ReadingListService {
             readingListEditResponseDTO.setReadingListId(readingList.getId());
             readingListEditResponseDTO.setReadingListName(readingList.getListName());
             readingListEditResponseDTO.setStoryCount(readingList.getStoryCount());
+
+            long likes = readingList.getVotes();
+
+            String likesInString = "";
+            if(likes<=1000){
+                likesInString = String.valueOf(likes);
+            }
+            else if (likes >= 1000 && likes < 1000000) {
+                double value = (double) likes / 1000;
+                String vStr = String.valueOf(value);
+
+                if (vStr.endsWith(".0")) {
+                    likesInString = vStr.split("\\.0")[0] + "K";
+                } else {
+                    likesInString = vStr + "K";
+                }
+            }
+            else if(likes>=1000000){
+                double value = (double) likes/1000000;
+
+                String vStr = String.valueOf(value);
+
+                if (vStr.endsWith(".0")) {
+                    likesInString = vStr.split("\\.0")[0] + "M";
+                } else {
+                    likesInString = value+"M";
+                }
+            }
+            readingListEditResponseDTO.setLikes(likesInString);
+
+            User user = userRepository.findByUsername(username);
+            if(user==null){
+                throw new UserNotFoundException("User not found");
+            }
+
+            readingListEditResponseDTO.setCurrentUserLikedOrNot(false);
+            List<ReadingListLike> readingListLikes = readingList.getReadingListLikes();
+            for (ReadingListLike x : readingListLikes){
+                if(x.getUser().getId()==user.getId()){
+                    readingListEditResponseDTO.setCurrentUserLikedOrNot(true);
+                    break;
+                }
+            }
 
             List<ReadingListEditStoryDTO> readingListEditStoryDTOList = new ArrayList<>();
             for (ReadingListStory x : readingListStories){
@@ -367,13 +409,39 @@ public class ReadingListServiceImpl implements ReadingListService {
             return readingListEditResponseDTO;
 
         }
-        catch (NotFoundException e) {
+        catch (NotFoundException | UserNotFoundException e) {
             throw e;
         }
         catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public boolean checkIfReadingListOwnedByCurrentUser(String name, long readingListId) {
+
+        try{
+            User user = userRepository.findByUsername(name);
+            if(user==null){
+                throw new UserNotFoundException("User not found");
+            }
+
+            Optional<ReadingList> readingListOptional = readingListRepository.findById((int) readingListId);
+            if(!readingListOptional.isPresent()){
+                throw new NotFoundException("Reading list not found.");
+            }
+
+            ReadingList readingList = readingListOptional.get();
+            return readingList.getUser().getId() == user.getId();
+
+        }
+        catch (UserNotFoundException | NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

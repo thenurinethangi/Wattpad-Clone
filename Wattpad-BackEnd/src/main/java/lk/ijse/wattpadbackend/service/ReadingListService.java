@@ -14,5 +14,7 @@ public interface ReadingListService {
 
     void updateAReadingList(ReadingListEditRequestDTO readingListEditRequestDTO);
 
-    ReadingListEditResponseDTO getAllStoriesInAReadingListById(long id);
+    ReadingListEditResponseDTO getAllStoriesInAReadingListById(String username, long id);
+
+    boolean checkIfReadingListOwnedByCurrentUser(String name, long readingListId);
 }

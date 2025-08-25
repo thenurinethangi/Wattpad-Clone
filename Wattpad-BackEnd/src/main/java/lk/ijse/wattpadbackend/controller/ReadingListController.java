@@ -57,8 +57,19 @@ public class ReadingListController {
     @GetMapping("/single/all/{id}")
     public APIResponse getAllStoriesInAReadingListById(@PathVariable long id){
 
-        ReadingListEditResponseDTO readingListEditResponseDTO = readingListService.getAllStoriesInAReadingListById(id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        ReadingListEditResponseDTO readingListEditResponseDTO = readingListService.getAllStoriesInAReadingListById(auth.getName(),id);
         return new APIResponse(202,"Successfully loaded all stories of readingList id: "+id, readingListEditResponseDTO);
+    }
+
+    @GetMapping("/owner/{id}")
+    public APIResponse checkIfReadingListOwnedByCurrentUser(@PathVariable("id") long readingListId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        Boolean result = readingListService.checkIfReadingListOwnedByCurrentUser(auth.getName(),readingListId);
+        return new APIResponse(202,"Successfully get the result of reading list owned by current user or not", result);
     }
 }
 

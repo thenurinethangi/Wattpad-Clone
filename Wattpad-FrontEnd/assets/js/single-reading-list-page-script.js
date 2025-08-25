@@ -42,6 +42,81 @@ window.onload = function () {
 
 
 
+//check if reading list owned by current login user
+async function checkReadingListOwnedByCurrentUserOrNot() {
+
+    let readingListId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("readingListId")) {
+        readingListId = params.get("readingListId");
+    }
+
+    if(readingListId==null){
+        //load chapter not found page
+        return;
+    }
+
+    await fetch('http://localhost:8080/api/v1/readingList/owner/'+readingListId, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            let result = data.data;
+
+            if(result){
+                let editAndDeleteBtnContainer = `
+        <div class="hQRdg">
+            <!--edit-->
+            <a href="" id="edit-btn" class="button__Y70Pw secondary-variant__KvdoY default-accent__Pc0Pm small-size__XHtfM clickable__iYXtN with-padding__cVt72">
+                <span class="background-overlay__mCEaX"></span>
+                <span class="icon__p6RRK">
+                    <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpEdit</title><path d="m19.399 2.434-.207-.062-.21-.05a3.446 3.446 0 0 0-3.118.942l-12.15 12.15a.9.9 0 0 0-.232.4l-1.35 4.95a.9.9 0 0 0 1.105 1.104l4.95-1.35a.9.9 0 0 0 .4-.232l12.15-12.15a3.446 3.446 0 0 0-1.338-5.702Zm.065 4.43L7.483 18.844l-3.2.873.872-3.2 11.981-11.98a1.646 1.646 0 1 1 2.328 2.327Z" fill="#121212"></path></svg>
+                </span>
+                Edit
+            </a>
+            <!--delete-->
+            <button id="delete-btn" class="button__Y70Pw secondary-variant__KvdoY alert-accent__i1c5g small-size__XHtfM clickable__iYXtN with-padding__cVt72">
+                <span class="background-overlay__mCEaX"></span>
+                <span class="icon__p6RRK">
+                    <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false"><title id="">WpDelete</title><path d="M7 5V4a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1h4a1 1 0 1 1 0 2h-1v13a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7H3a1 1 0 0 1 0-2h4Zm2.293-1.707A1 1 0 0 0 9 4v1h6V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-.707.293ZM6 7v13a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7H6Z" fill="#121212"></path><path d="M10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1ZM14 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1Z" fill="#121212"></path></svg>
+                </span>
+                Delete
+            </button>
+        </div>`;
+
+                $('#actions-buttons-container').prepend(editAndDeleteBtnContainer);
+            }
+
+        })
+        .catch(error => {
+            try {
+                let errorResponse = JSON.parse(error.message);
+                console.error('Error:', errorResponse);
+            } catch (e) {
+                console.error('Error:', error.message);
+            }
+        });
+}
+checkReadingListOwnedByCurrentUserOrNot();
+
+
+
+
 //load all stories in reading list from backend
 async function loadAllStoriesInReadingList() {
 
@@ -212,10 +287,8 @@ loadAllStoriesInReadingList();
 
 
 
-
 //when click on clear all stories btn add all the stories to delete queue
-let deleteBtn = $('#delete-btn')[0];
-deleteBtn.addEventListener('click', function (event) {
+$(document).on('click','#delete-btn',function (event) {
 
     Swal.fire({
         title: 'Delete reading list?',
