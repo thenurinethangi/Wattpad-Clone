@@ -3,6 +3,9 @@ package lk.ijse.wattpadbackend.service;
 import lk.ijse.wattpadbackend.dto.ReadingListEditRequestDTO;
 import lk.ijse.wattpadbackend.dto.ReadingListEditResponseDTO;
 import lk.ijse.wattpadbackend.dto.ReadingListsDTO;
+import lk.ijse.wattpadbackend.dto.SingleReadingListDTO;
+
+import java.util.List;
 
 public interface ReadingListService {
 
@@ -19,4 +22,6 @@ public interface ReadingListService {
     boolean checkIfReadingListOwnedByCurrentUser(String name, long readingListId);
 
     String addOrRemoveLikeFromTheReadingList(String name, long readingListId);
+
+    List<SingleReadingListDTO> getAllLikedReadingLists(String name);
 }

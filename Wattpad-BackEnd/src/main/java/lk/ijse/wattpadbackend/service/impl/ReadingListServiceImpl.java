@@ -6,7 +6,6 @@ import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
 import lk.ijse.wattpadbackend.repository.ReadingListLikeRepository;
 import lk.ijse.wattpadbackend.repository.ReadingListRepository;
-import lk.ijse.wattpadbackend.repository.ReadingListStoryRepository;
 import lk.ijse.wattpadbackend.repository.UserRepository;
 import lk.ijse.wattpadbackend.service.ReadingListService;
 import lombok.RequiredArgsConstructor;
@@ -478,6 +477,54 @@ public class ReadingListServiceImpl implements ReadingListService {
             readingList.setVotes(likes);
         }
         return "add";
+    }
+
+    @Override
+    public List<SingleReadingListDTO> getAllLikedReadingLists(String name) {
+
+        try {
+            User user = userRepository.findByUsername(name);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            List<ReadingListLike> readingListLikeList = readingListLikeRepository.findAllByUser(user);
+
+            List<SingleReadingListDTO> singleReadingListDTOList = new ArrayList<>();
+            for (ReadingListLike x : readingListLikeList){
+                SingleReadingListDTO readingListDTO = new SingleReadingListDTO();
+                readingListDTO.setReadingListId(x.getReadingList().getId());
+                readingListDTO.setReadingListName(x.getReadingList().getListName());
+                readingListDTO.setStoryCount(x.getReadingList().getStoryCount());
+                readingListDTO.setUserId(x.getReadingList().getUser().getId());
+                readingListDTO.setUsername(x.getReadingList().getUser().getUsername());
+                readingListDTO.setUserProfilePicPath(x.getReadingList().getUser().getProfilePicPath());
+
+                List<ReadingListStory> readingListStories = x.getReadingList().getReadingListStories();
+                List<String> threeStoriesCoverImagePath = new ArrayList<>();
+                for (int i = 0; i < 3; i++) {
+                    if(i>=readingListStories.size()){
+                        threeStoriesCoverImagePath.add("wattpad-logo-white.svg");
+                    }
+                    else{
+                        threeStoriesCoverImagePath.add(readingListStories.get(i).getStory().getCoverImagePath());
+                    }
+                }
+                readingListDTO.setThreeStoriesCoverImagePath(threeStoriesCoverImagePath);
+
+                singleReadingListDTOList.add(readingListDTO);
+            }
+
+            return singleReadingListDTOList;
+
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
 }

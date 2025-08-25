@@ -3,12 +3,15 @@ package lk.ijse.wattpadbackend.controller;
 import lk.ijse.wattpadbackend.dto.ReadingListEditRequestDTO;
 import lk.ijse.wattpadbackend.dto.ReadingListEditResponseDTO;
 import lk.ijse.wattpadbackend.dto.ReadingListsDTO;
+import lk.ijse.wattpadbackend.dto.SingleReadingListDTO;
 import lk.ijse.wattpadbackend.service.ReadingListService;
 import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/readingList")
@@ -77,6 +80,15 @@ public class ReadingListController {
 
         String result = readingListService.addOrRemoveLikeFromTheReadingList(auth.getName(),readingListId);
         return new APIResponse(202,"Successfully add or remove the like from a reading list id : "+readingListId, result);
+    }
+
+    @GetMapping("/liked/all")
+    public APIResponse getAllLikedReadingLists(){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        List<SingleReadingListDTO> singleReadingListDTOList = readingListService.getAllLikedReadingLists(auth.getName());
+
+        return new APIResponse(202,"Successfully loaded all liked readingLists.",singleReadingListDTOList);
     }
 }
 
