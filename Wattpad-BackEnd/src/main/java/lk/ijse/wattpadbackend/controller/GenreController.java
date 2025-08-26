@@ -1,6 +1,8 @@
 package lk.ijse.wattpadbackend.controller;
 
 import lk.ijse.wattpadbackend.dto.GenreDTO;
+import lk.ijse.wattpadbackend.dto.GenreSearchCriteriaDTO;
+import lk.ijse.wattpadbackend.dto.GenreSearchResponseDTO;
 import lk.ijse.wattpadbackend.dto.SelectedGenreDTO;
 import lk.ijse.wattpadbackend.service.AuthService;
 import lk.ijse.wattpadbackend.service.GenreService;
@@ -20,6 +22,11 @@ public class GenreController {
     private final GenreService genreService;
     private final AuthService authService;
 
+    @GetMapping()
+    public APIResponse welcomeMessage(){
+        return new APIResponse(202,"WELCOME TO GENRE STORIES PAGE",null);
+    }
+
     @GetMapping("/all")
     public APIResponse allGenre(){
 
@@ -34,6 +41,13 @@ public class GenreController {
 
         genreService.selectGenre(selectedGenreDTO,auth.getName());
         return new APIResponse(202,"Selected genres have been successfully saved.",null);
+    }
+
+    @PostMapping("/{genre}")
+    public APIResponse getAllStoriesOfSelectedGenre(@PathVariable String genre, @RequestBody GenreSearchCriteriaDTO genreSearchCriteriaDTO){
+
+        GenreSearchResponseDTO genreSearchResponseDTO = genreService.getAllStoriesOfSelectedGenre(genre,genreSearchCriteriaDTO);
+        return new APIResponse(202,"Successfully load stories from selected genre.",genreSearchResponseDTO);
     }
 }
 

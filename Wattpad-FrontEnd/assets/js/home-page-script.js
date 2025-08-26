@@ -981,7 +981,7 @@ async function loadBrowseGenres() {
                             <ul class="splide__list" id="splide22-list" role="presentation" style="transform: translateX(0px);">
                                 <li class="splide__slide LH-JU is-active is-visible" role="group" aria-roledescription="slide" aria-label="1 of 23" style="margin-right: 8px; width: calc(50% - 4px);">
                                     <div class="WS31f">
-                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href=" ">
+                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Romance">
                                             <img src="https://static.wattpad.com/image/romance-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt="">
                                             <span class="typography-label-small-semi">Romance</span>
                                         </a>
@@ -989,7 +989,7 @@ async function loadBrowseGenres() {
                                 </li>
                                 <li class="splide__slide LH-JU is-visible is-next" role="group" aria-roledescription="slide" aria-label="2 of 23" style="margin-right: 8px; width: calc(50% - 4px);">
                                     <div class="WS31f">
-                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href=" ">
+                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Fanfiction">
                                             <img src="https://static.wattpad.com/image/fanfic-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt="">
                                             <span class="typography-label-small-semi">Fanfiction</span>
                                         </a>
@@ -997,7 +997,7 @@ async function loadBrowseGenres() {
                                 </li>
                                 <li class="splide__slide LH-JU is-visible" role="group" aria-roledescription="slide" aria-label="3 of 23" style="margin-right: 8px; width: calc(50% - 4px);">
                                     <div class="WS31f">
-                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href=" ">
+                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=LGBTQ+">
                                             <img src="https://static.wattpad.com/image/lgbt-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt="">
                                             <span class="typography-label-small-semi">LGBTQ+</span>
                                         </a>
@@ -1005,7 +1005,7 @@ async function loadBrowseGenres() {
                                 </li>
                                 <li class="splide__slide LH-JU is-visible" role="group" aria-roledescription="slide" aria-label="4 of 23" style="margin-right: 8px; width: calc(50% - 4px);">
                                     <div class="WS31f">
-                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href=" ">
+                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Wattpad Originals">
                                             <img src="https://static.wattpad.com/image/paidstories-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt="">
                                             <span class="typography-label-small-semi">Wattpad Originals</span>
                                         </a>
@@ -1013,7 +1013,7 @@ async function loadBrowseGenres() {
                                 </li>
                                 <li class="splide__slide LH-JU" role="group" aria-roledescription="slide" aria-label="5 of 23" style="margin-right: 8px; width: calc(50% - 4px);" aria-hidden="true">
                                     <div class="WS31f">
-                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href=" " tabindex="-1">
+                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Werewolf" tabindex="-1">
                                             <img src="https://static.wattpad.com/image/werewolf-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt="">
                                             <span class="typography-label-small-semi">Werewolf</span>
                                         </a>
@@ -1021,7 +1021,7 @@ async function loadBrowseGenres() {
                                 </li>
                                 <li class="splide__slide LH-JU" role="group" aria-roledescription="slide" aria-label="6 of 23" style="margin-right: 8px; width: calc(50% - 4px);" aria-hidden="true">
                                     <div class="WS31f">
-                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href=" " tabindex="-1">
+                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=New Adult" tabindex="-1">
                                             <img src="https://static.wattpad.com/image/newadult-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt="">
                                             <span class="typography-label-small-semi">New Adult</span>
                                         </a>
@@ -1030,7 +1030,7 @@ async function loadBrowseGenres() {
 
                                 <li class="splide__slide LH-JU is-active is-visible" role="group" aria-roledescription="slide" aria-label="1 of 23" style="margin-right: 8px; width: calc(50% - 4px);">
                                     <div class="WS31f">
-                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href=" ">
+                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="">
                                             <img src="https://static.wattpad.com/image/romance-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt="">
                                             <span class="typography-label-small-semi">Romance</span>
                                         </a>

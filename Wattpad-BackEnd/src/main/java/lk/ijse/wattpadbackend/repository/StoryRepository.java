@@ -9,11 +9,16 @@ import java.util.List;
 
 @Repository
 public interface StoryRepository extends JpaRepository<Story,Integer> {
+
     List<Story> findAllByCategory(String category);
 
     List<Story> findAllByOrderByViewsDesc();
 
     List<Story> findAllByUser(User user);
+
+    List<Story> findAllByCategoryOrderByViewsDesc(String genre);
+
+    List<Story> findAllByCategoryOrderByCreatedAtDesc(String genre);
 }
 
 
