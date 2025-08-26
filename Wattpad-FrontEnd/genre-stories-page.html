@@ -221,27 +221,21 @@
                         <!--story count-->
                         <h4 class="text-light all-caps" id="header-left">1.3K Stories</h4>
                         <!--sort by-->
-                        <div class="button-group relative inline-block">
+                        <div class="button-group relative inline-block" id="sort-by-container">
                             <button class="btn btn-text dropdown-toggle" id="sortby-button" data-toggle="dropdown">
                                 <span id="sortby-text">Sort by:  Hot</span>
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" id="sortby-dropdown" style="display: none;">
-                                <li>
-                                    <a href="/stories/sciencefiction/hot" data-section="hot" class="tab-control active">Hot
-                                        <span class="fa-stack check ">
-                                            <span class="fa fa-circle-empty fa-stack-2x fa-wp-base-2 " aria-hidden="true" style="font-size:16px;"></span>
-                                            <span class="fa fa-check fa-stack-1x fa-wp-base-2 " aria-hidden="true" style="font-size:10px;"></span>
-                                        </span>
-                                    </a>
+                                <li id="sort-by-hot">
+                                    <div data-section="hot" class="tab-control active" style="font-size: 14px; color: #222; padding: 3px 15px; font-weight: 400; display: flex; align-items: center;">Hot
+                                        <i class="fa-regular fa-circle-check" style="color: #00b2b2;"></i>
+                                    </div>
                                 </li>
-                                <li>
-                                    <a href="/stories/sciencefiction/new" data-section="new" class="tab-control">New
-                                        <span class="fa-stack check  hidden ">
-                                            <span class="fa fa-circle-empty fa-stack-2x fa-wp-base-2 " aria-hidden="true" style="font-size:16px;"></span>
-                                            <span class="fa fa-check fa-stack-1x fa-wp-base-2 " aria-hidden="true" style="font-size:10px;"></span>
-                                        </span>
-                                    </a>
+                                <li id="sort-by-newest">
+                                    <div data-section="new" class="tab-control" style="font-size: 14px; color: #222; padding: 3px 15px; font-weight: 400; display: flex; align-items: center;">New
+                                        <i class="fa-regular fa-circle-check" style="color: #00b2b2; display: none;"></i>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -316,8 +310,8 @@
                         </article>
 
                         <!--show more btn container-->
-                        <div class="show-more center-text">
-                            <button class="btn btn-grey on-showmore">
+                        <div id="show-more-btn-container" class="show-more center-text">
+                            <button id="search-more-btn" class="btn btn-grey on-showmore">
                                 <span class="show-more-message">
                                     <span>Show more</span>
                                     <i class="fas fa-angle-down fa-wp-neutral-2"></i>

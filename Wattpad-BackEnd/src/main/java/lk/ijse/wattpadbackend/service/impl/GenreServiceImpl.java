@@ -109,6 +109,7 @@ public class GenreServiceImpl implements GenreService {
                 }
                 else{
                     returnStoryCount = qualifiedStoryList.size();
+
                 }
 
                 List<Story> finalQulifiedStoryList = new ArrayList<>();
@@ -117,6 +118,13 @@ public class GenreServiceImpl implements GenreService {
                 }
 
                 GenreSearchResponseDTO genreSearchResponseDTO = new GenreSearchResponseDTO();
+
+                if(qualifiedStoryList.size()>searchCriteriaDTO.getStoryCount()){
+                    genreSearchResponseDTO.setAreMoreStoriesAvailable(1);
+                }
+                else{
+                    genreSearchResponseDTO.setAreMoreStoriesAvailable(0);
+                }
 
                 long count = returnStoryCount;
 

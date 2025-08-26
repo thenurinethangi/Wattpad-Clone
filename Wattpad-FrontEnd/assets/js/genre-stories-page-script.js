@@ -157,12 +157,42 @@ async function loadAllStoriesInSelectedGenre(data) {
             $('#tags-container').empty();
             for (let i = 0; i < genreSearchResult.tags.length; i++) {
 
-                let tag = `<div class="tag-item with-icon" href="">
-                                    <span>${genreSearchResult.tags[i]}</span>
-                                    <span class="fa fa-plus fa-wp-neutral-2" aria-hidden="true" style="font-size: 12px;"></span>
-                                  </div>`
+                let bool = false;
+                for (let j = 0; j < tags.length; j++) {
+                    if(genreSearchResult.tags[i]===tags[j]){
+                       bool = true;
+                       break;
+                    }
+                }
 
-                $('#tags-container').append(tag);
+                if(bool){
+                    let tag = `<div class="tag-item with-icon filter-tags" data-tag="${genreSearchResult.tags[i]}" style="background-color: #eee;">
+                                        <span>${genreSearchResult.tags[i]}</span>
+                                        <span class="fa fa-plus fa-wp-neutral-2" aria-hidden="true" style="font-size: 12px; transform: rotate(45deg);"></span>
+                                      </div>`
+
+                    $('#tags-container').append(tag);
+                }
+            }
+
+            for (let i = 0; i < genreSearchResult.tags.length; i++) {
+
+                let bool = false;
+                for (let j = 0; j < tags.length; j++) {
+                    if(genreSearchResult.tags[i]===tags[j]){
+                        bool = true;
+                        break;
+                    }
+                }
+
+                if(!bool){
+                    let tag = `<div class="tag-item with-icon filter-tags" data-tag="${genreSearchResult.tags[i]}">
+                                        <span>${genreSearchResult.tags[i]}</span>
+                                        <span class="fa fa-plus fa-wp-neutral-2" aria-hidden="true" style="font-size: 12px;"></span>
+                                      </div>`
+
+                    $('#tags-container').append(tag);
+                }
             }
 
             $('#header-left').text(genreSearchResult.totalStoriesCount+ ' Stories');
@@ -178,7 +208,7 @@ async function loadAllStoriesInSelectedGenre(data) {
                                 <div class="component-wrapper">
                                     <div class="item">
                                         <!--image-->
-                                        <a class="on-story-preview cover cover-lg" href="">
+                                        <a class="on-story-preview cover cover-lg" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}">
                                             <div class="fixed-ratio fixed-ratio-cover">
                                                 <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.coverImagePath}" alt="Story cover">
                                                 <div class="story-rank">
@@ -256,6 +286,12 @@ async function loadAllStoriesInSelectedGenre(data) {
                 }
             }
 
+            if(genreSearchResult.areMoreStoriesAvailable==1){
+                $('#show-more-btn-container').css('display','block');
+            }
+            else{
+                $('#show-more-btn-container').css('display','none');
+            }
 
         })
         .catch(error => {
@@ -278,6 +314,124 @@ let data = {
     'sortBy': sortBy
 };
 loadAllStoriesInSelectedGenre(data);
+
+
+
+
+//when click on search more btn load more stories by selected genre
+let searchMoreBtn = $('#search-more-btn')[0];
+searchMoreBtn.addEventListener('click',function (event) {
+
+    storyCount+=16;
+
+    let data = {
+        'storyCount': storyCount,
+        'tags': tags,
+        'sortBy': sortBy
+    };
+    loadAllStoriesInSelectedGenre(data);
+
+});
+
+
+
+
+//when click on sort by show the sort by drop down
+let sortByDropDown = $('#sortby-button')[0];
+sortByDropDown.addEventListener('click', function (event) {
+
+    $('#sortby-dropdown').css('display','block');
+    $('#sort-by-newest').css('display','block');
+    $('#sort-by-hot').css('display','block');
+});
+
+
+
+
+//when click on sort by hot filter the stories by most viewed to least
+let sortByHot = $('#sort-by-hot')[0];
+sortByHot.addEventListener('click', function (event) {
+
+    let icon1 = $(this).find('i');
+    if (icon1.length) {
+        icon1.css('display', 'block');
+    }
+
+    let icon2 = $('#sort-by-newest').find('i');
+    icon2.css('display','none');
+
+    $(this).css('display','none');
+    $('#sort-by-newest').css('display','none');
+
+    $('#sortby-text').text('Sort by:  Hot');
+
+    sortBy = 1;
+    let data = {
+        'storyCount': storyCount,
+        'tags': tags,
+        'sortBy': sortBy
+    };
+    loadAllStoriesInSelectedGenre(data);
+
+});
+
+
+
+
+//when click on sort by new filter the stories by latest to old
+let sortByNewest = $('#sort-by-newest')[0];
+sortByNewest.addEventListener('click', function (event) {
+
+    let icon1 = $(this).find('i');
+    if (icon1.length) {
+        icon1.css('display', 'block');
+    }
+
+    let icon2 = $('#sort-by-hot').find('i');
+    icon2.css('display','none');
+
+    $(this).css('display','none');
+    $('#sort-by-hot').css('display','none');
+
+    $('#sortby-text').text('Sort by:  New');
+
+    sortBy = 0;
+    let data = {
+        'storyCount': storyCount,
+        'tags': tags,
+        'sortBy': sortBy
+    };
+    loadAllStoriesInSelectedGenre(data);
+
+});
+
+
+
+
+//when click on filter tags filter the stories by tags
+$(document).on('click','.filter-tags',function (event) {
+
+    let tag = $(this).data('tag');
+
+    if (!tags.includes(tag)) {
+        tags.push(tag);
+    }
+    else{
+        tags = tags.filter(t => t !== tag);
+    }
+
+    let data = {
+        'storyCount': storyCount,
+        'tags': tags,
+        'sortBy': sortBy
+    };
+    loadAllStoriesInSelectedGenre(data);
+
+});
+
+
+
+
 
 
 

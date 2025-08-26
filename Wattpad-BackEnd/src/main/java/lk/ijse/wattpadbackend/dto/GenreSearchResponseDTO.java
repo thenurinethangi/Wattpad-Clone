@@ -14,4 +14,16 @@ public class GenreSearchResponseDTO {
     private String totalStoriesCount;
     private List<String> tags;
     private List<GenreStoryDTO> genreStoryDTOList;
+    private int areMoreStoriesAvailable;
 }
+
+
+
+
+
+
+
+
+
+
+
