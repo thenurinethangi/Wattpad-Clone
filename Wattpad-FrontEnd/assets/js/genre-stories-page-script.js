@@ -62,8 +62,8 @@ async function loadAllStoriesInSelectedGenre(data) {
     if(genre==='Romance'){
         genreTitle.text('Romance Stories');
     }
-    else if(genre==='FanFiction'){
-        genreTitle.text('FanFiction Stories');
+    else if(genre==='Fanfiction'){
+        genreTitle.text('Fanfiction Stories');
     }
     else if(genre==='LGBTQ+'){
         genreTitle.text('LGBTQ+ Stories');
@@ -122,8 +122,8 @@ async function loadAllStoriesInSelectedGenre(data) {
     else if(genre==='Adventure'){
         genreTitle.text('Adventure Stories');
     }
-    else if(genre==='Non Fiction'){
-        genreTitle.text('Non Fiction Stories');
+    else if(genre==='Non-Fiction'){
+        genreTitle.text('Non-Fiction Stories');
     }
     else if(genre==='Poetry'){
         genreTitle.text('Poetry Stories');
@@ -281,7 +281,7 @@ async function loadAllStoriesInSelectedGenre(data) {
                 }
 
                 if(count>0){
-                    let lessTagsCount = `<span class="num-not-shown on-story-preview" role="button" tabindex="0">+${count} more</span>`;
+                    let lessTagsCount = `<span class="num-not-shown on-story-preview" role="button" tabindex="0"><a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}" style="color: #6f6f6f; font-size: 12px; font-weight: 600;">+${count} more</a</span>`;
                     $(`.${story.storyId}`).append(lessTagsCount);
                 }
             }
