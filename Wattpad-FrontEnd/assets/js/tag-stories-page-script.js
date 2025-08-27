@@ -84,6 +84,12 @@ async function loadAllStoriesInSelectedTag(data) {
             let genreSearchResult = data.data;
 
             $('#tags-container').empty();
+            let searchedTag = `<div class="tag-item with-icon" style="background-color: #eee;">
+                                        <span>${tag}</span>
+                                      </div>`
+
+            $('#tags-container').append(searchedTag);
+
             for (let i = 0; i < genreSearchResult.tags.length; i++) {
 
                 let bool = false;
@@ -95,12 +101,12 @@ async function loadAllStoriesInSelectedTag(data) {
                 }
 
                 if(bool){
-                    let tag = `<div class="tag-item with-icon filter-tags" data-tag="${genreSearchResult.tags[i]}" style="background-color: #eee;">
+                    let tag1 = `<div class="tag-item with-icon filter-tags" data-tag="${genreSearchResult.tags[i]}" style="background-color: #eee;">
                                         <span>${genreSearchResult.tags[i]}</span>
                                         <span class="fa fa-plus fa-wp-neutral-2" aria-hidden="true" style="font-size: 12px; transform: rotate(45deg);"></span>
                                       </div>`
 
-                    $('#tags-container').append(tag);
+                    $('#tags-container').append(tag1);
                 }
             }
 
@@ -114,13 +120,13 @@ async function loadAllStoriesInSelectedTag(data) {
                     }
                 }
 
-                if(!bool){
-                    let tag = `<div class="tag-item with-icon filter-tags" data-tag="${genreSearchResult.tags[i]}">
+                if(!bool && genreSearchResult.tags[i]!==tag){
+                    let tag2 = `<div class="tag-item with-icon filter-tags" data-tag="${genreSearchResult.tags[i]}">
                                         <span>${genreSearchResult.tags[i]}</span>
                                         <span class="fa fa-plus fa-wp-neutral-2" aria-hidden="true" style="font-size: 12px;"></span>
                                       </div>`
 
-                    $('#tags-container').append(tag);
+                    $('#tags-container').append(tag2);
                 }
             }
 
