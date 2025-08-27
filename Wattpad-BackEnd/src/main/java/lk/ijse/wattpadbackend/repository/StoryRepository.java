@@ -23,6 +23,8 @@ public interface StoryRepository extends JpaRepository<Story,Integer> {
     List<Story> findAllByCategoryOrderByCreatedAtDesc(String genre);
 
     List<Story> findAllByOrderByCreatedAtDesc();
+
+    List<Story> findByTitleContainingIgnoreCase(String keyword);
 }
 
 

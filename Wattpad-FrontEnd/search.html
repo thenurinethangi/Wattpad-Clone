@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="assets/style/main-UJKFODQT.css"/>
     <link rel="stylesheet" href="assets/style/react-tooltip-HIHMAPNF.css"/>
     <link rel="stylesheet" href="assets/style/splide.min-AQNS3YPQ.css"/>
+    <link rel="stylesheet" href="assets/style/header-dropdowns-style.css">
     <link rel="stylesheet" href="assets/style/footer-style.css">
 </head>
 <body class="touchDisabled route-search" dir="ltr">
@@ -47,11 +48,18 @@
     </nav>
     <div class="lXfdp gMmKF">
         <div class="wDLq1">
-            <form class="VOZUu" action="" method="post" role="search" name="search">
+            <form id="search-form" class="VOZUu" action="" method="post" role="search" name="search">
                 <button class="_8r2SK U-dRJ" type="submit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5999 6.49844C1.5999 3.79224 3.79371 1.59844 6.4999 1.59844C9.2061 1.59844 11.3999 3.79224 11.3999 6.49844C11.3999 9.20463 9.2061 11.3984 6.4999 11.3984C3.79371 11.3984 1.5999 9.20463 1.5999 6.49844ZM6.4999 0.398438C3.13097 0.398438 0.399902 3.1295 0.399902 6.49844C0.399902 9.86737 3.13097 12.5984 6.4999 12.5984C7.99441 12.5984 9.36338 12.061 10.4241 11.1688C10.4515 11.2618 10.5019 11.3494 10.5752 11.4227L13.0501 13.8976C13.2844 14.1319 13.6643 14.1319 13.8986 13.8976C14.133 13.6633 14.133 13.2834 13.8986 13.0491L11.4238 10.5742C11.3504 10.5008 11.2629 10.4505 11.1699 10.423C12.0623 9.36227 12.5999 7.99313 12.5999 6.49844C12.5999 3.1295 9.86884 0.398438 6.4999 0.398438Z" fill="#121212" fill-opacity="0.64"></path></svg>
                 </button>
-                <input class="_6Hiiv" type="text" placeholder="Search" name="query" autoComplete="off"/>
+                <input id="search-input" class="_6Hiiv" type="text" placeholder="Search" name="query" autoComplete="off"/>
+                <!--search suggest container-->
+                <div id="search-suggestions-container" class="MaVh4 jYEar" style="display: none;">
+                    <div class="klGY-"></div>
+                    <ul id="search-suggestions-list" class="rYwVc">
+                        <!--here place suggested stories titles-->
+                    </ul>
+                </div>
             </form>
         </div>
     </div>
@@ -198,5 +206,10 @@
         <li class="uilPN">© 2025 Wattpad</li>
     </ul>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="assets/js/header-script.js"></script>
+<script src="assets/js/search-script.js"></script>
 </body>
 </html>
