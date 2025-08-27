@@ -43,7 +43,7 @@ window.onload = function () {
 
 
 
-//load first 10 stories in selected genre
+//load stories in selected genre by selected criteria
 async function loadAllStoriesInSelectedGenre(data) {
 
     let genre = null;
@@ -273,7 +273,7 @@ async function loadAllStoriesInSelectedGenre(data) {
                     }
                     else{
                         let tag = `<li>
-                                            <a class="tag-item" href="/stories/revenge">${story.tags[j]}</a>
+                                            <a class="tag-item" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/tag-stories-page.html?tag=${story.tags[j]}">${story.tags[j]}</a>
                                           </li>`;
 
                         $(`.${story.storyId} .tag-items`).append(tag);
