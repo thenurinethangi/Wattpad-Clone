@@ -157,10 +157,8 @@
                             <div class="component-wrapper" id="component-filterscontainer-filters-container-%2fsearch%2fwerewolf">
                                 <div class="filters-container">
                                     <div class="search-info">
-                                        <span class="sr-only">werewolf</span>
-                                        <div aria-hidden="true" class="search-term">"werewolf"</div>
-                                        <span class="sr-only">318,012 results</span>
-                                        <div class="stories-count" aria-hidden="true">318K results</div>
+                                        <div id="searched-keyword" aria-hidden="true" class="search-term">"werewolf"</div>
+                                        <div id="total-story-count" class="stories-count" aria-hidden="true">318K results</div>
                                     </div>
                                     <div class="filter">
                                         <span class="sr-only">Length You can select multiple options</span>
@@ -272,15 +270,8 @@
                                     <div class="tag-filter-container">
                                         <div class="refine-by-tag-header">Refine by tag</div>
                                         <div class="tag-grid clearfix tag-cloud-container">
-                                            <ul class="tag-items">
-                                                <li><a class="tag-pill__yrFxu refine-by-tag" href="werewolf%20%23alpha" role="button" aria-label="filter by alpha" aria-describedby="screen-reader-description" style="color: rgb(18, 18, 18);">alpha</a></li>
-                                                <li><a class="tag-pill__yrFxu refine-by-tag" href="werewolf%20%23mate" role="button" aria-label="filter by mate" aria-describedby="screen-reader-description" style="color: rgb(18, 18, 18);">mate</a></li>
-                                                <li><a class="tag-pill__yrFxu refine-by-tag" href="werewolf%20%23mates" role="button" aria-label="filter by mates" aria-describedby="screen-reader-description" style="color: rgb(18, 18, 18);">mates</a></li>
-                                                <li><a class="tag-pill__yrFxu refine-by-tag" href="werewolf%20%23pack" role="button" aria-label="filter by pack" aria-describedby="screen-reader-description" style="color: rgb(18, 18, 18);">pack</a></li>
-                                                <li><a class="tag-pill__yrFxu refine-by-tag" href="werewolf%20%23vampire" role="button" aria-label="filter by vampire" aria-describedby="screen-reader-description" style="color: rgb(18, 18, 18);">vampire</a></li>
-                                                <li><a class="tag-pill__yrFxu refine-by-tag" href="werewolf%20%23werewolf" role="button" aria-label="filter by werewolf" aria-describedby="screen-reader-description" style="color: rgb(18, 18, 18);">werewolf</a></li>
-                                                <li><a class="tag-pill__yrFxu refine-by-tag" href="werewolf%20%23werewolves" role="button" aria-label="filter by werewolves" aria-describedby="screen-reader-description" style="color: rgb(18, 18, 18);">werewolves</a></li>
-                                                <li><a class="tag-pill__yrFxu refine-by-tag" href="werewolf%20%23wolf" role="button" aria-label="filter by wolf" aria-describedby="screen-reader-description" style="color: rgb(18, 18, 18);">wolf</a></li>
+                                            <ul id="tags-container" class="tag-items">
+                                                <!--here is the where tags place-->
                                             </ul>
                                         </div>
                                         <div class="add-tag">
@@ -306,7 +297,7 @@
                                 <div class="component-wrapper" id="component-storycardcontainer-story-card-container-%2fsearch%2fwerewolf">
                                     <div class="feed-item-new panel new-container">
                                         <div class="story-card-container">
-                                            <ul class="list-group new-list-group">
+                                            <ul id="story-container" class="list-group new-list-group">
                                                 <!--single story-->
                                                 <li style="width: 100%;" class="list-group-item">
                                                     <a class="story-card" href="/story/12702726">
@@ -386,8 +377,10 @@
                                                 </li>
                                             </ul>
 
-                                            <button class="btn-load-more load-more">Load more stories</button>
-                                            <div class="results">You are seeing <strong>15</strong> of <strong>318K</strong> results</div>
+                                            <div id="btn-container">
+                                                <button class="btn-load-more load-more">Load more stories</button>
+                                                <div class="results">You are seeing <strong>15</strong> of <strong>318K</strong> results</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
