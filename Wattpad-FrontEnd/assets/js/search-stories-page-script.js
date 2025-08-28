@@ -57,7 +57,7 @@ async function loadAllStoriesThatMatchToSearchedKeyWord() {
         return;
     }
 
-    await fetch('http://localhost:8080/api/v1/search/by/'+search, {
+    await fetch('http://localhost:8080/api/v1/search/by/'+encodeURIComponent(search), {
         method: 'GET',
         credentials: 'include',
         headers: {

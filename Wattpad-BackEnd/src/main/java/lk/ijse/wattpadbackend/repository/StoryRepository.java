@@ -25,6 +25,10 @@ public interface StoryRepository extends JpaRepository<Story,Integer> {
     List<Story> findAllByOrderByCreatedAtDesc();
 
     List<Story> findByTitleContainingIgnoreCase(String keyword);
+
+    @Query(value = "SELECT * FROM story s WHERE LOWER(s.title) REGEXP CONCAT('(^| )', LOWER(:word), '( |$)')", nativeQuery = true)
+    List<Story> findByTitleContainingWholeWord(@Param("word") String word);
+
 }
 
 
