@@ -9,8 +9,7 @@ form.addEventListener('submit', function (event) {
         return;
     }
 
-
-
+    window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/search-stories-page.html?search=${inputValue}`;
 });
 
 
@@ -49,10 +48,9 @@ searchInput.addEventListener('keyup',function (event) {
                     $('#search-suggestions-list').empty();
 
                     for (let i = 0; i < ar.length; i++) {
-                        let title = `<li class="_2fMQj "><a class="_8oV22" href="#/"><svg width="13px" height="13px" viewBox="0 0 24 24" fill="none" stroke="#eee" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><g><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></g></svg><span class="UO9bH">${ar[i]}</span></a></li>`;
+                        let title = `<li class="_2fMQj "><a class="_8oV22" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/search-stories-page.html?search=${ar[i]}"><svg width="13px" height="13px" viewBox="0 0 24 24" fill="none" stroke="#eee" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><g><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></g></svg><span class="UO9bH">${ar[i]}</span></a></li>`;
                         $('#search-suggestions-list').append(title);
                     }
-
                 }
                 else{
                     $('#search-suggestions-container').css('display','none');
