@@ -1,13 +1,11 @@
 package lk.ijse.wattpadbackend.controller;
 
+import lk.ijse.wattpadbackend.dto.SearchCriteriaDTO;
 import lk.ijse.wattpadbackend.dto.SearchResponseDTO;
 import lk.ijse.wattpadbackend.service.SearchService;
 import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,6 +33,13 @@ public class SearchController {
 
         SearchResponseDTO searchResponseDTO = searchService.getAllStoriesThatMatchToSearchedKeyWord(input);
         return new APIResponse(202,"Successfully load stories by searched keyword",searchResponseDTO);
+    }
+
+    @PostMapping("/by/criteria/{input}")
+    public APIResponse getAllStoriesThatMatchToSearchedKeyWordAndCriteria(@PathVariable String input, @RequestBody SearchCriteriaDTO searchCriteriaDTO){
+
+        SearchResponseDTO searchResponseDTO = searchService.getAllStoriesThatMatchToSearchedKeyWordAndCriteria(input,searchCriteriaDTO);
+        return new APIResponse(202,"Successfully load stories by searched keyword and criteria",searchResponseDTO);
     }
 }
 
