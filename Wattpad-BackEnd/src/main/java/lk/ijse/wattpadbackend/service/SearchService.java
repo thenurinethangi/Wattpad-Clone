@@ -1,6 +1,7 @@
 package lk.ijse.wattpadbackend.service;
 
 import lk.ijse.wattpadbackend.dto.SearchCriteriaDTO;
+import lk.ijse.wattpadbackend.dto.SearchProfileReturnDTO;
 import lk.ijse.wattpadbackend.dto.SearchResponseDTO;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface SearchService {
     SearchResponseDTO getAllStoriesThatMatchToSearchedKeyWord(String input);
 
     SearchResponseDTO getAllStoriesThatMatchToSearchedKeyWordAndCriteria(String input, SearchCriteriaDTO searchCriteriaDTO);
+
+    List<SearchProfileReturnDTO> getAllProfilesThatMatchToSearchedKeyWord(String input);
 }

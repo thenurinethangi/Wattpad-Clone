@@ -2,12 +2,10 @@ package lk.ijse.wattpadbackend.service.impl;
 
 import lk.ijse.wattpadbackend.dto.GenreStoryDTO;
 import lk.ijse.wattpadbackend.dto.SearchCriteriaDTO;
+import lk.ijse.wattpadbackend.dto.SearchProfileReturnDTO;
 import lk.ijse.wattpadbackend.dto.SearchResponseDTO;
-import lk.ijse.wattpadbackend.entity.Chapter;
-import lk.ijse.wattpadbackend.entity.Story;
-import lk.ijse.wattpadbackend.entity.StoryTag;
-import lk.ijse.wattpadbackend.repository.ChapterRepository;
-import lk.ijse.wattpadbackend.repository.StoryRepository;
+import lk.ijse.wattpadbackend.entity.*;
+import lk.ijse.wattpadbackend.repository.*;
 import lk.ijse.wattpadbackend.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +21,9 @@ public class SearchServiceImpl implements SearchService {
 
     private final StoryRepository storyRepository;
     private final ChapterRepository chapterRepository;
+    private final UserRepository userRepository;
+    private final ReadingListRepository readingListRepository;
+    private final FollowingRepository followingRepository;
 
     @Override
     public List<String> getTopResultForSearch(String input) {
@@ -996,6 +997,82 @@ public class SearchServiceImpl implements SearchService {
 
         System.out.println(searchCriteriaDTO);
         return searchResponseDTO;
+    }
+
+    @Override
+    public List<SearchProfileReturnDTO> getAllProfilesThatMatchToSearchedKeyWord(String input) {
+
+        try{
+            List<User> userList1 = userRepository.findAllByFullNameContainingIgnoreCase(input);
+            List<User> userList2 = userRepository.findAllByUsernameContainingIgnoreCase(input);
+
+            List<User> finalSelectedUserList = new ArrayList<>();
+            for (User x : userList1){
+                if(!finalSelectedUserList.contains(x)){
+                    finalSelectedUserList.add(x);
+                }
+            }
+
+            for (User x : userList2){
+                if(!finalSelectedUserList.contains(x)){
+                    finalSelectedUserList.add(x);
+                }
+            }
+
+            List<SearchProfileReturnDTO> searchProfileReturnDTOList = new ArrayList<>();
+            for (User x : finalSelectedUserList){
+                SearchProfileReturnDTO searchProfileReturnDTO = new SearchProfileReturnDTO();
+                searchProfileReturnDTO.setUserId(x.getId());
+                searchProfileReturnDTO.setUsername(x.getUsername());
+                searchProfileReturnDTO.setFullName(x.getFullName());
+                searchProfileReturnDTO.setProfilePicPath(x.getProfilePicPath());
+
+                List<Story> storyList = storyRepository.findAllByUser(x);
+                searchProfileReturnDTO.setStoryCount(storyList.size());
+
+                List<ReadingList> readingListList = readingListRepository.findAllByUser(x);
+                searchProfileReturnDTO.setReadingListCount(readingListList.size());
+
+                List<Following> followingList = followingRepository.findAllByUser(x);
+
+                long followersLong = followingList.size();
+
+                String followersInStr = "";
+                if(followersLong<=1000){
+                    followersInStr = String.valueOf(followersLong);
+                }
+                else if (followersLong >= 1000 && followersLong < 1000000) {
+                    double value = (double) followersLong / 1000;
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        followersInStr = vStr.split("\\.0")[0] + "K";
+                    } else {
+                        followersInStr = vStr + "K";
+                    }
+                }
+                else if(followersLong>=1000000){
+                    double value = (double) followersLong/1000000;
+
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        followersInStr = vStr.split("\\.0")[0] + "M";
+                    } else {
+                        followersInStr = value+"M";
+                    }
+                }
+                searchProfileReturnDTO.setFollowersCount(followersInStr);
+
+                searchProfileReturnDTOList.add(searchProfileReturnDTO);
+            }
+
+            return searchProfileReturnDTOList;
+
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

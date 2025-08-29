@@ -1,6 +1,7 @@
 package lk.ijse.wattpadbackend.controller;
 
 import lk.ijse.wattpadbackend.dto.SearchCriteriaDTO;
+import lk.ijse.wattpadbackend.dto.SearchProfileReturnDTO;
 import lk.ijse.wattpadbackend.dto.SearchResponseDTO;
 import lk.ijse.wattpadbackend.service.SearchService;
 import lk.ijse.wattpadbackend.util.APIResponse;
@@ -40,6 +41,13 @@ public class SearchController {
 
         SearchResponseDTO searchResponseDTO = searchService.getAllStoriesThatMatchToSearchedKeyWordAndCriteria(input,searchCriteriaDTO);
         return new APIResponse(202,"Successfully load stories by searched keyword and criteria",searchResponseDTO);
+    }
+
+    @GetMapping("/profile/by/{input}")
+    public APIResponse getAllProfilesThatMatchToSearchedKeyWord(@PathVariable String input){
+
+       List<SearchProfileReturnDTO> searchProfileReturnDTOList = searchService.getAllProfilesThatMatchToSearchedKeyWord(input);
+        return new APIResponse(202,"Successfully load profiles by searched keyword",searchProfileReturnDTOList);
     }
 }
 
