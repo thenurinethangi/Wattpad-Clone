@@ -47,6 +47,36 @@ public class FollowServiceImpl implements FollowService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void removeAFollow(String name, long userId) {
+
+        try{
+            User user = userRepository.findByUsername(name);
+            if(user==null){
+                throw new UserNotFoundException("User not found");
+            }
+
+            Optional<User> optionalUser = userRepository.findById((int) userId);
+            if(!optionalUser.isPresent()){
+                throw new UserNotFoundException("User not found");
+            }
+            User followingUser = optionalUser.get();
+
+            Following following = followingRepository.findByFollowedUserIdAndUser(user.getId(),followingUser);
+            System.out.println("=================");
+            System.out.println(following);
+
+            followingRepository.delete(following);
+
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 
 

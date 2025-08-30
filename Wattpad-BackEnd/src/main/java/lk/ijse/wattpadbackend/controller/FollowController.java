@@ -25,6 +25,15 @@ public class FollowController {
         followService.makeAFollow(auth.getName(),userId);
         return new APIResponse(202,"Successfully follow user Id: "+userId,null);
     }
+
+    @PostMapping("/remove/{userId}")
+    public APIResponse removeAFollow(@PathVariable long userId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        followService.removeAFollow(auth.getName(),userId);
+        return new APIResponse(202,"Successfully unfollow user Id: "+userId,null);
+    }
 }
 
 
