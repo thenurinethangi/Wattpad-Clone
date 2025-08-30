@@ -6,6 +6,8 @@ import lk.ijse.wattpadbackend.dto.SearchResponseDTO;
 import lk.ijse.wattpadbackend.service.SearchService;
 import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,7 +48,9 @@ public class SearchController {
     @GetMapping("/profile/by/{input}")
     public APIResponse getAllProfilesThatMatchToSearchedKeyWord(@PathVariable String input){
 
-       List<SearchProfileReturnDTO> searchProfileReturnDTOList = searchService.getAllProfilesThatMatchToSearchedKeyWord(input);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        List<SearchProfileReturnDTO> searchProfileReturnDTOList = searchService.getAllProfilesThatMatchToSearchedKeyWord(auth.getName(),input);
         return new APIResponse(202,"Successfully load profiles by searched keyword",searchProfileReturnDTOList);
     }
 }

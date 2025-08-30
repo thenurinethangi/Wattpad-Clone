@@ -16,4 +16,5 @@ public class SearchProfileReturnDTO {
     private long storyCount;
     private long readingListCount;
     private String followersCount;
+    private int isCurrentUserFollowed;
 }

@@ -5,6 +5,7 @@ import lk.ijse.wattpadbackend.dto.SearchCriteriaDTO;
 import lk.ijse.wattpadbackend.dto.SearchProfileReturnDTO;
 import lk.ijse.wattpadbackend.dto.SearchResponseDTO;
 import lk.ijse.wattpadbackend.entity.*;
+import lk.ijse.wattpadbackend.exception.UserNotFoundException;
 import lk.ijse.wattpadbackend.repository.*;
 import lk.ijse.wattpadbackend.service.SearchService;
 import lombok.RequiredArgsConstructor;
@@ -1000,7 +1001,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public List<SearchProfileReturnDTO> getAllProfilesThatMatchToSearchedKeyWord(String input) {
+    public List<SearchProfileReturnDTO> getAllProfilesThatMatchToSearchedKeyWord(String username,String input) {
 
         try{
             List<User> userList1 = userRepository.findAllByFullNameContainingIgnoreCase(input);
@@ -1064,11 +1065,26 @@ public class SearchServiceImpl implements SearchService {
                 }
                 searchProfileReturnDTO.setFollowersCount(followersInStr);
 
+                User user = userRepository.findByUsername(username);
+                if(user==null){
+                    throw new UserNotFoundException("User not found.");
+                }
+
+                searchProfileReturnDTO.setIsCurrentUserFollowed(0);
+                for (Following y : followingList){
+                    if (Objects.equals(y.getUser().getId(), user.getId())) {
+                        searchProfileReturnDTO.setIsCurrentUserFollowed(1);
+                        break;
+                    }
+                }
                 searchProfileReturnDTOList.add(searchProfileReturnDTO);
             }
 
             return searchProfileReturnDTOList;
 
+        }
+        catch (UserNotFoundException e){
+            throw e;
         }
         catch (RuntimeException e) {
             throw new RuntimeException(e);
