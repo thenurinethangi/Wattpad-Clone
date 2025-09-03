@@ -78,6 +78,9 @@ async function loadChapterData() {
 
             let chapter = data.data;
 
+            //set data attribute
+            $('#chapter-text-body').attr('data-story-id',chapter.storyId);
+
             //top bar left
             $('#story-cover-image').attr('src', `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${chapter.storyCoverImagePath}`);
             $('#story-title').text(chapter.storyTitle);
@@ -201,12 +204,13 @@ async function loadChapterData() {
         });
 }
 
-loadChapterData();
+// loadChapterData();
 
 
 
 
 //load recommendation stories for chapter bottom
+let recommendationStoriesIds = [];
 async function loadRecommendationStories() {
 
     await fetch('http://localhost:8080/api/v1/chapter/recommendations', {
@@ -227,10 +231,17 @@ async function loadRecommendationStories() {
         .then(data => {
             console.log('Success:', data);
 
+            if(data.data.length<=0){
+                $('#bottom-container').css('display','none');
+                return;
+            }
+
             $('#recommendation-story-container').empty();
             for (let i = 0; i < data.data.length; i++) {
 
                 let story = data.data[i];
+
+                recommendationStoriesIds.push(story.id);
 
                 let recStoryContainer = ` 
                         <!--single recommendation story-->
@@ -285,8 +296,64 @@ async function loadRecommendationStories() {
         });
 }
 
-loadRecommendationStories();
+// loadRecommendationStories();
 
+
+
+
+//load recommendation stories for chapter bottom
+async function loadAlsoYouWillLikeStories() {
+
+    let storyId = $('#chapter-text-body').data('story-id');
+    recommendationStoriesIds.push(storyId);
+
+    let data = {
+        'storiesIdList': recommendationStoriesIds,
+    };
+
+    await fetch('http://localhost:8080/api/v1/chapter/alsoYouWillLikeStories', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+        })
+        .catch(error => {
+            try {
+                let errorResponse = JSON.parse(error.message);
+                console.error('Error:', errorResponse);
+            } catch (e) {
+                console.error('Error:', error.message);
+            }
+        });
+}
+
+// loadAlsoYouWillLikeStories();
+
+
+
+
+async function run() {
+    await loadChapterData();
+    await loadRecommendationStories();
+    loadAlsoYouWillLikeStories();
+}
+
+run();
 
 
 

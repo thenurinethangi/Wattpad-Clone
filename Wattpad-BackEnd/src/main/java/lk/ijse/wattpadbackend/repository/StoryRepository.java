@@ -31,6 +31,18 @@ public interface StoryRepository extends JpaRepository<Story,Integer> {
 
     @Query(value = "SELECT * FROM story WHERE user_id <> :userId ORDER BY RAND() LIMIT 2", nativeQuery = true)
     List<Story> findTwoRandomStoriesNotBelongingToCurrentUser(@Param("userId") Long userId);
+
+    @Query(value = """
+        SELECT * FROM story 
+        WHERE user_id <> :userId 
+          AND id NOT IN (:excludedStoryIds)
+        ORDER BY RAND() 
+        LIMIT 7
+        """, nativeQuery = true)
+    List<Story> findSevenRandomStoriesExcludingUserAndStories(
+            @Param("userId") Long userId,
+            @Param("excludedStoryIds") List<Long> excludedStoryIds
+    );
 }
 
 
