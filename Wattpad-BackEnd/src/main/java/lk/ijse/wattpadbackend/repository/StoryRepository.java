@@ -29,6 +29,8 @@ public interface StoryRepository extends JpaRepository<Story,Integer> {
     @Query(value = "SELECT * FROM story s WHERE LOWER(s.title) REGEXP CONCAT('(^| )', LOWER(:word), '( |$)')", nativeQuery = true)
     List<Story> findByTitleContainingWholeWord(@Param("word") String word);
 
+    @Query(value = "SELECT * FROM story WHERE user_id <> :userId ORDER BY RAND() LIMIT 2", nativeQuery = true)
+    List<Story> findTwoRandomStoriesNotBelongingToCurrentUser(@Param("userId") Long userId);
 }
 
 

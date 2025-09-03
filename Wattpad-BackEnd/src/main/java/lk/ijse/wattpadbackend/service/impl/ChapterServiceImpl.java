@@ -2,11 +2,13 @@ package lk.ijse.wattpadbackend.service.impl;
 
 import lk.ijse.wattpadbackend.dto.ChapterDTO;
 import lk.ijse.wattpadbackend.dto.ParagraphDTO;
-import lk.ijse.wattpadbackend.entity.Chapter;
-import lk.ijse.wattpadbackend.entity.Paragraph;
-import lk.ijse.wattpadbackend.entity.ParagraphComment;
+import lk.ijse.wattpadbackend.dto.StoryDTO;
+import lk.ijse.wattpadbackend.entity.*;
 import lk.ijse.wattpadbackend.exception.NotFoundException;
+import lk.ijse.wattpadbackend.exception.UserNotFoundException;
 import lk.ijse.wattpadbackend.repository.ChapterRepository;
+import lk.ijse.wattpadbackend.repository.StoryRepository;
+import lk.ijse.wattpadbackend.repository.UserRepository;
 import lk.ijse.wattpadbackend.service.ChapterService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ import java.util.Optional;
 public class ChapterServiceImpl implements ChapterService {
 
     private final ChapterRepository chapterRepository;
+    private final StoryRepository storyRepository;
+    private final UserRepository userRepository;
 
     @Override
     public ChapterDTO getAChapterById(long id) {
@@ -189,6 +193,108 @@ public class ChapterServiceImpl implements ChapterService {
 
         }
         catch (NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<StoryDTO> getRecommendationStories(String username) {
+
+        try{
+           User user = userRepository.findByUsername(username);
+           if(user==null){
+               throw new UserNotFoundException("User not found.");
+           }
+
+           List<Story> stories = storyRepository.findTwoRandomStoriesNotBelongingToCurrentUser(user.getId());
+
+           List<StoryDTO> storyDTOList = new ArrayList<>();
+           for (Story x : stories){
+               StoryDTO storyDTO = new StoryDTO();
+               storyDTO.setId(x.getId());
+               storyDTO.setTitle(x.getTitle());
+               storyDTO.setDescription(x.getDescription());
+               storyDTO.setParts(x.getParts());
+               storyDTO.setCoverImagePath(x.getCoverImagePath());
+               storyDTO.setUserId(x.getUser().getId());
+               storyDTO.setUsername(x.getUser().getUsername());
+
+               long viewsLong = x.getViews().longValue();
+
+               String viewsInStr = "";
+               if(viewsLong<=1000){
+                   viewsInStr = String.valueOf(viewsLong);
+               }
+               else if (viewsLong >= 1000 && viewsLong < 1000000) {
+                   double value = (double) viewsLong / 1000;
+                   String vStr = String.valueOf(value);
+
+                   if (vStr.endsWith(".0")) {
+                       viewsInStr = vStr.split("\\.0")[0] + "K";
+                   } else {
+                       viewsInStr = vStr + "K";
+                   }
+               }
+               else if(viewsLong>=1000000){
+                   double value = (double) viewsLong/1000000;
+
+                   String vStr = String.valueOf(value);
+
+                   if (vStr.endsWith(".0")) {
+                       viewsInStr = vStr.split("\\.0")[0] + "M";
+                   } else {
+                       viewsInStr = value+"M";
+                   }
+               }
+               storyDTO.setViews(viewsInStr);
+
+               long likesLong = x.getLikes().longValue();
+
+               String likesInStr = "";
+               if(likesLong<=1000){
+                   likesInStr = String.valueOf(likesLong);
+               }
+               else if (likesLong >= 1000 && likesLong < 1000000) {
+                   double value = (double) likesLong / 1000;
+                   String vStr = String.valueOf(value);
+
+                   if (vStr.endsWith(".0")) {
+                       likesInStr = vStr.split("\\.0")[0] + "K";
+                   } else {
+                       likesInStr = vStr + "K";
+                   }
+               }
+               else if(likesLong>=1000000){
+                   double value = (double) likesLong/1000000;
+
+                   String vStr = String.valueOf(value);
+
+                   if (vStr.endsWith(".0")) {
+                       likesInStr = vStr.split("\\.0")[0] + "M";
+                   } else {
+                       likesInStr = value+"M";
+                   }
+               }
+               storyDTO.setLikes(likesInStr);
+
+               List<StoryTag> storyTagList = x.getStoryTags();
+
+               List<String> tags = new ArrayList<>();
+               for (StoryTag y : storyTagList){
+                   tags.add(y.getTag().getTagName());
+               }
+               storyDTO.setTags(tags);
+
+               storyDTOList.add(storyDTO);
+           }
+
+           return storyDTOList;
+
+        }
+        catch (UserNotFoundException e){
             throw e;
         }
         catch (RuntimeException e) {
