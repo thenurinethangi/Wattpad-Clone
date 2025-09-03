@@ -89,32 +89,16 @@
           </button> <!--drop down button end-->
 
           <!--table of content hidden container(chapter list)-->
-          <div class="dropdown-menu pull-left">
+          <div id="chapters-list-container" class="dropdown-menu pull-left">
             <!--c1-->
             <div class="toc-header text-center">
-              <h6><a class="on-navigate" href="">𝕃𝕠𝕧𝕖 𝔼𝕞𝕓𝕣𝕒𝕔𝕖 ᵒⁿʰᵒˡᵈ</a></h6>
+              <h6><a class="on-navigate" href="">The Lost Kingdom</a></h6>
               <small>Table of contents</small>
             </div>
             <!--c2-->
-            <ul>
-              <li>Thenuri</li>
+            <ul id="chapters-list">
+              <!--here chapters list place-->
             </ul>
-<!--            <ul class="">-->
-<!--              <li>-->
-<!--                <a class="" href="/1388504625-introduction">-->
-<!--                  <div>introduction-->
-<!--                    <div></div>-->
-<!--                  </div>-->
-<!--                </a>-->
-<!--              </li>-->
-<!--              <li class="">-->
-<!--                <a href="/1394938115-chapter-1">-->
-<!--                  <div>Chapter 1-->
-<!--                    <div></div>-->
-<!--                  </div>-->
-<!--                </a>-->
-<!--              </li>-->
-<!--            </ul>-->
           </div><!--table of content hidden container(chapter list) end-->
         </div><!--top bar -> drop down side end-->
 
@@ -145,7 +129,7 @@
 
           <!--vote btn-->
           <div class="button-group relative inline-block">
-            <button class="btn btn-link on-vote" data-component-name="top_right_vote">
+            <button id="vote-btn" class="btn btn-link on-vote" data-component-name="top_right_vote">
               <i id="vote-icon" class="fa-solid fa-star fa-wp-neutral-2" style="font-size:14px; transform: translateY(-1.5px)"></i>
               <span class="hidden-mobile hidden-xs hidden-sm story-vote" style="text-decoration: none; padding-left: 7px;">Vote</span>
             </button>
@@ -261,43 +245,13 @@
                   </div>
                 </div>
                 <!--place here recommendation story when need-->
-                <div class="row">
+                <div class="row" id="also-you-like-story-main-container">
                   <div class="reading-widget hidden-xxs col-xs-12 col-sm-12 col-md-12 col-lg-12 similar-stories-container">
                     <h4 class="panel-title" style="margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #eee;">You'll also like</h4>
                     <div id="similar-stories" class="similar-stories">
                       <div class="stories">
                         <div id="also-you-like-story-container" class="collection">
                           <!--single story-->
-                          <div class="story-item clearfix">
-                            <div class="component-wrapper" id="component-storyitem-332542111-%2f1491714881-broken-doll-taekook-%25e2%259c%2594%25ef%25b8%258f-chapter-55">
-                              <a class="clearfix on-story-preview" href="/story/332542111-wednesday" data-story-id="332542111" data-author-name="thelittleblackghost">
-                                <div class="send-story-cover-event cover cover-sm" data-story-id="332542111">
-                                  <img srcset="https://img.wattpad.com/cover/332542111-80-k324325.jpg 1x, https://img.wattpad.com/cover/332542111-100-k324325.jpg 1.5x, https://img.wattpad.com/cover/332542111-144-k324325.jpg 2x, https://img.wattpad.com/cover/332542111-176-k324325.jpg 2.5x, https://img.wattpad.com/cover/332542111-200-k324325.jpg 3x" src="https://img.wattpad.com/cover/332542111-80-k324325.jpg" alt="Wednesday by thelittleblackghost">
-                                </div>
-                                <div class="left-container">
-                                  <div class="story-item-title-and-badge">
-                                    <div class="title">Wednesday</div>
-                                  </div>
-                                  <div class="meta" style="transform: translateY(-5px);">
-                                    <svg width="13" height="13" viewBox="0 0 16 16" fill="var(--wp-neutral-31)" stroke="var(--ds-neutral-80)" stroke-width="0" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class="MAVbp"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0703819 7.70186C0.164094 7.51443 0.339978 7.20175 0.596224 6.80498C1.02033 6.1483 1.52075 5.49201 2.09698 4.87737C3.77421 3.08833 5.7468 2 8 2C10.2532 2 12.2258 3.08833 13.903 4.87737C14.4792 5.49201 14.9797 6.1483 15.4038 6.80498C15.66 7.20175 15.8359 7.51443 15.9296 7.70186C16.0235 7.88954 16.0235 8.11046 15.9296 8.29814C15.8359 8.48557 15.66 8.79825 15.4038 9.19502C14.9797 9.8517 14.4792 10.508 13.903 11.1226C12.2258 12.9117 10.2532 14 8 14C5.7468 14 3.77421 12.9117 2.09698 11.1226C1.52075 10.508 1.02033 9.8517 0.596224 9.19502C0.339978 8.79825 0.164094 8.48557 0.0703819 8.29814C-0.0234606 8.11046 -0.0234606 7.88954 0.0703819 7.70186ZM1.71632 8.47165C2.0995 9.06496 2.55221 9.65868 3.06973 10.2107C4.5175 11.755 6.16991 12.6667 8.00004 12.6667C9.83017 12.6667 11.4826 11.755 12.9304 10.2107C13.4479 9.65868 13.9006 9.06496 14.2838 8.47165C14.3925 8.30325 14.489 8.14509 14.5729 8C14.489 7.85491 14.3925 7.69675 14.2838 7.52835C13.9006 6.93504 13.4479 6.34132 12.9304 5.78929C11.4826 4.24501 9.83017 3.33333 8.00004 3.33333C6.16991 3.33333 4.5175 4.24501 3.06973 5.78929C2.55221 6.34132 2.0995 6.93504 1.71632 7.52835C1.60756 7.69675 1.5111 7.85491 1.42718 8C1.5111 8.14509 1.60756 8.30325 1.71632 8.47165ZM8 10.6667C6.52724 10.6667 5.33333 9.47276 5.33333 8C5.33333 6.52724 6.52724 5.33333 8 5.33333C9.47276 5.33333 10.6667 6.52724 10.6667 8C10.6667 9.47276 9.47276 10.6667 8 10.6667ZM8 9.33333C8.73638 9.33333 9.33333 8.73638 9.33333 8C9.33333 7.26362 8.73638 6.66667 8 6.66667C7.26362 6.66667 6.66667 7.26362 6.66667 8C6.66667 8.73638 7.26362 9.33333 8 9.33333Z"></path></g></svg>
-                                    <span class="read-count" style="margin-left: 5px;">3M</span>
-
-                                    <svg style="transform: translateX(-6px);" width="13" height="13" viewBox="0 0 16 16" fill="var(--wp-neutral-31)" stroke="var(--ds-neutral-80)" stroke-width="0" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class="MAVbp"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M6.53792 5.80206C6.44089 5.99863 6.25344 6.13493 6.03653 6.16664L2.76572 6.64472L5.13194 8.94941C5.28919 9.10257 5.36096 9.32332 5.32385 9.53968L4.76557 12.7948L7.68982 11.2569C7.88407 11.1548 8.11616 11.1548 8.31042 11.2569L11.2347 12.7948L10.6764 9.53968C10.6393 9.32332 10.711 9.10257 10.8683 8.94941L13.2345 6.64472L9.9637 6.16664C9.74679 6.13493 9.55934 5.99863 9.46231 5.80206L8.00012 2.83982L6.53792 5.80206ZM5.49723 4.89797L7.40227 1.03858C7.64683 0.543131 8.35332 0.543131 8.59788 1.03858L10.5029 4.89797L14.7632 5.52067C15.3098 5.60056 15.5276 6.27246 15.1319 6.6579L12.0498 9.6599L12.7771 13.901C12.8706 14.4456 12.2989 14.8609 11.8098 14.6037L8.00007 12.6002L4.19038 14.6037C3.70129 14.8609 3.12959 14.4456 3.223 13.901L3.95039 9.6599L0.868253 6.6579C0.472524 6.27246 0.690379 5.60056 1.23699 5.52067L5.49723 4.89797Z"></path></g></svg>
-                                    <span class="vote-count" style="margin-left: 5px; transform: translateX(-6px);">123K</span>
-                                  </div>
-                                  <div class="small story-item-description" style="transform: translateY(-10px);">Male Wednesday x Female Reader
-                                    Based on the Netflix TV Series: Wednesday
-                                    (Y/n) = Your Name
-                                    (L/n) = Last Name
-                                    (H/l) = Hair Length
-                                    (H/c) = Hair Color
-                                    (E/c) = Eye Color
-                                    (S...
-                                  </div>
-                                </div>
-                              </a>
-                            </div>
-                          </div>
 
                         </div>
                       <div id="preview-modal"></div>
@@ -408,95 +362,8 @@
                         <div class="module-title">Recommendations</div>
                       </div>
                       <div style="direction:ltr;" id="recommendation-story-container" class="collection" data-target="storiesReadingRecommended">
-
                         <!--single recommendation story-->
-                        <div style="margin-right: 5px;" class="discover-module-stories-large on-discover-module-item">
-                          <a class="send-cover-event on-story-preview cover cover-home" data-story-id="294868496" href="/story/294868496-faking-it-lando-norris-ln">
-                            <div class="fixed-ratio fixed-ratio-cover">
-                              <img src="https://img.wattpad.com/cover/294868496-288-k574189.jpg" alt="Faking it || Lando Norris LN by inkaxis">
-                            </div>
-                          </a>
-                          <div class="content">
-                            <a class="title meta on-story-preview" href="" style="font-size: 18px; font-weight: 600; color: #222;">
-                              Faking it || Lando Norris LN
-                            </a>
-                            <a class="username meta on-navigate" href="/user/inkaxis" style="font-size: 15px; color: #222;">
-                              by inkaxis
-                            </a>
-                            <div class="meta social-meta">
-                                                            <span class="read-count" data-toggle="tooltip" data-placement="top" title="5,811,852 Reads">
-                                                                <span class="fa fa-view fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 5.8M
-                                                            </span>
-                              <span class="vote-count" data-toggle="tooltip" data-placement="top" title="125,450 Votes">
-                                                                <span class="fa fa-vote fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 125K
-                                                            </span>
-                              <span class="part-count">
-                                                                <span class="fa fa-list fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 7
-                                                            </span>
-                            </div>
-                            <div class="description">"The only thing i want from you is to see your name under mine when the race is over."
-                              "Pretty sure you want me under you more than you want that."
-                              ✼ When the ground sta...</div>
-                            <div class="tag-meta clearfix">
-                              <ul class="tag-items">
-                                <li style="padding-right: 0; width: fit-content;">
-                                  <a class="tag-item on-navigate" href="/stories/ricciardo">ricciardo</a>
-                                </li>
-                                <li style="padding-right: 0; width: fit-content;">
-                                  <a class="tag-item on-navigate" href="/stories/danielricciardo">danielricciardo</a>
-                                </li>
-                                <li style="padding-right: 0; width: fit-content;">
-                                  <a class="tag-item on-navigate" href="/stories/charlesleclerc">charlesleclerc</a>
-                                </li>
-                                <li><span class="num-not-shown on-story-preview" data-story-id="294868496">+23 more</span></li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
 
-                        <div class="discover-module-stories-large on-discover-module-item"><a class="send-cover-event on-story-preview cover cover-home" data-story-id="294868496" href="/story/294868496-faking-it-lando-norris-ln">
-                          <div class="fixed-ratio fixed-ratio-cover">
-                            <img src="https://img.wattpad.com/cover/294868496-288-k574189.jpg" alt="Faking it || Lando Norris LN by inkaxis">
-                          </div>
-                        </a>
-                          <div class="content" data-target="294868496" data-type="stories">
-                            <a class="title meta on-story-preview" href="" style="font-size: 18px; font-weight: 600; color: #222;">
-                              Faking it || Lando Norris LN
-                            </a>
-                            <a class="username meta on-navigate" href="/user/inkaxis" style="font-size: 15px; color: #222;">
-                              by inkaxis
-                            </a>
-                            <div class="meta social-meta">
-                                                            <span class="read-count" data-toggle="tooltip" data-placement="top" title="5,811,852 Reads">
-                                                                <span class="fa fa-view fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 5.8M
-                                                            </span>
-                              <span class="vote-count" data-toggle="tooltip" data-placement="top" title="125,450 Votes">
-                                                                <span class="fa fa-vote fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 125K
-                                                            </span>
-                              <span class="part-count">
-                                                                <span class="fa fa-list fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 7
-                                                            </span>
-                            </div>
-                            <div class="description">"The only thing i want from you is to see your name under mine when the race is over."
-                              "Pretty sure you want me under you more than you want that."
-                              ✼ When the ground sta...</div>
-                            <div class="tag-meta clearfix">
-                              <ul class="tag-items">
-                                <li>
-                                  <a class="tag-item on-navigate" href="/stories/ricciardo">ricciardo</a>
-                                </li>
-                                <li>
-                                  <a class="tag-item on-navigate" href="/stories/danielricciardo">danielricciardo</a>
-                                </li>
-                                <li>
-                                  <a class="tag-item on-navigate" href="/stories/charlesleclerc">charlesleclerc</a>
-                                </li>
-                              </ul>
-
-                              <span class="num-not-shown on-story-preview" data-story-id="294868496">+23 more</span>
-                            </div>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>

@@ -86,6 +86,23 @@ async function loadChapterData() {
             $('#story-title').text(chapter.storyTitle);
             $('#author').text('by '+chapter.username);
 
+            //set all chapters - dropdown
+            $('#chapters-list').empty();
+
+            for (let i = 0; i < data.data.chapterSimpleDTOList.length; i++) {
+
+                let c = data.data.chapterSimpleDTOList[i];
+
+                let singleChapter = null;
+                if(c.id==chapter.id){
+                    singleChapter = `<li style="overflow: hidden; padding: 10px 0px; font-size: 14px; font-weight: 600; color: #222; width: 100%; border-left: 4px solid #ff6122;"><a style="color: #ff6122" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${c.id}">${c.title}</a></li>`;
+                }
+                else {
+                    singleChapter = `<li style="overflow: hidden; padding: 10px 0px; font-size: 14px; font-weight: 600; color: #222; width: 100%;"><a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${c.id}">${c.title}</a></li>`;
+                }
+                $('#chapters-list').append(singleChapter);
+            }
+
             //top bar right
             if (chapter.isLiked === 1) {
                 $('#vote-icon').css('color', '#ff6122');
@@ -342,6 +359,10 @@ async function loadAlsoYouWillLikeStories() {
 
             $('#also-you-like-story-container').empty();
 
+            if(data.data.length<=0){
+                $('#also-you-like-story-main-container').css('display','none');
+            }
+
             for (let i = 0; i < data.data.length; i++) {
 
                 let story = data.data[i];
@@ -397,6 +418,45 @@ async function run() {
 }
 
 run();
+
+
+
+
+//when click on dropdown button chapter list appear
+let chapterListDropDown = $('#funbar-part-details')[0];
+chapterListDropDown.addEventListener('click',function (event) {
+
+    $('#chapters-list-container').css({
+        'display': 'block',
+        'visibility': 'visible',
+        'opacity': 1
+    });
+
+});
+
+
+//when click on the document chapter list disapear
+$(document).on('click', function (e) {
+    if (
+        $(e.target).closest('#funbar-part-details').length > 0 ||
+        $(e.target).closest('#chapters-list-container').length > 0
+    ) {
+
+        $('#chapters-list-container').css({
+            'display': 'block',
+            'visibility': 'visible',
+            'opacity': 1
+        });
+    }
+    else {
+        $('#chapters-list-container').css({
+            'display': 'none',
+            'visibility': 'hidden',
+            'opacity': 0
+        });
+    }
+});
+
 
 
 

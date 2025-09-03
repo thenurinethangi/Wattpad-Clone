@@ -27,6 +27,7 @@ public class ChapterDTO {
     private String userProfilePicPath;
     private int isLiked;
     private List<ParagraphDTO> paragraphDTOList;
+    private List<ChapterSimpleDTO> chapterSimpleDTOList;
 }
 
 

@@ -1,9 +1,6 @@
 package lk.ijse.wattpadbackend.service.impl;
 
-import lk.ijse.wattpadbackend.dto.ChapterDTO;
-import lk.ijse.wattpadbackend.dto.ParagraphDTO;
-import lk.ijse.wattpadbackend.dto.StoryDTO;
-import lk.ijse.wattpadbackend.dto.StoryIdsDTO;
+import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.entity.*;
 import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
@@ -145,6 +142,18 @@ public class ChapterServiceImpl implements ChapterService {
 
             //here must have a logic for check current user liked this chapter or not
             chapterDTO.setIsLiked(1);
+
+            List<Chapter> chapterList = chapterRepository.findAllByStory(chapter.getStory());
+
+            List<ChapterSimpleDTO> chapterSimpleDTOList = new ArrayList<>();
+            for (Chapter x : chapterList){
+                ChapterSimpleDTO chapterSimpleDTO = new ChapterSimpleDTO();
+                chapterSimpleDTO.setId(x.getId());
+                chapterSimpleDTO.setTitle(x.getTitle());
+
+                chapterSimpleDTOList.add(chapterSimpleDTO);
+            }
+            chapterDTO.setChapterSimpleDTOList(chapterSimpleDTOList);
 
             List<Paragraph> paragraphList = chapter.getParagraphs();
             List<ParagraphDTO> paragraphDTOList = new ArrayList<>();
