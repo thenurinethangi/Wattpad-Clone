@@ -28,7 +28,9 @@ public class ChapterController {
     @GetMapping("/{id}")
     public APIResponse getAChapterById(@PathVariable long id){
 
-        ChapterDTO chapterDTO = chapterService.getAChapterById(id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        ChapterDTO chapterDTO = chapterService.getAChapterById(auth.getName(),id);
         return new APIResponse(202,"Chapter data successfully loaded for chapter id: "+id,chapterDTO);
     }
 
@@ -48,6 +50,15 @@ public class ChapterController {
 
         List<StoryDTO> storyDTOList = chapterService.getAlsoYouWillLikeStories(auth.getName(),storyIdsDTO);
         return new APIResponse(202,"Successfully loaded you will also like stories",storyDTOList);
+    }
+
+    @PostMapping("/vote/{chapterId}")
+    public APIResponse addLikeOrRemove(@PathVariable long chapterId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        String result = chapterService.addLikeOrRemove(auth.getName(),chapterId);
+        return new APIResponse(202,"Successfully add or remove like",result);
     }
 }
 

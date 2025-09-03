@@ -8,9 +8,11 @@ import java.util.List;
 
 public interface ChapterService {
 
-    ChapterDTO getAChapterById(long id);
+    ChapterDTO getAChapterById(String username,long id);
 
     List<StoryDTO> getRecommendationStories(String username, StoryIdsDTO storyIdsDTO);
 
     List<StoryDTO> getAlsoYouWillLikeStories(String name, StoryIdsDTO storyIdsDTO);
+
+    String addLikeOrRemove(String name, long chapterId);
 }

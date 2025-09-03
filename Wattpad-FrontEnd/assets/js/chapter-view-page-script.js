@@ -107,6 +107,9 @@ async function loadChapterData() {
             if (chapter.isLiked === 1) {
                 $('#vote-icon').css('color', '#ff6122');
             }
+            else{
+                $('#vote-icon').css('color', '#6f6f6f');
+            }
 
             //chapter cover image
             if(chapter.coverImagePath!=null){
@@ -458,6 +461,51 @@ $(document).on('click', function (e) {
 });
 
 
+
+
+//when click on vote button add or remove the vote
+let voteBtn = $('#vote-btn')[0];
+voteBtn.addEventListener('click',function (event) {
+
+    let chapterId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("chapterId")) {
+        chapterId = params.get("chapterId");
+    }
+
+    if(chapterId==null){
+        //load chapter not found page
+        return;
+    }
+
+    fetch('http://localhost:8080/api/v1/chapter/vote/'+chapterId, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            loadChapterData();
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+        });
+
+});
 
 
 

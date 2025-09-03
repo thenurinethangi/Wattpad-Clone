@@ -4,6 +4,7 @@ import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.entity.*;
 import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
+import lk.ijse.wattpadbackend.repository.ChapterLikeRepository;
 import lk.ijse.wattpadbackend.repository.ChapterRepository;
 import lk.ijse.wattpadbackend.repository.StoryRepository;
 import lk.ijse.wattpadbackend.repository.UserRepository;
@@ -22,9 +23,10 @@ public class ChapterServiceImpl implements ChapterService {
     private final ChapterRepository chapterRepository;
     private final StoryRepository storyRepository;
     private final UserRepository userRepository;
+    private final ChapterLikeRepository chapterLikeRepository;
 
     @Override
-    public ChapterDTO getAChapterById(long id) {
+    public ChapterDTO getAChapterById(String username,long id) {
 
         try{
             Optional<Chapter> chapterOptional = chapterRepository.findById((int) id);
@@ -141,7 +143,18 @@ public class ChapterServiceImpl implements ChapterService {
             chapterDTO.setUserProfilePicPath(chapter.getStory().getUser().getProfilePicPath());
 
             //here must have a logic for check current user liked this chapter or not
-            chapterDTO.setIsLiked(1);
+            User user = userRepository.findByUsername(username);
+            if(user==null){
+                throw new UserNotFoundException("User not found.");
+            }
+
+            ChapterLike chapterLike = chapterLikeRepository.findByChapterAndUser(chapter,user);
+            if(chapterLike==null){
+                chapterDTO.setIsLiked(0);
+            }
+            else {
+                chapterDTO.setIsLiked(1);
+            }
 
             List<Chapter> chapterList = chapterRepository.findAllByStory(chapter.getStory());
 
@@ -393,6 +406,44 @@ public class ChapterServiceImpl implements ChapterService {
             }
 
             return storyDTOList;
+        }
+        catch (UserNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public String addLikeOrRemove(String username, long chapterId) {
+
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Chapter> optionalChapter = chapterRepository.findById((int) chapterId);
+            if(!optionalChapter.isPresent()){
+                throw new NotFoundException("Chapter not found.");
+            }
+            Chapter chapter = optionalChapter.get();
+
+            ChapterLike chapterLike = chapterLikeRepository.findByChapterAndUser(chapter,user);
+
+            if(chapterLike==null){
+                ChapterLike chapterLike1 = new ChapterLike();
+                chapterLike1.setChapter(chapter);
+                chapterLike1.setUser(user);
+
+                chapterLikeRepository.save(chapterLike1);
+                return "Liked";
+            }
+            else{
+                chapterLikeRepository.delete(chapterLike);
+                return "Unliked";
+            }
+
         }
         catch (UserNotFoundException e) {
             throw new RuntimeException(e);
