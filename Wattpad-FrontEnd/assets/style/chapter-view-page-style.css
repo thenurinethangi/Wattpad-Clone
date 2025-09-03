@@ -1806,6 +1806,199 @@ a.tag-item {
 }
 
 
+/*comment model*/
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    background-color: #000;
+}
+
+.modal-backdrop.in {
+    -moz-opacity: .5;
+    -khtml-opacity: .5;
+    opacity: .5;
+}
+
+.paragraph-comments-drawer .modal-backdrop {
+    z-index: 10300000;
+}
+
+.paragraph-comments-drawer .drawer-content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1032;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(18,18,18,.32);
+    transition: transform .3s ease-out,opacity .3s,-webkit-transform .3s ease-out;
+}
+
+.paragraph-comments-drawer .drawer-content.open {
+    opacity: 1;
+    transform: translate(0,0);
+}
+
+.paragraph-comments-drawer .drawer-content .drawer-header {
+    top: 0;
+    z-index: 1033;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: sticky;
+    background-color: #fff;
+}
+
+.paragraph-comments-drawer .drawer-content .drawer-header .drawer-title {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+    text-align: center;
+    color: #121212;
+    margin: 15px 0 15px 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.paragraph-comments-drawer .drawer-content .drawer-header .close-btn {
+    background: 0 0;
+    border: none;
+    padding: 19px;
+}
+
+.paragraph-comments-drawer .drawer-content .drawer-body {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.paragraph-comments-drawer .drawer-content .drawer-body .paragraph-content {
+    padding: 16px;
+    background: #f6f6f6;
+}
+
+.paragraph-comments-drawer .drawer-content .drawer-body .paragraph-content pre {
+    color: #121212;
+    margin: 0;
+    line-height: inherit;
+    font-size: 16px;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+
+.comments-list {
+    background-color: #fff;
+}
+
+.paragraph-comments-drawer .drawer-content .drawer-body .comments-list {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.new-comment-field {
+    top: 52px;
+    z-index: 1;
+    padding: 12px 16px;
+    background-color: #fff;
+}
+
+.new-comment-field.sticky {
+    position: sticky;
+}
+
+.textboxContainer__mbQss {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.text-body-sm {
+    font-weight: var(--font-weight-normal,400);
+    font-size: var(--font-size-xs,14px);
+    line-height: var(--line-height-xs,20px);
+}
+
+.textboxContainer__mbQss textarea {
+    border-color: var(--ds-neutral-40,rgba(18,18,18,.12));
+    border-radius: 24px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    resize: none;
+    width: 100%;
+    padding: 12px 48px 12px 16px;
+    color: var(--ds-neutral-100,#121212);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.textboxContainer__mbQss .defaultHeight__PP_LO {
+    height: 48px;
+}
+
+.textboxContainer__mbQss button {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    background: var(--ds-base-2-60,#3b19a9);
+    padding: 0;
+    cursor: pointer;
+}
+
+.textboxContainer__mbQss button:disabled {
+    background: var(--ds-base-2-40,#d7caff);
+}
+
+
+
 /*media query*/
 @media all and (max-width: 1147px) {
 

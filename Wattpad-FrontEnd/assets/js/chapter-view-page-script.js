@@ -149,17 +149,17 @@ async function loadChapterData() {
 
                 if (paragraph.contentType === 'text') {
                     let para = `
-                                    <div style="margin-bottom: 15px; position: relative; padding-right: 20px;">
+                                    <div class="chapter-content" data-comment-count="${paragraph.commentCount}" style="margin-bottom: 15px; position: relative; padding-right: 20px;">
                                         <p>${paragraph.content}</p>
         
                                         ${paragraph.commentCount !== "0"
-                                        ? `<div style="position: absolute; right: 0; bottom: 0; text-align: center; width: 24px;">
+                                        ? `<div class="comment-icon" data-paragraph-id="${paragraph.id}" style="position: absolute; right: 0; bottom: 0; text-align: center; width: 24px;">
                                                 <span style="position: absolute; top: -4px; right: 2px; left: 50%; transform: translate(-50%); font-size: 12px; font-weight: 700; color: #fff;">
                                                 ${paragraph.commentCount}
                                                 </span>
-                                                <i class="fa-solid fa-message" style="color: #6f6f6f; font-size: 20px;"></i>
+                                                <i class="fa-solid fa-message" style="color: #6f6f6f; font-size: 20px;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"></i>
                                         </div>`
-                                        : `<div style="opacity: 0; position: absolute; right: 0; bottom: 0; text-align: center; width: 24px;">
+                                        : `<div class="comment-icon" data-paragraph-id="${paragraph.id}" style="opacity: 0; position: absolute; right: 0; bottom: 0; text-align: center; width: 24px;">
                                                 <i class="fa-solid fa-square-plus" style="position: absolute; top: 6px; right: 2px; left: 50%; transform: translate(-50%); font-size: 10px; font-weight: 700; color: #fff;"></i>
                                                 <i class="fa-solid fa-message" style="color: #6f6f6f; font-size: 20px;"></i>
                                            </div>
@@ -170,38 +170,39 @@ async function loadChapterData() {
                     $('#chapter-body').append(para);
                 }
                 else if(paragraph.contentType==='image'){
-                    let para = `<div style="margin-bottom: 30px; margin-top: 30px">
-                                        <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${paragraph.content}" style="width: 100%;" alt="content image">
+                    let para = `<div class="chapter-content" data-comment-count="${paragraph.commentCount}" style="margin-bottom: 47px; margin-top: 30px; position: relative;">
+                                        <img class="chapter-content" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${paragraph.content}" style="width: 100%;" alt="content image">
                                         
-                                        ${paragraph.commentCount !== "0"
-                                        ? `<div style="position: absolute; right: 0; bottom: 0; text-align: center; width: 24px;">
-                                               <span style="position: absolute; top: -4px; right: 2px; left: 50%; transform: translate(-50%); font-size: 12px; font-weight: 700; color: #fff;">
-                                               ${paragraph.commentCount}
-                                               </span>
-                                               <i class="fa-solid fa-message" style="color: #6f6f6f; font-size: 20px;"></i>
-                                        </div>`
-                                        : `<div style="opacity: 0; position: absolute; right: 0; bottom: 0; text-align: center; width: 24px;">
+                                         ${paragraph.commentCount !== "0"
+                                         ? `<div class="comment-icon" data-paragraph-id="${paragraph.id}" style="position: absolute; right: 0; bottom: -37px;; text-align: center; width: 24px;">
+                                                <span style="position: absolute; top: -4px; right: 2px; left: 50%; transform: translate(-50%); font-size: 12px; font-weight: 700; color: #fff;">
+                                                ${paragraph.commentCount}
+                                                </span>
+                                                <i class="fa-solid fa-message" style="color: #6f6f6f; font-size: 20px;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"></i>
+                                           </div>`
+                                        : `<div class="comment-icon" data-paragraph-id="${paragraph.id}" style="opacity: 0; position: absolute; right: 0; bottom: -37px; text-align: center; width: 24px;">
                                                 <i class="fa-solid fa-square-plus" style="position: absolute; top: 6px; right: 2px; left: 50%; transform: translate(-50%); font-size: 10px; font-weight: 700; color: #fff;"></i>
                                                 <i class="fa-solid fa-message" style="color: #6f6f6f; font-size: 20px;"></i>
                                            </div>
-                                        `}
+                                        `
+                                        }
                                        </div>`
 
                     $('#chapter-body').append(para);
 
                 }
                 else if(paragraph.contentType==='link'){
-                    let para = `<div style="margin-bottom: 30px; margin-top: 30px;">
+                    let para = `<div class="chapter-content" data-comment-count="${paragraph.commentCount}" style="margin-bottom: 30px; margin-top: 30px;">
                                         <iframe width="100%" height="320" src="${paragraph.content}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                                         
                                         ${paragraph.commentCount !== "0"
-                                        ? `<div style="position: absolute; right: 0; bottom: 0; text-align: center; width: 24px;">
+                                        ? `<div class="comment-icon" data-paragraph-id="${paragraph.id}" style="position: absolute; right: 0; bottom: 0; text-align: center; width: 24px;">
                                                <span style="position: absolute; top: -4px; right: 2px; left: 50%; transform: translate(-50%); font-size: 12px; font-weight: 700; color: #fff;">
                                                ${paragraph.commentCount}
                                                </span>
                                                <i class="fa-solid fa-message" style="color: #6f6f6f; font-size: 20px;"></i>
                                         </div>`
-                                        : `<div style="opacity: 0; position: absolute; right: 0; bottom: 0; text-align: center; width: 24px;">
+                                        : `<div class="comment-icon" data-paragraph-id="${paragraph.id}" style="opacity: 0; position: absolute; right: 0; bottom: 0; text-align: center; width: 24px;">
                                                 <i class="fa-solid fa-square-plus" style="position: absolute; top: 6px; right: 2px; left: 50%; transform: translate(-50%); font-size: 10px; font-weight: 700; color: #fff;"></i>
                                                 <i class="fa-solid fa-message" style="color: #6f6f6f; font-size: 20px;"></i>
                                            </div>
@@ -510,14 +511,151 @@ voteBtn.addEventListener('click',function (event) {
 
 
 
+//when mouse enter the paragraph show comment icon(for uncommented paragraph)
+$(document).on('mouseenter', '.chapter-content', function () {
+    let commentCount = $(this).data('comment-count');
+    if (commentCount === 0) {
+        $(this).children('div').last().css('opacity', 1);
+    }
+});
+
+
+//when mouse leave the paragraph hide comment icon(for uncommented paragraph)
+$(document).on('mouseleave', '.chapter-content', function () {
+    let commentCount = $(this).data('comment-count');
+    if (commentCount === 0) {
+        $(this).children('div').last().css('opacity', 0);
+    }
+});
 
 
 
 
+//click on comment icon comment model appear
+$(document).on('click','.comment-icon',function (event) {
+
+    let paragraphId = $(this).data('paragraph-id');
+
+    let commentsModelContainer = `
+<div class="paragraph-comments-drawer">
+  <div role="presentation" class="modal-backdrop fade in" style="width: calc(100vw - 455px);"></div>
+  <div class="drawer-content open" style="width: 440px;">
+    <header class="drawer-header">
+      <h1 class="drawer-title">Chapter 58</h1>
+      <button class="close-btn" aria-label="Close">
+        <i class="fa-solid fa-xmark" style="color: #222;"></i>
+      </button>
+    </header>
+    <div class="drawer-body">
+      <div class="paragraph-content">
+        <pre>" දැදා කතාවක් කීන්නකෝ... "</pre>
+      </div>
+      <div class="comments-list">
+        <div class="new-comment-field sticky">
+          <div>
+            <div class="textboxContainer__mbQss">
+              <textarea placeholder="Write a comment..." class="text-body-sm defaultHeight__PP_LO" aria-label="Post new comment" style="height: 48px;"></textarea>
+              <button type="button" disabled="" aria-label="send">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.2424 13.7576L1.59386 9.91382C0.766235 9.54598 0.81481 8.35534 1.66965 8.05615L21.6485 1.06354C21.6779 1.05253 21.7077 1.04296 21.7378 1.03481C22.096 0.935758 22.4419 1.04489 22.6811 1.26776C22.6899 1.27595 22.6985 1.28433 22.7071 1.29289C22.7157 1.30146 22.7241 1.31014 22.7322 1.31893C22.9554 1.55835 23.0645 1.90478 22.9649 2.26344C22.9568 2.29301 22.9474 2.32229 22.9366 2.35116L15.9439 22.3304C15.6447 23.1852 14.454 23.2338 14.0862 22.4061L10.2424 13.7576ZM18.1943 4.39148L4.71107 9.11061L10.7785 11.8073L18.1943 4.39148ZM12.1927 13.2215L14.8894 19.2889L19.6085 5.80568L12.1927 13.2215Z" fill="#111111"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="comment-card-container">
+          <div>
+            <div class="dsContainer__RRG6K commentCardContainer__P0qWo">
+              <div class="dsColumn__PqDUP">
+                <a href="/user/Jeon_Taeshu" aria-label="Jeon_Taeshu">
+                  <img src="https://a.wattpad.com/useravatar/Jeon_Taeshu.256.879319.jpg" aria-hidden="true" alt="Jeon_Taeshu" class="avatar__Ygp0_ comment_card_avatar__zKv1t">
+                </a>
+              </div>
+              <div class="dsColumn__PqDUP commentCardContentContainer__F9gGk gap8__gx3K6">
+                <div class="dsRow__BXK6n gap8__gx3K6 authorProfileRow__GMsIH">
+                  <h3 aria-hidden="true" class="dsMargin__Gs6Tj title-action">Jeon_Taeshu</h3>
+                  <div class="dsRow__BXK6n badgeRow__bzi6i"></div>
+                </div>
+                <div class="dsRow__BXK6n commentCardContent__Vc9vg">
+                  <pre class="text-body-sm">කියහන් කුකියෝ</pre>
+                </div>
+                <div class="dsRow__BXK6n commentCardContent__Vc9vg commentCardMeta__Xy9U9">
+                  <p class="postedDate__xcq5D text-caption">7mo ago</p>
+                  <button class="replyButton__kdyts button__Meavz title-action" aria-label="Reply to comment">Reply</button>
+                </div>
+              </div>
+              <div class="dsColumn__PqDUP likeColumn__bveEu">
+                <button class="button__Meavz" aria-label="More options">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z" fill="#686868"></path></svg>
+                </button>
+                <div class="dsColumn__PqDUP">
+                  <button class="button__Meavz" aria-label="Like this comment">
+                    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>
+                  </button>
+                  <span class="text-caption"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="comment-card-container"><div>
+          <div class="dsContainer__RRG6K commentCardContainer__P0qWo">
+            <div class="dsColumn__PqDUP">
+              <a href="/user/Mommy_smoky" aria-label="Mommy_smoky">
+                <img src="https://a.wattpad.com/useravatar/Mommy_smoky.256.174400.jpg" aria-hidden="true" alt="Mommy_smoky" class="avatar__Ygp0_ comment_card_avatar__zKv1t">
+              </a>
+            </div>
+            <div class="dsColumn__PqDUP commentCardContentContainer__F9gGk gap8__gx3K6">
+              <div class="dsRow__BXK6n gap8__gx3K6 authorProfileRow__GMsIH">
+                <h3 aria-hidden="true" class="dsMargin__Gs6Tj title-action">Mommy_smoky</h3>
+                <div class="dsRow__BXK6n badgeRow__bzi6i"></div>
+              </div>
+              <div class="dsRow__BXK6n commentCardContent__Vc9vg">
+                <pre class="text-body-sm">අඩේ දැදා කතාත් දන්නවද? 😹</pre>
+              </div>
+              <div class="dsRow__BXK6n commentCardContent__Vc9vg commentCardMeta__Xy9U9">
+                <p class="postedDate__xcq5D text-caption">7mo ago</p>
+                <button class="replyButton__kdyts button__Meavz title-action" aria-label="Reply to comment">Reply</button>
+              </div>
+            </div>
+            <div class="dsColumn__PqDUP likeColumn__bveEu">
+              <button class="button__Meavz" aria-label="More options">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z" fill="#686868"></path></svg>
+              </button>
+              <div class="dsColumn__PqDUP">
+                <button class="button__Meavz" aria-label="Like this comment">
+                  <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>
+                </button>
+                <span class="text-caption">1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class=""></div>
+      </div>
+    </div>
+  </div>
+</div>`;
+
+    $('body').append(commentsModelContainer);
+});
 
 
+$(document).on('click','.close-btn',function (event) {
+
+    $('.paragraph-comments-drawer').css('display','none');
+
+});
 
 
+$(document).on('click', function (e) {
+
+    if ($(e.target).closest('.paragraph-comments-drawer').length > 0 || $(e.target.closest('.comment-icon').length > 0)) {
+        // $('.paragraph-comments-drawer').css('display','block');
+    }
+    else {
+        $('.paragraph-comments-drawer').css('display','none');
+    }
+});
 
 
 
