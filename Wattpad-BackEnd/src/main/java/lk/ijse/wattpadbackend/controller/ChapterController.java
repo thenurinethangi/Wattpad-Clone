@@ -32,12 +32,12 @@ public class ChapterController {
         return new APIResponse(202,"Chapter data successfully loaded for chapter id: "+id,chapterDTO);
     }
 
-    @GetMapping("/recommendations")
-    public APIResponse getRecommendationStories(){
+    @PostMapping("/recommendations")
+    public APIResponse getRecommendationStories(@RequestBody StoryIdsDTO storyIdsDTO){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        List<StoryDTO> storyDTOList = chapterService.getRecommendationStories(auth.getName());
+        List<StoryDTO> storyDTOList = chapterService.getRecommendationStories(auth.getName(),storyIdsDTO);
         return new APIResponse(202,"Successfully loaded recommendation stories",storyDTOList);
     }
 

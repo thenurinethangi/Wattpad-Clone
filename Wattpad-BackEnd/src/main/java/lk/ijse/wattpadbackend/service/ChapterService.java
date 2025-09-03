@@ -10,7 +10,7 @@ public interface ChapterService {
 
     ChapterDTO getAChapterById(long id);
 
-    List<StoryDTO> getRecommendationStories(String username);
+    List<StoryDTO> getRecommendationStories(String username, StoryIdsDTO storyIdsDTO);
 
     List<StoryDTO> getAlsoYouWillLikeStories(String name, StoryIdsDTO storyIdsDTO);
 }

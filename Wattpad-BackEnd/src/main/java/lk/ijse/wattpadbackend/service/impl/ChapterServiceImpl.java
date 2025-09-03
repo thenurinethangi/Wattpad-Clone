@@ -202,7 +202,7 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     @Override
-    public List<StoryDTO> getRecommendationStories(String username) {
+    public List<StoryDTO> getRecommendationStories(String username, StoryIdsDTO storyIdsDTO) {
 
         try{
            User user = userRepository.findByUsername(username);
@@ -210,7 +210,7 @@ public class ChapterServiceImpl implements ChapterService {
                throw new UserNotFoundException("User not found.");
            }
 
-           List<Story> stories = storyRepository.findTwoRandomStoriesNotBelongingToCurrentUser(user.getId());
+           List<Story> stories = storyRepository.findTwoRandomStoriesNotBelongingToUserAndStory(user.getId(),storyIdsDTO.getStoriesIdList().get(0));
 
            List<StoryDTO> storyDTOList = new ArrayList<>();
            for (Story x : stories){
