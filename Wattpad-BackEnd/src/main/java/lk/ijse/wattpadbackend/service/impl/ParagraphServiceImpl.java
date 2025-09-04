@@ -1,17 +1,12 @@
 package lk.ijse.wattpadbackend.service.impl;
 
 import lk.ijse.wattpadbackend.dto.ParagraphCommentsModelResponseDTO;
+import lk.ijse.wattpadbackend.dto.ReplyResponseDTO;
 import lk.ijse.wattpadbackend.dto.SingleCommentDTO;
-import lk.ijse.wattpadbackend.entity.CommentLike;
-import lk.ijse.wattpadbackend.entity.Paragraph;
-import lk.ijse.wattpadbackend.entity.ParagraphComment;
-import lk.ijse.wattpadbackend.entity.User;
+import lk.ijse.wattpadbackend.entity.*;
 import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
-import lk.ijse.wattpadbackend.repository.CommentLikeRepository;
-import lk.ijse.wattpadbackend.repository.ParagraphCommentRepository;
-import lk.ijse.wattpadbackend.repository.ParagraphRepository;
-import lk.ijse.wattpadbackend.repository.UserRepository;
+import lk.ijse.wattpadbackend.repository.*;
 import lk.ijse.wattpadbackend.service.ParagraphService;
 import lk.ijse.wattpadbackend.util.TimeAgoUtil;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +24,7 @@ public class ParagraphServiceImpl implements ParagraphService {
     private final ParagraphCommentRepository paragraphCommentRepository;
     private final CommentLikeRepository commentLikeRepository;
     private final UserRepository userRepository;
+    private final ReplyRepository replyRepository;
 
     @Override
     public ParagraphCommentsModelResponseDTO getAllCommentsByParagraphId(String username, long id) {
@@ -193,6 +189,111 @@ public class ParagraphServiceImpl implements ParagraphService {
                 return "Unliked";
             }
 
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void addAReplyToParagraphComment(String username, long id) {
+
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+        }
+        catch (UserNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public List<ReplyResponseDTO> getAllRepliesForParagraphComment(String username, long id) {
+
+        try {
+            Optional<ParagraphComment> optionalParagraphComment = paragraphCommentRepository.findById((int) id);
+            if(!optionalParagraphComment.isPresent()){
+                throw new NotFoundException("Comment not found.");
+            }
+            ParagraphComment paragraphComment = optionalParagraphComment.get();
+
+            List<Reply> replyList = replyRepository.findAllByParagraphComment(paragraphComment);
+
+            List<ReplyResponseDTO> replyResponseDTOList = new ArrayList<>();
+            for (Reply x : replyList){
+                ReplyResponseDTO replyResponseDTO = new ReplyResponseDTO();
+                replyResponseDTO.setReplyId(x.getId());
+                replyResponseDTO.setParagraphCommentId(x.getParagraphComment().getId());
+                replyResponseDTO.setReplyMessage(x.getReplyMessage());
+                replyResponseDTO.setUserId(x.getUser().getId());
+                replyResponseDTO.setUsername(x.getUser().getUsername());
+                replyResponseDTO.setUserProfilePic(x.getUser().getProfilePicPath());
+
+                long likesLong = x.getLikes();
+
+                String likesInStr = "";
+                if(likesLong<=1000){
+                    likesInStr = String.valueOf(likesLong);
+                }
+                else if (likesLong >= 1000 && likesLong < 1000000) {
+                    double value = (double) likesLong / 1000;
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        likesInStr = vStr.split("\\.0")[0] + "K";
+                    } else {
+                        likesInStr = vStr + "K";
+                    }
+                }
+                else if(likesLong>=1000000){
+                    double value = (double) likesLong/1000000;
+
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        likesInStr = vStr.split("\\.0")[0] + "M";
+                    } else {
+                        likesInStr = value+"M";
+                    }
+                }
+                replyResponseDTO.setLikes(likesInStr);
+
+                replyResponseDTO.setTime(TimeAgoUtil.toTimeAgo(x.getCreateAt()));
+
+                User user = userRepository.findByUsername(username);
+                if(user==null){
+                    throw new UserNotFoundException("User not found.");
+                }
+
+                CommentLike commentLike = commentLikeRepository.findByReplyAndUser(x,user);
+                if(commentLike==null){
+                    replyResponseDTO.setIsCurrentUserLiked(0);
+                }
+                else{
+                    replyResponseDTO.setIsCurrentUserLiked(1);
+                }
+
+                Long commentUserId = x.getUser().getId();
+                Long storyUserId = x.getParagraphComment().getParagraph().getChapter().getStory().getUser().getId();
+
+                if (commentUserId.equals(storyUserId)) {
+                    replyResponseDTO.setIsCommentByAuthor(1);
+                }
+                else{
+                    replyResponseDTO.setIsCommentByAuthor(0);
+                }
+
+                replyResponseDTOList.add(replyResponseDTO);
+            }
+
+            return replyResponseDTOList;
+        }
+        catch (UserNotFoundException e) {
+            throw new RuntimeException(e);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }

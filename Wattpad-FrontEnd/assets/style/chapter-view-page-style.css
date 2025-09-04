@@ -2026,6 +2026,114 @@ a.tag-item {
 }
 
 
+/*reply style*/
+.comments-list {
+    background-color: #fff;
+}
+
+.paragraph-comments-drawer .drawer-content .drawer-body .comments-list {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.comment-card-container {
+    position: relative;
+}
+
+.dsContainer__RRG6K {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.commentCardContainer__P0qWo, .commentCardContent__Vc9vg, .gap8__gx3K6, .likeColumn__bveEu {
+    gap: 8px;
+}
+
+.commentCardContainer__P0qWo {
+    padding: 8px 8px 8px 12px;
+    -webkit-transition: background-color 1s ease-out;
+    transition: background-color 1s ease-out;
+}
+
+.isStoryAuthor__cpod8 {
+    background-color: var(--ds-base-1-20,#fff6f2);
+}
+
+.replyCard__Ft5hc {
+    padding: 8px 8px 8px 60px;
+}
+
+.dsColumn__PqDUP {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+}
+
+img {
+    vertical-align: middle;
+}
+
+.avatar__Ygp0_ {
+    border-radius: 50%;
+    display: block;
+    background-color: #eee;
+}
+
+.comment_card_reply_avatar__niNAw {
+    width: 20px;
+    height: 20px;
+}
+
+.commentCardContainer__P0qWo, .commentCardContent__Vc9vg, .gap8__gx3K6, .likeColumn__bveEu {
+    gap: 8px;
+}
+
+.commentCardContentContainer__F9gGk {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding-right: 16px;
+}
+
+.dsRow__BXK6n {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+}
+
+.authorProfileRow__GMsIH, .commentCardMeta__Xy9U9, .viewRepliesRow__nKbo7 {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.button__Meavz {
+    border: none;
+    background: 0 0;
+    cursor: pointer;
+}
+
+.replyButton__kdyts {
+    color: var(--ds-base-2-60,#3b19a9);
+    padding: 0;
+}
+
+
 
 /*media query*/
 @media all and (max-width: 1147px) {
