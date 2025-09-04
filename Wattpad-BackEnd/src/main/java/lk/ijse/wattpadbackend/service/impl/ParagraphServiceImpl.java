@@ -151,6 +151,53 @@ public class ParagraphServiceImpl implements ParagraphService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public String addOrRemoveLikeOnParagraphComment(String username, long paragraphCommentId) {
+
+        try{
+            User user = userRepository.findByUsername(username);
+            if(user==null){
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<ParagraphComment> optionalParagraphComment = paragraphCommentRepository.findById((int) paragraphCommentId);
+            if(!optionalParagraphComment.isPresent()){
+                throw new NotFoundException("Comment not found.");
+            }
+            ParagraphComment paragraphComment = optionalParagraphComment.get();
+
+            CommentLike commentLike = commentLikeRepository.findByParagraphCommentAndUser(paragraphComment,user);
+            if(commentLike==null){
+                CommentLike commentLike1 = new CommentLike();
+                commentLike1.setParagraphComment(paragraphComment);
+                commentLike1.setUser(user);
+
+                commentLikeRepository.save(commentLike1);
+
+                long likes = paragraphComment.getLikes();
+                likes++;
+                paragraphComment.setLikes(likes);
+                paragraphCommentRepository.save(paragraphComment);
+
+                return "Liked";
+            }
+            else{
+                commentLikeRepository.delete(commentLike);
+
+                long likes = paragraphComment.getLikes();
+                likes--;
+                paragraphComment.setLikes(likes);
+                paragraphCommentRepository.save(paragraphComment);
+
+                return "Unliked";
+            }
+
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
 
 

@@ -7,10 +7,7 @@ import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/paragraph")
@@ -26,6 +23,15 @@ public class ParagraphController {
 
         ParagraphCommentsModelResponseDTO modelResponseDTO = paragraphService.getAllCommentsByParagraphId(auth.getName(),id);
         return new APIResponse(202,"Successfully loaded all the comments by paragraph id : "+id,modelResponseDTO);
+    }
+
+    @PostMapping("/comment/like/{id}")
+    public APIResponse addOrRemoveLikeOnParagraphComment(@PathVariable long id){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        String result = paragraphService.addOrRemoveLikeOnParagraphComment(auth.getName(),id);
+        return new APIResponse(202,"Successfully add or remove like on paragraph comment id : "+id,result);
     }
 }
 
