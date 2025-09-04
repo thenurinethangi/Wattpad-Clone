@@ -46,6 +46,15 @@ public class ParagraphController {
         List<ReplyResponseDTO> replyResponseDTOList = paragraphService.getAllRepliesForParagraphComment(auth.getName(),id);
         return new APIResponse(202,"Successfully load all the replies to paragraph comment id : "+id,replyResponseDTOList);
     }
+
+    @PostMapping("/comment/reply/like/{id}")
+    public APIResponse addOrRemoveLikeOnReply(@PathVariable long id){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        String result = paragraphService.addOrRemoveLikeOnReply(auth.getName(),id);
+        return new APIResponse(202,"Successfully add or remove like on reply id : "+id,result);
+    }
 }
 
 

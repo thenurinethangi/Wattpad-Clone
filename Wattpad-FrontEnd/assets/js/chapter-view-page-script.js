@@ -760,7 +760,7 @@ function loadRepliesByParagraphCommentId(paragraphCommentId,thisElement) {
                 let reply = data.data[i];
 
                 let singleReply = `
-  <div class="comment-card-container">
+  <div class="comment-card-container reply-card-container">
     <div>
       <div class="dsContainer__RRG6K commentCardContainer__P0qWo replyCard__Ft5hc">
         <div class="dsColumn__PqDUP">
@@ -798,7 +798,7 @@ function loadRepliesByParagraphCommentId(paragraphCommentId,thisElement) {
                 }
             </button>
               ${reply.likes!=='0'
-                    ? `<span class="text-caption" style="font-weight: 700; font-size: 12px ; color: #121212;">${comment.likes}</span>`
+                    ? `<span class="text-caption" style="font-weight: 700; font-size: 12px ; color: #121212;">${reply.likes}</span>`
                     : ``
                 }
           </div>
@@ -826,7 +826,7 @@ $(document).on('click','.like-btn-reply',function (event) {
     let replyId = $(this).data('reply-id');
     let paragraphCommentId = $(this).data('paragraph-comment-id');
 
-    fetch('http://localhost:8080/api/v1/paragraph/comment/like/'+paragraphCommentId, {
+    fetch('http://localhost:8080/api/v1/paragraph/comment/reply/like/'+replyId, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -844,7 +844,40 @@ $(document).on('click','.like-btn-reply',function (event) {
         .then(data => {
             console.log('Success:', data);
 
-            paragraphCommentsSetToTheModel(paragraphId);
+            if(data.data==='Liked'){
+                $(this).find('svg').attr('fill','#ff6122');
+                $(this).find('svg').find('path').attr('fill','#ff6122');
+                $(this).find('svg').find('path').attr('stroke','#ff6122');
+
+                if ($(this).siblings('.text-caption').length) {
+                    let value = $(this).siblings('.text-caption').text();
+                    let no = Number(value);
+                    no+=1;
+                    $(this).siblings('.text-caption').text(no);
+                }
+                else{
+                    let newCaption = $('<span class="text-caption" style="font-weight: 700; font-size: 12px ; color: #121212;">1</span>');
+                    $(this).after(newCaption);
+                }
+            }
+            else{
+                $(this).find('svg').attr('fill','none');
+                $(this).find('svg').find('path').attr('fill','none');
+                $(this).find('svg').find('path').attr('stroke','#121212');
+
+                if ($(this).siblings('.text-caption').length) {
+                    let value = $(this).siblings('.text-caption').text();
+                    let no = Number(value);
+                    no-=1;
+
+                    if(no<=0){
+                        $(this).siblings('.text-caption').remove();
+                    }
+                    else {
+                        $(this).siblings('.text-caption').text(no);
+                    }
+                }
+            }
 
         })
         .catch(error => {

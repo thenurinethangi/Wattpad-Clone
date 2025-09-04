@@ -299,6 +299,52 @@ public class ParagraphServiceImpl implements ParagraphService {
         }
     }
 
+    @Override
+    public String addOrRemoveLikeOnReply(String username, long replyId) {
+
+        try{
+            User user = userRepository.findByUsername(username);
+            if(user==null){
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Reply> optionalReply = replyRepository.findById((int) replyId);
+            if(!optionalReply.isPresent()){
+                throw new NotFoundException("Reply not found.");
+            }
+            Reply reply = optionalReply.get();
+
+            CommentLike commentLike = commentLikeRepository.findByReplyAndUser(reply,user);
+            if(commentLike==null){
+                CommentLike commentLike1 = new CommentLike();
+                commentLike1.setReply(reply);
+                commentLike1.setUser(user);
+
+                commentLikeRepository.save(commentLike1);
+
+                long likes = reply.getLikes();
+                likes++;
+                reply.setLikes(likes);
+                replyRepository.save(reply);
+
+                return "Liked";
+            }
+            else{
+                commentLikeRepository.delete(commentLike);
+
+                long likes = reply.getLikes();
+                likes--;
+                reply.setLikes(likes);
+                replyRepository.save(reply);
+
+                return "Unliked";
+            }
+
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
 
 
