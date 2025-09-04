@@ -2134,6 +2134,70 @@ img {
 }
 
 
+/*reply input field style*/
+.new-comment-field {
+    top: 52px;
+    z-index: 1;
+    padding: 12px 16px;
+    background-color: #fff;
+}
+
+.new-comment-field.reply {
+    padding-left: 60px;
+    background-color: #f6f6f6;
+}
+
+.textboxContainer__mbQss {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.textboxContainer__mbQss textarea {
+    border-color: var(--ds-neutral-40,rgba(18,18,18,.12));
+    border-radius: 24px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    resize: none;
+    width: 100%;
+    padding: 12px 48px 12px 16px;
+    color: var(--ds-neutral-100,#121212);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.textboxContainer__mbQss .defaultHeight__PP_LO {
+    height: 48px;
+}
+
+.textboxContainer__mbQss button {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    background: var(--ds-base-2-60,#3b19a9);
+    padding: 0;
+    cursor: pointer;
+}
+
+.textboxContainer__mbQss button svg path {
+    fill: var(--ds-neutral-00-solid,#fff);
+}
+
+
 
 /*media query*/
 @media all and (max-width: 1147px) {

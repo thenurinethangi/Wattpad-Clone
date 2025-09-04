@@ -1,6 +1,7 @@
 package lk.ijse.wattpadbackend.service.impl;
 
 import lk.ijse.wattpadbackend.dto.ParagraphCommentsModelResponseDTO;
+import lk.ijse.wattpadbackend.dto.ReplyRequestDTO;
 import lk.ijse.wattpadbackend.dto.ReplyResponseDTO;
 import lk.ijse.wattpadbackend.dto.SingleCommentDTO;
 import lk.ijse.wattpadbackend.entity.*;
@@ -195,13 +196,32 @@ public class ParagraphServiceImpl implements ParagraphService {
     }
 
     @Override
-    public void addAReplyToParagraphComment(String username, long id) {
+    public void addAReplyToParagraphComment(String username, long id, ReplyRequestDTO replyRequestDTO) {
 
         try {
             User user = userRepository.findByUsername(username);
             if (user == null) {
                 throw new UserNotFoundException("User not found.");
             }
+
+            Optional<ParagraphComment> optionalParagraphComment = paragraphCommentRepository.findById((int) id);
+            if(!optionalParagraphComment.isPresent()){
+                throw new NotFoundException("Comment not found.");
+            }
+            ParagraphComment paragraphComment = optionalParagraphComment.get();
+
+            Reply reply = new Reply();
+            reply.setReplyMessage(replyRequestDTO.getReplyMessage());
+            reply.setParagraphComment(paragraphComment);
+            reply.setUser(user);
+
+            replyRepository.save(reply);
+
+            long count = paragraphComment.getReplyCount();
+            count++;
+            paragraphComment.setReplyCount(count);
+            paragraphCommentRepository.save(paragraphComment);
+
         }
         catch (UserNotFoundException e) {
             throw new RuntimeException(e);

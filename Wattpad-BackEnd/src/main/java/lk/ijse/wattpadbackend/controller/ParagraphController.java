@@ -55,6 +55,15 @@ public class ParagraphController {
         String result = paragraphService.addOrRemoveLikeOnReply(auth.getName(),id);
         return new APIResponse(202,"Successfully add or remove like on reply id : "+id,result);
     }
+
+    @PostMapping("/comment/reply/{id}")
+    public APIResponse addAReplyToParagraphComment(@PathVariable long id, @RequestBody ReplyRequestDTO replyRequestDTO){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        paragraphService.addAReplyToParagraphComment(auth.getName(),id,replyRequestDTO);
+        return new APIResponse(202,"Successfully add reply to paragraph comment id : "+id,null);
+    }
 }
 
 

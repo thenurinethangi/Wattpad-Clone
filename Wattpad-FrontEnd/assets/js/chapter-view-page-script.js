@@ -618,7 +618,7 @@ function paragraphCommentsSetToTheModel(paragraphId) {
                 </div>
                 <div class="dsRow__BXK6n commentCardContent__Vc9vg commentCardMeta__Xy9U9">
                   <p class="postedDate__xcq5D text-caption">${comment.time}</p>
-                  <button class="replyButton__kdyts button__Meavz title-action" data-paragraph-comment-id="${comment.id}" aria-label="Reply to comment">Reply</button>
+                  <button class="replyButton__kdyts button__Meavz title-action reply-btn" data-paragraph-comment-id="${comment.id}" aria-label="Reply to comment">Reply</button>
                 </div>
                 <div class="dsRow__BXK6n viewRepliesRow__nKbo7 gap4__udBQg">
                 ${comment.replyCount!=='0'
@@ -646,6 +646,8 @@ function paragraphCommentsSetToTheModel(paragraphId) {
               </div>
             </div>
           </div>
+          <!--here place the comment input field-->
+          
           <!--here add replies-->
           <div class="comments-list reply-container">
           </div>
@@ -886,6 +888,104 @@ $(document).on('click','.like-btn-reply',function (event) {
         });
 
 });
+
+
+
+
+//when click on reply btn show the input field
+$(document).on('click','.reply-btn',function (event) {
+
+    let paragraphCommentId = $(this).data('paragraph-comment-id');
+
+    let replyContainer = $(this).closest(".comment-card-container").find(".reply-container");
+
+    if (replyContainer.prev(".reply-input-field").length === 0) {
+
+        let inputField = `
+<div class="new-comment-field reply reply-input-field">
+    <div>
+        <div class="textboxContainer__mbQss">
+            <textarea placeholder="Write a reply..." class="text-body-sm defaultHeight__PP_LO" aria-label="To enrich screen reader interactions, please activate Accessibility in Grammarly extension settings" spellcheck="false" style="height: 48px;"></textarea>
+            <button class="send-reply-btn" data-paragraph-comment-id="${paragraphCommentId}" type="button" disabled="" aria-label="send">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.2424 13.7576L1.59386 9.91382C0.766235 9.54598 0.81481 8.35534 1.66965 8.05615L21.6485 1.06354C21.6779 1.05253 21.7077 1.04296 21.7378 1.03481C22.096 0.935758 22.4419 1.04489 22.6811 1.26776C22.6899 1.27595 22.6985 1.28433 22.7071 1.29289C22.7157 1.30146 22.7241 1.31014 22.7322 1.31893C22.9554 1.55835 23.0645 1.90478 22.9649 2.26344C22.9568 2.29301 22.9474 2.32229 22.9366 2.35116L15.9439 22.3304C15.6447 23.1852 14.454 23.2338 14.0862 22.4061L10.2424 13.7576ZM18.1943 4.39148L4.71107 9.11061L10.7785 11.8073L18.1943 4.39148ZM12.1927 13.2215L14.8894 19.2889L19.6085 5.80568L12.1927 13.2215Z" fill="#111111"></path></svg>
+            </button>
+        </div>
+    </div>
+</div>`;
+
+        replyContainer.before(inputField);
+    }
+});
+
+
+$(document).on('input', '.reply-input-field textarea', function () {
+    let btn = $(this).closest('.reply-input-field').find('.send-reply-btn');
+    if ($(this).val().trim().length > 0) {
+        btn.prop('disabled', false);
+    } else {
+        btn.prop('disabled', true);
+    }
+});
+
+
+
+//click on send btn in reply input field send add a reply to a comment
+$(document).on('click','.send-reply-btn',function (event) {
+
+    let replyText = $(this).closest('.reply-input-field').find('textarea').val();
+    let paragraphCommentId = $(this).data('paragraph-comment-id');
+
+    let data = {
+        'replyMessage': replyText
+    }
+
+    fetch('http://localhost:8080/api/v1/paragraph/comment/reply/'+paragraphCommentId, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+        });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
