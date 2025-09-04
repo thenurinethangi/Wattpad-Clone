@@ -536,19 +536,45 @@ $(document).on('click','.comment-icon',function (event) {
 
     let paragraphId = $(this).data('paragraph-id');
 
-    let commentsModelContainer = `
+    fetch('http://localhost:8080/api/v1/paragraph/all/comments/'+paragraphId, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            let response = data.data;
+
+            let commentsModelContainer = `
 <div class="paragraph-comments-drawer">
   <div role="presentation" class="modal-backdrop fade in" style="width: calc(100vw - 455px);"></div>
   <div class="drawer-content open" style="width: 440px;">
     <header class="drawer-header">
-      <h1 class="drawer-title">Chapter 58</h1>
+      <h1 class="drawer-title">${response.chapterTitle}</h1>
       <button class="close-btn" aria-label="Close">
         <i class="fa-solid fa-xmark" style="color: #222;"></i>
       </button>
     </header>
     <div class="drawer-body">
       <div class="paragraph-content">
-        <pre>" දැදා කතාවක් කීන්නකෝ... "</pre>
+        ${response.contentType==='text'
+            ? `<pre>${response.content}</pre>`
+            : response.contentType === 'image' 
+                    ? `<img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${response.content}" alt="image" style="width: 100%;">`
+                    : `<iframe width="100%" height="320" src="${response.content}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+            }
+        
       </div>
       <div class="comments-list">
         <div class="new-comment-field sticky">
@@ -561,25 +587,32 @@ $(document).on('click','.comment-icon',function (event) {
             </div>
           </div>
         </div>
+        ${response.singleCommentDTOList.map(comment => `
         <div class="comment-card-container">
           <div>
             <div class="dsContainer__RRG6K commentCardContainer__P0qWo">
               <div class="dsColumn__PqDUP">
-                <a href="/user/Jeon_Taeshu" aria-label="Jeon_Taeshu">
-                  <img src="https://a.wattpad.com/useravatar/Jeon_Taeshu.256.879319.jpg" aria-hidden="true" alt="Jeon_Taeshu" class="avatar__Ygp0_ comment_card_avatar__zKv1t">
+                <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${comment.userId}" aria-label="Jeon_Taeshu">
+                  <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${comment.userProfilePic}" aria-hidden="true" alt="Jeon_Taeshu" class="avatar__Ygp0_ comment_card_avatar__zKv1t">
                 </a>
               </div>
               <div class="dsColumn__PqDUP commentCardContentContainer__F9gGk gap8__gx3K6">
                 <div class="dsRow__BXK6n gap8__gx3K6 authorProfileRow__GMsIH">
-                  <h3 aria-hidden="true" class="dsMargin__Gs6Tj title-action">Jeon_Taeshu</h3>
+                  <h3 aria-hidden="true" class="dsMargin__Gs6Tj title-action">${comment.username}</h3>
                   <div class="dsRow__BXK6n badgeRow__bzi6i"></div>
                 </div>
                 <div class="dsRow__BXK6n commentCardContent__Vc9vg">
-                  <pre class="text-body-sm">කියහන් කුකියෝ</pre>
+                  <pre class="text-body-sm">${comment.commentMessage}</pre>
                 </div>
                 <div class="dsRow__BXK6n commentCardContent__Vc9vg commentCardMeta__Xy9U9">
-                  <p class="postedDate__xcq5D text-caption">7mo ago</p>
+                  <p class="postedDate__xcq5D text-caption">${comment.time}</p>
                   <button class="replyButton__kdyts button__Meavz title-action" aria-label="Reply to comment">Reply</button>
+                </div>
+                <div class="dsRow__BXK6n viewRepliesRow__nKbo7 gap4__udBQg">
+                     ${comment.replyCount!=='0'
+                        ? `<button class="replyButton__kdyts button__Meavz title-action" aria-label="View replies">View ${comment.replyCount} Reply</button>`
+                        : ``
+                    }
                 </div>
               </div>
               <div class="dsColumn__PqDUP likeColumn__bveEu">
@@ -588,55 +621,34 @@ $(document).on('click','.comment-icon',function (event) {
                 </button>
                 <div class="dsColumn__PqDUP">
                   <button class="button__Meavz" aria-label="Like this comment">
-                    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>
+                    ${comment.isCurrentUserLiked===1
+                        ? `<svg width="16" height="14" viewBox="0 0 16 14" fill="#ff6122" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#ff6122" fill="#ff6122" stroke-width="1.5" stroke-linecap="round"></path></svg>`
+                        : `<svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>`
+                        }
                   </button>
-                  <span class="text-caption"></span>
+                  ${comment.likes!=='0'
+                    ? `<span class="text-caption" style="font-weight: 700; font-size: 12px ; color: #121212;">${comment.likes}</span>`
+                    : ``
+                    }
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="comment-card-container"><div>
-          <div class="dsContainer__RRG6K commentCardContainer__P0qWo">
-            <div class="dsColumn__PqDUP">
-              <a href="/user/Mommy_smoky" aria-label="Mommy_smoky">
-                <img src="https://a.wattpad.com/useravatar/Mommy_smoky.256.174400.jpg" aria-hidden="true" alt="Mommy_smoky" class="avatar__Ygp0_ comment_card_avatar__zKv1t">
-              </a>
-            </div>
-            <div class="dsColumn__PqDUP commentCardContentContainer__F9gGk gap8__gx3K6">
-              <div class="dsRow__BXK6n gap8__gx3K6 authorProfileRow__GMsIH">
-                <h3 aria-hidden="true" class="dsMargin__Gs6Tj title-action">Mommy_smoky</h3>
-                <div class="dsRow__BXK6n badgeRow__bzi6i"></div>
-              </div>
-              <div class="dsRow__BXK6n commentCardContent__Vc9vg">
-                <pre class="text-body-sm">අඩේ දැදා කතාත් දන්නවද? 😹</pre>
-              </div>
-              <div class="dsRow__BXK6n commentCardContent__Vc9vg commentCardMeta__Xy9U9">
-                <p class="postedDate__xcq5D text-caption">7mo ago</p>
-                <button class="replyButton__kdyts button__Meavz title-action" aria-label="Reply to comment">Reply</button>
-              </div>
-            </div>
-            <div class="dsColumn__PqDUP likeColumn__bveEu">
-              <button class="button__Meavz" aria-label="More options">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z" fill="#686868"></path></svg>
-              </button>
-              <div class="dsColumn__PqDUP">
-                <button class="button__Meavz" aria-label="Like this comment">
-                  <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>
-                </button>
-                <span class="text-caption">1</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
+        </div>`).join('')}
+       
         <div class=""></div>
       </div>
     </div>
   </div>
 </div>`;
 
-    $('body').append(commentsModelContainer);
+            $('body').append(commentsModelContainer);
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+        });
 });
 
 
