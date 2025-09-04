@@ -932,6 +932,10 @@ $(document).on('input', '.reply-input-field textarea', function () {
 //click on send btn in reply input field send add a reply to a comment
 $(document).on('click','.send-reply-btn',function (event) {
 
+    let thisElement = $(this);
+    let card = thisElement.closest('.comment-card-container');
+    let replyBtn = card.find('.reply-btn');
+
     let replyText = $(this).closest('.reply-input-field').find('textarea').val();
     let paragraphCommentId = $(this).data('paragraph-comment-id');
 
@@ -959,11 +963,15 @@ $(document).on('click','.send-reply-btn',function (event) {
         .then(data => {
             console.log('Success:', data);
 
+            loadRepliesByParagraphCommentId(paragraphCommentId,replyBtn);
+
         })
         .catch(error => {
             let response = JSON.parse(error.message);
             console.log(response);
         });
+
+    $(this).closest('.reply-input-field').remove();
 });
 
 
