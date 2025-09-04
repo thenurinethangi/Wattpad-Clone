@@ -1998,6 +1998,34 @@ a.tag-item {
 }
 
 
+/*author badge*/
+.dsRow__BXK6n {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+}
+
+.badgeRow__bzi6i {
+    gap: 4px;
+}
+
+.pill__HVTvX {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    border-radius: 12px;
+    padding: 2px 12px;
+    margin-right: 4px;
+}
+
+
 
 /*media query*/
 @media all and (max-width: 1147px) {

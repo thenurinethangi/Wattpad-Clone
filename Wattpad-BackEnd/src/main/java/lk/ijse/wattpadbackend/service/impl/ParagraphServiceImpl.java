@@ -131,6 +131,16 @@ public class ParagraphServiceImpl implements ParagraphService {
                     singleCommentDTO.setIsCurrentUserLiked(1);
                 }
 
+                Long commentUserId = x.getUser().getId();
+                Long storyUserId = x.getParagraph().getChapter().getStory().getUser().getId();
+
+                if (commentUserId.equals(storyUserId)) {
+                    singleCommentDTO.setIsCommentByAuthor(1);
+                }
+                else{
+                    singleCommentDTO.setIsCommentByAuthor(0);
+                }
+
                 singleCommentDTOList.add(singleCommentDTO);
             }
 

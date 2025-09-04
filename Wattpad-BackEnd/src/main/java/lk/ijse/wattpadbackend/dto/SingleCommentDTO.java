@@ -18,4 +18,5 @@ public class SingleCommentDTO {
     private String username;
     private String userProfilePic;
     private int isCurrentUserLiked;
+    private int isCommentByAuthor;
 }

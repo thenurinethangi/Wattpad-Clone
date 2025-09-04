@@ -599,7 +599,12 @@ $(document).on('click','.comment-icon',function (event) {
               <div class="dsColumn__PqDUP commentCardContentContainer__F9gGk gap8__gx3K6">
                 <div class="dsRow__BXK6n gap8__gx3K6 authorProfileRow__GMsIH">
                   <h3 aria-hidden="true" class="dsMargin__Gs6Tj title-action">${comment.username}</h3>
-                  <div class="dsRow__BXK6n badgeRow__bzi6i"></div>
+                  <div class="dsRow__BXK6n badgeRow__bzi6i">
+                    ${comment.isCommentByAuthor===1
+                        ? `<div class="pill__HVTvX text-caption" style="color: rgb(255, 255, 255); background-color: rgb(169, 62, 25);">Writer</div>`
+                        : ``
+                        }
+                  </div>
                 </div>
                 <div class="dsRow__BXK6n commentCardContent__Vc9vg">
                   <pre class="text-body-sm">${comment.commentMessage}</pre>
