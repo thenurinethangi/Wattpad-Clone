@@ -729,6 +729,9 @@ $(document).on('click','.direct-comment-send-btn',function (event) {
         .then(data => {
             console.log('Success:', data);
 
+            $(this).closest('.new-comment-field').find('textarea').val('');
+            paragraphCommentsSetToTheModel(paragraphId);
+
         })
         .catch(error => {
             let response = JSON.parse(error.message);
