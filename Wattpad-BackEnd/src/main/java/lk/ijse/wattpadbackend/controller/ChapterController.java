@@ -1,6 +1,7 @@
 package lk.ijse.wattpadbackend.controller;
 
 import lk.ijse.wattpadbackend.dto.ChapterDTO;
+import lk.ijse.wattpadbackend.dto.ReplyRequestDTO;
 import lk.ijse.wattpadbackend.dto.StoryDTO;
 import lk.ijse.wattpadbackend.dto.StoryIdsDTO;
 import lk.ijse.wattpadbackend.service.ChapterService;
@@ -59,6 +60,15 @@ public class ChapterController {
 
         String result = chapterService.addLikeOrRemove(auth.getName(),chapterId);
         return new APIResponse(202,"Successfully add or remove like",result);
+    }
+
+    @PostMapping("/comment/{chapterId}")
+    public APIResponse addACommentToAChapter(@PathVariable long chapterId, @RequestBody ReplyRequestDTO replyRequestDTO){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        chapterService.addACommentToAChapter(auth.getName(),chapterId,replyRequestDTO);
+        return new APIResponse(202,"Successfully added comment to a chapter id: "+chapterId,null);
     }
 }
 

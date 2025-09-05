@@ -153,13 +153,13 @@ async function loadChapterData() {
                                         <p>${paragraph.content}</p>
         
                                         ${paragraph.commentCount !== "0"
-                                        ? `<div class="comment-icon" data-paragraph-id="${paragraph.id}" style="position: absolute; right: 0; bottom: 0; text-align: center; width: 24px;">
+                                        ? `<div class="comment-icon" data-paragraph-id="${paragraph.id}" style="position: absolute; right: 0; bottom: 0; text-align: center; width: 30px;">
                                                 <span style="position: absolute; top: -4px; right: 2px; left: 50%; transform: translate(-50%); font-size: 12px; font-weight: 700; color: #fff;">
                                                 ${paragraph.commentCount}
                                                 </span>
                                                 <i class="fa-solid fa-message" style="color: #6f6f6f; font-size: 20px;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"></i>
                                         </div>`
-                                        : `<div class="comment-icon" data-paragraph-id="${paragraph.id}" style="opacity: 0; position: absolute; right: 0; bottom: 0; text-align: center; width: 24px;">
+                                        : `<div class="comment-icon" data-paragraph-id="${paragraph.id}" style="opacity: 0; position: absolute; right: 0; bottom: 0; text-align: center; width: 25px;">
                                                 <i class="fa-solid fa-square-plus" style="position: absolute; top: 6px; right: 2px; left: 50%; transform: translate(-50%); font-size: 10px; font-weight: 700; color: #fff;"></i>
                                                 <i class="fa-solid fa-message" style="color: #6f6f6f; font-size: 20px;"></i>
                                            </div>
@@ -767,7 +767,42 @@ $(document).on('click','.like-btn',function (event) {
         .then(data => {
             console.log('Success:', data);
 
-            paragraphCommentsSetToTheModel(paragraphId);
+            if(data.data==='Liked'){
+                $(this).find('svg').attr('fill','#ff6122');
+                $(this).find('svg').find('path').attr('fill','#ff6122');
+                $(this).find('svg').find('path').attr('stroke','#ff6122');
+
+                if ($(this).siblings('.text-caption').length) {
+                    let value = $(this).siblings('.text-caption').text();
+                    let no = Number(value);
+                    no+=1;
+                    $(this).siblings('.text-caption').text(no);
+                }
+                else{
+                    let newCaption = $('<span class="text-caption" style="font-weight: 700; font-size: 12px ; color: #121212;">1</span>');
+                    $(this).after(newCaption);
+                }
+            }
+            else{
+                $(this).find('svg').attr('fill','none');
+                $(this).find('svg').find('path').attr('fill','none');
+                $(this).find('svg').find('path').attr('stroke','#121212');
+
+                if ($(this).siblings('.text-caption').length) {
+                    let value = $(this).siblings('.text-caption').text();
+                    let no = Number(value);
+                    no-=1;
+
+                    if(no<=0){
+                        $(this).siblings('.text-caption').remove();
+                    }
+                    else {
+                        $(this).siblings('.text-caption').text(no);
+                    }
+                }
+            }
+
+            // paragraphCommentsSetToTheModel(paragraphId);
 
         })
         .catch(error => {
@@ -1218,6 +1253,48 @@ $(document).on('click','.send-reply-reply-btn',function (event) {
 
 
 
+//load first two comments of chapter
+function loadFirstTwoCommentsOfChapter() {
+
+    fetch('http://localhost:8080/api/v1/chapter', {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            const params = new URLSearchParams(window.location.search);
+
+            if (params.has("chapterId")) {
+
+                document.body.style.display = 'block';
+                document.body.style.visibility = 'visible';
+                document.body.style.opacity = 1;
+            }
+            else {
+                window.location.href = 'login-page.html';
+            }
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+
+            window.location.href = 'login-page.html';
+        });
+
+}
 
 
 

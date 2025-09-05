@@ -4,10 +4,7 @@ import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.entity.*;
 import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
-import lk.ijse.wattpadbackend.repository.ChapterLikeRepository;
-import lk.ijse.wattpadbackend.repository.ChapterRepository;
-import lk.ijse.wattpadbackend.repository.StoryRepository;
-import lk.ijse.wattpadbackend.repository.UserRepository;
+import lk.ijse.wattpadbackend.repository.*;
 import lk.ijse.wattpadbackend.service.ChapterService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +21,7 @@ public class ChapterServiceImpl implements ChapterService {
     private final StoryRepository storyRepository;
     private final UserRepository userRepository;
     private final ChapterLikeRepository chapterLikeRepository;
+    private final ChapterCommentRepository chapterCommentRepository;
 
     @Override
     public ChapterDTO getAChapterById(String username,long id) {
@@ -180,6 +178,9 @@ public class ChapterServiceImpl implements ChapterService {
 
                 List<ParagraphComment> paragraphComments = x.getParagraphComments();
                 long commentCount = paragraphComments.size();
+                for (ParagraphComment y : paragraphComments){
+                    commentCount+=y.getReplyCount();
+                }
 
                 String commentInStr = "";
                 if(commentCount<=1000){
@@ -443,6 +444,36 @@ public class ChapterServiceImpl implements ChapterService {
                 chapterLikeRepository.delete(chapterLike);
                 return "Unliked";
             }
+
+        }
+        catch (UserNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void addACommentToAChapter(String username, long chapterId, ReplyRequestDTO replyRequestDTO) {
+
+        try{
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Chapter> optionalChapter = chapterRepository.findById((int) chapterId);
+            if(!optionalChapter.isPresent()){
+                throw new NotFoundException("Chapter not found.");
+            }
+            Chapter chapter = optionalChapter.get();
+
+            ChapterComment chapterComment = new ChapterComment();
+            chapterComment.setChapter(chapter);
+            chapterComment.setCommentMessage(replyRequestDTO.getReplyMessage());
+            chapterComment.setUser(user);
+
+            chapterCommentRepository.save(chapterComment);
 
         }
         catch (UserNotFoundException e) {

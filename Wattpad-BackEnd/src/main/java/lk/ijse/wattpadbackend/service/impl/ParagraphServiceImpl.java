@@ -44,7 +44,7 @@ public class ParagraphServiceImpl implements ParagraphService {
             modelResponseDTO.setContentType(paragraph.getContentType());
             modelResponseDTO.setContent(paragraph.getContent());
 
-            List<ParagraphComment> paragraphComments = paragraphCommentRepository.findAllByParagraph(paragraph);
+            List<ParagraphComment> paragraphComments = paragraphCommentRepository.findAllByParagraphOrderByCreatedAtDesc(paragraph);
 
             List<SingleCommentDTO> singleCommentDTOList = new ArrayList<>();
             for (ParagraphComment x : paragraphComments){

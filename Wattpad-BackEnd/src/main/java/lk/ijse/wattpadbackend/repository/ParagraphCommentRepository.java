@@ -9,5 +9,8 @@ import java.util.List;
 
 @Repository
 public interface ParagraphCommentRepository extends JpaRepository<ParagraphComment,Integer> {
+
     List<ParagraphComment> findAllByParagraph(Paragraph paragraph);
+
+    List<ParagraphComment> findAllByParagraphOrderByCreatedAtDesc(Paragraph paragraph);
 }
