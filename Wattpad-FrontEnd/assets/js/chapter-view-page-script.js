@@ -1298,14 +1298,16 @@ async function loadFirstTwoCommentsOfChapter() {
                 bottomField.siblings('.comment-card-container').remove();
 
                 let showMoreBtn = `
-                      <!--show more comment button-->
-                      <div class="show-more-btn">
-                        <button class="button__Y70Pw secondary-variant__KvdoY default-accent__Pc0Pm medium-size__CLqD3 clickable__iYXtN full-width__dXWyx with-padding__cVt72">
-                          <span class="background-overlay__mCEaX"></span>Show more
-                        </button>
-                      </div>`
+                <!--show more comment button-->
+                <div class="show-more-btn">
+                    <button class="button__Y70Pw secondary-variant__KvdoY default-accent__Pc0Pm medium-size__CLqD3 clickable__iYXtN full-width__dXWyx with-padding__cVt72">
+                        <span class="background-overlay__mCEaX"></span>Show more
+                    </button>
+                </div>`;
 
-                bottomField.after(showMoreBtn)
+                if ($('.show-more-btn').length === 0) {
+                    bottomField.after(showMoreBtn);
+                }
 
                 for (let i = 0; i < data.data.length; i++) {
 
@@ -1336,7 +1338,7 @@ async function loadFirstTwoCommentsOfChapter() {
                               </div>
                               <div class="dsRow__BXK6n commentCardContent__Vc9vg commentCardMeta__Xy9U9">
                                 <p class="postedDate__xcq5D text-caption">${comment.time}</p>
-                                <button class="replyButton__kdyts button__Meavz title-action" aria-label="Reply to comment">Reply</button>
+<!--                                <button class="replyButton__kdyts button__Meavz title-action" aria-label="Reply to comment">Reply</button>-->
                               </div>
                             </div>
                             <div class="dsColumn__PqDUP likeColumn__bveEu">
@@ -1519,7 +1521,7 @@ $(document).on('click','.show-more-btn',async function (event) {
                               </div>
                               <div class="dsRow__BXK6n commentCardContent__Vc9vg commentCardMeta__Xy9U9">
                                 <p class="postedDate__xcq5D text-caption">${comment.time}</p>
-                                <button class="replyButton__kdyts button__Meavz title-action" aria-label="Reply to comment">Reply</button>
+<!--                                <button class="replyButton__kdyts button__Meavz title-action" aria-label="Reply to comment">Reply</button>-->
                               </div>
                             </div>
                             <div class="dsColumn__PqDUP likeColumn__bveEu">
@@ -1555,6 +1557,71 @@ $(document).on('click','.show-more-btn',async function (event) {
         });
 });
 
+
+
+
+$(document).on('input', '.bottom-comment-field textarea', function () {
+    let btn = $(this).closest('.bottom-comment-field').find('.send-chapter-comment-btn');
+    if ($(this).val().trim().length > 0) {
+        btn.prop('disabled', false);
+    } else {
+        btn.prop('disabled', true);
+    }
+});
+
+
+
+//click on send btn in reply input field send add a reply to a comment
+$(document).on('click','.send-chapter-comment-btn',function (event) {
+
+    let chapterId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("chapterId")) {
+        chapterId = params.get("chapterId");
+    }
+
+    if(chapterId==null){
+        //load chapter not found page
+        return;
+    }
+
+    let commentText = $(this).closest('.bottom-comment-field').find('textarea').val();
+
+    let data = {
+        'replyMessage': commentText
+    }
+
+    fetch('http://localhost:8080/api/v1/chapter/comment/'+chapterId, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            $(this).closest('.bottom-comment-field').find('textarea').val('');
+            loadFirstTwoCommentsOfChapter();
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+        });
+
+});
 
 
 
