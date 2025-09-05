@@ -404,3 +404,17 @@ body {
 .cover-upload.has-image .cover-text {
     display: none;
 }
+
+.remove-character-btn {
+    width: 40px;
+    height: 40px;
+    border: 2px dashed #d0d0d0;
+    background: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

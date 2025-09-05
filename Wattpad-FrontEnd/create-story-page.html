@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="assets/style/create-story-page-style.css">
     <link rel="stylesheet" href="assets/style/footer-style.css">
 </head>
-<body>
+<body style="display: block; visibility: hidden; opacity: 0;">
 
 <form>
     <div class="header">
@@ -30,8 +30,8 @@
             </div>
         </div>
         <div class="header-actions">
-            <a class="cancel-btn btn btn-grey">Cancel</a>
-            <button type="button" form="story-form" class="skip-btn btn">Skip</button>
+            <a class="cancel-btn btn btn-grey" href="home-page.html">Cancel</a>
+            <button type="button" form="story-form" class="skip-btn btn">Next</button>
         </div>
     </div>
 
@@ -68,9 +68,11 @@
                             Main Characters
                             <div class="info-icon-small">i</div>
                         </div>
-                        <div class="characters-section">
-                            <input type="text" name="mainCharacters" class="form-input" placeholder="Name" style="flex: 1;" />
-                            <button type="button" class="add-character-btn">+</button>
+                        <div class="characters-section" style="flex-direction: column;">
+                            <div style="width: 100%; display: flex; justify-content: flex-start; align-items: center;">
+                                <input type="text" name="mainCharacters" class="form-input" placeholder="Name" style="flex: 1;" />
+                                <button type="button" class="add-character-btn">+</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -262,5 +264,8 @@
         });
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="assets/js/create-story-page-script.js"></script>
 </body>
 </html>

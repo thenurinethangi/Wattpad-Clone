@@ -2,6 +2,7 @@ package lk.ijse.wattpadbackend.service.impl;
 
 import lk.ijse.wattpadbackend.dto.ChapterSimpleDTO;
 import lk.ijse.wattpadbackend.dto.StoryDTO;
+import lk.ijse.wattpadbackend.dto.StoryRequestDTO;
 import lk.ijse.wattpadbackend.entity.Chapter;
 import lk.ijse.wattpadbackend.entity.Story;
 import lk.ijse.wattpadbackend.entity.StoryTag;
@@ -149,6 +150,11 @@ public class StoryServiceImpl implements StoryService {
         catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void createANewStory(String name, StoryRequestDTO storyRequestDTO) {
+
     }
 }
 
