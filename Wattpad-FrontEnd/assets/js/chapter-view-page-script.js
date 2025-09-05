@@ -418,7 +418,8 @@ async function loadAlsoYouWillLikeStories() {
 async function run() {
     await loadChapterData();
     await loadRecommendationStories();
-    loadAlsoYouWillLikeStories();
+    await loadAlsoYouWillLikeStories();
+    loadFirstTwoCommentsOfChapter();
 }
 
 run();
@@ -1254,9 +1255,21 @@ $(document).on('click','.send-reply-reply-btn',function (event) {
 
 
 //load first two comments of chapter
-function loadFirstTwoCommentsOfChapter() {
+async function loadFirstTwoCommentsOfChapter() {
 
-    fetch('http://localhost:8080/api/v1/chapter', {
+    let chapterId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("chapterId")) {
+        chapterId = params.get("chapterId");
+    }
+
+    if(chapterId==null){
+        //load chapter not found page
+        return;
+    }
+
+    await fetch('http://localhost:8080/api/v1/chapter/comment/'+chapterId+'/'+2, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -1274,26 +1287,12 @@ function loadFirstTwoCommentsOfChapter() {
         .then(data => {
             console.log('Success:', data);
 
-            const params = new URLSearchParams(window.location.search);
-
-            if (params.has("chapterId")) {
-
-                document.body.style.display = 'block';
-                document.body.style.visibility = 'visible';
-                document.body.style.opacity = 1;
-            }
-            else {
-                window.location.href = 'login-page.html';
-            }
-
         })
         .catch(error => {
             let response = JSON.parse(error.message);
             console.log(response);
 
-            window.location.href = 'login-page.html';
         });
-
 }
 
 

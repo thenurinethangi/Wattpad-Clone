@@ -1,9 +1,6 @@
 package lk.ijse.wattpadbackend.controller;
 
-import lk.ijse.wattpadbackend.dto.ChapterDTO;
-import lk.ijse.wattpadbackend.dto.ReplyRequestDTO;
-import lk.ijse.wattpadbackend.dto.StoryDTO;
-import lk.ijse.wattpadbackend.dto.StoryIdsDTO;
+import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.service.ChapterService;
 import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
@@ -69,6 +66,15 @@ public class ChapterController {
 
         chapterService.addACommentToAChapter(auth.getName(),chapterId,replyRequestDTO);
         return new APIResponse(202,"Successfully added comment to a chapter id: "+chapterId,null);
+    }
+
+    @GetMapping("/comment/{chapterId}/{amount}")
+    public APIResponse loadCommentsOfAChapter(@PathVariable long chapterId, @PathVariable long amount){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        List<ReplyResponseDTO> replyResponseDTOList = chapterService.loadCommentsOfAChapter(auth.getName(),chapterId,amount);
+        return new APIResponse(202,"Successfully loaded comments of chapter id: "+chapterId,replyResponseDTOList);
     }
 }
 

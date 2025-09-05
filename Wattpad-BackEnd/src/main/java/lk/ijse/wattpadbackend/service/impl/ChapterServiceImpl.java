@@ -6,7 +6,10 @@ import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
 import lk.ijse.wattpadbackend.repository.*;
 import lk.ijse.wattpadbackend.service.ChapterService;
+import lk.ijse.wattpadbackend.util.TimeAgoUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ public class ChapterServiceImpl implements ChapterService {
     private final UserRepository userRepository;
     private final ChapterLikeRepository chapterLikeRepository;
     private final ChapterCommentRepository chapterCommentRepository;
+    private final CommentLikeRepository commentLikeRepository;
 
     @Override
     public ChapterDTO getAChapterById(String username,long id) {
@@ -475,6 +479,93 @@ public class ChapterServiceImpl implements ChapterService {
 
             chapterCommentRepository.save(chapterComment);
 
+        }
+        catch (UserNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<ReplyResponseDTO> loadCommentsOfAChapter(String username, long chapterId, long amount) {
+
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Chapter> optionalChapter = chapterRepository.findById((int) chapterId);
+            if (!optionalChapter.isPresent()) {
+                throw new NotFoundException("Chapter not found.");
+            }
+            Chapter chapter = optionalChapter.get();
+
+            Pageable limit = PageRequest.of(0, (int) amount);
+            List<ChapterComment> chapterCommentList = chapterCommentRepository.findAllByChapterOrderByCreatedAtDesc(chapter,limit);
+
+            List<ReplyResponseDTO> replyResponseDTOList = new ArrayList<>();
+            for (ChapterComment x : chapterCommentList){
+                ReplyResponseDTO replyResponseDTO = new ReplyResponseDTO();
+                replyResponseDTO.setReplyId(x.getId());
+                replyResponseDTO.setReplyMessage(x.getCommentMessage());
+                replyResponseDTO.setUserId(x.getUser().getId());
+                replyResponseDTO.setUsername(x.getUser().getUsername());
+                replyResponseDTO.setUserProfilePic(x.getUser().getProfilePicPath());
+                replyResponseDTO.setTime(TimeAgoUtil.toTimeAgo(x.getCreatedAt()));
+
+                long likesLong = x.getLikes();
+
+                String likesInStr = "";
+                if(likesLong<=1000){
+                    likesInStr = String.valueOf(likesLong);
+                }
+                else if (likesLong >= 1000 && likesLong < 1000000) {
+                    double value = (double) likesLong / 1000;
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        likesInStr = vStr.split("\\.0")[0] + "K";
+                    } else {
+                        likesInStr = vStr + "K";
+                    }
+                }
+                else if(likesLong>=1000000){
+                    double value = (double) likesLong/1000000;
+
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        likesInStr = vStr.split("\\.0")[0] + "M";
+                    } else {
+                        likesInStr = value+"M";
+                    }
+                }
+                replyResponseDTO.setLikes(likesInStr);
+
+                CommentLike commentLike = commentLikeRepository.findByChapterCommentAndUser(x,user);
+                if(commentLike==null){
+                    replyResponseDTO.setIsCurrentUserLiked(0);
+                }
+                else{
+                    replyResponseDTO.setIsCurrentUserLiked(1);
+                }
+
+                Long commentUserId = x.getUser().getId();
+                Long storyUserId = x.getChapter().getStory().getUser().getId();
+
+                if (commentUserId.equals(storyUserId)) {
+                    replyResponseDTO.setIsCommentByAuthor(1);
+                }
+                else{
+                    replyResponseDTO.setIsCommentByAuthor(0);
+                }
+
+                replyResponseDTOList.add(replyResponseDTO);
+            }
+
+            return replyResponseDTOList;
         }
         catch (UserNotFoundException e) {
             throw new RuntimeException(e);

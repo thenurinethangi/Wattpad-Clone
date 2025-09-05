@@ -1,9 +1,6 @@
 package lk.ijse.wattpadbackend.service;
 
-import lk.ijse.wattpadbackend.dto.ChapterDTO;
-import lk.ijse.wattpadbackend.dto.ReplyRequestDTO;
-import lk.ijse.wattpadbackend.dto.StoryDTO;
-import lk.ijse.wattpadbackend.dto.StoryIdsDTO;
+import lk.ijse.wattpadbackend.dto.*;
 
 import java.util.List;
 
@@ -18,4 +15,6 @@ public interface ChapterService {
     String addLikeOrRemove(String name, long chapterId);
 
     void addACommentToAChapter(String name, long chapterId, ReplyRequestDTO replyRequestDTO);
+
+    List<ReplyResponseDTO> loadCommentsOfAChapter(String name, long chapterId, long amount);
 }
