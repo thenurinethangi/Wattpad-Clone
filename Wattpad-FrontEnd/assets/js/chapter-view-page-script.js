@@ -1255,6 +1255,7 @@ $(document).on('click','.send-reply-reply-btn',function (event) {
 
 
 //load first two comments of chapter
+let commentCount = 2;
 async function loadFirstTwoCommentsOfChapter() {
 
     let chapterId = null;
@@ -1287,6 +1288,82 @@ async function loadFirstTwoCommentsOfChapter() {
         .then(data => {
             console.log('Success:', data);
 
+            if(data.data.length<=0){
+
+                $('.bottom-comment-field').after('<div><div class="comments-empty-stage"><img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/no-comments.svg" id="no-comments-graphics" alt=""><p class="message">Be the first to comment 💬</p></div></div>');
+
+            }
+            else{
+                let bottomField = $('.bottom-comment-field');
+                bottomField.siblings('.comment-card-container').remove();
+
+                let showMoreBtn = `
+                      <!--show more comment button-->
+                      <div class="show-more-btn">
+                        <button class="button__Y70Pw secondary-variant__KvdoY default-accent__Pc0Pm medium-size__CLqD3 clickable__iYXtN full-width__dXWyx with-padding__cVt72">
+                          <span class="background-overlay__mCEaX"></span>Show more
+                        </button>
+                      </div>`
+
+                bottomField.after(showMoreBtn)
+
+                for (let i = 0; i < data.data.length; i++) {
+
+                    let comment = data.data[i];
+
+                    let singleChapterComment = `
+                    <!--single comment-->
+                      <div class="comment-card-container" style="padding-inline: 12px;">
+                        <div>
+                          <div class="dsContainer__RRG6K commentCardContainer__P0qWo">
+                            <div class="dsColumn__PqDUP">
+                              <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${comment.userId}" aria-label="Lio_tiger007">
+                                <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${comment.userProfilePic}" aria-hidden="true" alt="Lio_tiger007" class="avatar__Ygp0_ comment_card_avatar__zKv1t">
+                              </a>
+                            </div>
+                            <div class="dsColumn__PqDUP commentCardContentContainer__F9gGk gap8__gx3K6">
+                              <div class="dsRow__BXK6n gap8__gx3K6 authorProfileRow__GMsIH">
+                                <h3 aria-hidden="true" class="dsMargin__Gs6Tj title-action">${comment.username}</h3>
+                                <div class="dsRow__BXK6n badgeRow__bzi6i">
+                                    ${comment.isCommentByAuthor===1
+                                    ? `<div class="pill__HVTvX text-caption" style="color: rgb(255, 255, 255); background-color: rgb(169, 62, 25);">Writer</div>`
+                                    : ``
+                                    }
+                                </div>
+                              </div>
+                              <div class="dsRow__BXK6n commentCardContent__Vc9vg">
+                                <pre class="text-body-sm">${comment.commentMessage}</pre>
+                              </div>
+                              <div class="dsRow__BXK6n commentCardContent__Vc9vg commentCardMeta__Xy9U9">
+                                <p class="postedDate__xcq5D text-caption">${comment.time}</p>
+                                <button class="replyButton__kdyts button__Meavz title-action" aria-label="Reply to comment">Reply</button>
+                              </div>
+                            </div>
+                            <div class="dsColumn__PqDUP likeColumn__bveEu">
+                              <button class="button__Meavz" aria-label="More options">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z" fill="#686868"></path></svg>
+                              </button>
+                              <div class="dsColumn__PqDUP">
+                                <button class="button__Meavz chapter-comment-like-btn" data-chapter-comment-id="${comment.id}" aria-label="Like this comment">
+                                    ${comment.isCurrentUserLiked===1
+                                    ? `<svg width="16" height="14" viewBox="0 0 16 14" fill="#ff6122" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#ff6122" fill="#ff6122" stroke-width="1.5" stroke-linecap="round"></path></svg>`
+                                    : `<svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>`
+                                    }
+                                </button>
+                                ${comment.likes!=='0'
+                                ? `<span class="text-caption" style="font-weight: 700; font-size: 12px ; color: #121212;">${comment.likes}</span>`
+                                : ``
+                                }
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+`
+                    bottomField.after(singleChapterComment);
+                }
+            }
+
         })
         .catch(error => {
             let response = JSON.parse(error.message);
@@ -1296,6 +1373,187 @@ async function loadFirstTwoCommentsOfChapter() {
 }
 
 
+
+
+//when click on like icon on comment add or remove like
+$(document).on('click','.chapter-comment-like-btn',function (event) {
+
+    let chapterCommentId = $(this).data('chapter-comment-id');
+
+    fetch('http://localhost:8080/api/v1/chapter/comment/like/'+chapterCommentId, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            if(data.data==='Liked'){
+                $(this).find('svg').attr('fill','#ff6122');
+                $(this).find('svg').find('path').attr('fill','#ff6122');
+                $(this).find('svg').find('path').attr('stroke','#ff6122');
+
+                if ($(this).siblings('.text-caption').length) {
+                    let value = $(this).siblings('.text-caption').text();
+                    let no = Number(value);
+                    no+=1;
+                    $(this).siblings('.text-caption').text(no);
+                }
+                else{
+                    let newCaption = $('<span class="text-caption" style="font-weight: 700; font-size: 12px ; color: #121212;">1</span>');
+                    $(this).after(newCaption);
+                }
+            }
+            else{
+                $(this).find('svg').attr('fill','none');
+                $(this).find('svg').find('path').attr('fill','none');
+                $(this).find('svg').find('path').attr('stroke','#121212');
+
+                if ($(this).siblings('.text-caption').length) {
+                    let value = $(this).siblings('.text-caption').text();
+                    let no = Number(value);
+                    no-=1;
+
+                    if(no<=0){
+                        $(this).siblings('.text-caption').remove();
+                    }
+                    else {
+                        $(this).siblings('.text-caption').text(no);
+                    }
+                }
+            }
+
+            // paragraphCommentsSetToTheModel(paragraphId);
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+        });
+
+});
+
+
+
+
+//load more comments
+$(document).on('click','.show-more-btn',async function (event) {
+
+    let chapterId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("chapterId")) {
+        chapterId = params.get("chapterId");
+    }
+
+    if(chapterId==null){
+        //load chapter not found page
+        return;
+    }
+
+    commentCount+=10;
+
+    await fetch('http://localhost:8080/api/v1/chapter/comment/'+chapterId+'/'+commentCount, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            if(data.data.length<=0){
+
+                $('.bottom-comment-field').after('<div><div class="comments-empty-stage"><img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/no-comments.svg" id="no-comments-graphics" alt=""><p class="message">Be the first to comment 💬</p></div></div>');
+
+            }
+            else{
+                let bottomField = $('.bottom-comment-field');
+                bottomField.siblings('.comment-card-container').remove();
+
+                for (let i = 0; i < data.data.length; i++) {
+
+                    let comment = data.data[i];
+
+                    let singleChapterComment = `
+                    <!--single comment-->
+                      <div class="comment-card-container" style="padding-inline: 12px;">
+                        <div>
+                          <div class="dsContainer__RRG6K commentCardContainer__P0qWo">
+                            <div class="dsColumn__PqDUP">
+                              <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${comment.userId}" aria-label="Lio_tiger007">
+                                <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${comment.userProfilePic}" aria-hidden="true" alt="Lio_tiger007" class="avatar__Ygp0_ comment_card_avatar__zKv1t">
+                              </a>
+                            </div>
+                            <div class="dsColumn__PqDUP commentCardContentContainer__F9gGk gap8__gx3K6">
+                              <div class="dsRow__BXK6n gap8__gx3K6 authorProfileRow__GMsIH">
+                                <h3 aria-hidden="true" class="dsMargin__Gs6Tj title-action">${comment.username}</h3>
+                                <div class="dsRow__BXK6n badgeRow__bzi6i">
+                                    ${comment.isCommentByAuthor===1
+                        ? `<div class="pill__HVTvX text-caption" style="color: rgb(255, 255, 255); background-color: rgb(169, 62, 25);">Writer</div>`
+                        : ``
+                    }
+                                </div>
+                              </div>
+                              <div class="dsRow__BXK6n commentCardContent__Vc9vg">
+                                <pre class="text-body-sm">${comment.commentMessage}</pre>
+                              </div>
+                              <div class="dsRow__BXK6n commentCardContent__Vc9vg commentCardMeta__Xy9U9">
+                                <p class="postedDate__xcq5D text-caption">${comment.time}</p>
+                                <button class="replyButton__kdyts button__Meavz title-action" aria-label="Reply to comment">Reply</button>
+                              </div>
+                            </div>
+                            <div class="dsColumn__PqDUP likeColumn__bveEu">
+                              <button class="button__Meavz" aria-label="More options">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z" fill="#686868"></path></svg>
+                              </button>
+                              <div class="dsColumn__PqDUP">
+                                <button class="button__Meavz chapter-comment-like-btn" data-chapter-comment-id="${comment.id}" aria-label="Like this comment">
+                                    ${comment.isCurrentUserLiked===1
+                        ? `<svg width="16" height="14" viewBox="0 0 16 14" fill="#ff6122" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#ff6122" fill="#ff6122" stroke-width="1.5" stroke-linecap="round"></path></svg>`
+                        : `<svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>`
+                    }
+                                </button>
+                                ${comment.likes!=='0'
+                        ? `<span class="text-caption" style="font-weight: 700; font-size: 12px ; color: #121212;">${comment.likes}</span>`
+                        : ``
+                    }
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+`
+                    bottomField.after(singleChapterComment);
+                }
+            }
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+
+        });
+});
 
 
 

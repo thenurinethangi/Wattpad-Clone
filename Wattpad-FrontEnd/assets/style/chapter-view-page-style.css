@@ -2202,6 +2202,37 @@ img {
     margin-top: -12px;
 }
 
+/*comment bottom field style*/
+.comments-empty-stage {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+.comments-empty-stage .message {
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #121212;
+    margin-top: 16px;
+    margin-bottom: 24px;
+}
+
+
 
 
 /*media query*/

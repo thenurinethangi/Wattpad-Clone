@@ -73,8 +73,17 @@ public class ChapterController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        List<ReplyResponseDTO> replyResponseDTOList = chapterService.loadCommentsOfAChapter(auth.getName(),chapterId,amount);
-        return new APIResponse(202,"Successfully loaded comments of chapter id: "+chapterId,replyResponseDTOList);
+        List<SingleCommentDTO> singleCommentDTOList = chapterService.loadCommentsOfAChapter(auth.getName(),chapterId,amount);
+        return new APIResponse(202,"Successfully loaded comments of chapter id: "+chapterId,singleCommentDTOList);
+    }
+
+    @PostMapping("/comment/like/{id}")
+    public APIResponse addOrRemoveLikeOnChapterComment(@PathVariable long id){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        String result = chapterService.addOrRemoveLikeOnChapterComment(auth.getName(),id);
+        return new APIResponse(202,"Successfully added or removed like on chapter comment id: "+id,result);
     }
 }
 

@@ -16,5 +16,7 @@ public interface ChapterService {
 
     void addACommentToAChapter(String name, long chapterId, ReplyRequestDTO replyRequestDTO);
 
-    List<ReplyResponseDTO> loadCommentsOfAChapter(String name, long chapterId, long amount);
+    List<SingleCommentDTO> loadCommentsOfAChapter(String name, long chapterId, long amount);
+
+    String addOrRemoveLikeOnChapterComment(String name, long id);
 }
