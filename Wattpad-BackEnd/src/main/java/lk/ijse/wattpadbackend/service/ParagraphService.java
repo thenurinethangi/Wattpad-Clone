@@ -17,4 +17,6 @@ public interface ParagraphService {
     List<ReplyResponseDTO> getAllRepliesForParagraphComment(String username, long id);
 
     String addOrRemoveLikeOnReply(String name, long id);
+
+    void addACommentToAParagraphByParagraphId(String name, long id, ReplyRequestDTO replyRequestDTO);
 }

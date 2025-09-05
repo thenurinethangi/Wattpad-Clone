@@ -2197,6 +2197,11 @@ img {
     fill: var(--ds-neutral-00-solid,#fff);
 }
 
+.new-comment-field .reply-to-user {
+    font-size: 12px;
+    margin-top: -12px;
+}
+
 
 
 /*media query*/

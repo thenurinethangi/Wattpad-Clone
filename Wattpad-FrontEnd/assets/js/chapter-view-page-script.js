@@ -588,7 +588,7 @@ function paragraphCommentsSetToTheModel(paragraphId) {
           <div>
             <div class="textboxContainer__mbQss">
               <textarea placeholder="Write a comment..." class="text-body-sm defaultHeight__PP_LO" aria-label="Post new comment" style="height: 48px;"></textarea>
-              <button type="button" disabled="" aria-label="send">
+              <button class="direct-comment-send-btn" data-paragraph-id="${response.paragraphId}" type="button" disabled="" aria-label="send">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.2424 13.7576L1.59386 9.91382C0.766235 9.54598 0.81481 8.35534 1.66965 8.05615L21.6485 1.06354C21.6779 1.05253 21.7077 1.04296 21.7378 1.03481C22.096 0.935758 22.4419 1.04489 22.6811 1.26776C22.6899 1.27595 22.6985 1.28433 22.7071 1.29289C22.7157 1.30146 22.7241 1.31014 22.7322 1.31893C22.9554 1.55835 23.0645 1.90478 22.9649 2.26344C22.9568 2.29301 22.9474 2.32229 22.9366 2.35116L15.9439 22.3304C15.6447 23.1852 14.454 23.2338 14.0862 22.4061L10.2424 13.7576ZM18.1943 4.39148L4.71107 9.11061L10.7785 11.8073L18.1943 4.39148ZM12.1927 13.2215L14.8894 19.2889L19.6085 5.80568L12.1927 13.2215Z" fill="#111111"></path></svg>
               </button>
             </div>
@@ -689,6 +689,57 @@ $(document).on('click', function (e) {
 
 
 
+$(document).on('input', '.new-comment-field textarea', function () {
+    let btn = $(this).closest('.new-comment-field').find('.direct-comment-send-btn');
+    if ($(this).val().trim().length > 0) {
+        btn.prop('disabled', false);
+    } else {
+        btn.prop('disabled', true);
+    }
+});
+
+
+//when click on the send comment btn add new comment to the paragraph
+$(document).on('click','.direct-comment-send-btn',function (event) {
+
+    let replyText = $(this).closest('.new-comment-field').find('textarea').val();
+    let paragraphId = $(this).data('paragraph-id');
+
+    let data = {
+        'replyMessage': replyText
+    }
+
+    fetch('http://localhost:8080/api/v1/paragraph/comment/'+paragraphId, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+        });
+
+});
+
+
+
+
 //when click on like icon on comment add or remove like
 $(document).on('click','.like-btn',function (event) {
 
@@ -732,6 +783,8 @@ $(document).on('click','.view-replies-btn',function (event) {
     let paragraphCommentId = $(this).data('paragraph-comment-id');
     loadRepliesByParagraphCommentId(paragraphCommentId,$(this));
 
+    $(this).hide();
+    $(this)[0].style.setProperty('display', 'none', 'important');
 });
 
 
@@ -762,7 +815,7 @@ function loadRepliesByParagraphCommentId(paragraphCommentId,thisElement) {
                 let reply = data.data[i];
 
                 let singleReply = `
-  <div class="comment-card-container reply-card-container">
+  <div class="comment-card-container reply-card-container" data-paragraph-comment-id="${reply.paragraphCommentId}">
     <div>
       <div class="dsContainer__RRG6K commentCardContainer__P0qWo replyCard__Ft5hc">
         <div class="dsColumn__PqDUP">
@@ -785,7 +838,7 @@ function loadRepliesByParagraphCommentId(paragraphCommentId,thisElement) {
           </div>
           <div class="dsRow__BXK6n commentCardContent__Vc9vg commentCardMeta__Xy9U9">
             <p class="postedDate__xcq5D text-caption">${reply.time}</p>
-            <button class="replyButton__kdyts button__Meavz text-meta" style="font-size: 12px; font-weight: 700;" aria-label="Reply to comment">Reply</button>
+            <button class="replyButton__kdyts button__Meavz text-meta reply-reply-btn" style="font-size: 12px; font-weight: 700;" aria-label="Reply to comment">Reply</button>
           </div>
         </div>
         <div class="dsColumn__PqDUP likeColumn__bveEu">
@@ -807,6 +860,8 @@ function loadRepliesByParagraphCommentId(paragraphCommentId,thisElement) {
         </div>
       </div>
     </div>
+    <!--here put the reply to reply input field-->
+    
   </div>
 `;
                 thisElement.closest('.comment-card-container').find('.reply-container').append(singleReply);
@@ -935,6 +990,7 @@ $(document).on('click','.send-reply-btn',function (event) {
     let thisElement = $(this);
     let card = thisElement.closest('.comment-card-container');
     let replyBtn = card.find('.reply-btn');
+    let viewRepliesBtn = card.find('.view-replies-btn');
 
     let replyText = $(this).closest('.reply-input-field').find('textarea').val();
     let paragraphCommentId = $(this).data('paragraph-comment-id');
@@ -963,6 +1019,7 @@ $(document).on('click','.send-reply-btn',function (event) {
         .then(data => {
             console.log('Success:', data);
 
+            viewRepliesBtn.css('display','none');
             loadRepliesByParagraphCommentId(paragraphCommentId,replyBtn);
 
         })
@@ -974,6 +1031,186 @@ $(document).on('click','.send-reply-btn',function (event) {
     $(this).closest('.reply-input-field').remove();
 });
 
+
+
+
+//when click on the reply button in reply add a reply to a reply
+$(document).on('click', '.reply-reply-btn', function (event) {
+
+    let thisElement = $(this);
+    let replyCard = thisElement.closest('.reply-card-container');
+    let paragraphCommentId= replyCard.data('paragraph-comment-id');
+
+    if (replyCard.find('.replyTo.reply').length === 0) {
+        let username = thisElement.closest('.comment-card-container').find('h3.title-action').text().trim();
+
+        let inputField = `
+        <div class="new-comment-field replyTo reply">
+            <div class="reply-to-user">Replying to ${username}</div>
+            <div>
+                <div class="textboxContainer__mbQss">
+                    <textarea placeholder="Write a reply..." 
+                              class="text-body-sm defaultHeight__PP_LO" 
+                              spellcheck="true" 
+                              style="height: 48px;" data-username="${username}">@${username} </textarea>
+                    <button data-paragraph-comment-id="${paragraphCommentId}" class="send-reply-reply-btn" type="button" aria-label="send">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10.2424 13.7576L1.59386 9.91382C0.766235 9.54598 0.81481 8.35534 1.66965 8.05615L21.6485 1.06354C21.6779 1.05253 21.7077 1.04296 21.7378 1.03481C22.096 0.935758 22.4419 1.04489 22.6811 1.26776C22.6899 1.27595 22.6985 1.28433 22.7071 1.29289C22.7157 1.30146 22.7241 1.31014 22.7322 1.31893C22.9554 1.55835 23.0645 1.90478 22.9649 2.26344C22.9568 2.29301 22.9474 2.32229 22.9366 2.35116L15.9439 22.3304C15.6447 23.1852 14.454 23.2338 14.0862 22.4061L10.2424 13.7576ZM18.1943 4.39148L4.71107 9.11061L10.7785 11.8073L18.1943 4.39148ZM12.1927 13.2215L14.8894 19.2889L19.6085 5.80568L12.1927 13.2215Z" fill="#111111"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>`;
+
+        replyCard.append(inputField);
+    }
+});
+
+
+
+
+//click on send btn in reply reply input field send add a reply to a reply
+$(document).on('click','.send-reply-reply-btn',function (event) {
+
+    let thisElement = $(this);
+    let replyBtn1 = thisElement.closest('.replyTo.reply').closest('.comment-card-container').find('.reply-btn');
+    let card = thisElement.closest('.comment-card-container');
+    let replyBtn = card.find('.reply-btn');
+    let viewRepliesBtn = card.find('.view-replies-btn');
+
+    let replyText = $(this).closest('.replyTo.reply').find('textarea').val().trim();
+    let repliedUsername = $(this).closest('.replyTo.reply').find('textarea').data('username');
+    repliedUsername = '@'+repliedUsername;
+    let paragraphCommentId = $(this).data('paragraph-comment-id');
+
+    let usernameLength = repliedUsername.length;
+    let actualReply = replyText.substring(usernameLength,replyText.length).trim();
+
+    if(replyText===repliedUsername || replyText.length<=0 || actualReply.length<=0){
+        return;
+    }
+
+    let data = {
+        'replyMessage': repliedUsername+' '+actualReply
+    }
+
+    fetch('http://localhost:8080/api/v1/paragraph/comment/reply/'+paragraphCommentId, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            viewRepliesBtn.css('display','none');
+
+            fetch('http://localhost:8080/api/v1/paragraph/comment/reply/'+paragraphCommentId, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errData => {
+                            throw new Error(JSON.stringify(errData));
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+
+                    // viewRepliesBtn.closest('.comment-card-container').find('.reply-container').empty();
+                    let topCard = thisElement.parents('.comment-card-container').first();
+                    let replyContainer = topCard.find('.reply-container');
+                    replyContainer.empty();
+
+                    for (let i = 0; i < data.data.length; i++) {
+
+                        let reply = data.data[i];
+
+                        let singleReply = `
+  <div class="comment-card-container reply-card-container" data-paragraph-comment-id="${reply.paragraphCommentId}">
+    <div>
+      <div class="dsContainer__RRG6K commentCardContainer__P0qWo replyCard__Ft5hc">
+        <div class="dsColumn__PqDUP">
+          <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${reply.userId}" aria-label="romancefanatic13">
+            <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${reply.userProfilePic}" aria-hidden="true" alt="romancefanatic13" class="avatar__Ygp0_ comment_card_reply_avatar__niNAw">
+          </a>
+        </div>
+        <div class="dsColumn__PqDUP commentCardContentContainer__F9gGk gap8__gx3K6">
+          <div class="dsRow__BXK6n gap8__gx3K6 authorProfileRow__GMsIH">
+            <h3 aria-hidden="true" class="dsMargin__Gs6Tj title-action">${reply.username}</h3>
+            <div class="dsRow__BXK6n badgeRow__bzi6i">
+                ${reply.isCommentByAuthor===1
+                            ? `<div class="pill__HVTvX text-caption" style="color: rgb(255, 255, 255); background-color: rgb(169, 62, 25);">Writer</div>`
+                            : ``
+                        }
+            </div>
+          </div>
+          <div class="dsRow__BXK6n commentCardContent__Vc9vg">
+            <pre class="text-body-sm" style="color: #222;">${reply.replyMessage}</pre>
+          </div>
+          <div class="dsRow__BXK6n commentCardContent__Vc9vg commentCardMeta__Xy9U9">
+            <p class="postedDate__xcq5D text-caption">${reply.time}</p>
+            <button class="replyButton__kdyts button__Meavz text-meta reply-reply-btn" style="font-size: 12px; font-weight: 700;" aria-label="Reply to comment">Reply</button>
+          </div>
+        </div>
+        <div class="dsColumn__PqDUP likeColumn__bveEu">
+          <button class="button__Meavz" aria-label="More options">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z" fill="#686868"></path></svg>
+          </button>
+          <div class="dsColumn__PqDUP">
+            <button class="button__Meavz like-btn-reply" data-reply-id="${reply.replyId}" data-paragraph-comment-id="${reply.paragraphCommentId}" aria-label="Like this comment">
+                ${reply.isCurrentUserLiked===1
+                            ? `<svg width="16" height="14" viewBox="0 0 16 14" fill="#ff6122" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#ff6122" fill="#ff6122" stroke-width="1.5" stroke-linecap="round"></path></svg>`
+                            : `<svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>`
+                        }
+            </button>
+              ${reply.likes!=='0'
+                            ? `<span class="text-caption" style="font-weight: 700; font-size: 12px ; color: #121212;">${reply.likes}</span>`
+                            : ``
+                        }
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--here put the reply to reply input field-->
+    
+  </div>
+`;
+                        // viewRepliesBtn.closest('.comment-card-container').find('.reply-container').append(singleReply);
+                        replyContainer.append(singleReply);
+                    }
+
+                })
+                .catch(error => {
+                    let response = JSON.parse(error.message);
+                    console.log(response);
+                });
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+        });
+
+    $(this).closest('.replyTo.reply').remove();
+});
 
 
 

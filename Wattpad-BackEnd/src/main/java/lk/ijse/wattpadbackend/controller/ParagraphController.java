@@ -64,6 +64,15 @@ public class ParagraphController {
         paragraphService.addAReplyToParagraphComment(auth.getName(),id,replyRequestDTO);
         return new APIResponse(202,"Successfully add reply to paragraph comment id : "+id,null);
     }
+
+    @PostMapping("/comment/{id}")
+    public APIResponse addACommentToAParagraphByParagraphId(@PathVariable long id, @RequestBody ReplyRequestDTO replyRequestDTO){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        paragraphService.addACommentToAParagraphByParagraphId(auth.getName(),id,replyRequestDTO);
+        return new APIResponse(202,"Successfully added comment to a paragraph id : "+id,null);
+    }
 }
 
 

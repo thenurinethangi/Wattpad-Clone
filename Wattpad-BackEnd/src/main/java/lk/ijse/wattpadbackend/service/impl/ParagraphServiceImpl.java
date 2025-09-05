@@ -360,9 +360,45 @@ public class ParagraphServiceImpl implements ParagraphService {
                 return "Unliked";
             }
 
-        } catch (RuntimeException e) {
+        }
+        catch (UserNotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void addACommentToAParagraphByParagraphId(String username, long id, ReplyRequestDTO replyRequestDTO) {
+
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Paragraph> optionalParagraph = paragraphRepository.findById((int) id);
+            if(!optionalParagraph.isPresent()){
+                throw new NotFoundException("Paragraph not found.");
+            }
+            Paragraph paragraph = optionalParagraph.get();
+
+            ParagraphComment paragraphComment = new ParagraphComment();
+            paragraphComment.setParagraph(paragraph);
+            paragraphComment.setCommentMessage(replyRequestDTO.getReplyMessage());
+            paragraphComment.setUser(user);
+
+            paragraphCommentRepository.save(paragraphComment);
+
+        }
+        catch (UserNotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }
