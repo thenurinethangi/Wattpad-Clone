@@ -9,4 +9,6 @@ public interface StoryService {
     StoryDTO getAStoryById(long id);
 
     CreateStoryResponseDTO createANewStory(String name, StoryRequestDTO storyRequestDTO);
+
+    StoryDTO getAStoryByIdTwo(long id);
 }

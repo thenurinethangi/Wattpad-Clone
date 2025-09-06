@@ -156,6 +156,34 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
+    public StoryDTO getAStoryByIdTwo(long id) {
+
+        try{
+            Optional<Story> storyOptional = storyRepository.findById((int) id);
+
+            if(!storyOptional.isPresent()){
+                throw new NotFoundException("Story not found.");
+            }
+
+            Story story = storyOptional.get();
+
+            StoryDTO storyDTO = new StoryDTO();
+            storyDTO.setId(story.getId());
+            storyDTO.setTitle(story.getTitle());
+            storyDTO.setCoverImagePath(story.getCoverImagePath());
+
+            return storyDTO;
+
+        }
+        catch (NotFoundException e) {
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public CreateStoryResponseDTO createANewStory(String username, StoryRequestDTO storyRequestDTO) {
 
         try{
