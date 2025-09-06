@@ -1,5 +1,6 @@
 package lk.ijse.wattpadbackend.controller;
 
+import lk.ijse.wattpadbackend.dto.CreateStoryResponseDTO;
 import lk.ijse.wattpadbackend.dto.StoryDTO;
 import lk.ijse.wattpadbackend.dto.StoryRequestDTO;
 import lk.ijse.wattpadbackend.entity.Story;
@@ -104,8 +105,8 @@ public class StoryController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        long id = storyService.createANewStory(auth.getName(),storyRequestDTO);
-        return new APIResponse(202,"Successfully created a new story.",id);
+        CreateStoryResponseDTO createStoryResponseDTO = storyService.createANewStory(auth.getName(),storyRequestDTO);
+        return new APIResponse(202,"Successfully created a new story.",createStoryResponseDTO);
     }
 }
 

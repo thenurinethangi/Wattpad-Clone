@@ -1,15 +1,13 @@
 package lk.ijse.wattpadbackend.service.impl;
 
 import lk.ijse.wattpadbackend.dto.ChapterSimpleDTO;
+import lk.ijse.wattpadbackend.dto.CreateStoryResponseDTO;
 import lk.ijse.wattpadbackend.dto.StoryDTO;
 import lk.ijse.wattpadbackend.dto.StoryRequestDTO;
 import lk.ijse.wattpadbackend.entity.*;
 import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
-import lk.ijse.wattpadbackend.repository.StoryRepository;
-import lk.ijse.wattpadbackend.repository.StoryTagRepository;
-import lk.ijse.wattpadbackend.repository.TagRepository;
-import lk.ijse.wattpadbackend.repository.UserRepository;
+import lk.ijse.wattpadbackend.repository.*;
 import lk.ijse.wattpadbackend.service.StoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +25,7 @@ public class StoryServiceImpl implements StoryService {
     private final UserRepository userRepository;
     private final TagRepository tagRepository;
     private final StoryTagRepository storyTagRepository;
+    private final ChapterRepository chapterRepository;
 
     @Override
     public StoryDTO getAStoryById(long id) {
@@ -157,7 +156,7 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public long createANewStory(String username, StoryRequestDTO storyRequestDTO) {
+    public CreateStoryResponseDTO createANewStory(String username, StoryRequestDTO storyRequestDTO) {
 
         try{
             User user = userRepository.findByUsername(username);
@@ -209,7 +208,17 @@ public class StoryServiceImpl implements StoryService {
                 storyTagRepository.save(storyTag);
             }
 
-            return story1.getId();
+            Chapter chapter = new Chapter();
+            chapter.setStory(story1);
+            chapter.setTitle("Untitled Part 1");
+            chapter.setPublishedOrDraft(0);
+            Chapter chapter1 = chapterRepository.save(chapter);
+
+            CreateStoryResponseDTO createStoryResponseDTO = new CreateStoryResponseDTO();
+            createStoryResponseDTO.setStoryId(story1.getId());
+            createStoryResponseDTO.setChapterId(chapter1.getId());
+
+            return createStoryResponseDTO;
 
         }
         catch (RuntimeException e) {

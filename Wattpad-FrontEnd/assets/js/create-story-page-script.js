@@ -133,8 +133,8 @@ $(document).on('click', '.skip-btn', function () {
         .then(data => {
             console.log('Success:', data);
 
-            let id = data.data;
-            window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/create-chapter-page.html?storyId=${id}`;
+            let response = data.data;
+            window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/create-chapter-page.html?storyId=${response.storyId}&chapterId=${response.chapterId}`;
 
         })
         .catch(error => {
