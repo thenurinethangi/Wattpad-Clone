@@ -17,6 +17,7 @@ public class StoryRequestDTO {
     private String copyright;
     private String targetAudience;
     private String language;
+    private String category;
     private int rating;
     private int status;
     private String coverImagePath;

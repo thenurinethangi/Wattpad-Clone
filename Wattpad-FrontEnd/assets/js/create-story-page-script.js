@@ -88,7 +88,7 @@ $(document).on('click', '.skip-btn', function () {
     let title = formEl.querySelector('input[name="title"]').value.trim();
     let description = formEl.querySelector('textarea[name="description"]').value.trim();
     let category = formEl.querySelector('select[name="category"]').value.trim();
-    let tags = formEl.querySelector('input[name="tags"]').value.trim();
+    let tags = formEl.querySelector('input[name="tags"]').value.trim().toLowerCase().split(',').map(tag => tag.trim().replace(/\s+/g, ""));
     let targetAudience = formEl.querySelector('select[name="targetAudience"]').value.trim();
     let language = formEl.querySelector('select[name="language"]').value.trim();
     let copyright = formEl.querySelector('select[name="copyright"]').value.trim();
@@ -112,22 +112,36 @@ $(document).on('click', '.skip-btn', function () {
     formData.append("copyright", copyright);
     formData.append("isMature", isMature);
 
-    characters.forEach((char, index) => {
-        formData.append("mainCharacters[" + index + "]", char);
+    characters.forEach(char => {
+        formData.append("mainCharacters", char);
     });
 
-    // send to backend
-    // fetch("http://localhost:8080/api/v1/story", {
-    //     method: "POST",
-    //     body: formData
-    // })
-    //     .then(res => res.json())
-    //     .then(data => {
-    //         console.log("Success:", data);
-    //     })
-    //     .catch(err => {
-    //         console.error("Error:", err);
-    //     });
+    fetch('http://localhost:8080/api/v1/story', {
+        method: 'POST',
+        credentials: 'include',
+        body: formData
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            let id = data.data;
+            window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/create-chapter-page.html?storyId=${id}`;
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+
+        });
 });
 
 

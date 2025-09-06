@@ -2,9 +2,11 @@ package lk.ijse.wattpadbackend.controller;
 
 import lk.ijse.wattpadbackend.dto.StoryDTO;
 import lk.ijse.wattpadbackend.dto.StoryRequestDTO;
+import lk.ijse.wattpadbackend.entity.Story;
 import lk.ijse.wattpadbackend.service.StoryService;
 import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +36,7 @@ public class StoryController {
         return new APIResponse(202,"Story data successfully loaded for story id: "+id,storyDTO);
     }
 
-    @PostMapping()
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public APIResponse createANewStory(@RequestParam("title") String title,
                                        @RequestParam("description") String description,
                                        @RequestParam("mainCharacters") List<String> mainCharacters,
@@ -64,6 +66,7 @@ public class StoryController {
         storyRequestDTO.setCopyright(copyright);
         storyRequestDTO.setTargetAudience(targetAudience);
         storyRequestDTO.setLanguage(language);
+        storyRequestDTO.setCategory(category);
 
 
         if (hasValidCoverImage) {
@@ -101,8 +104,8 @@ public class StoryController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        storyService.createANewStory(auth.getName(),storyRequestDTO);
-        return new APIResponse(202,"Successfully created a new story.",null);
+        long id = storyService.createANewStory(auth.getName(),storyRequestDTO);
+        return new APIResponse(202,"Successfully created a new story.",id);
     }
 }
 

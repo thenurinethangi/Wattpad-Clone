@@ -3,16 +3,17 @@ package lk.ijse.wattpadbackend.service.impl;
 import lk.ijse.wattpadbackend.dto.ChapterSimpleDTO;
 import lk.ijse.wattpadbackend.dto.StoryDTO;
 import lk.ijse.wattpadbackend.dto.StoryRequestDTO;
-import lk.ijse.wattpadbackend.entity.Chapter;
-import lk.ijse.wattpadbackend.entity.Story;
-import lk.ijse.wattpadbackend.entity.StoryTag;
+import lk.ijse.wattpadbackend.entity.*;
 import lk.ijse.wattpadbackend.exception.NotFoundException;
+import lk.ijse.wattpadbackend.exception.UserNotFoundException;
 import lk.ijse.wattpadbackend.repository.StoryRepository;
+import lk.ijse.wattpadbackend.repository.StoryTagRepository;
+import lk.ijse.wattpadbackend.repository.TagRepository;
+import lk.ijse.wattpadbackend.repository.UserRepository;
 import lk.ijse.wattpadbackend.service.StoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,9 @@ import java.util.Optional;
 public class StoryServiceImpl implements StoryService {
 
     private final StoryRepository storyRepository;
+    private final UserRepository userRepository;
+    private final TagRepository tagRepository;
+    private final StoryTagRepository storyTagRepository;
 
     @Override
     public StoryDTO getAStoryById(long id) {
@@ -153,10 +157,86 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public void createANewStory(String name, StoryRequestDTO storyRequestDTO) {
+    public long createANewStory(String username, StoryRequestDTO storyRequestDTO) {
 
+        try{
+            User user = userRepository.findByUsername(username);
+            if(user==null){
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Story story = new Story();
+            story.setTitle(storyRequestDTO.getTitle());
+            story.setDescription(storyRequestDTO.getDescription());
+            story.setCoverImagePath(storyRequestDTO.getCoverImagePath());
+            story.setCategory(storyRequestDTO.getCategory());
+            story.setCopyright(storyRequestDTO.getCopyright());
+            story.setLanguage(storyRequestDTO.getLanguage());
+            story.setTargetAudience(storyRequestDTO.getTargetAudience());
+            story.setUser(user);
+            story.setPublishedOrDraft(0);
+            story.setRating(storyRequestDTO.getRating());
+            story.setStatus(storyRequestDTO.getStatus());
+
+            String mainCharacters = "";
+            for (String x :storyRequestDTO.getCharacters()){
+                mainCharacters += x+",";
+            }
+            if (!mainCharacters.isEmpty()) {
+                mainCharacters = mainCharacters.substring(0, mainCharacters.length() - 1);
+            }
+            story.setMainCharacters(mainCharacters);
+
+            String[] ar = storyRequestDTO.getTags().split(",");
+            for (String x : ar){
+                Tag tag = tagRepository.findByTagName(x);
+                if(tag==null){
+                    Tag tag1 = new Tag();
+                    tag1.setTagName(x);
+                    tagRepository.save(tag1);
+                }
+            }
+
+            Story story1 = storyRepository.save(story);
+
+            for (String x : ar){
+                Tag tag = tagRepository.findByTagName(x);
+
+                StoryTag storyTag = new StoryTag();
+                storyTag.setStory(story1);
+                storyTag.setTag(tag);
+
+                storyTagRepository.save(storyTag);
+            }
+
+            return story1.getId();
+
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

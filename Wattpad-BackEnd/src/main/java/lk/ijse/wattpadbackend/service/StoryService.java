@@ -7,5 +7,5 @@ public interface StoryService {
 
     StoryDTO getAStoryById(long id);
 
-    void createANewStory(String name, StoryRequestDTO storyRequestDTO);
+    long createANewStory(String name, StoryRequestDTO storyRequestDTO);
 }
