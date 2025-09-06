@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -702,6 +703,7 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     @Override
+    @Transactional
     public void saveChapter(long chapterId, long storyId, ChapterSaveRequestDTO chapterSaveRequestDTO) {
 
         try{
@@ -745,6 +747,172 @@ public class ChapterServiceImpl implements ChapterService {
                 paragraphRepository.save(paragraph);
             }
 
+        }
+        catch (NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    @Transactional
+    public long createAndSaveChapter(long storyId, ChapterSaveRequestDTO chapterSaveRequestDTO) {
+
+        try{
+            Optional<Story> optionalStory = storyRepository.findById((int) storyId);
+            if(!optionalStory.isPresent()){
+                throw new NotFoundException("Story not found.");
+            }
+            Story story = optionalStory.get();
+
+            Chapter chapter = new Chapter();
+            chapter.setStory(story);
+            chapter.setPublishedOrDraft(0);
+            chapter.setTitle(chapterSaveRequestDTO.getChapterTitle());
+            chapter.setCoverImagePath(chapterSaveRequestDTO.getChapterCoverUrl());
+
+            Chapter savedChapter = chapterRepository.save(chapter);
+
+            int count = 1;
+            for (ContentDTO x :chapterSaveRequestDTO.getContent()){
+                Paragraph paragraph = new Paragraph();
+                paragraph.setChapter(savedChapter);
+                paragraph.setContent(x.getContent());
+
+                if(x.getType().equals("text")){
+                    paragraph.setContentType("text");
+                }
+                else if(x.getType().equals("image")){
+                    paragraph.setContentType("image");
+                }
+                else if(x.getType().equals("video")){
+                    paragraph.setContentType("link");
+                }
+
+                paragraph.setSequenceNo(count);
+                count++;
+
+                paragraphRepository.save(paragraph);
+            }
+
+            return savedChapter.getId();
+
+        }
+        catch (NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void publishAndSaveChapter(long chapterId, long storyId, ChapterSaveRequestDTO chapterSaveRequestDTO) {
+
+        try{
+            Optional<Chapter> optionalChapter = chapterRepository.findById((int) chapterId);
+            if(!optionalChapter.isPresent()){
+                throw new NotFoundException("Chapter not found.");
+            }
+            Chapter chapter = optionalChapter.get();
+
+            Optional<Story> optionalStory = storyRepository.findById((int) storyId);
+            if(!optionalStory.isPresent()){
+                throw new NotFoundException("Story not found.");
+            }
+            Story story = optionalStory.get();
+            story.setPublishedOrDraft(1);
+            storyRepository.save(story);
+
+            chapter.setTitle(chapterSaveRequestDTO.getChapterTitle());
+            chapter.setCoverImagePath(chapterSaveRequestDTO.getChapterCoverUrl());
+            chapter.setPublishedOrDraft(1);
+            chapterRepository.save(chapter);
+
+            paragraphRepository.deleteAllByChapter(chapter);
+
+            int count = 1;
+            for (ContentDTO x :chapterSaveRequestDTO.getContent()){
+                Paragraph paragraph = new Paragraph();
+                paragraph.setChapter(chapter);
+                paragraph.setContent(x.getContent());
+
+                if(x.getType().equals("text")){
+                    paragraph.setContentType("text");
+                }
+                else if(x.getType().equals("image")){
+                    paragraph.setContentType("image");
+                }
+                else if(x.getType().equals("video")){
+                    paragraph.setContentType("link");
+                }
+
+                paragraph.setSequenceNo(count);
+                count++;
+
+                paragraphRepository.save(paragraph);
+            }
+
+        }
+        catch (NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    @Transactional
+    public long createPublishAndSaveChapter(long storyId, ChapterSaveRequestDTO chapterSaveRequestDTO) {
+
+        try{
+            Optional<Story> optionalStory = storyRepository.findById((int) storyId);
+            if(!optionalStory.isPresent()){
+                throw new NotFoundException("Story not found.");
+            }
+            Story story = optionalStory.get();
+            story.setPublishedOrDraft(1);
+            storyRepository.save(story);
+
+            Chapter chapter = new Chapter();
+            chapter.setStory(story);
+            chapter.setPublishedOrDraft(1);
+            chapter.setTitle(chapterSaveRequestDTO.getChapterTitle());
+            chapter.setCoverImagePath(chapterSaveRequestDTO.getChapterCoverUrl());
+
+            Chapter savedChapter = chapterRepository.save(chapter);
+
+            int count = 1;
+            for (ContentDTO x :chapterSaveRequestDTO.getContent()){
+                Paragraph paragraph = new Paragraph();
+                paragraph.setChapter(savedChapter);
+                paragraph.setContent(x.getContent());
+
+                if(x.getType().equals("text")){
+                    paragraph.setContentType("text");
+                }
+                else if(x.getType().equals("image")){
+                    paragraph.setContentType("image");
+                }
+                else if(x.getType().equals("video")){
+                    paragraph.setContentType("link");
+                }
+
+                paragraph.setSequenceNo(count);
+                count++;
+
+                paragraphRepository.save(paragraph);
+            }
+
+            return savedChapter.getId();
+
+        }
+        catch (NotFoundException e){
+            throw e;
         }
         catch (RuntimeException e) {
             throw new RuntimeException(e);

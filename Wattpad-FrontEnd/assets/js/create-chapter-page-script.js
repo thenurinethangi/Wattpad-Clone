@@ -1,6 +1,3 @@
-let isSaved = 0;
-let cId = null;
-
 //check user register or not
 window.onload = function () {
 
@@ -132,6 +129,7 @@ function insertMedia2(type) {
 
                     // Insert into container
                     container.prepend(img);
+                    localStorage.setItem("isSaved", "false");
 
                     // Hide add buttons after setting media
                     container.querySelectorAll('.media-btn').forEach(btn => btn.style.display = 'none');
@@ -157,6 +155,7 @@ function insertMedia2(type) {
 
                 // Insert into container
                 container.prepend(iframe);
+                localStorage.setItem("isSaved", "false");
 
                 // Hide add buttons after setting media
                 container.querySelectorAll('.media-btn').forEach(btn => btn.style.display = 'none');
@@ -207,6 +206,7 @@ $(document).on('click','.edit-media',function (event) {
                                 </svg>
                             </div>`;
                     };
+                    localStorage.setItem("isSaved", "false");
                     reader.readAsDataURL(file);
                 }
             };
@@ -229,7 +229,9 @@ $(document).on('click','.edit-media',function (event) {
                                     <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                                 </svg>
                             </div>`;
-                    } else {
+                        localStorage.setItem("isSaved", "false");
+                    }
+                    else {
                         Swal.fire('Invalid URL', 'Please enter a valid YouTube link', 'error');
                     }
                 }
@@ -356,6 +358,7 @@ async function collectAndPrepareContentForForm() {
             })
             .then(data => {
                 console.log('Success:', data);
+                localStorage.setItem("isSaved", "true");
                 $('.saved-indicator').text('Saved');
             })
             .catch(error => {
@@ -363,7 +366,7 @@ async function collectAndPrepareContentForForm() {
                 console.log(response);
             });
     }
-    else if (!params.has("chapterId") && params.has("storyId") && cId==null) {
+    else if (!params.has("chapterId") && params.has("storyId") && !localStorage.getItem('chapterId')) {
         storyId = params.get("storyId");
 
         let data = {
@@ -392,6 +395,46 @@ async function collectAndPrepareContentForForm() {
             })
             .then(data => {
                 console.log('Success:', data);
+                localStorage.setItem("chapterId", data.data);
+                localStorage.setItem("isSaved", "true");
+                $('.saved-indicator').text('Saved');
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+            });
+    }
+    else if (!params.has("chapterId") && params.has("storyId") && localStorage.getItem('chapterId')) {
+        storyId = params.get("storyId");
+        chapterId = localStorage.getItem('chapterId');
+
+        let data = {
+            'chapterTitle': chapterTitle,
+            'chapterCoverUrl': url,
+            'content': paragraphAr
+        };
+
+        console.log("Final payload:", data);
+
+        fetch(`http://localhost:8080/api/v1/chapter/save/${chapterId}/${storyId}`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                localStorage.setItem("isSaved", "true");
                 $('.saved-indicator').text('Saved');
             })
             .catch(error => {
@@ -400,6 +443,7 @@ async function collectAndPrepareContentForForm() {
             });
     }
 }
+
 
 async function buildParagraphArray(contentStructure) {
     let paragraphAr = [];
@@ -436,6 +480,7 @@ async function buildParagraphArray(contentStructure) {
     return paragraphAr;
 }
 
+
 async function uploadImageToImgbb(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -469,6 +514,245 @@ async function uploadImageToImgbb(file) {
 
 
 
+//click on preview button
+function previewChapter() {
+
+    if(localStorage.getItem('isSaved')==='false'){
+        Swal.fire({
+            title: 'Warning!',
+            text: 'Save first to view the preview.',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
+
+    let cId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("chapterId")) {
+        cId = params.get("chapterId");
+    }
+
+    if(!localStorage.getItem('chapterId') && cId==null){
+        Swal.fire({
+            title: 'Warning!',
+            text: 'Save first to view the preview.',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
+
+    let x;
+    if(params.has("chapterId")){
+        x = params.get("chapterId");
+    }
+    else{
+        x = localStorage.getItem('chapterId');
+    }
+
+    window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${x}`;
+}
+
+
+
+
+//click on publish button
+async function publish() {
+
+    const chapterTitle = document.getElementById('chapterTitleEdit').textContent.trim();
+    document.getElementById('chapterTitleInput').value = chapterTitle;
+
+    let chapterCover = $('.media-buttons').find('img, iframe');
+
+    let url = '';
+    if (chapterCover.is('img')) {
+        let imageUrl = chapterCover.attr('src');
+        console.log("Image URL:", imageUrl);
+
+        // Convert URL to File object
+        const res = await fetch(imageUrl);
+        const blob = await res.blob();
+        let file = new File([blob], "cover-image.jpg", { type: blob.type });
+        console.log("Image File:", file);
+
+        // ✅ wait for upload before continuing
+        url = await uploadImageToImgbb(file);
+
+    } else if (chapterCover.is('iframe')) {
+        let videoUrl = chapterCover.attr('src');
+        url = videoUrl;
+        console.log("Video URL:", videoUrl);
+    }
+
+    const editor = document.getElementById('contentEditor');
+    const contentStructure = {
+        paragraphs: []
+    };
+
+    editor.querySelectorAll('.paragraph-container').forEach((container) => {
+        const textarea = container.querySelector('.paragraph-textarea');
+        const media = container.querySelector('.embedded-media');
+
+        const paragraphData = {
+            type: 'text',
+            value: textarea ? textarea.value.trim() : "",
+            media: null
+        };
+
+        if (media) {
+            const mediaType = media.getAttribute('data-media-type');
+
+            if (mediaType === 'image') {
+                const imageUniqueId = media.getAttribute('data-image-unique-id');
+                const storedImage = attachedImageFiles.get(imageUniqueId);
+
+                if (storedImage) {
+                    paragraphData.media = {
+                        type: 'image',
+                        file: storedImage instanceof File ? storedImage : storedImage.file
+                    };
+                }
+
+            } else if (mediaType === 'video') {
+                const videoUrl = media.getAttribute('data-video-url');
+                const videoId = media.getAttribute('data-video-id');
+                paragraphData.media = {
+                    type: 'video',
+                    url: videoUrl,
+                    videoId: videoId
+                };
+            }
+        }
+
+        contentStructure.paragraphs.push(paragraphData);
+    });
+
+    // ✅ Wait until all paragraphs are processed (image uploads done)
+    let paragraphAr = await buildParagraphArray(contentStructure);
+
+    let chapterId = null;
+    let storyId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("chapterId") && params.has("storyId")) {
+        chapterId = params.get("chapterId");
+        storyId = params.get("storyId");
+
+        let data = {
+            'chapterTitle': chapterTitle,
+            'chapterCoverUrl': url,
+            'content': paragraphAr
+        };
+
+        console.log("Final payload:", data);
+
+        fetch(`http://localhost:8080/api/v1/chapter/publishAndSave/${chapterId}/${storyId}`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+
+                window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${chapterId}`;
+
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+            });
+    }
+    else if (!params.has("chapterId") && params.has("storyId") && !localStorage.getItem('chapterId')) {
+        storyId = params.get("storyId");
+
+        let data = {
+            'chapterTitle': chapterTitle,
+            'chapterCoverUrl': url,
+            'content': paragraphAr
+        };
+
+        console.log("Final payload:", data);
+
+        fetch(`http://localhost:8080/api/v1/chapter/createPublishAndSave/${storyId}`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+
+                window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${data.data}`;
+
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+            });
+    }
+    else if (!params.has("chapterId") && params.has("storyId") && localStorage.getItem('chapterId')) {
+        storyId = params.get("storyId");
+        chapterId = localStorage.getItem('chapterId');
+
+        let data = {
+            'chapterTitle': chapterTitle,
+            'chapterCoverUrl': url,
+            'content': paragraphAr
+        };
+
+        console.log("Final payload:", data);
+
+        fetch(`http://localhost:8080/api/v1/chapter/publishAndSave/${chapterId}/${storyId}`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+
+                window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${chapterId}`;
+
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+            });
+
+    }
+}
 
 
 

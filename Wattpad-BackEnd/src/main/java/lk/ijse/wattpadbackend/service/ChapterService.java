@@ -21,4 +21,10 @@ public interface ChapterService {
     String addOrRemoveLikeOnChapterComment(String name, long id);
 
     void saveChapter(long chapterId, long storyId, ChapterSaveRequestDTO chapterSaveRequestDTO);
+
+    long createAndSaveChapter(long storyId, ChapterSaveRequestDTO chapterSaveRequestDTO);
+
+    void publishAndSaveChapter(long chapterId, long storyId, ChapterSaveRequestDTO chapterSaveRequestDTO);
+
+    long createPublishAndSaveChapter(long storyId, ChapterSaveRequestDTO chapterSaveRequestDTO);
 }

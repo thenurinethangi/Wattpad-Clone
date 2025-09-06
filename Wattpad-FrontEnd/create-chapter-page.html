@@ -47,7 +47,7 @@
 
   <!-------header right-------->
   <div class="header-actions">
-    <button class="btn btn-primary" type="button" onclick="submitForm('publish')">Publish</button>
+    <button class="btn btn-primary" type="button" onclick="publish()">Publish</button>
     <button class="btn btn-secondary" type="button" onclick="collectAndPrepareContentForForm()">Save</button>
     <button class="btn btn-outline" type="button" onclick="previewChapter()">Preview</button>
     <button class="more-btn">
@@ -224,6 +224,7 @@
                         </button>
                     `;
           currentParagraph.appendChild(mediaDiv);
+          localStorage.setItem("isSaved", "false");
           addNewParagraph(); // Add a new paragraph after adding video
         } else {
           alert('Please enter a valid YouTube URL (e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ)');
@@ -255,6 +256,7 @@
                     </button>
                 `;
         currentParagraph.appendChild(mediaDiv);
+        localStorage.setItem("isSaved", "false");
         addNewParagraph(); // Add a new paragraph after adding image
       };
       reader.readAsDataURL(file);
@@ -277,6 +279,7 @@
       }
     }
     mediaDiv.remove();
+    localStorage.setItem("isSaved", "false");
     updateWordCount();
   }
 
@@ -310,6 +313,7 @@
             </div>
         `;
     editor.appendChild(newParagraph);
+    localStorage.setItem("isSaved", "false");
 
     // Focus on new textarea after it's added to DOM
     const newTextarea = newParagraph.querySelector('.paragraph-textarea');
@@ -354,156 +358,6 @@
     document.getElementById('wordCountDisplay').textContent = totalWords + ' words';
   }
 
-  // Function to collect all content and prepare for form submission
-  // function collectAndPrepareContentForForm() {
-  //   const chapterTitle = document.getElementById('chapterTitleEdit').textContent.trim();
-  //   document.getElementById('chapterTitleInput').value = chapterTitle; // Update hidden title field
-  //
-  //   const editor = document.getElementById('contentEditor');
-  //   const contentStructure = {
-  //     paragraphs: []
-  //   };
-  //
-  //   // Clear any old dynamically added file inputs from previous submissions
-  //   const form = document.getElementById('chapterForm');
-  //   form.querySelectorAll('input[type="file"][name^="imageFile_"]').forEach(input => input.remove());
-  //
-  //   // Prepare new hidden file inputs for images
-  //   let currentImageFileIndex = 0;
-  //   attachedImageFiles.forEach((file, uniqueImageId) => {
-  //     const fileInput = document.createElement('input');
-  //     fileInput.type = 'file';
-  //     fileInput.name = `imageFile_${currentImageFileIndex}`; // Unique name for each file
-  //     fileInput.style.display = 'none'; // Keep it hidden
-  //     // Create a DataTransfer object to assign the File to the input
-  //     const dataTransfer = new DataTransfer();
-  //     dataTransfer.items.add(file);
-  //     fileInput.files = dataTransfer.files;
-  //
-  //     form.appendChild(fileInput); // Add to the form
-  //     // Also store this new name in our map for easy lookup
-  //     attachedImageFiles.set(uniqueImageId, { file: file, formFieldName: fileInput.name });
-  //     currentImageFileIndex++;
-  //   });
-  //
-  //
-  //   // Iterate through each paragraph container to build the content structure
-  //   editor.querySelectorAll('.paragraph-container').forEach((container) => {
-  //     const textarea = container.querySelector('.paragraph-textarea');
-  //     const media = container.querySelector('.embedded-media'); // Only one media per paragraph container for now
-  //
-  //     const paragraphData = {
-  //       type: 'text', // Default to text
-  //       value: textarea.value.trim(),
-  //       media: null // Placeholder for media data
-  //     };
-  //
-  //     if (media) {
-  //       const mediaType = media.getAttribute('data-media-type');
-  //       if (mediaType === 'image') {
-  //         const imageUniqueId = media.getAttribute('data-image-unique-id');
-  //         const storedImage = attachedImageFiles.get(imageUniqueId);
-  //         if (storedImage && storedImage.formFieldName) {
-  //           paragraphData.media = {
-  //             type: 'image',
-  //             formFieldName: storedImage.formFieldName // Reference the hidden file input name
-  //           };
-  //         }
-  //       } else if (mediaType === 'video') {
-  //         const videoUrl = media.getAttribute('data-video-url');
-  //         const videoId = media.getAttribute('data-video-id');
-  //         paragraphData.media = {
-  //           type: 'video',
-  //           url: videoUrl,
-  //           videoId: videoId
-  //         };
-  //       }
-  //     }
-  //     contentStructure.paragraphs.push(paragraphData);
-  //   });
-  //
-  //   // Set the JSON string of the content structure to the hidden input
-  //   document.getElementById('chapterContentJsonInput').value = JSON.stringify(contentStructure);
-  // }
-
-
-  // // Function to collect all content and prepare for form submission
-  // function collectAndPrepareContentForForm() {
-  //   const chapterTitle = document.getElementById('chapterTitleEdit').textContent.trim();
-  //   document.getElementById('chapterTitleInput').value = chapterTitle; // Update hidden title field
-  //
-  //   const editor = document.getElementById('contentEditor');
-  //   const contentStructure = {
-  //     paragraphs: []
-  //   };
-  //
-  //   // Clear any old dynamically added file inputs from previous submissions
-  //   const form = document.getElementById('chapterForm');
-  //   form.querySelectorAll('input[type="file"][name^="imageFile_"]').forEach(input => input.remove());
-  //
-  //   // ✅ Prepare new hidden file inputs for images
-  //   let currentImageFileIndex = 0;
-  //   attachedImageFiles.forEach((entry, uniqueImageId) => {
-  //     const actualFile = entry instanceof File ? entry : entry.file; // ensure it's a File
-  //
-  //     if (actualFile) {
-  //       const fileInput = document.createElement('input');
-  //       fileInput.type = 'file';
-  //       fileInput.name = `imageFile_${currentImageFileIndex}`; // Unique name
-  //       fileInput.style.display = 'none';
-  //
-  //       const dataTransfer = new DataTransfer();
-  //       dataTransfer.items.add(actualFile); // only File here
-  //       fileInput.files = dataTransfer.files;
-  //
-  //       form.appendChild(fileInput);
-  //
-  //       // update map with new field name
-  //       attachedImageFiles.set(uniqueImageId, { file: actualFile, formFieldName: fileInput.name });
-  //       currentImageFileIndex++;
-  //     }
-  //   });
-  //
-  //   // Iterate through each paragraph container to build the content structure
-  //   editor.querySelectorAll('.paragraph-container').forEach((container) => {
-  //     const textarea = container.querySelector('.paragraph-textarea');
-  //     const media = container.querySelector('.embedded-media'); // Only one media per paragraph container for now
-  //
-  //     const paragraphData = {
-  //       type: 'text', // Default to text
-  //       value: textarea.value.trim(),
-  //       media: null // Placeholder for media data
-  //     };
-  //
-  //     if (media) {
-  //       const mediaType = media.getAttribute('data-media-type');
-  //       if (mediaType === 'image') {
-  //         const imageUniqueId = media.getAttribute('data-image-unique-id');
-  //         const storedImage = attachedImageFiles.get(imageUniqueId);
-  //         if (storedImage && storedImage.formFieldName) {
-  //           paragraphData.media = {
-  //             type: 'image',
-  //             formFieldName: storedImage.formFieldName // Reference hidden input name
-  //           };
-  //         }
-  //       } else if (mediaType === 'video') {
-  //         const videoUrl = media.getAttribute('data-video-url');
-  //         const videoId = media.getAttribute('data-video-id');
-  //         paragraphData.media = {
-  //           type: 'video',
-  //           url: videoUrl,
-  //           videoId: videoId
-  //         };
-  //       }
-  //     }
-  //     contentStructure.paragraphs.push(paragraphData);
-  //   });
-  //
-  //   // Set the JSON string of the content structure to the hidden input
-  //   document.getElementById('chapterContentJsonInput').value = JSON.stringify(contentStructure);
-  //   console.log(contentStructure);
-  // }
-
 
   // Function to submit the form based on action (publish/save)
   function submitForm(action) {
@@ -513,14 +367,14 @@
   }
 
   // Function for preview (still uses JS to open a new tab)
-  function previewChapter() {
-    collectAndPrepareContentForForm();
-    const contentJson = document.getElementById('chapterContentJsonInput').value;
-    const chapterTitle = document.getElementById('chapterTitleInput').value;
-    // You might need a server endpoint that specifically handles preview data
-    // For simplicity, passing JSON as a query parameter (might exceed URL limits for large content)
-    window.open(`/chapters/preview?title=${encodeURIComponent(chapterTitle)}&content=${encodeURIComponent(contentJson)}`, '_blank');
-  }
+  // function previewChapter() {
+  //   collectAndPrepareContentForForm();
+  //   const contentJson = document.getElementById('chapterContentJsonInput').value;
+  //   const chapterTitle = document.getElementById('chapterTitleInput').value;
+  //   // You might need a server endpoint that specifically handles preview data
+  //   // For simplicity, passing JSON as a query parameter (might exceed URL limits for large content)
+  //   window.open(`/chapters/preview?title=${encodeURIComponent(chapterTitle)}&content=${encodeURIComponent(contentJson)}`, '_blank');
+  // }
 
 
   // Auto-save functionality (still uses fetch because it's background)

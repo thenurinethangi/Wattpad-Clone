@@ -92,6 +92,27 @@ public class ChapterController {
         chapterService.saveChapter(chapterId,storyId,chapterSaveRequestDTO);
         return new APIResponse(202,"Successfully saved chapter id: "+chapterId,null);
     }
+
+    @PostMapping("/createAndSave/{storyId}")
+    public APIResponse createAndSaveChapter(@PathVariable long storyId, @RequestBody ChapterSaveRequestDTO chapterSaveRequestDTO){
+
+        long id = chapterService.createAndSaveChapter(storyId,chapterSaveRequestDTO);
+        return new APIResponse(202,"Successfully created and saved chapter",id);
+    }
+
+    @PostMapping("/publishAndSave/{chapterId}/{storyId}")
+    public APIResponse publishAndSaveChapter(@PathVariable long chapterId, @PathVariable long storyId, @RequestBody ChapterSaveRequestDTO chapterSaveRequestDTO){
+
+        chapterService.publishAndSaveChapter(chapterId,storyId,chapterSaveRequestDTO);
+        return new APIResponse(202,"Successfully published and saved chapter id: "+chapterId,null);
+    }
+
+    @PostMapping("/createPublishAndSave/{storyId}")
+    public APIResponse createPublishAndSaveChapter(@PathVariable long storyId, @RequestBody ChapterSaveRequestDTO chapterSaveRequestDTO){
+
+        long id = chapterService.createPublishAndSaveChapter(storyId,chapterSaveRequestDTO);
+        return new APIResponse(202,"Successfully created and saved and published chapter",id);
+    }
 }
 
 
