@@ -172,6 +172,25 @@ public class StoryServiceImpl implements StoryService {
             storyDTO.setTitle(story.getTitle());
             storyDTO.setCoverImagePath(story.getCoverImagePath());
 
+            List<Chapter> characterList = story.getChapters();
+            List<ChapterSimpleDTO> chapterSimpleDTOList = new ArrayList<>();
+            for(Chapter x : characterList){
+                if(x.getPublishedOrDraft()==0){
+                    continue;
+                }
+
+                ChapterSimpleDTO chapterSimpleDTO = new ChapterSimpleDTO();
+                chapterSimpleDTO.setId(x.getId());
+                chapterSimpleDTO.setTitle(x.getTitle());
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, MMMM d yyyy");
+                chapterSimpleDTO.setPublishedDate(x.getPublishedDate().format(formatter));
+
+                chapterSimpleDTOList.add(chapterSimpleDTO);
+            }
+
+            storyDTO.setChapterSimpleDTOList(chapterSimpleDTOList);
+
             return storyDTO;
 
         }

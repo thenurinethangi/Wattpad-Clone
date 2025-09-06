@@ -19,4 +19,6 @@ public interface ChapterService {
     List<SingleCommentDTO> loadCommentsOfAChapter(String name, long chapterId, long amount);
 
     String addOrRemoveLikeOnChapterComment(String name, long id);
+
+    void saveChapter(long chapterId, long storyId, ChapterSaveRequestDTO chapterSaveRequestDTO);
 }

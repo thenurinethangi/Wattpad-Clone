@@ -85,6 +85,13 @@ public class ChapterController {
         String result = chapterService.addOrRemoveLikeOnChapterComment(auth.getName(),id);
         return new APIResponse(202,"Successfully added or removed like on chapter comment id: "+id,result);
     }
+
+    @PostMapping("/save/{chapterId}/{storyId}")
+    public APIResponse saveChapter(@PathVariable long chapterId, @PathVariable long storyId, @RequestBody ChapterSaveRequestDTO chapterSaveRequestDTO){
+
+        chapterService.saveChapter(chapterId,storyId,chapterSaveRequestDTO);
+        return new APIResponse(202,"Successfully saved chapter id: "+chapterId,null);
+    }
 }
 
 

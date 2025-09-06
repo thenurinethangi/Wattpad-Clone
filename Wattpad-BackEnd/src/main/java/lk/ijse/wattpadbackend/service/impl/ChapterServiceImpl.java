@@ -28,6 +28,7 @@ public class ChapterServiceImpl implements ChapterService {
     private final CommentLikeRepository commentLikeRepository;
     private final ReplyRepository replyRepository;
     private final ParagraphCommentRepository paragraphCommentRepository;
+    private final ParagraphRepository paragraphRepository;
 
     @Override
     public ChapterDTO getAChapterById(String username,long id) {
@@ -696,6 +697,56 @@ public class ChapterServiceImpl implements ChapterService {
             }
 
         } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void saveChapter(long chapterId, long storyId, ChapterSaveRequestDTO chapterSaveRequestDTO) {
+
+        try{
+            Optional<Chapter> optionalChapter = chapterRepository.findById((int) chapterId);
+            if(!optionalChapter.isPresent()){
+                throw new NotFoundException("Chapter not found.");
+            }
+            Chapter chapter = optionalChapter.get();
+
+            Optional<Story> optionalStory = storyRepository.findById((int) storyId);
+            if(!optionalStory.isPresent()){
+                throw new NotFoundException("Story not found.");
+            }
+            Story story = optionalStory.get();
+
+            chapter.setTitle(chapterSaveRequestDTO.getChapterTitle());
+            chapter.setCoverImagePath(chapterSaveRequestDTO.getChapterCoverUrl());
+            chapterRepository.save(chapter);
+
+            paragraphRepository.deleteAllByChapter(chapter);
+
+            int count = 1;
+            for (ContentDTO x :chapterSaveRequestDTO.getContent()){
+                Paragraph paragraph = new Paragraph();
+                paragraph.setChapter(chapter);
+                paragraph.setContent(x.getContent());
+
+                if(x.getType().equals("text")){
+                    paragraph.setContentType("text");
+                }
+                else if(x.getType().equals("image")){
+                    paragraph.setContentType("image");
+                }
+                else if(x.getType().equals("video")){
+                    paragraph.setContentType("link");
+                }
+
+                paragraph.setSequenceNo(count);
+                count++;
+
+                paragraphRepository.save(paragraph);
+            }
+
+        }
+        catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
     }
