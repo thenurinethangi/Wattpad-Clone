@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -23,13 +24,13 @@ public class UserDTO {
 
     private String password;
 
-    private Date birthday;
+    private LocalDate birthday;
 
     private String pronouns;
 
     private String about;
 
-    private Date joinedDate;
+    private LocalDate joinedDate;
 
     private String websiteLink;
 
@@ -44,4 +45,6 @@ public class UserDTO {
     private int isVerify;
 
     private int isActive;
+
+    private int isCurrentUser;
 }
