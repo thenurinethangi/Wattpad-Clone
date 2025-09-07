@@ -209,7 +209,7 @@
                             </button>
                             <!--follow btn-->
                             <button role="menuitem" class="btn btn-fan btn-white  on-follow-user on-follow" data-target="moonflower_9597" data-following="false" data-gtm="profile|follow">
-                                <span class="fa fa-follow no-right-padding fa-wp-base-2 fa-wp-base-2-dark" aria-hidden="true" style="font-size:16px;"></span>
+                                <i class="fa-solid fa-user-plus" style="font-size:16px;"></i>
                                 <span class="hidden-xs truncate">Follow</span>
                             </button>
                             <div class="button-group inline-block relative three-dots-btn">
@@ -386,7 +386,7 @@
                                 <!--story panel header-->
                                 <header class="panel-heading">
                                     <a href="" class="settings on-navigate">
-                                        <span class="fa fa-settings fa-wp-neutral-2 " aria-hidden="true" style="font-size:24px;"></span>
+                                        <i id="story-setting" class="fa-solid fa-gear" style="margin-right: 5px;"></i>
                                     </a>
                                     <div class="panel-title" id="story-panel-title">
                                         Story by yukee07
@@ -451,14 +451,20 @@
                     <!--reading list container-->
                     <section id="profile-lists">
                         <div class="reading-lists">
-                            <div class="panel panel-default2">
+                            <!--actual list container-->
+                            <div class="panel panel-default2 reading-list-panel">
                                 <!--reading list panel header-->
                                 <header class="panel-heading">
-                                    <a href="/list" class="settings">
-                                        <span class="fa fa-settings fa-wp-neutral-2 " aria-hidden="true" style="font-size:24px;"></span>
+                                    <a href="/list" class="settings" id="reading-list-setting">
+                                        <i class="fa-solid fa-gear" style="margin-right: 5px;"></i>
                                     </a>
-                                    <span class="fa fa-plus fa-wp-neutral-2 settings on-create-list" aria-hidden="true" style="font-size:24px;"></span>
-                                    <div class="panel-title">1 Reading List</div>
+                                    <svg id="add-reading-list" style="transform: translateY(-3.5px);" class="settings on-create-list" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                         viewBox="0 0 20 20" fill="none" stroke="currentColor"
+                                         stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" color="#6f6f6f">
+                                        <line x1="12" y1="5" x2="12" y2="19"/>
+                                        <line x1="5" y1="12" x2="19" y2="12"/>
+                                    </svg>
+                                    <div class="panel-title" id="reading-list-panel-title">1 Reading List</div>
                                 </header>
                                 <hr>
                                 <!--reading list panel body-->
@@ -508,11 +514,11 @@
                                     </div>
                                 </div>
                                 <!--show more btn-->
-                                <div class="show-more center-text hidden">
-                                    <button class="btn btn-grey on-showmore">
+                                <div class="show-more center-text show-more-reading-list">
+                                    <button class="btn btn-grey on-showmore on-showmore-reading-list">
                                         <span class="show-more-message">
                                             <span>Show more</span>
-                                            <span class="fa fa-down-small fa-wp-neutral-2"></span>
+                                            <i class="fa-solid fa-angle-down" style="padding-left: 5px; padding-top: 5px;"></i>
                                         </span>
                                         <span class="loading-message hidden">
                                             <span class="fa fa-loading fa-spin fa-wp-neutral-2 loading-spinner fa-spin-fix-position" aria-hidden="true" style="font-size:16px;"></span>
@@ -522,6 +528,32 @@
                                 </div>
                             </div>
                         </div>
+                        <!--if there is no reading list this show-->
+                        <div class="panel panel-default2 empty-placeholder">
+                            <header class="panel-heading">
+                                <div class="panel-title"></div>
+                                <div class="panel-subtitle"></div>
+                            </header>
+
+                            <div class="panel-body">
+                                <div class="no-reading-list">
+                                    <button class="btn btn-md btn-orange on-create-list">Create Reading List</button>
+                                </div>
+                                <div class="story-cover">
+                                    <div class="fixed-ratio fixed-ratio-cover"></div>
+                                </div><!---->
+                                <div class="story-cover">
+                                    <div class="fixed-ratio fixed-ratio-cover"></div>
+                                </div><!---->
+                                <div class="story-cover">
+                                    <div class="fixed-ratio fixed-ratio-cover"></div>
+                                </div><!---->
+                                <div class="story-cover">
+                                    <div class="fixed-ratio fixed-ratio-cover"></div>
+                                </div>
+                            </div>
+                        </div>
+
                     </section>
                 </div>
 

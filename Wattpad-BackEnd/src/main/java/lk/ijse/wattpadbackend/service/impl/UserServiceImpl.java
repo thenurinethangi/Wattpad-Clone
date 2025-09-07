@@ -418,7 +418,13 @@ public class UserServiceImpl implements UserService {
             }
             User user = optionalUser.get();
 
-            List<ReadingList> readingListList = user.getReadingLists();
+            List<ReadingList> readingLists = user.getReadingLists();
+            List<ReadingList> readingListList = new ArrayList<>();
+            for(ReadingList x : readingLists){
+                if(!x.getReadingListStories().isEmpty()){
+                    readingListList.add(x);
+                }
+            }
 
             long returnCount = 0;
             if(readingListList.size()>=readingListCount){
@@ -455,7 +461,7 @@ public class UserServiceImpl implements UserService {
                     if(j==3){
                         break;
                     }
-                    ReadingListStory listStory = readingListStories.get(i);
+                    ReadingListStory listStory = readingListStories.get(j);
 
                     StoryDTO storyDTO = new StoryDTO();
                     storyDTO.setId(listStory.getStory().getId());

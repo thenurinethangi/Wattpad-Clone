@@ -1,6 +1,7 @@
 package lk.ijse.wattpadbackend.controller;
 
 import lk.ijse.wattpadbackend.dto.UserDTO;
+import lk.ijse.wattpadbackend.dto.UserProfileReadingListResponseDTO;
 import lk.ijse.wattpadbackend.dto.UserProfileStoriesResponseDTO;
 import lk.ijse.wattpadbackend.service.UserService;
 import lk.ijse.wattpadbackend.util.APIResponse;
@@ -64,8 +65,8 @@ public class UserController {
     @GetMapping("/readingList/{id}/{readingListCount}")
     public APIResponse getReadingListByUserId(@PathVariable long id, @PathVariable long readingListCount){
 
-        userService.getReadingListByUserId(id,readingListCount);
-        return new APIResponse(202,"Successfully load reading lists by user.",null);
+        List<UserProfileReadingListResponseDTO> userProfileReadingListResponseDTO = userService.getReadingListByUserId(id,readingListCount);
+        return new APIResponse(202,"Successfully load reading lists by user.",userProfileReadingListResponseDTO);
     }
 }
 
