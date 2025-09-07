@@ -1,6 +1,7 @@
 package lk.ijse.wattpadbackend.controller;
 
 import lk.ijse.wattpadbackend.dto.UserDTO;
+import lk.ijse.wattpadbackend.dto.UserProfileStoriesResponseDTO;
 import lk.ijse.wattpadbackend.service.UserService;
 import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,15 @@ public class UserController {
 
         List<UserDTO> userDTOList = userService.getFollowingUsersByUserId(id);
         return new APIResponse(202,"Successfully load top following users.",userDTOList);
+    }
+
+    @GetMapping("/story/{id}/{storyCount}")
+    public APIResponse getStoriesByUserId(@PathVariable long id, @PathVariable long storyCount){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        UserProfileStoriesResponseDTO userProfileStoriesResponseDTO = userService.getStoriesByUserId(auth.getName(),id,storyCount);
+        return new APIResponse(202,"Successfully load stories by user.",userProfileStoriesResponseDTO);
     }
 }
 

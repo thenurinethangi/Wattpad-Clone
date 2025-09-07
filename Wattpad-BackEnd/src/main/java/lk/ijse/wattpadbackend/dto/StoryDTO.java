@@ -27,6 +27,7 @@ public class StoryDTO {
     private String profilePicPath;
     private List<String> tags;
     private List<ChapterSimpleDTO> chapterSimpleDTOList;
+    private int publishedOrDraft;
 }
 
 

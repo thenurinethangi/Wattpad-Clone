@@ -388,54 +388,55 @@
                                     <a href="" class="settings on-navigate">
                                         <span class="fa fa-settings fa-wp-neutral-2 " aria-hidden="true" style="font-size:24px;"></span>
                                     </a>
-                                    <div class="panel-title">
+                                    <div class="panel-title" id="story-panel-title">
                                         Story by yukee07
                                     </div>
-                                    <ul class="metadata">
+                                    <ul class="metadata" id="story-panel-metadata">
                                         <li>1 Published Story &nbsp;.&nbsp; 0 Draft (only visible to you)</li>
                                     </ul>
                                 </header>
                                 <!--story panel body-->
-                                <div class="panel-body">
-                                    <div id="works-item-view">
-                                        <div class="discover-module-stories-large on-discover-module-item">
-                                            <a class="send-cover-event on-story-preview cover cover-home" href="">
-                                                <div class="fixed-ratio fixed-ratio-cover">
-                                                    <img src="https://img.wattpad.com/cover/397138907-288-k364117.jpg" alt="Sample 1 by yukee07">
-                                                </div>
-                                            </a>
-                                            <div class="content" data-target="397138907" data-type="stories">
-                                                <a class="title meta on-story-preview" data-story-id="397138907" href="/story/397138907-sample-1">
-                                                    Sample 1
-                                                </a>
-                                                <div class="meta social-meta">
-                                                    <span class="read-count">
-                                                        <span class="fa fa-view fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 0
-                                                    </span>
-                                                    <span class="vote-count">
-                                                        <span class="fa fa-vote fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 0
-                                                    </span>
-                                                    <span class="part-count">
-                                                        <span class="fa fa-list fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 1
-                                                    </span>
-                                                </div>
-                                                <div class="description">Sample 1 desc</div>
-                                                <div class="tag-ranking">
-                                                    <img src="assets/image/ranking-medal-grey.png" alt="ranking" class="tag-ranking-medal" id="undefined" height="27" width="22">
-                                                    <span>#<b>405</b> in <b>sample</b></span>
-                                                    <a href="" class="on-ranking-navigate">See all rankings</a>
-                                                </div>
-                                                <span class="work-state">Published</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="panel-body" id="story-container">
+                                    <!--single story-->
+<!--                                    <div id="works-item-view">-->
+<!--                                        <div class="discover-module-stories-large on-discover-module-item">-->
+<!--                                            <a class="send-cover-event on-story-preview cover cover-home" href="">-->
+<!--                                                <div class="fixed-ratio fixed-ratio-cover">-->
+<!--                                                    <img src="https://img.wattpad.com/cover/397138907-288-k364117.jpg" alt="Sample 1 by yukee07">-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                            <div class="content" data-target="397138907" data-type="stories">-->
+<!--                                                <a class="title meta on-story-preview" data-story-id="397138907" href="/story/397138907-sample-1">-->
+<!--                                                    Sample 1-->
+<!--                                                </a>-->
+<!--                                                <div class="meta social-meta">-->
+<!--                                                    <span class="read-count">-->
+<!--                                                        <span class="fa fa-view fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 0-->
+<!--                                                    </span>-->
+<!--                                                    <span class="vote-count">-->
+<!--                                                        <span class="fa fa-vote fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 0-->
+<!--                                                    </span>-->
+<!--                                                    <span class="part-count">-->
+<!--                                                        <span class="fa fa-list fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> 1-->
+<!--                                                    </span>-->
+<!--                                                </div>-->
+<!--                                                <div class="description">Sample 1 desc</div>-->
+<!--                                                <div class="tag-ranking">-->
+<!--                                                    <img src="assets/image/ranking-medal-grey.png" alt="ranking" class="tag-ranking-medal" id="undefined" height="27" width="22">-->
+<!--                                                    <span>#<b>405</b> in <b>sample</b></span>-->
+<!--                                                    <a href="" class="on-ranking-navigate">See all rankings</a>-->
+<!--                                                </div>-->
+<!--                                                <span class="work-state">Published</span>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                 </div>
                                 <!--show more btn - only 3 to 5 story show and for more than that this should be display-->
-                                <div class="show-more center-text hidden">
-                                    <button class="btn btn-grey on-showmore">
+                                <div class="show-more center-text show-more-story-btn">
+                                    <button class="btn btn-grey on-showmore on-showmore-stories">
                                         <span class="show-more-message">
                                             <span>Show more</span>
-                                            <span class="fa fa-down-small fa-wp-neutral-2"></span>
+                                            <i class="fa-solid fa-angle-down" style="padding-left: 5px; padding-top: 5px;"></i>
                                         </span>
                                         <span class="loading-message hidden">
                                             <span class="fa fa-loading fa-spin fa-wp-neutral-2 loading-spinner fa-spin-fix-position" aria-hidden="true" style="font-size:16px;"></span>

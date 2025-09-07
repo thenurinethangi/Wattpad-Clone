@@ -1,11 +1,15 @@
 package lk.ijse.wattpadbackend.service.impl;
 
+import lk.ijse.wattpadbackend.dto.StoryDTO;
 import lk.ijse.wattpadbackend.dto.UserDTO;
+import lk.ijse.wattpadbackend.dto.UserProfileStoriesResponseDTO;
 import lk.ijse.wattpadbackend.entity.Following;
 import lk.ijse.wattpadbackend.entity.Story;
+import lk.ijse.wattpadbackend.entity.StoryTag;
 import lk.ijse.wattpadbackend.entity.User;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
 import lk.ijse.wattpadbackend.repository.FollowingRepository;
+import lk.ijse.wattpadbackend.repository.StoryRepository;
 import lk.ijse.wattpadbackend.repository.UserRepository;
 import lk.ijse.wattpadbackend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +25,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final FollowingRepository followingRepository;
+    private final StoryRepository storyRepository;
 
     @Override
     public String getUserProfilePic(String name) {
@@ -136,6 +141,265 @@ public class UserServiceImpl implements UserService {
             }
 
             return userDTOList;
+
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Internal Server Error.");
+        }
+    }
+
+    @Override
+    public UserProfileStoriesResponseDTO getStoriesByUserId(String username, long id, long storyCount) {
+
+        try {
+            User currentUser = userRepository.findByUsername(username);
+            if (currentUser == null) {
+                throw new UserNotFoundException("User not found. Please Signup.");
+            }
+
+            Optional<User> optionalUser = userRepository.findById((int) id);
+            if (!optionalUser.isPresent()) {
+                throw new UserNotFoundException("User not found.");
+            }
+            User user = optionalUser.get();
+
+
+            if(user.getId()==currentUser.getId()) {
+                List<Story> storyList = storyRepository.findAllByUser(user);
+
+                long publishedCount = 0;
+                long draftCount = 0;
+                for (Story x : storyList){
+                    if(x.getPublishedOrDraft()==1){
+                        publishedCount++;
+                    } else if (x.getPublishedOrDraft()==0) {
+                        draftCount++;
+                    }
+                }
+
+                UserProfileStoriesResponseDTO profileStoriesResponseDTO = new UserProfileStoriesResponseDTO();
+                profileStoriesResponseDTO.setUserId(user.getId());
+                profileStoriesResponseDTO.setUserFullName(user.getFullName());
+                profileStoriesResponseDTO.setPublishedCount(publishedCount);
+                profileStoriesResponseDTO.setDraftCount(draftCount);
+                profileStoriesResponseDTO.setIsCurrentUser(1);
+
+                long returnStoryCount = 0;
+                if(storyList.size()>=storyCount){
+                    returnStoryCount = storyCount;
+                    if(storyList.size()>storyCount){
+                        profileStoriesResponseDTO.setIsMoreStoriesThere(1);
+                    }
+                    else {
+                        profileStoriesResponseDTO.setIsMoreStoriesThere(0);
+                    }
+                } else {
+                    returnStoryCount = storyList.size();
+                    profileStoriesResponseDTO.setIsMoreStoriesThere(0);
+                }
+
+                List<StoryDTO> storyDTOList = new ArrayList<>();
+                for (int i = 0; i < returnStoryCount; i++) {
+                    Story x  = storyList.get(i);
+
+                    StoryDTO storyDTO = new StoryDTO();
+                    storyDTO.setId(x.getId());
+                    storyDTO.setCoverImagePath(x.getCoverImagePath());
+                    storyDTO.setTitle(x.getTitle());
+                    storyDTO.setDescription(x.getDescription());
+                    storyDTO.setParts(x.getParts());
+                    storyDTO.setPublishedOrDraft(x.getPublishedOrDraft());
+
+                    long likesLong = x.getLikes().longValue();
+
+                    String likesInStr = "";
+                    if(likesLong<=1000){
+                        likesInStr = String.valueOf(likesLong);
+                    }
+                    else if (likesLong >= 1000 && likesLong < 1000000) {
+                        double value = (double) likesLong / 1000;
+                        String vStr = String.valueOf(value);
+
+                        if (vStr.endsWith(".0")) {
+                            likesInStr = vStr.split("\\.0")[0] + "K";
+                        } else {
+                            likesInStr = vStr + "K";
+                        }
+                    }
+                    else if(likesLong>=1000000){
+                        double value = (double) likesLong/1000000;
+
+                        String vStr = String.valueOf(value);
+
+                        if (vStr.endsWith(".0")) {
+                            likesInStr = vStr.split("\\.0")[0] + "M";
+                        } else {
+                            likesInStr = value+"M";
+                        }
+                    }
+                    storyDTO.setLikes(likesInStr);
+
+                    long viewsLong = x.getViews().longValue();
+
+                    String viewsInStr = "";
+                    if(viewsLong<=1000){
+                        viewsInStr = String.valueOf(viewsLong);
+                    }
+                    else if (viewsLong >= 1000 && viewsLong < 1000000) {
+                        double value = (double) viewsLong / 1000;
+                        String vStr = String.valueOf(value);
+
+                        if (vStr.endsWith(".0")) {
+                            viewsInStr = vStr.split("\\.0")[0] + "K";
+                        } else {
+                            viewsInStr = vStr + "K";
+                        }
+                    }
+                    else if(viewsLong>=1000000){
+                        double value = (double) viewsLong/1000000;
+
+                        String vStr = String.valueOf(value);
+
+                        if (vStr.endsWith(".0")) {
+                            viewsInStr = vStr.split("\\.0")[0] + "M";
+                        } else {
+                            viewsInStr = value+"M";
+                        }
+                    }
+
+                    storyDTO.setViews(viewsInStr);
+
+                    List<StoryTag> storyTagList = x.getStoryTags();
+                    List<String> tags = new ArrayList<>();
+                    for (StoryTag y : storyTagList){
+                        tags.add(y.getTag().getTagName());
+                    }
+                    storyDTO.setTags(tags);
+
+                    storyDTOList.add(storyDTO);
+                }
+
+                profileStoriesResponseDTO.setStoryDTOList(storyDTOList);
+                return profileStoriesResponseDTO;
+            }
+            else {
+
+                List<Story> storyList1 = storyRepository.findAllByUser(user);
+
+                List<Story> storyList = new ArrayList<>();
+                for (Story x : storyList1){
+                    if(x.getPublishedOrDraft()==1){
+                        storyList.add(x);
+                    }
+                }
+
+                UserProfileStoriesResponseDTO profileStoriesResponseDTO = new UserProfileStoriesResponseDTO();
+                profileStoriesResponseDTO.setUserId(user.getId());
+                profileStoriesResponseDTO.setUserFullName(user.getFullName());
+                profileStoriesResponseDTO.setPublishedCount(storyList.size());
+                profileStoriesResponseDTO.setIsCurrentUser(0);
+
+                long returnStoryCount = 0;
+                if(storyList.size()>=storyCount){
+                    returnStoryCount = storyCount;
+                    if(storyList.size()>storyCount){
+                        profileStoriesResponseDTO.setIsMoreStoriesThere(1);
+                    }
+                    else {
+                        profileStoriesResponseDTO.setIsMoreStoriesThere(0);
+                    }
+                } else {
+                    returnStoryCount = storyList.size();
+                    profileStoriesResponseDTO.setIsMoreStoriesThere(0);
+                }
+
+                List<StoryDTO> storyDTOList = new ArrayList<>();
+                for (int i = 0; i < returnStoryCount; i++) {
+                    Story x  = storyList.get(i);
+
+                    StoryDTO storyDTO = new StoryDTO();
+                    storyDTO.setId(x.getId());
+                    storyDTO.setCoverImagePath(x.getCoverImagePath());
+                    storyDTO.setTitle(x.getTitle());
+                    storyDTO.setDescription(x.getDescription());
+                    storyDTO.setParts(x.getParts());
+                    storyDTO.setPublishedOrDraft(x.getPublishedOrDraft());
+
+                    long likesLong = x.getLikes().longValue();
+
+                    String likesInStr = "";
+                    if(likesLong<=1000){
+                        likesInStr = String.valueOf(likesLong);
+                    }
+                    else if (likesLong >= 1000 && likesLong < 1000000) {
+                        double value = (double) likesLong / 1000;
+                        String vStr = String.valueOf(value);
+
+                        if (vStr.endsWith(".0")) {
+                            likesInStr = vStr.split("\\.0")[0] + "K";
+                        } else {
+                            likesInStr = vStr + "K";
+                        }
+                    }
+                    else if(likesLong>=1000000){
+                        double value = (double) likesLong/1000000;
+
+                        String vStr = String.valueOf(value);
+
+                        if (vStr.endsWith(".0")) {
+                            likesInStr = vStr.split("\\.0")[0] + "M";
+                        } else {
+                            likesInStr = value+"M";
+                        }
+                    }
+                    storyDTO.setLikes(likesInStr);
+
+                    long viewsLong = x.getViews().longValue();
+
+                    String viewsInStr = "";
+                    if(viewsLong<=1000){
+                        viewsInStr = String.valueOf(viewsLong);
+                    }
+                    else if (viewsLong >= 1000 && viewsLong < 1000000) {
+                        double value = (double) viewsLong / 1000;
+                        String vStr = String.valueOf(value);
+
+                        if (vStr.endsWith(".0")) {
+                            viewsInStr = vStr.split("\\.0")[0] + "K";
+                        } else {
+                            viewsInStr = vStr + "K";
+                        }
+                    }
+                    else if(viewsLong>=1000000){
+                        double value = (double) viewsLong/1000000;
+
+                        String vStr = String.valueOf(value);
+
+                        if (vStr.endsWith(".0")) {
+                            viewsInStr = vStr.split("\\.0")[0] + "M";
+                        } else {
+                            viewsInStr = value+"M";
+                        }
+                    }
+
+                    storyDTO.setViews(viewsInStr);
+
+                    List<StoryTag> storyTagList = x.getStoryTags();
+                    List<String> tags = new ArrayList<>();
+                    for (StoryTag y : storyTagList){
+                        tags.add(y.getTag().getTagName());
+                    }
+                    storyDTO.setTags(tags);
+
+                    storyDTOList.add(storyDTO);
+                }
+
+                profileStoriesResponseDTO.setStoryDTOList(storyDTOList);
+                return profileStoriesResponseDTO;
+            }
 
         }
         catch (UserNotFoundException e) {
