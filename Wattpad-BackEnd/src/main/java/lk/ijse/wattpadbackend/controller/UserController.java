@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -40,6 +42,13 @@ public class UserController {
 
         UserDTO userDTO = userService.getUserDataByUserId(auth.getName(),id);
         return new APIResponse(202,"Successfully load user data.",userDTO);
+    }
+
+    @GetMapping("/following/{id}")
+    public APIResponse getFollowingUsersByUserId(@PathVariable long id){
+
+        List<UserDTO> userDTOList = userService.getFollowingUsersByUserId(id);
+        return new APIResponse(202,"Successfully load top following users.",userDTOList);
     }
 }
 

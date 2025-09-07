@@ -1,6 +1,7 @@
 package lk.ijse.wattpadbackend.service.impl;
 
 import lk.ijse.wattpadbackend.dto.UserDTO;
+import lk.ijse.wattpadbackend.entity.Following;
 import lk.ijse.wattpadbackend.entity.Story;
 import lk.ijse.wattpadbackend.entity.User;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
@@ -10,6 +11,8 @@ import lk.ijse.wattpadbackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -101,6 +104,46 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Internal Server Error.");
         }
 
+    }
+
+    @Override
+    public List<UserDTO> getFollowingUsersByUserId(long id) {
+
+        try {
+            Optional<User> optionalUser = userRepository.findById((int) id);
+            if(!optionalUser.isPresent()){
+                throw new UserNotFoundException("User not found.");
+            }
+            User user = optionalUser.get();
+
+            List<Following> followingList = followingRepository.findAllByFollowedUserId(user.getId());
+
+            int i = 0;
+            if(followingList.size()>=3){
+                i = 3;
+            }
+            else {
+                i = followingList.size();
+            }
+
+            List<UserDTO> userDTOList = new ArrayList<>();
+            for (int j = 0; j < i; j++) {
+                UserDTO userDTO = new UserDTO();
+                userDTO.setId(followingList.get(j).getUser().getId());
+                userDTO.setProfilePicPath(followingList.get(j).getUser().getProfilePicPath());
+
+                userDTOList.add(userDTO);
+            }
+
+            return userDTOList;
+
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Internal Server Error.");
+        }
     }
 }
 
