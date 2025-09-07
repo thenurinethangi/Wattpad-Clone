@@ -7,6 +7,7 @@
     <meta name="author" content="Thenuri Nethangi">
     <meta name="keywords" content="online stories, read stories, write stories, wattpad alternative, fiction platform, storytelling, novels, short stories, creative writing, user-generated stories">
     <meta name="description" content="Discover and share captivating stories on our platform. Read novels, write your own tales, and connect with a community of passionate readers and writers.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="assets/style/desktop-web.d4472ed8-remove-min.css">
     <!--for header-->
     <link rel="stylesheet" href="assets/style/css-bundle-TDTK4GB6.css"/>
@@ -140,9 +141,9 @@
                 Change Background Image
                 </button>
             </div>
-            <div class="avatar avatar-profile center-block">
-                <div class="component-wrapper" id="component-avatar-display-%2fuser%2fyukee07">
-                    <img src="https://img.wattpad.com/useravatar/7.128.jpg" aria-hidden="true" alt="yukee07">
+            <div class="avatar avatar-profile center-block profile-pic-warp">
+                <div class="component-wrapper profile-pic-container" id="component-avatar-display-%2fuser%2fyukee07">
+                    <img id="profile-pic" src="https://img.wattpad.com/useravatar/7.128.jpg" aria-hidden="true" alt="profile pic">
                 </div>
                 <div id="edit-avatar" class="hidden faded edit-profile">
                     <span class="loading-bg faded"></span>
@@ -161,11 +162,11 @@
             </div>
             <div class="row header-metadata">
                 <div class="col-xs-4 scroll-to-element" data-id="profile-works">
-                    <p>1</p>
+                    <p id="work">1</p>
                     <p>Work</p>
                 </div>
                 <div class="col-xs-4 scroll-to-element" data-id="profile-lists">
-                    <p>2</p>
+                    <p id="reading-lists">2</p>
                     <p>Reading Lists</p>
                 </div>
                 <div class="col-xs-4 ">
@@ -187,21 +188,70 @@
                             </ul>
                         </nav>
                         <div class="actions" role="menu">
+                            <!--coin button-->
                             <span class="user-balance" role="menuitem">
                                 <div class="component-wrapper" id="component-walletwithonboarding-profile-%2fuser%2fyukee07">
                                     <button class="default wallet" title="Wallet with 0 Coins">
                                         <img src="assets/image/coin-icon.svg" alt="Coin" class="coin-icon">
                                         <span class="num-coins divider-right">-</span>
                                         <div class="get-coins">
-                                            <span class="fa fa-plus fa-wp-neutral-1" aria-hidden="true" style="font-size: 12px;"></span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                                <path d="M12 5v14M5 12h14"/>
+                                            </svg>
                                         </div>
                                     </button>
                                 </div>
                             </span>
+                            <!--profile edit btn-->
                             <button class="btn btn-white on-edit-profile" role="menuitem">
-                                <span class="fa fa-settings fa-wp-neutral-2 " aria-hidden="true" style="font-size:16px;"></span>
+                                <i class="fa-solid fa-gear" style="margin-right: 5px;"></i>
                                 <span class="hidden-xs">Edit Profile</span>
                             </button>
+                            <!--follow btn-->
+                            <button role="menuitem" class="btn btn-fan btn-white  on-follow-user on-follow" data-target="moonflower_9597" data-following="false" data-gtm="profile|follow">
+                                <span class="fa fa-follow no-right-padding fa-wp-base-2 fa-wp-base-2-dark" aria-hidden="true" style="font-size:16px;"></span>
+                                <span class="hidden-xs truncate">Follow</span>
+                            </button>
+                            <div class="button-group inline-block relative three-dots-btn">
+                                <div class="component-wrapper" id="component-profilemoreoptionsbutton-options-%2fuser%2fmoonflower_9597">
+                                    <div>
+                                        <button class="btn btn-white dropdown-toggle profile-more-options" data-toggle="dropdown" aria-controls="profile-more-options" aria-expanded="false" aria-label="more options" role="menuitem">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class="more-icon"><g><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></g></svg>
+                                        </button>
+                                        <div class="triangle"></div>
+                                        <div class="dropdown-menu align-right">
+                                            <div class="user-safety-operations">
+                                                <button class="user-safety-operation btn-no-background btn-left-icon mute">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></g></svg>
+                                                    Mute moonflower_9597
+                                                </button>
+                                                <button class="user-safety-operation btn-no-background btn-left-icon block">
+                                                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#222222" stroke-width="0" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><path d="M7.00001 0.333252C3.31668 0.333252 0.333344 3.31659 0.333344 6.99992C0.333344 10.6833 3.31668 13.6666 7.00001 13.6666C10.6833 13.6666 13.6667 10.6833 13.6667 6.99992C13.6667 3.31659 10.6833 0.333252 7.00001 0.333252ZM1.66668 6.99992C1.66668 4.05325 4.05334 1.66659 7.00001 1.66659C8.23334 1.66659 9.36334 2.08992 10.2667 2.78992L2.79001 10.2666C2.09001 9.36325 1.66668 8.23325 1.66668 6.99992ZM7.00001 12.3333C5.76668 12.3333 4.63668 11.9099 3.73334 11.2099L11.21 3.73325C11.91 4.63659 12.3333 5.76659 12.3333 6.99992C12.3333 9.94659 9.94668 12.3333 7.00001 12.3333Z" fill="#111111"></path></g></svg>
+                                                    Block moonflower_9597
+                                                </button>
+                                                <button class="on-report user-safety-operation btn-no-background btn-left-icon" data-username="moonflower_9597">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></g></svg>
+                                                    Report
+                                                </button>
+                                                <a class="conduct-link user-safety-operation btn-no-background btn-left-icon option" href="https://support.wattpad.com/hc/en-us/articles/200774234-Code-of-Conduct" target="_blank" rel="noreferrer noopener" tabindex="0">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></g></svg>
+                                                    <span class="conduct-link">Code of Conduct</span>
+                                                </a>
+                                                <a class="safety-portal user-safety-operation btn-no-background btn-left-icon option" href="https://safetyportal.wattpad.com/" target="_blank" rel="noreferrer noopener" tabindex="0">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></g></svg>
+                                                    <span>Wattpad Safety Portal</span>
+                                                </a>
+                                            </div>
+                                            <div class="user-safety-operations moderation-options">
+                                                <a class="user-safety-operation btn-no-background btn-left-icon" href="https://policies.wattpad.com/" target="_blank" rel="noopener noreferrer" tabindex="0">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></g></svg>
+                                                    <span class="option">Wattpad Policies</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -218,13 +268,22 @@
                     <section id="profile-about">
                         <div class="about-info panel panel-default2">
                             <div class="panel-body">
-                                <!--description-->
+                                <!--no - description-->
                                 <div class="no-description">
                                     <div>Help people get to know you</div>
                                     <button class="btn btn-orange on-edit">Add Description</button>
                                 </div>
+                                <!--has description-->
+                                <div class="description">
+                                    <pre>Disco doll 💅</pre>
+                                </div>
                                 <!--joined date-->
                                 <ul class="list-unstyled user-meta-info row">
+                                    <li class="location col-xs-12 col-sm-12">
+                                        <span class="user-meta-info-content">
+                                            <i class="fa-solid fa-location-dot" style="color: #6f6f6f; font-size: 14px; margin-right: 5px;"></i>FANTASY WORLD
+                                        </span>
+                                    </li>
                                     <li class="date col-xs-12 col-sm-12">
                                         <span class="user-meta-info-content">
                                             <span>Joined</span>July 1, 2025
@@ -232,8 +291,24 @@
                                     </li>
                                 </ul>
                                 <hr>
+                                <ul id="profile-links" class="list-unstyled row">
+                                    <li class="facebook col-xs-12 col-sm-12">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="#1877F2">
+                                            <path d="M22.675 0h-21.35C.595 0 0 .592 0 1.324v21.351C0 23.406.595 24 1.325
+                                                24h11.49v-9.294H9.692v-3.622h3.123V8.413c0-3.1 1.894-4.788 4.659-4.788
+                                                1.325 0 2.464.099 2.795.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796
+                                                1.763v2.312h3.587l-.467 3.622h-3.12V24h6.116C23.405 24 24 23.406 24
+                                                22.675V1.324C24 .592 23.405 0 22.675 0z"/>
+                                        </svg>
+                                        <span class="sr-only">facebook:</span>
+                                        <a style="transform: translateY(-25px);" class="alt-link" href="https://www.facebook.com/124206996446242" target="_blank" rel="nofollow noopener">
+                                            Annabell's Facebook profile
+                                        </a>
+                                    </li>
+                                </ul>
+<!--                                <hr>-->
                                 <!--following-->
-                                <div id="following-panel" style="display: none;">
+                                <div id="following-panel">
                                     <div class="title">Following</div>
                                     <div class="users clearfix">
                                         <!--single following profile-->
@@ -242,16 +317,58 @@
                                         </a>
                                     </div>
                                 </div>
-                                <hr style="display: none;">
+                                <hr>
                                 <!--share-->
                                 <div id="profile-share-links">
                                     <div class="title">Share profile</div>
                                     <div class="social-share-links">
-                                        <a aria-label="share-facebook" data-gtm-action="share:facebook" class="share-facebook social-share" target="_blank" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.wattpad.com%2Fyukee07%3Futm_source%3Dweb%26utm_medium%3Dfacebook%26utm_content%3Dshare_profile" data-share-channel="facebook"><span class="fa fa-facebook fa-wp-neutral-5 " aria-hidden="true" style="font-size:18px;"></span></a>
-                                        <a aria-label="share-twitter" data-gtm-action="share:twitter" class="share-twitter social-share" target="_blank" href="https://twitter.com/intent/tweet?text=Check+out+my+profile+on+%23Wattpad%2C+I%27m+yukee07&amp;url=https%3A%2F%2Fwww.wattpad.com%2Fyukee07%3Futm_source%3Dweb%26utm_medium%3Dtwitter%26utm_content%3Dshare_profile" data-share-channel="twitter" data-share-url="https%3A%2F%2Ftwitter.com%2Fintent%2Ftweet%3Ftext%3D%25s%26url%3D%25s" data-url="https%3A%2F%2Fwww.wattpad.com%2Fyukee07" data-share-text="Check+out+my+profile+on+%23Wattpad%2C+I%27m+yukee07" data-share-content="share_profile"><span class="fa fa-twitter fa-wp-neutral-5 " aria-hidden="true" style="font-size:18px;"></span></a>
-                                        <a aria-label="share-pinterest" data-gtm-action="share:pinterest" class="share-pinterest social-share" target="_blank" href="https://www.pinterest.com/pin/create/button/?media=https%3A%2F%2Fimg.wattpad.com%2Fuseravatar%2F7.128.jpg&amp;description=Check+out+my+profile+on+Wattpad%2C+I%27m+yukee07+&amp;url=https%3A%2F%2Fwww.wattpad.com%2Fyukee07%3Futm_source%3Dweb%26utm_medium%3Dpinterest%26utm_content%3Dshare_profile" data-share-channel="pinterest"><span class="fa fa-pinterest fa-wp-neutral-5 " aria-hidden="true" style="font-size:18px;"></span></a>
-                                        <a aria-label="share-tumblr" data-gtm-action="share:tumblr" class="share-tumblr social-share" target="_blank" href="https://tumblr.com/widgets/share/tool?posttype=photo&amp;content=https%3A%2F%2Fimg.wattpad.com%2Fuseravatar%2F7.128.jpg&amp;caption=Check+out+my+profile+on+Wattpad%2C+I%27m+yukee07+https%3A%2F%2Fwww.wattpad.com%2Fyukee07%3Futm_source%3Dweb%26utm_medium%3Dtumblr%26utm_content%3Dshare_profile+&amp;tags=books%2Cwattpad%2Camreading&amp;canonicalUrl=https%3A%2F%2Fwww.wattpad.com%2Fyukee07&amp;clickthroughUrl=https%3A%2F%2Fwww.wattpad.com%2Fyukee07%3Futm_source%3Dweb%26utm_medium%3Dtumblr%26utm_content%3Dshare_profile" data-share-channel="tumblr" data-share-url="https%3A%2F%2Ftumblr.com%2Fwidgets%2Fshare%2Ftool%3Fposttype%3Dphoto%26content%3Dhttps%253A%252F%252Fimg.wattpad.com%252Fuseravatar%252F7.128.jpg%26caption%3D%25s%26tags%3Dbooks%252Cwattpad%252Camreading%26canonicalUrl%3Dhttps%253A%252F%252Fwww.wattpad.com%252Fyukee07%26clickthroughUrl%3D%25s" data-url="https%3A%2F%2Fwww.wattpad.com%2Fyukee07" data-share-text="Check+out+my+profile+on+Wattpad%2C+I%27m+yukee07+https%3A%2F%2Fwww.wattpad.com%2Fyukee07%3Futm_source%3Dweb%26utm_medium%3Dtumblr%26utm_content%3Dshare_profile+" data-share-content="share_profile"><span class="fa fa-tumblr fa-wp-neutral-5 " aria-hidden="true" style="font-size:18px;"></span></a>
-                                        <a aria-label="share-email" data-gtm-action="share:email" class="share-email" href="mailto:?subject=Check%20out%20my%20profile%20on%20Wattpad%2C%20I%27m%20yukee07&amp;body=Check%20out%20my%20profile%20on%20Wattpad%2C%20I%27m%20yukee07%0Ahttps%3A%2F%2Fwww.wattpad.com%2Fyukee07%3Futm_source%3Dweb%26utm_medium%3Demail%26utm_content%3Dshare_profile%0A" data-share-channel="email"><span class="fa fa-inbox fa-wp-neutral-5 " aria-hidden="true" style="font-size:18px;"></span></a>
+                                        <a aria-label="share-facebook" data-gtm-action="share:facebook" class="share-facebook social-share" target="_blank" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.wattpad.com%2Fyukee07%3Futm_source%3Dweb%26utm_medium%3Dfacebook%26utm_content%3Dshare_profile" data-share-channel="facebook">
+                                            <i class="fa-brands fa-facebook-f" style="color:#fff; font-size:18px; transform: translateY(7px);"></i>
+                                        </a>
+                                        <a aria-label="share-twitter" data-gtm-action="share:twitter" class="share-twitter social-share" target="_blank" href="https://twitter.com/intent/tweet?text=Check+out+my+profile+on+%23Wattpad%2C+I%27m+yukee07&amp;url=https%3A%2F%2Fwww.wattpad.com%2Fyukee07%3Futm_source%3Dweb%26utm_medium%3Dtwitter%26utm_content%3Dshare_profile" data-share-channel="twitter" data-share-url="https%3A%2F%2Ftwitter.com%2Fintent%2Ftweet%3Ftext%3D%25s%26url%3D%25s" data-url="https%3A%2F%2Fwww.wattpad.com%2Fyukee07" data-share-text="Check+out+my+profile+on+%23Wattpad%2C+I%27m+yukee07" data-share-content="share_profile">
+                                            <svg style="transform: translateY(7px);" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white">
+                                                <path d="M23.954 4.569c-.885.392-1.83.656-2.825.775
+           1.014-.611 1.794-1.574 2.163-2.724-.951.555-2.005.959-3.127
+           1.184-.897-.959-2.178-1.555-3.594-1.555-2.717
+           0-4.924 2.206-4.924 4.924 0 .39.045.765.127
+           1.124-4.09-.205-7.719-2.165-10.148-5.144-.424.729-.666
+           1.577-.666 2.475 0 1.708.87 3.216 2.188
+           4.099-.807-.026-1.566-.248-2.229-.616v.061c0
+           2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.317
+           0-.626-.03-.928-.086.627 1.956 2.444 3.379
+           4.6 3.419-1.68 1.319-3.809 2.105-6.102
+           2.105-.396 0-.788-.023-1.175-.069 2.179 1.397
+           4.768 2.212 7.557 2.212 9.054
+           0 14-7.496 14-13.986 0-.21 0-.423-.015-.634.962-.695
+           1.8-1.562 2.46-2.549z"/>
+                                            </svg>
+                                        </a>
+                                        <a aria-label="share-pinterest" data-gtm-action="share:pinterest" class="share-pinterest social-share" target="_blank" href="https://www.pinterest.com/pin/create/button/?media=https%3A%2F%2Fimg.wattpad.com%2Fuseravatar%2F7.128.jpg&amp;description=Check+out+my+profile+on+Wattpad%2C+I%27m+yukee07+&amp;url=https%3A%2F%2Fwww.wattpad.com%2Fyukee07%3Futm_source%3Dweb%26utm_medium%3Dpinterest%26utm_content%3Dshare_profile" data-share-channel="pinterest">
+                                            <svg style="transform: translateY(7px);" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white">
+                                                <path d="M12 0C5.373 0 0 5.373 0 12c0 4.991 3.657 9.13 8.438
+           10.246-.117-.87-.223-2.205.047-3.157.242-.83
+           1.561-5.297 1.561-5.297s-.397-.794-.397-1.963c0-1.84
+           1.067-3.214 2.397-3.214 1.131 0 1.679.849
+           1.679 1.867 0 1.137-.724 2.839-1.096
+           4.417-.312 1.318.663 2.394 1.963 2.394
+           2.356 0 3.94-3.031 3.94-6.616
+           0-2.729-1.844-4.776-5.199-4.776-3.791
+           0-6.158 2.828-6.158 5.983 0 1.09.319
+           1.861.818 2.455.229.27.26.378.177.686-.059.227-.194.776-.25
+           .994-.082.318-.334.433-.615.315-1.715-.699-2.514-2.571-2.514-4.674
+           0-3.471 2.927-7.633 8.729-7.633 4.664
+           0 7.727 3.372 7.727 6.993 0 4.788-2.66
+           8.358-6.588 8.358-1.317 0-2.556-.717-2.979-1.531l-.811
+           3.089c-.291 1.107-1.082 2.493-1.613
+           3.338 1.209.373 2.491.574 3.822.574
+           6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
+                                            </svg>
+                                        </a>
+                                        <a aria-label="share-tumblr" data-gtm-action="share:tumblr" class="share-tumblr social-share" target="_blank" href="https://tumblr.com/widgets/share/tool?posttype=photo&amp;content=https%3A%2F%2Fimg.wattpad.com%2Fuseravatar%2F7.128.jpg&amp;caption=Check+out+my+profile+on+Wattpad%2C+I%27m+yukee07+https%3A%2F%2Fwww.wattpad.com%2Fyukee07%3Futm_source%3Dweb%26utm_medium%3Dtumblr%26utm_content%3Dshare_profile+&amp;tags=books%2Cwattpad%2Camreading&amp;canonicalUrl=https%3A%2F%2Fwww.wattpad.com%2Fyukee07&amp;clickthroughUrl=https%3A%2F%2Fwww.wattpad.com%2Fyukee07%3Futm_source%3Dweb%26utm_medium%3Dtumblr%26utm_content%3Dshare_profile" data-share-channel="tumblr" data-share-url="https%3A%2F%2Ftumblr.com%2Fwidgets%2Fshare%2Ftool%3Fposttype%3Dphoto%26content%3Dhttps%253A%252F%252Fimg.wattpad.com%252Fuseravatar%252F7.128.jpg%26caption%3D%25s%26tags%3Dbooks%252Cwattpad%252Camreading%26canonicalUrl%3Dhttps%253A%252F%252Fwww.wattpad.com%252Fyukee07%26clickthroughUrl%3D%25s" data-url="https%3A%2F%2Fwww.wattpad.com%2Fyukee07" data-share-text="Check+out+my+profile+on+Wattpad%2C+I%27m+yukee07+https%3A%2F%2Fwww.wattpad.com%2Fyukee07%3Futm_source%3Dweb%26utm_medium%3Dtumblr%26utm_content%3Dshare_profile+" data-share-content="share_profile">
+                                            <svg style="transform: translateY(7px);" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white">
+                                                <path d="M14.667 24c-5.333 0-7.333-3.917-7.333-6.667v-6.333H5V7.333C8.333 6.111 9.222 3.278 9.333 0h3.667v7h5v4h-5v6.111c0 1.222.611 2.222 2.333 2.222h2.778V24h-3.444z"/>
+                                            </svg>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

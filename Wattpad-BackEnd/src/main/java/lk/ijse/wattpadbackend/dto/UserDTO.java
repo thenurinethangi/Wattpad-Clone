@@ -47,4 +47,10 @@ public class UserDTO {
     private int isActive;
 
     private int isCurrentUser;
+
+    private long work;
+
+    private long readingLists;
+
+    private long followers;
 }

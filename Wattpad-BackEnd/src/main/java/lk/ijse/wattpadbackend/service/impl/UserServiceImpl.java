@@ -1,8 +1,10 @@
 package lk.ijse.wattpadbackend.service.impl;
 
 import lk.ijse.wattpadbackend.dto.UserDTO;
+import lk.ijse.wattpadbackend.entity.Story;
 import lk.ijse.wattpadbackend.entity.User;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
+import lk.ijse.wattpadbackend.repository.FollowingRepository;
 import lk.ijse.wattpadbackend.repository.UserRepository;
 import lk.ijse.wattpadbackend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final FollowingRepository followingRepository;
 
     @Override
     public String getUserProfilePic(String name) {
@@ -63,7 +66,6 @@ public class UserServiceImpl implements UserService {
             userDTO.setWebsiteLink(user.getWebsiteLink());
             userDTO.setFullName(user.getFullName());
             userDTO.setLocation(user.getLocation());
-            userDTO.setPassword(user.getPassword());
             userDTO.setCoverPicPath(user.getCoverPicPath());
             userDTO.setProfilePicPath(user.getProfilePicPath());
             userDTO.setJoinedDate(user.getJoinedDate());
@@ -76,6 +78,18 @@ public class UserServiceImpl implements UserService {
             else{
                 userDTO.setIsCurrentUser(0);
             }
+
+            int storyCount = 0;
+            for(Story x : user.getStories()){
+                if(x.getPublishedOrDraft()==1){
+                    storyCount++;
+                }
+            }
+            userDTO.setWork(storyCount);
+
+            userDTO.setReadingLists(user.getReadingLists().size());
+
+            userDTO.setFollowers(followingRepository.findAllByUser(user).size());
 
             return userDTO;
 
