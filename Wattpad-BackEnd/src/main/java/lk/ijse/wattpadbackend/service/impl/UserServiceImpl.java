@@ -2,11 +2,9 @@ package lk.ijse.wattpadbackend.service.impl;
 
 import lk.ijse.wattpadbackend.dto.StoryDTO;
 import lk.ijse.wattpadbackend.dto.UserDTO;
+import lk.ijse.wattpadbackend.dto.UserProfileReadingListResponseDTO;
 import lk.ijse.wattpadbackend.dto.UserProfileStoriesResponseDTO;
-import lk.ijse.wattpadbackend.entity.Following;
-import lk.ijse.wattpadbackend.entity.Story;
-import lk.ijse.wattpadbackend.entity.StoryTag;
-import lk.ijse.wattpadbackend.entity.User;
+import lk.ijse.wattpadbackend.entity.*;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
 import lk.ijse.wattpadbackend.repository.FollowingRepository;
 import lk.ijse.wattpadbackend.repository.StoryRepository;
@@ -400,6 +398,138 @@ public class UserServiceImpl implements UserService {
                 profileStoriesResponseDTO.setStoryDTOList(storyDTOList);
                 return profileStoriesResponseDTO;
             }
+
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Internal Server Error.");
+        }
+    }
+
+    @Override
+    public List<UserProfileReadingListResponseDTO> getReadingListByUserId(long id, long readingListCount) {
+
+        try {
+            Optional<User> optionalUser = userRepository.findById((int) id);
+            if (!optionalUser.isPresent()) {
+                throw new UserNotFoundException("User not found.");
+            }
+            User user = optionalUser.get();
+
+            List<ReadingList> readingListList = user.getReadingLists();
+
+            long returnCount = 0;
+            if(readingListList.size()>=readingListCount){
+                returnCount = readingListCount;
+            }
+            else{
+                returnCount = readingListList.size();
+            }
+
+            List<UserProfileReadingListResponseDTO> profileReadingListResponseDTOList = new ArrayList<>();
+            for (int i = 0; i < returnCount; i++) {
+                ReadingList x = readingListList.get(i);
+
+                UserProfileReadingListResponseDTO dto = new UserProfileReadingListResponseDTO();
+                dto.setReadingListId(x.getId());
+                dto.setReadingListName(x.getListName());
+                dto.setReadingListStoryCount(x.getReadingListStories().size());
+
+                if(readingListList.size()>=readingListCount){
+                    if(readingListList.size()>readingListCount){
+                        dto.setIsMoreReadingListsAvailable(1);
+                    }
+                    else {
+                        dto.setIsMoreReadingListsAvailable(0);
+                    }
+                }
+                else{
+                    dto.setIsMoreReadingListsAvailable(0);
+                }
+
+                List<StoryDTO> storyDTOList = new ArrayList<>();
+                List<ReadingListStory> readingListStories = x.getReadingListStories();
+                for (int j = 0; j < readingListStories.size(); j++) {
+                    if(j==3){
+                        break;
+                    }
+                    ReadingListStory listStory = readingListStories.get(i);
+
+                    StoryDTO storyDTO = new StoryDTO();
+                    storyDTO.setId(listStory.getStory().getId());
+                    storyDTO.setParts(listStory.getStory().getParts());
+                    storyDTO.setTitle(listStory.getStory().getTitle());
+                    storyDTO.setCoverImagePath(listStory.getStory().getCoverImagePath());
+
+                    long likesLong = listStory.getStory().getLikes().longValue();
+
+                    String likesInStr = "";
+                    if(likesLong<=1000){
+                        likesInStr = String.valueOf(likesLong);
+                    }
+                    else if (likesLong >= 1000 && likesLong < 1000000) {
+                        double value = (double) likesLong / 1000;
+                        String vStr = String.valueOf(value);
+
+                        if (vStr.endsWith(".0")) {
+                            likesInStr = vStr.split("\\.0")[0] + "K";
+                        } else {
+                            likesInStr = vStr + "K";
+                        }
+                    }
+                    else if(likesLong>=1000000){
+                        double value = (double) likesLong/1000000;
+
+                        String vStr = String.valueOf(value);
+
+                        if (vStr.endsWith(".0")) {
+                            likesInStr = vStr.split("\\.0")[0] + "M";
+                        } else {
+                            likesInStr = value+"M";
+                        }
+                    }
+                    storyDTO.setLikes(likesInStr);
+
+                    long viewsLong = listStory.getStory().getViews().longValue();
+
+                    String viewsInStr = "";
+                    if(viewsLong<=1000){
+                        viewsInStr = String.valueOf(viewsLong);
+                    }
+                    else if (viewsLong >= 1000 && viewsLong < 1000000) {
+                        double value = (double) viewsLong / 1000;
+                        String vStr = String.valueOf(value);
+
+                        if (vStr.endsWith(".0")) {
+                            viewsInStr = vStr.split("\\.0")[0] + "K";
+                        } else {
+                            viewsInStr = vStr + "K";
+                        }
+                    }
+                    else if(viewsLong>=1000000){
+                        double value = (double) viewsLong/1000000;
+
+                        String vStr = String.valueOf(value);
+
+                        if (vStr.endsWith(".0")) {
+                            viewsInStr = vStr.split("\\.0")[0] + "M";
+                        } else {
+                            viewsInStr = value+"M";
+                        }
+                    }
+                    storyDTO.setViews(viewsInStr);
+
+                    storyDTOList.add(storyDTO);
+                }
+
+                dto.setThreeStoriesDTOList(storyDTOList);
+
+                profileReadingListResponseDTOList.add(dto);
+            }
+
+            return profileReadingListResponseDTOList;
 
         }
         catch (UserNotFoundException e) {

@@ -60,6 +60,13 @@ public class UserController {
         UserProfileStoriesResponseDTO userProfileStoriesResponseDTO = userService.getStoriesByUserId(auth.getName(),id,storyCount);
         return new APIResponse(202,"Successfully load stories by user.",userProfileStoriesResponseDTO);
     }
+
+    @GetMapping("/readingList/{id}/{readingListCount}")
+    public APIResponse getReadingListByUserId(@PathVariable long id, @PathVariable long readingListCount){
+
+        userService.getReadingListByUserId(id,readingListCount);
+        return new APIResponse(202,"Successfully load reading lists by user.",null);
+    }
 }
 
 
