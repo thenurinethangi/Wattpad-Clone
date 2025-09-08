@@ -98,6 +98,8 @@ async function loadUserData() {
             $('#work').text(user.work);
             $('#reading-lists').text(user.readingLists);
             $('.followers-count').text(user.followers);
+            $('#reading-list-setting').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/reading-list-page.html`);
+            $('.story-setting-on-navigate').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/mywork-page.html`);
 
             if(user.profilePicPath==null){
                 console.log('profile pic is null');
@@ -185,7 +187,7 @@ async function loadUserData() {
 
 
 
-//load user profile data
+//load following users
 async function loadFollowingUsers() {
 
     let userId = null;
