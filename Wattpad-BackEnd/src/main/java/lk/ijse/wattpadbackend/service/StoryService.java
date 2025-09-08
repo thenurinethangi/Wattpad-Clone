@@ -1,9 +1,6 @@
 package lk.ijse.wattpadbackend.service;
 
-import lk.ijse.wattpadbackend.dto.CreateStoryResponseDTO;
-import lk.ijse.wattpadbackend.dto.MyStorySingleStoryDTO;
-import lk.ijse.wattpadbackend.dto.StoryDTO;
-import lk.ijse.wattpadbackend.dto.StoryRequestDTO;
+import lk.ijse.wattpadbackend.dto.*;
 
 import java.util.List;
 
@@ -18,4 +15,8 @@ public interface StoryService {
     List<MyStorySingleStoryDTO> loadPublishedStoriesOfCurrentUser(String name);
 
     List<MyStorySingleStoryDTO> loadAllStoriesOfCurrentUser(String name);
+
+    boolean checkIfStoryIsOwnedByCurrentUser(String name, long storyId);
+
+    List<EditStoryChapterDTO> loadAllChaptersOfAStoryByStoryId(long storyId);
 }

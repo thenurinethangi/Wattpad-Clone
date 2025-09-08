@@ -1,9 +1,6 @@
 package lk.ijse.wattpadbackend.controller;
 
-import lk.ijse.wattpadbackend.dto.CreateStoryResponseDTO;
-import lk.ijse.wattpadbackend.dto.MyStorySingleStoryDTO;
-import lk.ijse.wattpadbackend.dto.StoryDTO;
-import lk.ijse.wattpadbackend.dto.StoryRequestDTO;
+import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.entity.Story;
 import lk.ijse.wattpadbackend.service.StoryService;
 import lk.ijse.wattpadbackend.util.APIResponse;
@@ -28,6 +25,15 @@ public class StoryController {
     public APIResponse welcomeMessage(){
 
         return new APIResponse(202,"WELCOME TO STORY PAGE",null);
+    }
+
+    @GetMapping("/isCurrentUser/{storyId}")
+    public APIResponse checkIfStoryIsOwnedByCurrentUser(@PathVariable long storyId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean result = storyService.checkIfStoryIsOwnedByCurrentUser(auth.getName(),storyId);
+        return new APIResponse(202,"Successfully check is story from current user or not",result);
     }
 
     @GetMapping("/{id}")
@@ -135,6 +141,13 @@ public class StoryController {
 
         List<MyStorySingleStoryDTO> myStorySingleStoryDTOList = storyService.loadAllStoriesOfCurrentUser(auth.getName());
         return new APIResponse(202,"Successfully loaded all stories of current user",myStorySingleStoryDTOList);
+    }
+
+    @GetMapping("/chapters/{storyId}")
+    public APIResponse loadAllChaptersOfAStoryByStoryId(@PathVariable long storyId){
+
+        List<EditStoryChapterDTO> editStoryChapterDTOList = storyService.loadAllChaptersOfAStoryByStoryId(storyId);
+        return new APIResponse(202,"Successfully loaded all chapters of a story id: "+storyId,editStoryChapterDTOList);
     }
 }
 

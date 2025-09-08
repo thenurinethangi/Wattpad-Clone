@@ -23,6 +23,8 @@ public class StoryServiceImpl implements StoryService {
     private final TagRepository tagRepository;
     private final StoryTagRepository storyTagRepository;
     private final ChapterRepository chapterRepository;
+    private final ParagraphCommentRepository paragraphCommentRepository;
+    private final ChapterCommentRepository chapterCommentRepository;
 
     @Override
     public StoryDTO getAStoryById(long id) {
@@ -482,6 +484,162 @@ public class StoryServiceImpl implements StoryService {
         catch (UserNotFoundException e) {
             throw e;
         } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean checkIfStoryIsOwnedByCurrentUser(String username, long storyId) {
+
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            List<Story> storyList = storyRepository.findAllByUser(user);
+            for(Story x : storyList){
+                if(x.getId()==storyId){
+                    return true;
+                }
+            }
+            return false;
+
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<EditStoryChapterDTO> loadAllChaptersOfAStoryByStoryId(long storyId) {
+
+        try{
+            Optional<Story> optionalStory = storyRepository.findById((int) storyId);
+            if(!optionalStory.isPresent()){
+                throw new NotFoundException("Story not found.");
+            }
+            Story story = optionalStory.get();
+
+            List<Chapter> chapterList = story.getChapters();
+
+            List<EditStoryChapterDTO> editStoryChapterDTOList = new ArrayList<>();
+            for(Chapter x : chapterList){
+                EditStoryChapterDTO dto = new EditStoryChapterDTO();
+                dto.setChapterId(x.getId());
+                dto.setChapterTitle(x.getTitle());
+                dto.setPublishedOrDraft(x.getPublishedOrDraft());
+
+                long likesLong = x.getLikes();
+
+                String likesInStr = "";
+                if(likesLong<=1000){
+                    likesInStr = String.valueOf(likesLong);
+                }
+                else if (likesLong >= 1000 && likesLong < 1000000) {
+                    double value = (double) likesLong / 1000;
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        likesInStr = vStr.split("\\.0")[0] + "K";
+                    } else {
+                        likesInStr = vStr + "K";
+                    }
+                }
+                else if(likesLong>=1000000){
+                    double value = (double) likesLong/1000000;
+
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        likesInStr = vStr.split("\\.0")[0] + "M";
+                    } else {
+                        likesInStr = value+"M";
+                    }
+                }
+                dto.setLikes(likesInStr);
+
+                long viewsLong = x.getViews();
+
+                String viewsInStr = "";
+                if(viewsLong<=1000){
+                    viewsInStr = String.valueOf(viewsLong);
+                }
+                else if (viewsLong >= 1000 && viewsLong < 1000000) {
+                    double value = (double) viewsLong / 1000;
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        viewsInStr = vStr.split("\\.0")[0] + "K";
+                    } else {
+                        viewsInStr = vStr + "K";
+                    }
+                }
+                else if(viewsLong>=1000000){
+                    double value = (double) viewsLong/1000000;
+
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        viewsInStr = vStr.split("\\.0")[0] + "M";
+                    } else {
+                        viewsInStr = value+"M";
+                    }
+                }
+                dto.setViews(viewsInStr);
+
+                long totalComments = 0;
+                List<ChapterComment> chapterCommentList = chapterCommentRepository.findAllByChapter(x);
+                totalComments+=chapterCommentList.size();
+
+                List<Paragraph> paragraphList = x.getParagraphs();
+                for (Paragraph y : paragraphList){
+                    totalComments+=y.getParagraphComments().size();
+                }
+
+                long commentsLong = totalComments;
+
+                String commentsInStr = "";
+                if(commentsLong<=1000){
+                    commentsInStr = String.valueOf(commentsLong);
+                }
+                else if (commentsLong >= 1000 && commentsLong < 1000000) {
+                    double value = (double) commentsLong / 1000;
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        commentsInStr = vStr.split("\\.0")[0] + "K";
+                    } else {
+                        commentsInStr = vStr + "K";
+                    }
+                }
+                else if(commentsLong>=1000000){
+                    double value = (double) commentsLong/1000000;
+
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        commentsInStr = vStr.split("\\.0")[0] + "M";
+                    } else {
+                        commentsInStr = value+"M";
+                    }
+                }
+                dto.setComments(commentsInStr);
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+                String formattedDate = x.getPublishedDate().format(formatter);
+
+                dto.setPublishedDate(formattedDate);
+
+                editStoryChapterDTOList.add(dto);
+            }
+
+            return editStoryChapterDTOList;
+
+        }
+        catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
     }

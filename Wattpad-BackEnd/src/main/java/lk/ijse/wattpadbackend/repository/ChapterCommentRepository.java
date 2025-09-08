@@ -14,4 +14,6 @@ public interface ChapterCommentRepository extends JpaRepository<ChapterComment,I
     List<ChapterComment> findAllByChapterOrderByCreatedAtDesc(Chapter chapter, Pageable pageable);
 
     List<ChapterComment> findAllByChapterOrderByCreatedAtAsc(Chapter chapter, Pageable limit);
+
+    List<ChapterComment> findAllByChapter(Chapter x);
 }

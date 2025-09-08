@@ -7,6 +7,7 @@
   <meta name="author" content="Thenuri Nethangi">
   <meta name="keywords" content="online stories, read stories, write stories, wattpad alternative, fiction platform, storytelling, novels, short stories, creative writing, user-generated stories">
   <meta name="description" content="Discover and share captivating stories on our platform. Read novels, write your own tales, and connect with a community of passionate readers and writers.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" type="text/css" href="assets/style/desktop-web.d4472ed8-remove-min.css">
   <!--for header-->
   <link rel="stylesheet" href="assets/style/css-bundle-TDTK4GB6.css"/>
@@ -18,7 +19,7 @@
   <link rel="stylesheet" href="assets/style/react-tooltip-HIHMAPNF.css"/>
   <link rel="stylesheet" href="assets/style/splide.min-AQNS3YPQ.css"/>
   <link rel="stylesheet" href="assets/style/footer-style.css">
-<body>
+<body style="display: none; visibility: hidden; opacity: 0;">
 
 <div id="app-container">
   <div>
@@ -28,7 +29,7 @@
         <!--header - where cancel and save btn placed and story title-->
         <div id="edit-controls" class="edit-profile">
           <button class="btn btn-text on-edit-cancel" aria-label="Cancel">
-            <span class="fa fa-left fa-wp-neutral-2 " aria-hidden="true" style="font-size:24px;"></span>
+            <a style="margin-right: 6px;" class="back-btn"><i style="color: #6f6f6f" class="fa-solid fa-arrow-left-long"></i></a>
           </button>
           <div class="works-item-metadata">
             <p class="small group-title">
@@ -412,5 +413,9 @@
     <li class="uilPN">© 2025 Wattpad</li>
   </ul>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="assets/js/story-edit-page-script.js"></script>
 </body>
 </html>
