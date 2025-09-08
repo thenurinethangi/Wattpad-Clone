@@ -16,4 +16,6 @@ public interface StoryService {
     StoryDTO getAStoryByIdTwo(long id);
 
     List<MyStorySingleStoryDTO> loadPublishedStoriesOfCurrentUser(String name);
+
+    List<MyStorySingleStoryDTO> loadAllStoriesOfCurrentUser(String name);
 }

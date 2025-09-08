@@ -127,6 +127,15 @@ public class StoryController {
         List<MyStorySingleStoryDTO> myStorySingleStoryDTOList = storyService.loadPublishedStoriesOfCurrentUser(auth.getName());
         return new APIResponse(202,"Successfully loaded all published stories of current user",myStorySingleStoryDTOList);
     }
+
+    @GetMapping("/all/user")
+    public APIResponse loadAllStoriesOfCurrentUser(){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        List<MyStorySingleStoryDTO> myStorySingleStoryDTOList = storyService.loadAllStoriesOfCurrentUser(auth.getName());
+        return new APIResponse(202,"Successfully loaded all stories of current user",myStorySingleStoryDTOList);
+    }
 }
 
 
