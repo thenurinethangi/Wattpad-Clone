@@ -46,6 +46,10 @@ public interface StoryRepository extends JpaRepository<Story,Integer> {
             @Param("userId") Long userId,
             @Param("excludedStoryIds") List<Long> excludedStoryIds
     );
+
+    @Query("SELECT s FROM Story s WHERE s.user = :user AND s.publishedOrDraft = :status")
+    List<Story> findAllByUserAndPublishedOrDraft(@Param("user") User user,
+                                                 @Param("status") int status);
 }
 
 

@@ -1,6 +1,7 @@
 package lk.ijse.wattpadbackend.controller;
 
 import lk.ijse.wattpadbackend.dto.CreateStoryResponseDTO;
+import lk.ijse.wattpadbackend.dto.MyStorySingleStoryDTO;
 import lk.ijse.wattpadbackend.dto.StoryDTO;
 import lk.ijse.wattpadbackend.dto.StoryRequestDTO;
 import lk.ijse.wattpadbackend.entity.Story;
@@ -116,6 +117,15 @@ public class StoryController {
 
         CreateStoryResponseDTO createStoryResponseDTO = storyService.createANewStory(auth.getName(),storyRequestDTO);
         return new APIResponse(202,"Successfully created a new story.",createStoryResponseDTO);
+    }
+
+    @GetMapping("/published/user")
+    public APIResponse loadPublishedStoriesOfCurrentUser(){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        List<MyStorySingleStoryDTO> myStorySingleStoryDTOList = storyService.loadPublishedStoriesOfCurrentUser(auth.getName());
+        return new APIResponse(202,"Successfully loaded all published stories of current user",myStorySingleStoryDTOList);
     }
 }
 

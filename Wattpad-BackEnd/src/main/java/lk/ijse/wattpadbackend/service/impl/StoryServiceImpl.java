@@ -1,9 +1,6 @@
 package lk.ijse.wattpadbackend.service.impl;
 
-import lk.ijse.wattpadbackend.dto.ChapterSimpleDTO;
-import lk.ijse.wattpadbackend.dto.CreateStoryResponseDTO;
-import lk.ijse.wattpadbackend.dto.StoryDTO;
-import lk.ijse.wattpadbackend.dto.StoryRequestDTO;
+import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.entity.*;
 import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
@@ -269,6 +266,114 @@ public class StoryServiceImpl implements StoryService {
 
         }
         catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<MyStorySingleStoryDTO> loadPublishedStoriesOfCurrentUser(String username) {
+
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            List<Story> storyList = storyRepository.findAllByUserAndPublishedOrDraft(user,1);
+
+            List<MyStorySingleStoryDTO> myStorySingleStoryDTOList = new ArrayList<>();
+            for (Story x : storyList){
+                MyStorySingleStoryDTO dto = new MyStorySingleStoryDTO();
+                dto.setStoryId(x.getId());
+                dto.setStoryTitle(x.getTitle());
+                dto.setStoryCoverImagePath(x.getCoverImagePath());
+                dto.setParts(x.getParts().longValue());
+
+                long likesLong = x.getLikes().longValue();
+
+                String likesInStr = "";
+                if(likesLong<=1000){
+                    likesInStr = String.valueOf(likesLong);
+                }
+                else if (likesLong >= 1000 && likesLong < 1000000) {
+                    double value = (double) likesLong / 1000;
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        likesInStr = vStr.split("\\.0")[0] + "K";
+                    } else {
+                        likesInStr = vStr + "K";
+                    }
+                }
+                else if(likesLong>=1000000){
+                    double value = (double) likesLong/1000000;
+
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        likesInStr = vStr.split("\\.0")[0] + "M";
+                    } else {
+                        likesInStr = value+"M";
+                    }
+                }
+                dto.setLikes(likesInStr);
+
+                long viewsLong = x.getViews().longValue();
+
+                String viewsInStr = "";
+                if(viewsLong<=1000){
+                    viewsInStr = String.valueOf(viewsLong);
+                }
+                else if (viewsLong >= 1000 && viewsLong < 1000000) {
+                    double value = (double) viewsLong / 1000;
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        viewsInStr = vStr.split("\\.0")[0] + "K";
+                    } else {
+                        viewsInStr = vStr + "K";
+                    }
+                }
+                else if(viewsLong>=1000000){
+                    double value = (double) viewsLong/1000000;
+
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        viewsInStr = vStr.split("\\.0")[0] + "M";
+                    } else {
+                        viewsInStr = value+"M";
+                    }
+                }
+                dto.setViews(viewsInStr);
+
+                long publishedCount = 0;
+                long draftCount = 0;
+                List<Chapter> chapterList = x.getChapters();
+                for (Chapter y : chapterList){
+                    if(y.getPublishedOrDraft()==1){
+                        publishedCount++;
+                    }
+                    else {
+                        draftCount++;
+                    }
+                }
+
+                dto.setPublishedPartsCount(publishedCount);
+                dto.setDraftPartsCount(draftCount);
+
+                //here should implement last edited time of story
+                dto.setLastUpdate("12 minutes go");
+
+                myStorySingleStoryDTOList.add(dto);
+            }
+
+            return myStorySingleStoryDTOList;
+
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
     }
