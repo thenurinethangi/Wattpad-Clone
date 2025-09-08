@@ -56,6 +56,9 @@ async function loadPublishedStories() {
         .then(data => {
             console.log('Success:', data);
 
+            $('.all-stories-tab').removeClass('active');
+            $('.published-stories-tab').addClass('active');
+
             $('.works-item-new.drag-item').empty();
             for (let i = 0; i < data.data.length; i++) {
 
@@ -82,7 +85,7 @@ async function loadPublishedStories() {
                                                         </div>
                                                         <div class="story-info">
                                                             <h3 class="story-title" aria-label="Story Item: Temp 2.">
-                                                                <a class="on-show-details" href="/myworks/398855545-temp-2" data-href="/myworks/398855545-temp-2">
+                                                                <a class="on-show-details" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-edit-page.html?storyId=${story.storyId}">
                                                                     <strong>${story.storyTitle}</strong>
                                                                 </a>
                                                             </h3>
@@ -194,10 +197,30 @@ async function loadPublishedStories() {
 
 
 
+//click on all stories tab
+let allStoriesTab = $('.all-stories-tab')[0];
+allStoriesTab.addEventListener('click',function (event) {
+
+    loadAllStories();
+});
+
+
+
+
+//click on published stories tab
+let publishedStoriesTab = $('.published-stories-tab')[0];
+publishedStoriesTab.addEventListener('click',function (event) {
+
+    loadPublishedStories();
+});
+
+
+
+
 //load all stories
 async function loadAllStories() {
 
-    await fetch('http://localhost:8080/api/v1/story/published/user', {
+    await fetch('http://localhost:8080/api/v1/story/all/user', {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -214,6 +237,9 @@ async function loadAllStories() {
         })
         .then(data => {
             console.log('Success:', data);
+
+            $('.all-stories-tab').addClass('active');
+            $('.published-stories-tab').removeClass('active');
 
             $('.works-item-new.drag-item').empty();
             for (let i = 0; i < data.data.length; i++) {
@@ -241,16 +267,19 @@ async function loadAllStories() {
                                                         </div>
                                                         <div class="story-info">
                                                             <h3 class="story-title" aria-label="Story Item: Temp 2.">
-                                                                <a class="on-show-details" href="/myworks/398855545-temp-2" data-href="/myworks/398855545-temp-2">
+                                                                <a class="on-show-details" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.storyCoverImagePath}">
                                                                     <strong>${story.storyTitle}</strong>
                                                                 </a>
                                                             </h3>
                                                             <div class="counts">
-                                                                <span class="publish-count"><strong>${story.publishedPartsCount} Published Part</strong></span>
+                                                                ${story. ublishedPartsCount>0
+                                                                ? `<span class="publish-count"><strong>${story.publishedPartsCount} Published Part</strong></span>`
+                                                                : ``
+                                                                }
                                                                 ${story. draftPartsCount>0
-                    ?`<span class="publish-count draft-count"><strong>${story.draftPartsCount} Drafts</strong></span>`
-                    :``
-                }
+                                                                ?`<span class="publish-count draft-count"><strong>${story.draftPartsCount} Drafts</strong></span>`
+                                                                :``
+                                                                }
                                                             </div>
                                                             <div class="updated-date">Updated ${story.lastUpdate}</div>
                                                             <div class="meta-wrapper">
