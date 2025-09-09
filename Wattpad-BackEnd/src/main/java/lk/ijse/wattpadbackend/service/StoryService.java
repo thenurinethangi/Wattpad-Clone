@@ -21,4 +21,6 @@ public interface StoryService {
     List<EditStoryChapterDTO> loadAllChaptersOfAStoryByStoryId(long storyId);
 
     StoryCreateDTO loadStoryDetailsByStoryId(long storyId);
+
+    void updateAStory(String name, StoryCreateDTO storyCreateDTO);
 }

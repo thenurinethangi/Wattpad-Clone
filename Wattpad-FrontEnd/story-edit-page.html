@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="assets/style/react-tooltip-HIHMAPNF.css"/>
   <link rel="stylesheet" href="assets/style/splide.min-AQNS3YPQ.css"/>
   <link rel="stylesheet" href="assets/style/footer-style.css">
+  <link rel="stylesheet" href="assets/style/create-story-page-style.css">
 <body style="display: none; visibility: hidden; opacity: 0;">
 
 <div id="app-container">
@@ -51,9 +52,9 @@
           <div class="col-lg-3 col-md-3 col-sm-12" id="picture-sidebar">
             <div class="image-placeholder  file-upload file-drop">
               <!--cover image-->
-              <img src="https://img.wattpad.com/cover/398855545-512-k600768.jpg" alt="Temp 2" height="256" class="cover cover-xlg edit-cover">
+              <img style="object-fit: cover; object-position: center;" src="https://img.wattpad.com/cover/398855545-512-k600768.jpg" alt="Temp 2" height="256" class="cover cover-xlg edit-cover">
               <!--new cover uplaod input-->
-              <div class="new-cover-upload" style="width: 100%; height: 100%">
+              <div class="new-cover-upload" style="width: 100%; height: 100%;">
                 <input accept="image/jpeg, image/png, image/gif" type="file" name="file" style="position: absolute; right: 0px; top: 0px; opacity: 0; height: 100%; width: 100%;" aria-label="Story cover file upload">
               </div>
             </div>
@@ -79,39 +80,35 @@
 
 
                 <!--story details container - where story edit form placed- when remove hidden it show and we should hidden tbl of content when user click on story details tab-->
-                <form class="main-edit-form hidden">
+                <form class="main-edit-form hidden" id="story-form">
                   <div class="required-form-wrapper">
                     <!--title-->
                     <div class="form-group title-form">
                       <label>Title</label>
                       <span class="empty-warning hidden" id="title-warning">Required</span>
-                      <div contenteditable="true" class="story-title has-title">Temp 2</div>
+                      <div contenteditable="true" class="story-title has-title" id="story-title">Temp 2</div>
                     </div>
                     <!--description-->
                     <div class="form-group description-form">
                       <div class="form-wrapper">
                         <label>Description</label>
                         <span data-toggle="popover" class="popover-icon" id="description-tooltip" title="" data-original-title="Add a story description">
-                          <span class="fa fa-info fa-wp-neutral-2 " aria-hidden="true" style="font-size:16px;"></span>
+                          <i class="fa-solid fa-circle-info" style="color: #666;"></i>
                         </span>
                         <span class="empty-warning hidden" id="description-warning">Required</span>
                       </div>
-                      <textarea type="text" name="title" class="story-description " aria-label="Story description" aria-multiline="true">Temp 2 Desc</textarea>
+                      <textarea type="text" name="title" class="story-description" aria-label="Story description" aria-multiline="true">Temp 2 Desc</textarea>
                     </div>
                     <!--main characters-->
-                    <div class="form-group characters-form">
-                      <div class="form-wrapper">
-                        <label>Main Characters</label>
-                        <span data-toggle="popover" class="popover-icon" id="characters-tooltip" title="" data-original-title="Who are your Main Characters?">
-                          <span class="fa fa-info fa-wp-neutral-2 " aria-hidden="true" style="font-size:16px;"></span>
-                        </span>
+                    <div class="form-group">
+                      <div class="form-label">
+                        Main Characters
+                        <div class="info-icon-small">i</div>
                       </div>
-                      <div class="characters">
-                        <div class="character">
-                          <input type="text" class="character-input" name="character" aria-label="Character name" placeholder="Name" data-id="" value="">
-                          <div class="btn btn-grey on-add-character" aria-label="Add another character">
-                            <span class="fa fa-plus fa-wp-neutral-1 " aria-hidden="true" style="font-size:16px;"></span>
-                          </div>
+                      <div class="characters-section" style="flex-direction: column;">
+                        <div style="width: 100%; display: flex; justify-content: flex-start; align-items: center;">
+                          <input type="text" name="mainCharacters" class="form-input" placeholder="Name" style="flex: 1;" />
+                          <button type="button" class="add-character-btn">+</button>
                         </div>
                       </div>
                     </div>
@@ -120,31 +117,15 @@
                       <div class="form-wrapper">
                         <label for="categoryselect">Category</label>
                         <span data-toggle="popover" class="popover-icon" id="category-tooltip" title="" data-original-title="Tell Wattpad the category of your story">
-                          <span class="fa fa-info fa-wp-neutral-2 " aria-hidden="true" style="font-size:16px;"></span>
+                          <i class="fa-solid fa-circle-info" style="color: #666"></i>
                         </span>
-                        <select id="categoryselect" class="form-control ">
-                          <option value="-1">Select a category</option>
-                          <option value="14" selected="selected">Action</option>
-                          <option value="11">Adventure</option>
-                          <option value="24">ChickLit</option>
-                          <option value="6">Fanfiction</option>
-                          <option value="3">Fantasy</option>
-                          <option value="21">General Fiction</option>
-                          <option value="23">Historical Fiction</option>
-                          <option value="9">Horror</option>
-                          <option value="7">Humor</option>
-                          <option value="8">Mystery / Thriller</option>
-                          <option value="16">Non-Fiction</option>
-                          <option value="12">Paranormal</option>
-                          <option value="2">Poetry</option>
-                          <option value="19">Random</option>
-                          <option value="4">Romance</option>
-                          <option value="5">Science Fiction</option>
-                          <option value="17">Short Story</option>
-                          <option value="13">Spiritual</option>
-                          <option value="1">Teen Fiction</option>
-                          <option value="18">Vampire</option>
-                          <option value="22">Werewolf</option>
+                        <select id="categoryselect" class="form-control" style="width: 300px;">
+                          <option value="">Select a category</option>
+                          <option value="romance">Romance</option>
+                          <option value="fantasy">Fantasy</option>
+                          <option value="young-adult">Young Adult</option>
+                          <option value="mystery">Mystery</option>
+                          <option value="science-fiction">Science Fiction</option>
                         </select>
                         <span class="empty-warning hidden" id="category-empty-warning">
                           Required
@@ -152,152 +133,81 @@
                       </div>
                     </div>
                     <!--tags-->
-                    <div class="form-group tags-form">
-                      <div class="form-wrapper">
-                        <label>Tags</label>
-                        <span data-toggle="popover" class="popover-icon" id="tags-tooltip" title="" data-original-title="Help readers find your story">
-                          <span class="fa fa-info fa-wp-neutral-2 " aria-hidden="true" style="font-size:16px;"></span>
-                        </span>
-                        <span class="empty-warning hidden" id="tag-empty-warning">Required</span>
+                    <div class="form-group" style="padding-bottom: 10px;">
+                      <div class="form-label">
+                        Tags
+                        <div class="info-icon-small">i</div>
                       </div>
-                      <div class="tag-container">
-                        <div id="editable-tags" style="margin-bottom: 5px;">
-                          <div class="component-wrapper" id="component-storytags-storytags-%2fmyworks%2f398855545-temp-2">
-                            <div class="tag-grid clearfix">
-                              <ul class="tag-items">
-                                <li>
-                                  <a class="tag-item with-icon active">
-                                    <span>templars</span>
-                                    <span class="fa fa-remove fa-wp-neutral-2" aria-hidden="true" style="font-size: 12px;"></span>
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                        <div id="add-tag" class="tag-item with-icon on-add-tag">
-                          <span>Add a tag</span><span class="fa fa-plus fa-wp-neutral-1 " aria-hidden="true" style="font-size:12px;"></span>
-                        </div>
-                        <span id="tag-input-wrapper">
-                        <input id="tag-input" class="hidden on-tag-input" placeholder="Separate tags with a space" autocomplete="off">
-                        </span>
+                      <div class="tags-section">
+                        <input type="text" name="tags" placeholder="Add tags separated by commas" class="form-input tags-input" style="flex: 1;">
+                        <!--                            <button type="button" class="add-tag-btn">Add a tag +</button>-->
                       </div>
                     </div>
                   </div>
                   <!--target audience-->
-                  <div class="form-group target-audience-form">
-                    <div class="form-wrapper">
-                      <label for="target-audience">Target Audience</label>
-                      <span data-toggle="popover" class="popover-icon" id="target-audience-tooltip" title="" data-original-title="Who is this story for?">
-                        <span class="fa fa-info fa-wp-neutral-2 " aria-hidden="true" style="font-size:16px;"></span>
-                      </span>
-                      <select id="target-audience" class="form-control ">
-                        <option selected="true" disabled="disabled">Who is your primary audience?</option>
-                        <option value="13-18">Young Adult (13-18 years of age)</option>
-                        <option value="18-25" selected="">New Adult (18-25 years of age)</option>
-                        <option value="25+">Adult (25+ years of age)</option>
-                      </select>
+                  <div class="form-group" style="padding-top: 15px;">
+                    <div class="form-label">
+                      Target Audience
+                      <div class="info-icon-small">i</div>
                     </div>
+                    <select id="targetAudience" name="targetAudience" class="form-select" style="width: 300px;">
+                      <option value="">Who is your primary audience?</option>
+                      <option value="young adult">Young Adult</option>
+                      <option value="adult">Adult</option>
+                      <option value="teen">Teen</option>
+                    </select>
                   </div>
                   <div class="inline-form-wrapper">
                     <!--language-->
-                    <div class="form-group language-form">
-                      <div class="form-wrapper">
-                        <label>Language</label>
-                        <span data-toggle="popover" class="popover-icon" id="language-tooltip" title="" data-original-title="What language is your story in?">
-                          <span class="fa fa-info fa-wp-neutral-2 " aria-hidden="true" style="font-size:16px;"></span>
-                        </span>
-                        <select id="languageselect" class="form-control " aria-label="Story language">
-                          <option value="14">Polski</option>
-                          <option value="16">العربية</option>
-                          <option value="24">Česky</option>
-                          <option value="4">Deutsch</option>
-                          <option value="30">ελληνικά</option>
-                          <option value="1" selected="selected">English</option>
-                          <option value="5">Español</option>
-                          <option value="31">فارسی</option>
-                          <option value="18">Filipino</option>
-                          <option value="2">Français</option>
-                          <option value="21">हिन्दी</option>
-                          <option value="20">Bahasa Indonesia</option>
-                          <option value="3">Italiano</option>
-                          <option value="17">עברית</option>
-                          <option value="28">Magyar</option>
-                          <option value="22">Bahasa Melayu</option>
-                          <option value="13">Nederlands</option>
-                          <option value="6">Português</option>
-                          <option value="15">Română</option>
-                          <option value="7">Русский</option>
-                          <option value="44">Slovenčina</option>
-                          <option value="40">Српски</option>
-                          <option value="23">Türkçe</option>
-                          <option value="46">Українська</option>
-                          <option value="19">Tiếng Việt</option>
-                          <option value="11">Other</option>
-                        </select>
+                    <div class="form-group" style="padding-top: 10px;">
+                      <div class="form-label">
+                        Language
+                        <div class="info-icon-small">i</div>
                       </div>
+                      <select id="language" name="language" class="form-select" style="width: 300px;">
+                        <option value="english">English</option>
+                        <option value="spanish">Spanish</option>
+                        <option value="french">French</option>
+                        <option value="german">German</option>
+                      </select>
                     </div>
                     <!--copy right-->
-                    <div class="form-group copyright-form">
-                      <div class="form-wrapper">
-                        <div class="component-wrapper" id="component-copyright-copyright-%2fmyworks%2f398855545-temp-2">
-                          <div class="form-field">
-                            <div class="form-field-label">
-                              <label>Copyright</label>
-                              <div class="icon-container">
-                                <button class="btn btn-no-style">
-                                  <span class="fa fa-info fa-wp-neutral-2" aria-hidden="true" style="font-size: 16px;"></span>
-                                </button>
-                              </div>
-                            </div>
-                            <select class="select-form-field" id="select-form-component" aria-label="Copyright options" name="copyright">(value !== placeholder &amp;&amp;
-                              <option hidden="" disabled="" value="Select">Select</option>)
-                              <option value="1">All Rights Reserved</option>
-                              <option value="2">Public Domain</option>
-                              <option value="3">Creative Commons (CC) Attribution</option>
-                              <option value="4">(CC) Attrib. NonCommercial</option>
-                              <option value="5">(CC) Attrib. NonComm. NoDerivs</option>
-                              <option value="6">(CC) Attrib. NonComm. ShareAlike</option>
-                              <option value="7">(CC) Attribution-ShareAlike</option>
-                              <option value="8">(CC) Attribution-NoDerivs</option>
-                            </select>
-                          </div>
-                          <p class="copyright-description">You do not allow your work to be used or adapted in any way without your permission.</p>
-                        </div>
+                    <div class="form-group" style="padding-top: 10px;">
+                      <div class="form-label">
+                        Copyright
+                        <div class="info-icon-small">i</div>
+                      </div>
+                      <select name="copyright" class="form-select" style="width: 300px;">
+                        <option value="all-rights-reserved">All Rights Reserved</option>
+                        <option value="creative-commons">Creative Commons</option>
+                        <option value="public-domain">Public Domain</option>
+                      </select>
+                      <div class="copyright-description">
+                        You do not allow your work to be used or adapted in any way without your permission.
                       </div>
                     </div>
                     <!--mature-->
-                    <div class="form-group rating-form">
-                      <div class="form-wrapper">
-                        <label class="rating-label">Rating</label>
-                        <span data-toggle="popover" class="popover-icon" id="rating-tooltip" title="" data-original-title="Rate your story">
-                          <span class="fa fa-info fa-wp-neutral-2 " aria-hidden="true" style="font-size:16px;"></span>
-                        </span>
-                        <span class="toggle-prompt">Mature</span>
-                        <div class="onoffswitch ">
-                          <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="mature-switch">
-                          <label class="onoffswitch-label" for="mature-switch">
-                            <div class="onoffswitch-inner">
-                              <span class="on">ON</span>
-                              <span class="off">OFF</span>
-                            </div>
-                            <span class="onoffswitch-switch"></span>
-                          </label>
-                        </div>
+                    <div class="form-group">
+                      <div class="form-label">
+                        Rating
+                        <div class="info-icon-small">i</div>
                       </div>
-                      <p class="rating-warning everyone">
-                        Your story is appropriate for all audiences. The Wattpad community has the ability to rate your story Mature. For more info, please read Wattpad’s Content Guidelines: <a href="https://www.wattpad.com/guidelines">https://www.wattpad.com/guidelines</a>
-                      </p>
-                      <p class="rating-warning writerMature hidden">
-                        Your story contains graphic depictions of violence, sexuality, strong language, and/or other mature themes. For more info, please read Wattpad’s Content Guidelines: <a href="https://www.wattpad.com/guidelines">https://www.wattpad.com/guidelines</a>
-                      </p>
+                      <div class="rating-section">
+                        <span>Mature</span>
+                        <input type="hidden" name="isMature" id="isMatureInput" value="0">
+                        <button type="button" class="rating-toggle">OFF</button>
+                      </div>
+                      <div class="rating-description">
+                        Your story is appropriate for all audiences. The Wattpad community has the ability to rate your story Mature. For more info, please read <a href="/guidelines" class="rating-link">Wattpad's Content Guidelines</a>: <br>
+                        <a href="/guidelines" class="rating-link">https://www.wattpad.com/guidelines</a>
+                      </div>
                     </div>
                     <!--story status-->
                     <div class="form-group status-form">
                       <div class="form-wrapper">
                         <label class="rating-label">Story Status</label>
                         <span data-toggle="popover" class="popover-icon" id="story-tooltip" title="" data-original-title="Mark as Complete">
-                          <span class="fa fa-info fa-wp-neutral-2 " aria-hidden="true" style="font-size:16px;"></span>
+                          <i class="fa-solid fa-circle-info" style="color: #666"></i>
                         </span>
                         <span class="toggle-prompt">Complete?</span>
                         <div class="onoffswitch">

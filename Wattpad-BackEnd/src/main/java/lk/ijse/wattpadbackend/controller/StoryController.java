@@ -153,6 +153,42 @@ public class StoryController {
         StoryCreateDTO storyCreateDTO = storyService.loadStoryDetailsByStoryId(storyId);
         return new APIResponse(202,"Successfully loaded all data of story id: "+storyId,storyCreateDTO);
     }
+
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public APIResponse updateAStory(@RequestParam("storyId") long id,
+                                    @RequestParam("title") String title,
+                                    @RequestParam("status") int status,
+                                       @RequestParam("description") String description,
+                                       @RequestParam("mainCharacters") List<String> mainCharacters,
+                                       @RequestParam("category") String category,
+                                       @RequestParam("tags") String tags,
+                                       @RequestParam("targetAudience") String targetAudience,
+                                       @RequestParam("language") String language,
+                                       @RequestParam("copyright") String copyright,
+                                       @RequestParam("isMature") String isMature,
+                                       @RequestParam("coverImageUrl") String coverImageUrl){
+
+        StoryCreateDTO storyCreateDTO = new StoryCreateDTO();
+        storyCreateDTO.setId(id);
+        storyCreateDTO.setStatus(status);
+        storyCreateDTO.setRating(Integer.parseInt(isMature));
+        storyCreateDTO.setDescription(description);
+        storyCreateDTO.setTitle(title);
+        storyCreateDTO.setCharacters(mainCharacters);
+        storyCreateDTO.setTags(tags);
+        storyCreateDTO.setCopyright(copyright);
+        storyCreateDTO.setTargetAudience(targetAudience);
+        storyCreateDTO.setLanguage(language);
+        storyCreateDTO.setCategory(category);
+        storyCreateDTO.setCoverImagePath(coverImageUrl);
+
+        System.out.println(storyCreateDTO);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        storyService.updateAStory(auth.getName(), storyCreateDTO);
+        return new APIResponse(202,"Successfully update the story id: "+id,null);
+    }
 }
 
 

@@ -2,12 +2,14 @@ package lk.ijse.wattpadbackend.service.impl;
 
 import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.entity.*;
+import lk.ijse.wattpadbackend.exception.AccessDeniedException;
 import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
 import lk.ijse.wattpadbackend.repository.*;
 import lk.ijse.wattpadbackend.service.StoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -679,6 +681,85 @@ public class StoryServiceImpl implements StoryService {
 
         }
         catch (NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updateAStory(String username, StoryCreateDTO storyCreateDTO) {
+
+        try{
+            User user = userRepository.findByUsername(username);
+            if(user==null){
+                throw new UserNotFoundException("User not found.");
+            }
+
+            boolean bool = false;
+            List<Story> storyList = user.getStories();
+            for(Story x : storyList){
+                if(x.getId()==storyCreateDTO.getId()){
+                    bool = true;
+                    break;
+                }
+            }
+            if(!bool){
+                throw new AccessDeniedException("You haven't not access to this function");
+            }
+
+            Optional<Story> storyOptional = storyRepository.findById((int) storyCreateDTO.getId());
+            if(!storyOptional.isPresent()){
+                throw new NotFoundException("Story not found.");
+            }
+            Story story = storyOptional.get();
+
+            story.setTitle(storyCreateDTO.getTitle());
+            story.setDescription(storyCreateDTO.getDescription());
+            story.setCoverImagePath(storyCreateDTO.getCoverImagePath());
+            story.setCategory(storyCreateDTO.getCategory());
+            story.setCopyright(storyCreateDTO.getCopyright());
+            story.setLanguage(storyCreateDTO.getLanguage());
+            story.setTargetAudience(storyCreateDTO.getTargetAudience());
+            story.setRating(storyCreateDTO.getRating());
+            story.setStatus(storyCreateDTO.getStatus());
+
+            String mainCharacters = "";
+            for (String x : storyCreateDTO.getCharacters()){
+                mainCharacters += x+",";
+            }
+            if (!mainCharacters.isEmpty()) {
+                mainCharacters = mainCharacters.substring(0, mainCharacters.length() - 1);
+            }
+            story.setMainCharacters(mainCharacters);
+
+            storyTagRepository.deleteByStory(story);
+
+            String[] ar = storyCreateDTO.getTags().split(",");
+            for (String x : ar){
+                Tag tag = tagRepository.findByTagName(x);
+                if(tag==null){
+                    Tag tag1 = new Tag();
+                    tag1.setTagName(x);
+                    tagRepository.save(tag1);
+                }
+            }
+
+            Story story1 = storyRepository.save(story);
+
+            for (String x : ar){
+                Tag tag = tagRepository.findByTagName(x);
+
+                StoryTag storyTag = new StoryTag();
+                storyTag.setStory(story1);
+                storyTag.setTag(tag);
+
+                storyTagRepository.save(storyTag);
+            }
+        }
+        catch (AccessDeniedException | NotFoundException e){
             throw e;
         }
         catch (RuntimeException e) {
