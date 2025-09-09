@@ -179,15 +179,18 @@ async function loadAllChapters() {
                           <!--when click on 3 dots this will show-->
                           <ul id="works-more-options-1563628382" class="dropdown-menu align-right" role="menu">
                             <li role="none">
-                              <a target="_blank" href="/1563628382-temp-2-temp-part-1" data-url="/1563628382-temp-2-temp-part-1" class="on-view-as-reader" data-id="1563628382" data-attr="wid-toc" role="menuitem">
+                              <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${chapter.chapterId}" class="on-view-as-reader" role="menuitem">
                                 View as reader
                               </a>
                             </li>
+                            ${chapter.publishedOrDraft===1
+                            ? `<li role="none">
+                                <a data-chapter-id="${chapter.chapterId}" role="menuitem" href="" data-toggle="modal" class="on-unpublish-part" data-target="#details-modal">Unpublish</a>
+                               </li>`
+                            : ``
+                            }
                             <li role="none">
-                              <a role="menuitem" href="" data-toggle="modal" class="on-unpublish-part" data-target="#details-modal" data-id="1563628382">Unpublish</a>
-                            </li>
-                            <li role="none">
-                              <a role="menuitem" href="" data-toggle="modal" data-target="#details-modal" class="on-delete-published-part" data-id="1563628382">
+                              <a data-chapter-id="${chapter.chapterId}" role="menuitem" href="" data-toggle="modal" data-target="#details-modal" class="on-delete-published-part" data-id="1563628382">
                                 Delete Part
                               </a>
                             </li>
@@ -409,8 +412,22 @@ storyDetailsTab.addEventListener('click',function (event) {
 
 //when click on save button edit the story
 $(document).on('click', '.on-edit-save', function () {
+
+    let storyId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("storyId")) {
+        storyId = params.get("storyId");
+    }
+
+    if (storyId == null) {
+        //load story not found page
+        return;
+    }
+
     let formEl = document.getElementById("story-form");
 
+    // collect characters
     let characters = [];
     $(formEl).find('input[name="mainCharacters"]').each(function () {
         let value = $(this).val().trim();
@@ -424,23 +441,7 @@ $(document).on('click', '.on-edit-save', function () {
         return;
     }
 
-    // let coverInput = formEl.querySelector('input[type="file"]'); // fixed input selector
-    // let cover = coverInput.files[0]; // may be null if user didn't upload new cover
-    // let title = formEl.querySelector('#story-title').innerText.trim();
-    // let description = formEl.querySelector('textarea[name="title"]').value.trim();
-    // let category = formEl.querySelector('#categoryselect').value.trim();
-    // let tags = formEl.querySelector('input[name="tags"]').value.trim().toLowerCase().split(',')
-    //     .map(tag => tag.trim().replace(/\s+/g, "")).filter(t => t);
-    // let targetAudience = formEl.querySelector('select[name="targetAudience"]').value.trim();
-    // let language = formEl.querySelector('#language').value.trim();
-    // let copyright = formEl.querySelector('select[name="copyright"]').value.trim();
-    // let isMature = formEl.querySelector('#isMatureInput').value.trim();
-    // let isComplete = document.getElementById("complete-switch").checked ? 1 : 0;
-
-    let coverInput = formEl.querySelector('input[type="file"]'); // fixed input selector
-    let cover = coverInput.files[0]; // may be null if user didn't upload new cover
-    console.log("Cover:", cover);
-
+    // collect all fields
     let title = formEl.querySelector('#story-title').innerText.trim();
     console.log("Title:", title);
 
@@ -475,9 +476,9 @@ $(document).on('click', '.on-edit-save', function () {
     }
 
     // Function to send update request
-    const sendUpdate = (coverUrl) => {
+    function sendUpdate(coverUrl) {
         let formData = new FormData();
-        formData.append("storyId", story.id); // existing story id
+        formData.append("storyId", storyId);
         formData.append("coverImageUrl", coverUrl);
         formData.append("title", title);
         formData.append("description", description);
@@ -493,7 +494,7 @@ $(document).on('click', '.on-edit-save', function () {
             formData.append("mainCharacters", char);
         });
 
-        fetch(`http://localhost:8080/api/v1/story/${story.id}`, {
+        fetch(`http://localhost:8080/api/v1/story`, {
             method: 'PUT',
             credentials: 'include',
             body: formData
@@ -513,17 +514,22 @@ $(document).on('click', '.on-edit-save', function () {
                     title: 'Success',
                     text: 'Story updated successfully!',
                     confirmButtonColor: '#3085d6'
+                }).then(() => {
+                    window.location.reload();
                 });
-                window.location.reload();
             })
             .catch(error => {
                 let response = JSON.parse(error.message);
                 console.log(response);
             });
-    };
+    }
 
-    // If new cover selected → upload first
+    // Check for cover image
+    let coverInput = document.querySelector('.new-cover-upload input[type="file"]');
+    let cover = coverInput.files.length > 0 ? coverInput.files[0] : null;
+
     if (cover) {
+        // upload to imgbb
         const reader = new FileReader();
         reader.readAsDataURL(cover);
         reader.onload = async () => {
@@ -547,8 +553,9 @@ $(document).on('click', '.on-edit-save', function () {
             }
         };
     } else {
-        // No new cover uploaded → keep old cover
-        sendUpdate(story.coverImagePath);
+        // No new cover uploaded → use existing <img> src
+        let existingCover = document.querySelector(".cover.edit-cover").src;
+        sendUpdate(existingCover);
     }
 });
 
@@ -614,6 +621,211 @@ $(document).on('click', '.add-character-btn', function () {
 $(document).on('click', '.remove-character-btn', function () {
     $(this).closest('div').remove();
 });
+
+
+
+
+//click on mature btn
+$(document).on('click', '.rating-toggle', function () {
+    let hiddenInput = $('#isMatureInput');
+    let button = $(this);
+
+    if (hiddenInput.val() === "0") {
+        hiddenInput.val("1");
+        button.text("ON");
+        button.addClass("active");
+    } else {
+        hiddenInput.val("0");
+        button.text("OFF");
+        button.removeClass("active");
+    }
+
+    console.log("isMature:", hiddenInput.val());
+});
+
+
+
+
+// click on cancel btn
+$(document).on('click', '.on-edit-cancel', function () {
+    window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/mywork-page.html`;
+});
+
+
+
+// click on view as a reader btn
+$(document).on('click', '#on-view-as-reader', function () {
+
+    let storyId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("storyId")) {
+        storyId = params.get("storyId");
+    }
+
+    if (storyId == null) {
+        //load story not found page
+        return;
+    }
+
+    window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${storyId}`;
+});
+
+
+
+
+// toggle dropdown on 3-dot click
+$(document).on('click', '.dropdown-toggle', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    let dropdownMenu = $(this).siblings('.dropdown-menu');
+
+    // hide others
+    $('.dropdown-menu').not(dropdownMenu).removeClass('show');
+
+    // toggle current
+    dropdownMenu.toggleClass('show');
+});
+
+// close dropdown if clicked outside
+$(document).on('click', function () {
+    $('.dropdown-menu').removeClass('show');
+});
+
+
+
+
+// Unpublish chapter
+$(document).on('click', '.on-unpublish-part', function (e) {
+
+    let storyId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("storyId")) {
+        storyId = params.get("storyId");
+    }
+
+    if (storyId == null) {
+        //load story not found page
+        return;
+    }
+
+    e.preventDefault();
+    let chapterId = $(this).data('chapter-id');
+
+    confirmAction(
+        'Unpublish Chapter?',
+        'This chapter will no longer be visible to readers.',
+        'Yes, Unpublish',
+        () => {
+
+            fetch('http://localhost:8080/api/v1/chapter/unpublish/'+chapterId+'/'+storyId, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errData => {
+                            throw new Error(JSON.stringify(errData));
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+
+                    loadAllChapters();
+
+                })
+                .catch(error => {
+                    let response = JSON.parse(error.message);
+                    console.log(response);
+                });
+
+        }
+    );
+});
+
+
+
+
+// Delete chapter
+$(document).on('click', '.on-delete-published-part', function (e) {
+
+    let storyId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("storyId")) {
+        storyId = params.get("storyId");
+    }
+
+    if (storyId == null) {
+        //load story not found page
+        return;
+    }
+
+    e.preventDefault();
+    let chapterId = $(this).data('chapter-id');
+
+    confirmAction(
+        'Delete Chapter?',
+        'This action cannot be undone.',
+        'Yes, Delete',
+        () => {
+
+            fetch('http://localhost:8080/api/v1/chapter/delete/'+chapterId+'/'+storyId, {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errData => {
+                            throw new Error(JSON.stringify(errData));
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+
+                    loadAllChapters();
+
+                })
+                .catch(error => {
+                    let response = JSON.parse(error.message);
+                    console.log(response);
+                });
+
+        }
+    );
+});
+
+
+
+// SweetAlert helper
+function confirmAction(title, text, confirmButton, callback) {
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#aaa',
+        confirmButtonText: confirmButton
+    }).then((result) => {
+        if (result.isConfirmed) {
+            callback();
+        }
+    });
+}
+
 
 
 

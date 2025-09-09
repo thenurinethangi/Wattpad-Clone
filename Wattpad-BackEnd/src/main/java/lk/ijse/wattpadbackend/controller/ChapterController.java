@@ -113,6 +113,24 @@ public class ChapterController {
         long id = chapterService.createPublishAndSaveChapter(storyId,chapterSaveRequestDTO);
         return new APIResponse(202,"Successfully created and saved and published chapter",id);
     }
+
+    @PostMapping("/unpublish/{chapterId}/{storyId}")
+    public APIResponse makeChapterUnpublishByChapterId(@PathVariable long chapterId, @PathVariable long storyId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        chapterService.makeStoryUnpublishByStoryId(auth.getName(),chapterId,storyId);
+        return new APIResponse(202,"Successfully unpublished chapter id: : "+chapterId,null);
+    }
+
+    @DeleteMapping("/delete/{chapterId}/{storyId}")
+    public APIResponse makeChapterDeleteByChapterId(@PathVariable long chapterId, @PathVariable long storyId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        chapterService.makeChapterDeleteByChapterId(auth.getName(),chapterId,storyId);
+        return new APIResponse(202,"Successfully deleted chapter id: : "+chapterId,null);
+    }
 }
 
 

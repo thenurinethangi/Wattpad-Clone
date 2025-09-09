@@ -27,4 +27,9 @@ public interface ChapterService {
     void publishAndSaveChapter(long chapterId, long storyId, ChapterSaveRequestDTO chapterSaveRequestDTO);
 
     long createPublishAndSaveChapter(long storyId, ChapterSaveRequestDTO chapterSaveRequestDTO);
+
+
+    void makeStoryUnpublishByStoryId(String name, long chapterId, long storyId);
+
+    void makeChapterDeleteByChapterId(String name, long chapterId, long storyId);
 }
