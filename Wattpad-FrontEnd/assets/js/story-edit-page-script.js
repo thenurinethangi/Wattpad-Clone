@@ -802,7 +802,6 @@ $(document).on('click', '.on-delete-published-part', function (e) {
                     let response = JSON.parse(error.message);
                     console.log(response);
                 });
-
         }
     );
 });
