@@ -10,9 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -202,7 +200,7 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public CreateStoryResponseDTO createANewStory(String username, StoryRequestDTO storyRequestDTO) {
+    public CreateStoryResponseDTO createANewStory(String username, StoryCreateDTO storyCreateDTO) {
 
         try{
             User user = userRepository.findByUsername(username);
@@ -211,20 +209,20 @@ public class StoryServiceImpl implements StoryService {
             }
 
             Story story = new Story();
-            story.setTitle(storyRequestDTO.getTitle());
-            story.setDescription(storyRequestDTO.getDescription());
-            story.setCoverImagePath(storyRequestDTO.getCoverImagePath());
-            story.setCategory(storyRequestDTO.getCategory());
-            story.setCopyright(storyRequestDTO.getCopyright());
-            story.setLanguage(storyRequestDTO.getLanguage());
-            story.setTargetAudience(storyRequestDTO.getTargetAudience());
+            story.setTitle(storyCreateDTO.getTitle());
+            story.setDescription(storyCreateDTO.getDescription());
+            story.setCoverImagePath(storyCreateDTO.getCoverImagePath());
+            story.setCategory(storyCreateDTO.getCategory());
+            story.setCopyright(storyCreateDTO.getCopyright());
+            story.setLanguage(storyCreateDTO.getLanguage());
+            story.setTargetAudience(storyCreateDTO.getTargetAudience());
             story.setUser(user);
             story.setPublishedOrDraft(0);
-            story.setRating(storyRequestDTO.getRating());
-            story.setStatus(storyRequestDTO.getStatus());
+            story.setRating(storyCreateDTO.getRating());
+            story.setStatus(storyCreateDTO.getStatus());
 
             String mainCharacters = "";
-            for (String x :storyRequestDTO.getCharacters()){
+            for (String x : storyCreateDTO.getCharacters()){
                 mainCharacters += x+",";
             }
             if (!mainCharacters.isEmpty()) {
@@ -232,7 +230,7 @@ public class StoryServiceImpl implements StoryService {
             }
             story.setMainCharacters(mainCharacters);
 
-            String[] ar = storyRequestDTO.getTags().split(",");
+            String[] ar = storyCreateDTO.getTags().split(",");
             for (String x : ar){
                 Tag tag = tagRepository.findByTagName(x);
                 if(tag==null){
@@ -638,6 +636,50 @@ public class StoryServiceImpl implements StoryService {
 
             return editStoryChapterDTOList;
 
+        }
+        catch (NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public StoryCreateDTO loadStoryDetailsByStoryId(long storyId) {
+
+        try {
+            Optional<Story> optionalStory = storyRepository.findById((int) storyId);
+            if (!optionalStory.isPresent()) {
+                throw new NotFoundException("Story not found.");
+            }
+            Story story = optionalStory.get();
+
+            StoryCreateDTO storyCreateDTO = new StoryCreateDTO();
+            storyCreateDTO.setId(story.getId());
+            storyCreateDTO.setTitle(story.getTitle());
+            storyCreateDTO.setCategory(story.getCategory());
+            storyCreateDTO.setLanguage(story.getLanguage());
+            storyCreateDTO.setCopyright(story.getCopyright());
+            storyCreateDTO.setDescription(story.getDescription());
+            storyCreateDTO.setStatus(story.getStatus());
+            storyCreateDTO.setRating(story.getRating());
+            storyCreateDTO.setTargetAudience(story.getTargetAudience());
+            storyCreateDTO.setCoverImagePath(story.getCoverImagePath());
+            storyCreateDTO.setCharacters(Arrays.asList(story.getMainCharacters().split(",")));
+
+            StringJoiner joiner = new StringJoiner(",");
+            for (StoryTag x : story.getStoryTags()) {
+                joiner.add(x.getTag().getTagName());
+            }
+            String tags = joiner.toString();
+            storyCreateDTO.setTags(tags);
+
+            return storyCreateDTO;
+
+        }
+        catch (NotFoundException e){
+            throw e;
         }
         catch (RuntimeException e) {
             throw new RuntimeException(e);

@@ -8,7 +8,7 @@ public interface StoryService {
 
     StoryDTO getAStoryById(long id);
 
-    CreateStoryResponseDTO createANewStory(String name, StoryRequestDTO storyRequestDTO);
+    CreateStoryResponseDTO createANewStory(String name, StoryCreateDTO storyCreateDTO);
 
     StoryDTO getAStoryByIdTwo(long id);
 
@@ -19,4 +19,6 @@ public interface StoryService {
     boolean checkIfStoryIsOwnedByCurrentUser(String name, long storyId);
 
     List<EditStoryChapterDTO> loadAllChaptersOfAStoryByStoryId(long storyId);
+
+    StoryCreateDTO loadStoryDetailsByStoryId(long storyId);
 }

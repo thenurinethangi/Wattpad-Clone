@@ -1,7 +1,6 @@
 package lk.ijse.wattpadbackend.controller;
 
 import lk.ijse.wattpadbackend.dto.*;
-import lk.ijse.wattpadbackend.entity.Story;
 import lk.ijse.wattpadbackend.service.StoryService;
 import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.List;
 
 @RestController
@@ -72,18 +69,18 @@ public class StoryController {
 //            System.out.println("Cover Image Name: " + coverImage.getOriginalFilename());
 //        }
 
-        StoryRequestDTO storyRequestDTO = new StoryRequestDTO();
-        storyRequestDTO.setStatus(0);
-        storyRequestDTO.setRating(Integer.parseInt(isMature));
-        storyRequestDTO.setDescription(description);
-        storyRequestDTO.setTitle(title);
-        storyRequestDTO.setCharacters(mainCharacters);
-        storyRequestDTO.setTags(tags);
-        storyRequestDTO.setCopyright(copyright);
-        storyRequestDTO.setTargetAudience(targetAudience);
-        storyRequestDTO.setLanguage(language);
-        storyRequestDTO.setCategory(category);
-        storyRequestDTO.setCoverImagePath(coverImageUrl);
+        StoryCreateDTO storyCreateDTO = new StoryCreateDTO();
+        storyCreateDTO.setStatus(0);
+        storyCreateDTO.setRating(Integer.parseInt(isMature));
+        storyCreateDTO.setDescription(description);
+        storyCreateDTO.setTitle(title);
+        storyCreateDTO.setCharacters(mainCharacters);
+        storyCreateDTO.setTags(tags);
+        storyCreateDTO.setCopyright(copyright);
+        storyCreateDTO.setTargetAudience(targetAudience);
+        storyCreateDTO.setLanguage(language);
+        storyCreateDTO.setCategory(category);
+        storyCreateDTO.setCoverImagePath(coverImageUrl);
 
 
 //        if (hasValidCoverImage) {
@@ -117,11 +114,11 @@ public class StoryController {
 //            System.out.println("No cover image provided, creating story without image");
 //        }
 
-        System.out.println(storyRequestDTO);
+        System.out.println(storyCreateDTO);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        CreateStoryResponseDTO createStoryResponseDTO = storyService.createANewStory(auth.getName(),storyRequestDTO);
+        CreateStoryResponseDTO createStoryResponseDTO = storyService.createANewStory(auth.getName(), storyCreateDTO);
         return new APIResponse(202,"Successfully created a new story.",createStoryResponseDTO);
     }
 
@@ -148,6 +145,13 @@ public class StoryController {
 
         List<EditStoryChapterDTO> editStoryChapterDTOList = storyService.loadAllChaptersOfAStoryByStoryId(storyId);
         return new APIResponse(202,"Successfully loaded all chapters of a story id: "+storyId,editStoryChapterDTOList);
+    }
+
+    @GetMapping("/data/{storyId}")
+    public APIResponse loadStoryDetailsByStoryId(@PathVariable long storyId){
+
+        StoryCreateDTO storyCreateDTO = storyService.loadStoryDetailsByStoryId(storyId);
+        return new APIResponse(202,"Successfully loaded all data of story id: "+storyId,storyCreateDTO);
     }
 }
 

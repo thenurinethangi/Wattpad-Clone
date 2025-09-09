@@ -2,7 +2,6 @@ package lk.ijse.wattpadbackend.dto;
 
 import lombok.*;
 
-import java.math.BigInteger;
 import java.util.List;
 
 @AllArgsConstructor
@@ -10,8 +9,9 @@ import java.util.List;
 @Setter
 @Getter
 @ToString
-public class StoryRequestDTO {
+public class StoryCreateDTO {
 
+    private long id;
     private String title;
     private String description;
     private String copyright;

@@ -72,8 +72,8 @@
                 <!--tabs-->
                 <div class="component-wrapper" id="component-worksitemsdetailsnavbar-works-nav-bar-%2fmyworks%2f398855545-temp-2">
                   <div class="works-edit-select">
-                    <button class="on-switch-type" data-section="story-detail">Story Details</button>
-                    <button class="on-switch-type active" data-section="toc">Table of Contents</button>
+                    <button class="on-switch-type story-details-tab" data-section="story-detail">Story Details</button>
+                    <button class="on-switch-type active table-of-content-tab" data-section="toc">Table of Contents</button>
                   </div>
                 </div>
 
@@ -325,54 +325,54 @@
                     <!--new part btn-->
                     <button class="btn btn-orange on-new-part">+ New Part</button>
                     <!--chapters placed container-->
-                    <div class="parts-list text-left">
+                    <div class="parts-list text-left chapters-container">
                       <!--a single chapter-->
-                      <div class="story-part drag-item">
-                        <div class="drag-handle vcenter">
-                          <span class="fa fa-menu fa-wp-neutral-2 " aria-hidden="true" style="font-size:28px;"></span>
-                        </div>
-                        <div class="part-meta vcenter">
-                          <div class="part-name col-xs-12">
-                            <a href="" class="auto-shorten on-navigate">Temp Part 1</a>
-                          </div>
-                          <div class="part-detail">
-                            <div class="col-xs-10 col-sm-5">
-                                <span class="publish-state text-body-sm published">Published</span>
-                              <span> - Jul 27, 2025</span>
-                            </div>
-                            <div class="col-xs-10 col-sm-5">
-                              <div class="meta">
-                                <div class="col-xs-4"><span class="fa fa-view fa-wp-neutral-2 " aria-hidden="true" style="font-size:16px;"></span> 1</div>
-                                <div class="col-xs-4"><span class="fa fa-vote fa-wp-neutral-2 " aria-hidden="true" style="font-size:16px;"></span> 0</div>
-                                <div class="col-xs-4"><span class="fa fa-comment fa-wp-neutral-2 " aria-hidden="true" style="font-size:16px;"></span> 0
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!--3 dots btn-->
-                        <div class="button-group vcenter dropdown">
-                          <button class="btn btn-white dropdown-toggle" data-toggle="dropdown" aria-controls="profile-more-options-1563628382" aria-expanded="false" aria-label="More options button.">
-                            <span class="fa fa-more fa-wp-neutral-2 fa-l" aria-hidden="true" style="font-size:18px;"></span>
-                          </button>
-                          <!--when click on 3 dots this will show-->
-                          <ul id="works-more-options-1563628382" class="dropdown-menu align-right" role="menu">
-                            <li role="none">
-                              <a target="_blank" href="/1563628382-temp-2-temp-part-1" data-url="/1563628382-temp-2-temp-part-1" class="on-view-as-reader" data-id="1563628382" data-attr="wid-toc" role="menuitem">
-                                View as reader
-                              </a>
-                            </li>
-                            <li role="none">
-                              <a role="menuitem" href="" data-toggle="modal" class="on-unpublish-part" data-target="#details-modal" data-id="1563628382">Unpublish</a>
-                            </li>
-                            <li role="none">
-                              <a role="menuitem" href="" data-toggle="modal" data-target="#details-modal" class="on-delete-published-part" data-id="1563628382">
-                                Delete Part
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
+<!--                      <div class="story-part drag-item">-->
+<!--                        <div class="drag-handle vcenter">-->
+<!--                          <span class="fa fa-menu fa-wp-neutral-2 " aria-hidden="true" style="font-size:28px;"></span>-->
+<!--                        </div>-->
+<!--                        <div class="part-meta vcenter">-->
+<!--                          <div class="part-name col-xs-12">-->
+<!--                            <a href="" class="auto-shorten on-navigate">Temp Part 1</a>-->
+<!--                          </div>-->
+<!--                          <div class="part-detail">-->
+<!--                            <div class="col-xs-10 col-sm-5">-->
+<!--                                <span class="publish-state text-body-sm published">Published</span>-->
+<!--                              <span> - Jul 27, 2025</span>-->
+<!--                            </div>-->
+<!--                            <div class="col-xs-10 col-sm-5">-->
+<!--                              <div class="meta">-->
+<!--                                <div class="col-xs-4"><span class="fa fa-view fa-wp-neutral-2 " aria-hidden="true" style="font-size:16px;"></span> 1</div>-->
+<!--                                <div class="col-xs-4"><span class="fa fa-vote fa-wp-neutral-2 " aria-hidden="true" style="font-size:16px;"></span> 0</div>-->
+<!--                                <div class="col-xs-4"><span class="fa fa-comment fa-wp-neutral-2 " aria-hidden="true" style="font-size:16px;"></span> 0-->
+<!--                                </div>-->
+<!--                              </div>-->
+<!--                            </div>-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash;3 dots btn&ndash;&gt;-->
+<!--                        <div class="button-group vcenter dropdown">-->
+<!--                          <button class="btn btn-white dropdown-toggle" data-toggle="dropdown" aria-controls="profile-more-options-1563628382" aria-expanded="false" aria-label="More options button.">-->
+<!--                            <span class="fa fa-more fa-wp-neutral-2 fa-l" aria-hidden="true" style="font-size:18px;"></span>-->
+<!--                          </button>-->
+<!--                          &lt;!&ndash;when click on 3 dots this will show&ndash;&gt;-->
+<!--                          <ul id="works-more-options-1563628382" class="dropdown-menu align-right" role="menu">-->
+<!--                            <li role="none">-->
+<!--                              <a target="_blank" href="/1563628382-temp-2-temp-part-1" data-url="/1563628382-temp-2-temp-part-1" class="on-view-as-reader" data-id="1563628382" data-attr="wid-toc" role="menuitem">-->
+<!--                                View as reader-->
+<!--                              </a>-->
+<!--                            </li>-->
+<!--                            <li role="none">-->
+<!--                              <a role="menuitem" href="" data-toggle="modal" class="on-unpublish-part" data-target="#details-modal" data-id="1563628382">Unpublish</a>-->
+<!--                            </li>-->
+<!--                            <li role="none">-->
+<!--                              <a role="menuitem" href="" data-toggle="modal" data-target="#details-modal" class="on-delete-published-part" data-id="1563628382">-->
+<!--                                Delete Part-->
+<!--                              </a>-->
+<!--                            </li>-->
+<!--                          </ul>-->
+<!--                        </div>-->
+<!--                      </div>-->
                     </div>
 
                   </div>
