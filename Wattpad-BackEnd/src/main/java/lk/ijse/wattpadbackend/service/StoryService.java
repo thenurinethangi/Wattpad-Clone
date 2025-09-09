@@ -25,4 +25,6 @@ public interface StoryService {
     void updateAStory(String name, StoryCreateDTO storyCreateDTO);
 
     void unpublishedStoryByStoryId(String name, long storyId);
+
+    void deleteStoryByStoryId(String name, long storyId);
 }

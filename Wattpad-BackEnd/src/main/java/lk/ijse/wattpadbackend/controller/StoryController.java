@@ -198,6 +198,15 @@ public class StoryController {
         storyService.unpublishedStoryByStoryId(auth.getName(),storyId);
         return new APIResponse(202,"Successfully unpublished story id: "+storyId,null);
     }
+
+    @DeleteMapping("/delete/{storyId}")
+    public APIResponse deleteStoryByStoryId(@PathVariable long storyId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        storyService.deleteStoryByStoryId(auth.getName(),storyId);
+        return new APIResponse(202,"Successfully deleted story id: "+storyId,null);
+    }
 }
 
 
