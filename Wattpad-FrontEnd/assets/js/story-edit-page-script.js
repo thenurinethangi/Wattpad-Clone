@@ -249,6 +249,7 @@ async function loadStoryDetailsWhenPageLoading() {
             console.log('Success:', data);
 
             $('.cover.cover-xlg.edit-cover').attr('src',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${data.data.coverImagePath}`);
+            $('#story-title-top').text(data.data.title);
 
         })
         .catch(error => {

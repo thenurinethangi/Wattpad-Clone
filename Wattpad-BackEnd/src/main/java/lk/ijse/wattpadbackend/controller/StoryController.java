@@ -189,6 +189,15 @@ public class StoryController {
         storyService.updateAStory(auth.getName(), storyCreateDTO);
         return new APIResponse(202,"Successfully update the story id: "+id,null);
     }
+
+    @PostMapping("/unpublish/{storyId}")
+    public APIResponse unpublishedStoryByStoryId(@PathVariable long storyId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        storyService.unpublishedStoryByStoryId(auth.getName(),storyId);
+        return new APIResponse(202,"Successfully unpublished story id: "+storyId,null);
+    }
 }
 
 

@@ -18,4 +18,5 @@ public class MyStorySingleStoryDTO {
     private long publishedPartsCount;
     private long draftPartsCount;
     private String lastUpdate;
+    private int PublishedOrDraft;
 }

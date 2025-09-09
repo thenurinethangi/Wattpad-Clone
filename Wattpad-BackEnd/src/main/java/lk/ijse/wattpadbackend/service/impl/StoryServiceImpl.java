@@ -398,6 +398,7 @@ public class StoryServiceImpl implements StoryService {
                 dto.setStoryTitle(x.getTitle());
                 dto.setStoryCoverImagePath(x.getCoverImagePath());
                 dto.setParts(x.getParts().longValue());
+                dto.setPublishedOrDraft(x.getPublishedOrDraft());
 
                 long likesLong = x.getLikes().longValue();
 
@@ -758,6 +759,44 @@ public class StoryServiceImpl implements StoryService {
 
                 storyTagRepository.save(storyTag);
             }
+        }
+        catch (AccessDeniedException | NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void unpublishedStoryByStoryId(String username, long storyId) {
+
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            boolean bool = false;
+            List<Story> storyList = user.getStories();
+            for (Story x : storyList) {
+                if (x.getId() == storyId) {
+                    bool = true;
+                    break;
+                }
+            }
+            if (!bool) {
+                throw new AccessDeniedException("You haven't not access to this function");
+            }
+
+            Optional<Story> storyOptional = storyRepository.findById((int) storyId);
+            if (!storyOptional.isPresent()) {
+                throw new NotFoundException("Story not found.");
+            }
+            Story story = storyOptional.get();
+
+            story.setPublishedOrDraft(0);
+            storyRepository.save(story);
         }
         catch (AccessDeniedException | NotFoundException e){
             throw e;

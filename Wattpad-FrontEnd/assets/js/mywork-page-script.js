@@ -120,7 +120,7 @@ async function loadPublishedStories() {
                                                     <div class="dropdown parts-dropdown">
                                                         <!--continue writing btn-->
                                                         <button class="btn btn-orange dropdown-toggle" data-toggle="dropdown">
-                                                            <span class="continue-text" data-part="398855545">Continue writing</span>
+                                                            <span class="continue-text" data-story-id="${story.storyId}">Continue writing</span>
                                                             <span class="down-icon">
                                                                 <i class="fa-solid fa-angle-down" style="padding-left: 5px; padding-top: 5px;"></i>
                                                             </span>
@@ -128,7 +128,7 @@ async function loadPublishedStories() {
                                                         <div class="triangle"></div>
                                                         <!--when click on continue writing this drop down show-->
                                                         <ul class="dropdown-menu">
-                                                            <div class="story-parts-wrapper">
+                                                            <div class="story-parts-wrapper" style="display: none; visibility: hidden; opacity: 0;">
                                                                 <li class="story-part">
                                                                     <div class="part-title">Temp Part 1</div>
                                                                     <div class="part-meta">
@@ -138,8 +138,14 @@ async function loadPublishedStories() {
                                                                 </li>
                                                             </div>
                                                             <li class="newpart-wrapper">
-                                                                <button class="btn btn-orange on-newpart">
-                                                                    <span class="fa fa-plus fa-wp-neutral-5 " aria-hidden="true" style="font-size:16px;"></span> New Part
+                                                                <button class="btn btn-orange on-newpart" data-story-id="${story.storyId}">
+                                                                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Plus</title>
+  <rect x="11" y="4" width="2" height="16" rx="1" fill="currentColor"/>
+  <rect x="4" y="11" width="16" height="2" rx="1" fill="currentColor"/>
+</svg>
+
+                                                                    New Part
                                                                 </button>
                                                             </li>
                                                         </ul>
@@ -155,18 +161,21 @@ async function loadPublishedStories() {
                                                             <div class="triangle"></div>
                                                             <ul id="works-more-options-398855545" class="dropdown-menu align-right" role="menu">
                                                                 <li role="none">
-                                                                    <a target="_blank" href="https://www.wattpad.com/story/398855545-temp-2" class="on-view-as-reader" data-id="398855545" data-url="https://www.wattpad.com/story/398855545-temp-2" role="menuitem">
-                                                                        <span class="fa fa-view fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> View as reader
+                                                                    <a target="_blank" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}" class="on-view-as-reader" data-id="398855545" data-url="https://www.wattpad.com/story/398855545-temp-2" role="menuitem">
+<!--                                                                        <span class="fa fa-view fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> -->
+                                                                        View as reader
                                                                     </a>
                                                                 </li>
                                                                 <li role="none">
-                                                                    <a role="menuitem" href="#" data-toggle="modal" data-target="#unpublish-modal" data-stop-details="true" data-id="398855545" class="on-set-storyId">
-                                                                        <span class="fa fa-library fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> Unpublish
+                                                                    <a ${story.storyId} role="menuitem" href="#" class="on-set-storyId on-unpublish-story">
+<!--                                                                        <span class="fa fa-library fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> -->
+                                                                        Unpublish
                                                                     </a>
                                                                 </li>
                                                                 <li role="none">
-                                                                    <a role="menuitem" href="#" data-toggle="modal" data-target="#delete-modal" data-stop-details="true" class="on-set-storyId" data-id="398855545">
-                                                                        <span class="fa fa-trash fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> Delete Story
+                                                                    <a ${story.storyId} role="menuitem" href="#" class="on-set-storyId on-delete-story">
+<!--                                                                        <span class="fa fa-trash fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> -->
+                                                                        Delete Story
                                                                     </a>
                                                                 </li>
                                                             </ul>
@@ -313,7 +322,7 @@ async function loadAllStories() {
                                                         <div class="triangle"></div>
                                                         <!--when click on continue writing this drop down show-->
                                                         <ul class="dropdown-menu">
-                                                            <div class="story-parts-wrapper">
+                                                            <div class="story-parts-wrapper" style="display: none; visibility: hidden; opacity: 0;">
                                                                 <li class="story-part">
                                                                     <div class="part-title">Temp Part 1</div>
                                                                     <div class="part-meta">
@@ -323,8 +332,14 @@ async function loadAllStories() {
                                                                 </li>
                                                             </div>
                                                             <li class="newpart-wrapper">
-                                                                <button class="btn btn-orange on-newpart">
-                                                                    <span class="fa fa-plus fa-wp-neutral-5 " aria-hidden="true" style="font-size:16px;"></span> New Part
+                                                                <button class="btn btn-orange on-newpart" data-story-id="${story.storyId}">
+                                                                    <svg style="transform: translateY(3px);" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Plus</title>
+  <rect x="11" y="4" width="2" height="16" rx="1" fill="currentColor"/>
+  <rect x="4" y="11" width="16" height="2" rx="1" fill="currentColor"/>
+</svg>
+
+                                                                    New Part
                                                                 </button>
                                                             </li>
                                                         </ul>
@@ -340,18 +355,24 @@ async function loadAllStories() {
                                                             <div class="triangle"></div>
                                                             <ul id="works-more-options-398855545" class="dropdown-menu align-right" role="menu">
                                                                 <li role="none">
-                                                                    <a target="_blank" href="https://www.wattpad.com/story/398855545-temp-2" class="on-view-as-reader" data-id="398855545" data-url="https://www.wattpad.com/story/398855545-temp-2" role="menuitem">
-                                                                        <span class="fa fa-view fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> View as reader
+                                                                    <a target="_blank" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}" class="on-view-as-reader" data-id="398855545" data-url="https://www.wattpad.com/story/398855545-temp-2" role="menuitem">
+<!--                                                                        <span class="fa fa-view fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> -->
+                                                                        View as reader
                                                                     </a>
                                                                 </li>
+                                                                ${story.publishedOrDraft===1
+                                                                ? `<li role="none">
+                                                                        <a ${story.storyId} role="menuitem" href="#" class="on-set-storyId on-unpublish-story">
+<!--                                                                            <span class="fa fa-library fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> -->
+                                                                            Unpublish
+                                                                        </a>
+                                                                   </li>`
+                                                                : ``
+                                                                }
                                                                 <li role="none">
-                                                                    <a role="menuitem" href="#" data-toggle="modal" data-target="#unpublish-modal" data-stop-details="true" data-id="398855545" class="on-set-storyId">
-                                                                        <span class="fa fa-library fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> Unpublish
-                                                                    </a>
-                                                                </li>
-                                                                <li role="none">
-                                                                    <a role="menuitem" href="#" data-toggle="modal" data-target="#delete-modal" data-stop-details="true" class="on-set-storyId" data-id="398855545">
-                                                                        <span class="fa fa-trash fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> Delete Story
+                                                                    <a ${story.storyId} role="menuitem" href="#" class="on-set-storyId on-delete-story">
+<!--                                                                        <span class="fa fa-trash fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> -->
+                                                                        Delete Story
                                                                     </a>
                                                                 </li>
                                                             </ul>
@@ -388,6 +409,169 @@ async function run() {
 }
 
 run();
+
+
+
+
+// Toggle 3-dot dropdown
+$(document).on("click", ".actions-wrapper .dropdown-toggle", function (e) {
+    e.stopPropagation(); // prevent document click closing immediately
+    const dropdownMenu = $(this).closest(".dropdown").find(".dropdown-menu");
+
+    // Hide other open dropdowns
+    $(".dropdown-menu").not(dropdownMenu).css({
+        display: "none",
+        visibility: "hidden",
+        opacity: 0
+    });
+
+    // Toggle current dropdown
+    dropdownMenu.css({
+        display: "block",
+        visibility: "visible",
+        opacity: 1
+    });
+});
+
+// Hide dropdown on outside click
+$(document).on("click", function () {
+    $(".dropdown-menu").css({
+        display: "none",
+        visibility: "hidden",
+        opacity: 0
+    });
+});
+
+
+
+
+// Unpublish story
+$(document).on('click', '.on-unpublish-story', function (e) {
+
+    e.preventDefault();
+    let storyId = $(this).data('story-id');
+
+    confirmAction(
+        'Unpublish Story?',
+        'This story will no longer be visible to readers.',
+        'Yes, Unpublish',
+        () => {
+
+            fetch('http://localhost:8080/api/v1/story/unpublish/'+storyId, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errData => {
+                            throw new Error(JSON.stringify(errData));
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+
+                    loadPublishedStories();
+                    loadAllStories();
+
+                })
+                .catch(error => {
+                    let response = JSON.parse(error.message);
+                    console.log(response);
+                });
+
+        }
+    );
+});
+
+
+
+
+// Delete story
+$(document).on('click', '.on-delete-story', function (e) {
+
+    e.preventDefault();
+    let storyId = $(this).data('story-id');
+
+    confirmAction(
+        'Delete Story?',
+        'This action cannot be undone.',
+        'Yes, Delete',
+        () => {
+
+            fetch('http://localhost:8080/api/v1/story/delete/'+storyId, {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errData => {
+                            throw new Error(JSON.stringify(errData));
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+
+                    loadPublishedStories();
+                    loadAllStories();
+
+                })
+                .catch(error => {
+                    let response = JSON.parse(error.message);
+                    console.log(response);
+                });
+        }
+    );
+});
+
+
+// SweetAlert helper
+function confirmAction(title, text, confirmButton, callback) {
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#aaa',
+        confirmButtonText: confirmButton
+    }).then((result) => {
+        if (result.isConfirmed) {
+            callback();
+        }
+    });
+}
+
+
+
+
+// Continue writing - show parts dropdown
+$(document).on("click", ".btn-orange.dropdown-toggle", function (e) {
+    e.stopPropagation();
+    const menu = $(this).siblings(".dropdown-menu");
+    menu.find(".story-parts-wrapper").show(); // show parts wrapper
+    menu.css({
+        display: "block",
+        visibility: "visible",
+        opacity: 1
+    });
+});
+
+// New Part button click → open chapter page
+$(document).on("click", ".on-newpart", function () {
+
+    let storyId = $(this).data('story-id');
+    window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/create-chapter-page.html?storyId=${storyId}`;
+});
 
 
 

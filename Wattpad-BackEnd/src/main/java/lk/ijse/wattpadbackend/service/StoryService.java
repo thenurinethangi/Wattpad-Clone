@@ -23,4 +23,6 @@ public interface StoryService {
     StoryCreateDTO loadStoryDetailsByStoryId(long storyId);
 
     void updateAStory(String name, StoryCreateDTO storyCreateDTO);
+
+    void unpublishedStoryByStoryId(String name, long storyId);
 }
