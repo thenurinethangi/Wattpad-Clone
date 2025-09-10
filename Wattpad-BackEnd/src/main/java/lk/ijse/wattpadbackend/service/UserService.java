@@ -19,4 +19,6 @@ public interface UserService {
     List<UserProfileReadingListResponseDTO> getReadingListByUserId(long id, long readingListCount);
 
     void updateUser(UserDTO userDTO);
+
+    void followAOtherUser(String name, long id);
 }

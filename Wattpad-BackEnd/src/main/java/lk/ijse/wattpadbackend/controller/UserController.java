@@ -69,10 +69,17 @@ public class UserController {
     @PutMapping()
     public APIResponse updateUser(@RequestBody UserDTO userDTO){
 
-        System.out.println(userDTO);
-
         userService.updateUser(userDTO);
         return new APIResponse(202,"Successfully update the user details.",null);
+    }
+
+    @PostMapping("/follow/{id}")
+    public APIResponse followAOtherUser(@PathVariable long id){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        userService.followAOtherUser(auth.getName(),id);
+        return new APIResponse(202,"Successfully followed the users.",null);
     }
 }
 

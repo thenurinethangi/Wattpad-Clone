@@ -576,6 +576,34 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Internal Server Error.");
         }
     }
+
+    @Override
+    public void followAOtherUser(String username, long id) {
+
+        try {
+           User currentUser = userRepository.findByUsername(username);
+           if(currentUser==null){
+               throw new UserNotFoundException("User not found.");
+           }
+
+            Optional<User> optionalUser = userRepository.findById((int) id);
+            if (!optionalUser.isPresent()) {
+                throw new UserNotFoundException("User not found.");
+            }
+            User user = optionalUser.get();
+
+            Following following = new Following();
+            following.setUser(user);
+            following.setFollowedUserId(currentUser.getId());
+            followingRepository.save(following);
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Internal Server Error.");
+        }
+    }
 }
 
 

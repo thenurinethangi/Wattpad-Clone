@@ -143,6 +143,7 @@ async function loadUserData() {
                 $('#add-reading-list').remove();
                 $('#story-setting').remove();
                 $('.no-description').remove();
+                $('.empty-placeholder').remove();
             }
 
             if(user.about==null){
@@ -173,7 +174,7 @@ async function loadUserData() {
                 $('.facebook').find('a').text(user.fullName.split(' ')[0]+'\'s Facebook profile');
             }
 
-            $('.following-tab').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile-following.html?userId=${user.userId}`);
+            $('.following-tab').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile-following.html?userId=${userId}`);
 
         })
         .catch(error => {
@@ -314,7 +315,7 @@ async function loadUserStories() {
                                         <div class="discover-module-stories-large on-discover-module-item">
                                             <a class="send-cover-event on-story-preview cover cover-home" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.id}">
                                                 <div class="fixed-ratio fixed-ratio-cover">
-                                                    <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.coverImagePath}" alt="Cover image">
+                                                    <img style="object-fit: cover;" src="${story.coverImagePath}" alt="Cover image">
                                                 </div>
                                             </a>
                                             <div class="content" data-target="397138907" data-type="stories">
@@ -471,7 +472,7 @@ async function loadUserReadingLists() {
                                                 <div class="story-item hide">
                                                     <a class="on-story-preview cover cover-md" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${item.id}">
                                                         <div class="fixed-ratio fixed-ratio-cover">
-                                                            <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${item.coverImagePath}" alt="Story cover">
+                                                            <img src="${item.coverImagePath}" alt="Story cover">
                                                         </div>
                                                     </a>
                                                     <div class="content">
@@ -594,6 +595,57 @@ async function run() {
 
 run();
 
+
+
+
+//follow user
+let followBtn = $('.follow-btn')[0];
+followBtn.addEventListener('click',function (event) {
+
+    let userId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("userId")) {
+        userId = params.get("userId");
+    }
+
+    if(userId==null){
+        //load chapter not found page
+        return;
+    }
+
+    fetch('http://localhost:8080/user/follow/'+userId, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            $(".follow-btn").replaceWith(`
+  <button role="menuitem" class="btn btn-fan on-follow-user on-unfollow btn-teal">
+    <span class="fa no-right-padding fa-wp-base-2 fa-following fa-wp-neutral-5" aria-hidden="true" style="font-size:16px;"></span>
+    <span class="hidden-xs truncate">Following</span>
+  </button>
+`);
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+        });
+
+});
 
 
 
