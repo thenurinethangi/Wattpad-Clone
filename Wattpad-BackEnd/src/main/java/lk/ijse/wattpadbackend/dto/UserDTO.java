@@ -53,4 +53,6 @@ public class UserDTO {
     private long readingLists;
 
     private long followers;
+
+    private int isFollowedByTheCurrentUser;
 }

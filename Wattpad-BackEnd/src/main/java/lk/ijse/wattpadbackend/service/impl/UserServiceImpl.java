@@ -98,6 +98,14 @@ public class UserServiceImpl implements UserService {
 
             userDTO.setFollowers(followingRepository.findAllByUser(user).size());
 
+            Following following = followingRepository.findByFollowedUserIdAndUser(currentUser.getId(),user);
+            if(following!=null){
+                userDTO.setIsFollowedByTheCurrentUser(1);
+            }
+            else{
+                userDTO.setIsFollowedByTheCurrentUser(0);
+            }
+
             return userDTO;
 
         }

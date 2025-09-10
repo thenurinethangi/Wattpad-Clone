@@ -78,6 +78,9 @@ public class UserController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
+        System.out.println(id);
+        System.out.println(auth.getName());
+
         userService.followAOtherUser(auth.getName(),id);
         return new APIResponse(202,"Successfully followed the users.",null);
     }
@@ -86,6 +89,9 @@ public class UserController {
     public APIResponse unfollowAOtherUser(@PathVariable long id){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        System.out.println(id);
+        System.out.println(auth.getName());
 
         userService.unfollowAOtherUser(auth.getName(),id);
         return new APIResponse(202,"Successfully unfollowed the users.",null);

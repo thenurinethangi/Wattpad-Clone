@@ -85,8 +85,8 @@ async function loadStoryDetails() {
                 $('#chapterTitleEdit').text('Untitled Part 1');
             }
             else {
-                $('#chapter-title').text('Untitled Part ' + story.chapterSimpleDTOList.length + 1);
-                $('#chapterTitleEdit').text('Untitled Part ' + story.chapterSimpleDTOList.length + 1);
+                $('#chapter-title').text('Untitled Part ' + (story.chapterSimpleDTOList.length + 1));
+                $('#chapterTitleEdit').text('Untitled Part ' + (story.chapterSimpleDTOList.length + 1));
             }
 
         })
@@ -130,6 +130,7 @@ function insertMedia2(type) {
                     // Insert into container
                     container.prepend(img);
                     localStorage.setItem("isSaved", "false");
+                    $('.saved-indicator').text('Unsaved');
 
                     // Hide add buttons after setting media
                     container.querySelectorAll('.media-btn').forEach(btn => btn.style.display = 'none');
@@ -156,6 +157,7 @@ function insertMedia2(type) {
                 // Insert into container
                 container.prepend(iframe);
                 localStorage.setItem("isSaved", "false");
+                $('.saved-indicator').text('Unsaved');
 
                 // Hide add buttons after setting media
                 container.querySelectorAll('.media-btn').forEach(btn => btn.style.display = 'none');
@@ -207,6 +209,7 @@ $(document).on('click','.edit-media',function (event) {
                             </div>`;
                     };
                     localStorage.setItem("isSaved", "false");
+                    $('.saved-indicator').text('Unsaved');
                     reader.readAsDataURL(file);
                 }
             };
@@ -230,6 +233,7 @@ $(document).on('click','.edit-media',function (event) {
                                 </svg>
                             </div>`;
                         localStorage.setItem("isSaved", "false");
+                        $('.saved-indicator').text('unsaved');
                     }
                     else {
                         Swal.fire('Invalid URL', 'Please enter a valid YouTube link', 'error');
@@ -269,7 +273,6 @@ async function collectAndPrepareContentForForm() {
         let file = new File([blob], "cover-image.jpg", { type: blob.type });
         console.log("Image File:", file);
 
-        // ✅ wait for upload before continuing
         url = await uploadImageToImgbb(file);
 
     } else if (chapterCover.is('iframe')) {
@@ -321,7 +324,8 @@ async function collectAndPrepareContentForForm() {
         contentStructure.paragraphs.push(paragraphData);
     });
 
-    // ✅ Wait until all paragraphs are processed (image uploads done)
+    $('#save-spinner').removeClass('hidden');
+
     let paragraphAr = await buildParagraphArray(contentStructure);
 
     let chapterId = null;
@@ -360,6 +364,7 @@ async function collectAndPrepareContentForForm() {
                 console.log('Success:', data);
                 localStorage.setItem("isSaved", "true");
                 $('.saved-indicator').text('Saved');
+                $('#save-spinner').addClass('hidden');
             })
             .catch(error => {
                 let response = JSON.parse(error.message);
@@ -398,6 +403,7 @@ async function collectAndPrepareContentForForm() {
                 localStorage.setItem("chapterId", data.data);
                 localStorage.setItem("isSaved", "true");
                 $('.saved-indicator').text('Saved');
+                $('#save-spinner').addClass('hidden');
             })
             .catch(error => {
                 let response = JSON.parse(error.message);
@@ -436,6 +442,7 @@ async function collectAndPrepareContentForForm() {
                 console.log('Success:', data);
                 localStorage.setItem("isSaved", "true");
                 $('.saved-indicator').text('Saved');
+                $('#save-spinner').addClass('hidden');
             })
             .catch(error => {
                 let response = JSON.parse(error.message);
@@ -571,13 +578,11 @@ async function publish() {
         let imageUrl = chapterCover.attr('src');
         console.log("Image URL:", imageUrl);
 
-        // Convert URL to File object
         const res = await fetch(imageUrl);
         const blob = await res.blob();
         let file = new File([blob], "cover-image.jpg", { type: blob.type });
         console.log("Image File:", file);
 
-        // ✅ wait for upload before continuing
         url = await uploadImageToImgbb(file);
 
     } else if (chapterCover.is('iframe')) {
@@ -629,7 +634,8 @@ async function publish() {
         contentStructure.paragraphs.push(paragraphData);
     });
 
-    // ✅ Wait until all paragraphs are processed (image uploads done)
+    $('#save-spinner').removeClass('hidden');
+
     let paragraphAr = await buildParagraphArray(contentStructure);
 
     let chapterId = null;
@@ -750,10 +756,49 @@ async function publish() {
                 let response = JSON.parse(error.message);
                 console.log(response);
             });
-
     }
 }
 
+
+
+
+//load chapter content if the chapter going to edit
+function loadChapterContent() {
+
+    let cId = null;
+    let storyId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("chapterId") && params.has("storyId")) {
+        cId = params.get("chapterId");
+        storyId = params.get("storyId");
+    }
+
+    fetch(`http://localhost:8080/api/v1/chapter/publishAndSave/${chapterId}/${storyId}`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+        });
+}
 
 
 

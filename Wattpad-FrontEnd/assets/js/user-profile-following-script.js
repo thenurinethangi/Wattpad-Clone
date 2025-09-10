@@ -118,7 +118,7 @@ async function loadUserData() {
                 }
             }
             else {
-                $('#profile-pic').attr('src', `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${user.profilePicPath}`);
+                $('#profile-pic').attr('src', `${user.profilePicPath}`);
 
                 if(user.coverPicPath==null){
                     const randomIndex = Math.floor(Math.random() * profileColors.length);
@@ -142,7 +142,7 @@ async function loadUserData() {
                 $('#story-setting').remove();
             }
 
-            $('.about-tab').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${user.userId}`);
+            $('.about-tab').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${userId}`);
 
         })
         .catch(error => {
@@ -207,7 +207,7 @@ async function loadFollowingUsers() {
                 let singleUser = `
                         <article class="user-card">
                             ${user.coverPicPath===null
-                            ? `<div class="background background-sm" style="background-image: url( 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${user.coverPicPath}' );"></div>`
+                            ? `<div class="background background-sm" style="background-image: url( '${user.coverPicPath}' );"></div>`
                             : `<div class="background background-sm" style="background-color: ${randomColor}"></div>`
                             }
                             ${user.profilePicPath===null
@@ -215,20 +215,20 @@ async function loadFollowingUsers() {
                                  <p style="font-weight: 500; font-size: 3em; text-align: center; transform: translateY(28px); color: #fff;">${user.fullName.substring(0,1).toUpperCase()}</p>
                                </a>`
                             : `<a class="avatar avatar-lg on-navigate" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${user.userId}">
-                                <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${user.profilePicPath}">
+                                <img src="${user.profilePicPath}">
                                </a>`
                             }
                             <div class="content">
                                 <h5><a class="alt-link on-navigate" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${user.userId}">${user.fullName}</a></h5>
                                 <small>@${user.username}</small>
                                 ${user.isFollowedByTheCurrentUser===1
-                                ? `<button class="btn btn-fan btn-md btn-block btn-teal on-unfollow" data-target="Taekook_Sinatra" data-following="true" role="button">
+                                ? `<button data-user-id="${user.userId}" class="btn btn-fan btn-md btn-block btn-teal on-unfollow unfollow-btn" role="button">
                                     <i class="fa-solid fa-user-plus" style="font-size:15px; color: #fff;"></i>
                                     <span class="truncate">Followed</span>
                                 </button>`
-                                : `<button style="background-color: #fff; border: 1.5px solid rgba(111,111,111,0.5);" class="btn btn-fan btn-md btn-block btn-teal on-unfollow" data-target="Taekook_Sinatra" data-following="true" role="button">
+                                : `<button data-user-id="${user.userId}" style="background-color: #fff; border: 1.5px solid rgba(111,111,111,0.5);" class="btn btn-fan btn-md btn-block btn-teal on-unfollow follow-btn" role="button">
                                     <i class="fa-solid fa-user-plus" style="font-size:15px; color: #099;"></i>
-                                    <span class="truncate" style="color: #6f6f6f;">Following</span>
+                                    <span class="truncate" style="color: #6f6f6f;">Follow</span>
                                 </button>`
                                 }
                             </div>
@@ -284,6 +284,72 @@ showMoreUsersBtn.addEventListener('click',async function (event) {
     count+=16;
     loadFollowingUsers();
 
+});
+
+
+
+
+//follow user
+$(document).on('click', '.follow-btn', function (event) {
+
+    let userId = $('.follow-btn').data('user-id');
+
+    fetch('http://localhost:8080/user/follow/' + userId, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            loadFollowingUsers();
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+        });
+});
+
+
+
+
+//unfollow user
+$(document).on('click', '.unfollow-btn', function (event) {
+
+    let userId = $('.unfollow-btn').data('user-id');
+
+    fetch('http://localhost:8080/user/unfollow/' + userId, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            loadFollowingUsers();
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+        });
 });
 
 

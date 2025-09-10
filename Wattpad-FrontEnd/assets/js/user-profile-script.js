@@ -176,6 +176,15 @@ async function loadUserData() {
 
             $('.following-tab').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile-following.html?userId=${userId}`);
 
+            if(user.isFollowedByTheCurrentUser===1 && user.isCurrentUser===0){
+                $(".follow-btn").replaceWith(`
+                <button role="menuitem" class="btn btn-fan on-follow-user on-unfollow btn-teal">
+                    <i class="fa-solid fa-user-plus" style="font-size:16px;"></i>
+                    <span class="hidden-xs truncate">Following</span>
+                </button>
+            `);
+            }
+
         })
         .catch(error => {
             try {
@@ -599,9 +608,7 @@ run();
 
 
 //follow user
-let followBtn = $('.follow-btn')[0];
-followBtn.addEventListener('click',function (event) {
-
+$(document).on('click', '.follow-btn', function (event) {
     let userId = null;
     const params = new URLSearchParams(window.location.search);
 
@@ -609,12 +616,12 @@ followBtn.addEventListener('click',function (event) {
         userId = params.get("userId");
     }
 
-    if(userId==null){
-        //load chapter not found page
+    if (userId == null) {
+        // load chapter not found page
         return;
     }
 
-    fetch('http://localhost:8080/user/follow/'+userId, {
+    fetch('http://localhost:8080/user/follow/' + userId, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -632,28 +639,25 @@ followBtn.addEventListener('click',function (event) {
         .then(data => {
             console.log('Success:', data);
 
+            // Replace with unfollow button
             $(".follow-btn").replaceWith(`
-  <button role="menuitem" class="btn btn-fan on-follow-user on-unfollow btn-teal">
-    <i class="fa-solid fa-user-plus" style="font-size:16px;"></i>
-    <span class="hidden-xs truncate">Following</span>
-  </button>
-`);
-
+                <button role="menuitem" class="btn btn-fan on-follow-user on-unfollow btn-teal">
+                    <i class="fa-solid fa-user-plus" style="font-size:16px;"></i>
+                    <span class="hidden-xs truncate">Following</span>
+                </button>
+            `);
         })
         .catch(error => {
             let response = JSON.parse(error.message);
             console.log(response);
         });
-
 });
 
 
 
 
 //unfollow user
-let unfollowBtn = $('.on-unfollow')[0];
-unfollowBtn.addEventListener('click',function (event) {
-
+$(document).on('click', '.on-unfollow', function (event) {
     let userId = null;
     const params = new URLSearchParams(window.location.search);
 
@@ -661,12 +665,12 @@ unfollowBtn.addEventListener('click',function (event) {
         userId = params.get("userId");
     }
 
-    if(userId==null){
-        //load chapter not found page
+    if (userId == null) {
+        // load chapter not found page
         return;
     }
 
-    fetch('http://localhost:8080/user/unfollow//'+userId, {
+    fetch('http://localhost:8080/user/unfollow/' + userId, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -684,20 +688,20 @@ unfollowBtn.addEventListener('click',function (event) {
         .then(data => {
             console.log('Success:', data);
 
+            // Replace with follow button
             $(".on-unfollow").replaceWith(`
-  <button role="menuitem" class="btn btn-fan btn-white  on-follow-user on-follow follow-btn">
-                                <i class="fa-solid fa-user-plus" style="font-size:16px;"></i>
-                                <span class="hidden-xs truncate">Follow</span>
-                            </button>
-`);
-
+                <button role="menuitem" class="btn btn-fan btn-white on-follow-user on-follow follow-btn">
+                    <i class="fa-solid fa-user-plus" style="font-size:16px;"></i>
+                    <span class="hidden-xs truncate">Follow</span>
+                </button>
+            `);
         })
         .catch(error => {
             let response = JSON.parse(error.message);
             console.log(response);
         });
-
 });
+
 
 
 
