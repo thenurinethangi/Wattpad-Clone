@@ -12,6 +12,7 @@ import lk.ijse.wattpadbackend.repository.UserRepository;
 import lk.ijse.wattpadbackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -596,6 +597,36 @@ public class UserServiceImpl implements UserService {
             following.setUser(user);
             following.setFollowedUserId(currentUser.getId());
             followingRepository.save(following);
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Internal Server Error.");
+        }
+    }
+
+    @Override
+    @Transactional
+    public void unfollowAOtherUser(String username, long id) {
+
+        try {
+            User currentUser = userRepository.findByUsername(username);
+            if(currentUser==null){
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<User> optionalUser = userRepository.findById((int) id);
+            if (!optionalUser.isPresent()) {
+                throw new UserNotFoundException("User not found.");
+            }
+            User user = optionalUser.get();
+
+            Following following = followingRepository.findByFollowedUserIdAndUser(currentUser.getId(),user);
+            if(following!=null){
+                System.out.println("exit");
+                followingRepository.delete(following);
+            }
         }
         catch (UserNotFoundException e) {
             throw e;

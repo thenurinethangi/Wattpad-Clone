@@ -21,4 +21,6 @@ public interface UserService {
     void updateUser(UserDTO userDTO);
 
     void followAOtherUser(String name, long id);
+
+    void unfollowAOtherUser(String name, long id);
 }

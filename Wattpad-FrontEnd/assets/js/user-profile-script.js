@@ -634,9 +634,61 @@ followBtn.addEventListener('click',function (event) {
 
             $(".follow-btn").replaceWith(`
   <button role="menuitem" class="btn btn-fan on-follow-user on-unfollow btn-teal">
-    <span class="fa no-right-padding fa-wp-base-2 fa-following fa-wp-neutral-5" aria-hidden="true" style="font-size:16px;"></span>
+    <i class="fa-solid fa-user-plus" style="font-size:16px;"></i>
     <span class="hidden-xs truncate">Following</span>
   </button>
+`);
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+        });
+
+});
+
+
+
+
+//unfollow user
+let unfollowBtn = $('.on-unfollow')[0];
+unfollowBtn.addEventListener('click',function (event) {
+
+    let userId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("userId")) {
+        userId = params.get("userId");
+    }
+
+    if(userId==null){
+        //load chapter not found page
+        return;
+    }
+
+    fetch('http://localhost:8080/user/unfollow//'+userId, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            $(".on-unfollow").replaceWith(`
+  <button role="menuitem" class="btn btn-fan btn-white  on-follow-user on-follow follow-btn">
+                                <i class="fa-solid fa-user-plus" style="font-size:16px;"></i>
+                                <span class="hidden-xs truncate">Follow</span>
+                            </button>
 `);
 
         })

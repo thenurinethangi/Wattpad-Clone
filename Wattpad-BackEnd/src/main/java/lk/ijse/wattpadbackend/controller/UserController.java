@@ -81,6 +81,15 @@ public class UserController {
         userService.followAOtherUser(auth.getName(),id);
         return new APIResponse(202,"Successfully followed the users.",null);
     }
+
+    @PostMapping("/unfollow/{id}")
+    public APIResponse unfollowAOtherUser(@PathVariable long id){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        userService.unfollowAOtherUser(auth.getName(),id);
+        return new APIResponse(202,"Successfully unfollowed the users.",null);
+    }
 }
 
 
