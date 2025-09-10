@@ -1,0 +1,349 @@
+<html lang="en">
+<head>
+    <meta charSet="utf-8"/>
+    <link rel="icon" type="image/ico" href="assets/image/wattpad-icon-2-removebg-preview.ico">
+    <title>yukee07 - Wattpad</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Thenuri Nethangi">
+    <meta name="keywords" content="online stories, read stories, write stories, wattpad alternative, fiction platform, storytelling, novels, short stories, creative writing, user-generated stories">
+    <meta name="description" content="Discover and share captivating stories on our platform. Read novels, write your own tales, and connect with a community of passionate readers and writers.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/style/desktop-web.d4472ed8-remove-min.css">
+    <!--for header-->
+    <link rel="stylesheet" href="assets/style/css-bundle-TDTK4GB6.css"/>
+    <link rel="preload" as="font" href="assets/fonts/SourceSansPro-Regular.ttf" crossorigin="anonymous"/>
+    <link rel="preload" as="font" href="assets/fonts/SourceSansPro-SemiBold.ttf" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="assets/style/fonts-XNHMJ6ZM.css"/>
+    <link rel="stylesheet" href="assets/style/tokens-2GVK43A7.css"/>
+    <link rel="stylesheet" href="assets/style/main-UJKFODQT.css"/>
+    <link rel="stylesheet" href="assets/style/react-tooltip-HIHMAPNF.css"/>
+    <link rel="stylesheet" href="assets/style/splide.min-AQNS3YPQ.css"/>
+    <link rel="stylesheet" href="assets/style/footer-style.css">
+    <style>
+        .profile-edit-header {
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        /* Cover background */
+        .cover-container {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .cover-container .cover-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Profile picture + name */
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: -60px; /* overlap */
+        }
+
+        .profile-pic-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            object-fit: cover;
+        }
+
+        /* Edit icons */
+        .edit-icon {
+            position: absolute;
+            background: rgba(0,0,0,0.6);
+            border-radius: 50%;
+            padding: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .edit-icon input {
+            display: none;
+        }
+
+        .cover-edit {
+            bottom: 12px;
+            right: 12px;
+        }
+
+        .pic-edit {
+            bottom: 0;
+            right: 0;
+        }
+
+        /* Full name input */
+        .name-input {
+            margin-top: 12px;
+        }
+
+        .name-input input {
+            font-size: 20px;
+            padding: 6px 10px;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            text-align: center;
+            background: transparent;
+            color: #333;
+        }
+
+        .name-input input:focus {
+            border-color: #ff5a00;
+            outline: none;
+        }
+
+    </style>
+</head>
+<body style="display: none; visibility: hidden; opacity: 0;">
+
+<div id="app-container">
+    <div class="profile-layout">
+        <div class="component-wrapper" id="component-buycoinsreactmodal-buy-coins-modal-%2fuser%2fyukee07"></div>
+        <!--profile edit-->
+        <!--top bar-->
+        <div id="edit-controls" class="faded edit-profile clearfix" style="padding-top: 60px;">
+            <div class="container">
+                <strong>Currently editing your profile</strong>
+                <div class="actions pull-right">
+                    <button class="btn btn-orange on-edit-save">Save Changes</button>
+                    <button class="btn btn-grey on-edit-cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Edit Header -->
+        <header class="profile-edit-header">
+            <!-- Cover background -->
+            <div class="cover-container">
+                <img src="https://w0.peakpx.com/wallpaper/410/412/HD-wallpaper-plain-black-black.jpg"
+                     alt=""
+                     class="cover-image background">
+
+                <!-- Pen icon for changing cover -->
+                <label class="edit-icon cover-edit">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="white">
+                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71
+                 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003
+                 1.003 0 0 0-1.42 0l-1.83 1.83
+                 3.75 3.75 1.84-1.82z"/>
+                    </svg>
+                    <input type="file" accept="image/*" hidden>
+                </label>
+            </div>
+
+            <!-- Profile picture + name -->
+            <div class="profile-info">
+                <div class="profile-pic-container">
+                    <img id="profile-pic" src="https://via.placeholder.com/120"
+                         alt=""
+                         class="profile-pic">
+
+                    <!-- Pen icon for changing profile picture -->
+                    <label class="edit-icon pic-edit">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="white">
+                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71
+                   7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003
+                   1.003 0 0 0-1.42 0l-1.83 1.83
+                   3.75 3.75 1.84-1.82z"/>
+                        </svg>
+                        <input type="file" accept="image/*" hidden>
+                    </label>
+                </div>
+
+                <div class="name-input">
+                    <input type="text" value="Your Full Name" id="fullname">
+                </div>
+            </div>
+        </header>
+
+        <div id="edit-profile" class="edit-profile container">
+            <br><br>
+            <form class="form-horizontal" role="form">
+
+                <p class="info-message">The information you enter here, including username, profile photo, and background image, will be visible to other users. Learn about safe information sharing <a rel="noopener noreferrer" target="_blank" href="https://safetyportal.wattpad.com/youth-portal/sharing-information">here.</a></p>
+
+                <div class="row form-group gender">
+                    <label for="update-gender" class="control-label col-sm-3">Pronouns</label>
+                    <div class="col-sm-6">
+                        <select name="gender" class="form-control" id="update-gender" data-field="gender" value="" selected="selected">
+                            <option value="He/Him">He/Him</option>
+                            <option value="She/Her">She/Her</option>
+                            <option value="They/Them">They/Them</option>
+                            <option value="Not listed">Not listed</option>
+                            <option value=" ">I'd rather not say</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Temp remove until v3 API support is updated -->
+                <div class="row form-group description">
+                    <label for="update-description" class="control-label col-sm-3">About</label>
+                    <div class="col-sm-6">
+                        <textarea id="update-description" class="form-control count-input" data-field="description" data-name="Description" data-limit="2000" data-counter="description-counter" rows="10"></textarea>
+                        <div class="description-counter pull-right hidden"><span>0</span>/2000</div>
+                    </div>
+                </div>
+
+                <div class="row form-group website">
+                    <label for="update-website" class="control-label col-sm-3">My Website</label>
+                    <div class="col-sm-6">
+                        <input id="update-website" type="text" class="form-control" data-field="website" value="" placeholder="Enter a link to your personal website" selected="selected">
+                    </div>
+                </div>
+
+                <div class="row form-group location">
+                    <label for="update-location" class="control-label col-sm-3">Location</label>
+                    <div class="col-sm-6">
+                        <input id="update-location" type="text" class="form-control" data-field="location" value="" placeholder="Enter your location" selected="selected">
+                    </div>
+                </div>
+
+                <div class="component-wrapper" id="component-accountsocialmedia-facebook-info-%2fuser%2fyukee07"><div><div class="row form-group facebook"><label for="update-facebook" class="control-label col-sm-3">Facebook <img class="label-icon" src="assets/image/icon22_fb.png?" alt="icon22_fb.png" border="0" align="absmiddle"></label><div class="col-sm-6"><div class="connect-facebook-wrapper"><button class="btn-no-style"><img class="btn-facebook-link" alt="Facebook" border="0" width="89" height="21" src="assets/image/connect_light_medium_short.gif"></button><div class="facebook-tooltip" role="tooltip" aria-label="Facebook" data-tip="Connecting with Facebook makes it really easy to share everything you do on Wattpad with your Facebook friends. It also allows you to login to Wattpad with one click!" currentitem="false"><span class="fa fa-info fa-wp-neutral-2 tooltip-icon" aria-hidden="true" style="font-size: 16px;"></span></div><div class="__react_component_tooltip t1cdb1fc0-9ca9-4860-b45b-a200fe3cb949 place-top type-dark" id="t1cdb1fc0-9ca9-4860-b45b-a200fe3cb949" data-id="tooltip"><style aria-hidden="true">
+                    .t1cdb1fc0-9ca9-4860-b45b-a200fe3cb949 {
+                        color: #fff;
+                        background: #222;
+                        border: 1px solid transparent;
+                    }
+
+                    .t1cdb1fc0-9ca9-4860-b45b-a200fe3cb949.place-top {
+                        margin-top: -10px;
+                    }
+                    .t1cdb1fc0-9ca9-4860-b45b-a200fe3cb949.place-top::before {
+                        border-top: 8px solid transparent;
+                    }
+                    .t1cdb1fc0-9ca9-4860-b45b-a200fe3cb949.place-top::after {
+                        border-left: 8px solid transparent;
+                        border-right: 8px solid transparent;
+                        bottom: -6px;
+                        left: 50%;
+                        margin-left: -8px;
+                        border-top-color: #222;
+                        border-top-style: solid;
+                        border-top-width: 6px;
+                    }
+
+                    .t1cdb1fc0-9ca9-4860-b45b-a200fe3cb949.place-bottom {
+                        margin-top: 10px;
+                    }
+                    .t1cdb1fc0-9ca9-4860-b45b-a200fe3cb949.place-bottom::before {
+                        border-bottom: 8px solid transparent;
+                    }
+                    .t1cdb1fc0-9ca9-4860-b45b-a200fe3cb949.place-bottom::after {
+                        border-left: 8px solid transparent;
+                        border-right: 8px solid transparent;
+                        top: -6px;
+                        left: 50%;
+                        margin-left: -8px;
+                        border-bottom-color: #222;
+                        border-bottom-style: solid;
+                        border-bottom-width: 6px;
+                    }
+
+                    .t1cdb1fc0-9ca9-4860-b45b-a200fe3cb949.place-left {
+                        margin-left: -10px;
+                    }
+                    .t1cdb1fc0-9ca9-4860-b45b-a200fe3cb949.place-left::before {
+                        border-left: 8px solid transparent;
+                    }
+                    .t1cdb1fc0-9ca9-4860-b45b-a200fe3cb949.place-left::after {
+                        border-top: 5px solid transparent;
+                        border-bottom: 5px solid transparent;
+                        right: -6px;
+                        top: 50%;
+                        margin-top: -4px;
+                        border-left-color: #222;
+                        border-left-style: solid;
+                        border-left-width: 6px;
+                    }
+
+                    .t1cdb1fc0-9ca9-4860-b45b-a200fe3cb949.place-right {
+                        margin-left: 10px;
+                    }
+                    .t1cdb1fc0-9ca9-4860-b45b-a200fe3cb949.place-right::before {
+                        border-right: 8px solid transparent;
+                    }
+                    .t1cdb1fc0-9ca9-4860-b45b-a200fe3cb949.place-right::after {
+                        border-top: 5px solid transparent;
+                        border-bottom: 5px solid transparent;
+                        left: -6px;
+                        top: 50%;
+                        margin-top: -4px;
+                        border-right-color: #222;
+                        border-right-style: solid;
+                        border-right-width: 6px;
+                    }
+                </style></div></div></div></div></div></div>
+
+                <!--<div class="row form-group facebook">
+                    <label for="update-facebook" class="control-label col-sm-3">Link with Facebook</label>
+                    <div class="col-sm-6">
+                        <input id="update-facebook" type="text" class="form-control" data-field="facebook" value="" placeholder="Connect with Facebook">
+                    </div>
+                </div>
+
+                <div class="row form-group twitter">
+                    <label for="update-twitter" class="control-label col-sm-3">Link with Twitter</label>
+                    <div class="col-sm-6">
+                        <input id="update-twitter" type="text" class="form-control" data-field="twitter" value="" placeholder="Connect with Twitter">
+                    </div>
+                </div>
+
+                <div class="row form-group smashwords">
+                    <label for="update-smashwords" class="control-label col-sm-3">Smashwords</label>
+                    <div class="col-sm-6">
+                        <input id="update-smashwords" type="text" class="form-control" data-field="smashwords" value="" placeholder="Add your Smashwords Profile">
+                    </div>
+                </div>
+                -->
+
+            </form>
+
+            <br>
+            <br>
+            <br>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="assets/js/user-profile-edit-page-script.js"></script>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

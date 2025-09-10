@@ -132,7 +132,7 @@
         </div>
 
         <!--profile picture, bg image, statics section-->
-        <header class="background background-lg" style="background-color: #555C51;">
+        <header class="background background-lg" style="background-color: #555C51; display: block; position: relative;">
             <div id="edit-overlay" class="hidden faded edit-profile"></div>
             <div id="edit-background" class="hidden faded edit-profile center-block">
                 <span class="loading faded"></span>
@@ -143,7 +143,7 @@
             </div>
             <div class="avatar avatar-profile center-block profile-pic-warp">
                 <div class="component-wrapper profile-pic-container" id="component-avatar-display-%2fuser%2fyukee07">
-                    <img id="profile-pic" src="https://img.wattpad.com/useravatar/7.128.jpg" aria-hidden="true" alt="profile pic">
+                    <img style="object-fit: cover;" id="profile-pic" src="https://img.wattpad.com/useravatar/7.128.jpg" aria-hidden="true" alt="profile pic">
                 </div>
                 <div id="edit-avatar" class="hidden faded edit-profile">
                     <span class="loading-bg faded"></span>
@@ -182,9 +182,9 @@
                     <div class="navigation-content">
                         <nav>
                             <ul>
-                                <li data-section="about" class="active"><a href="/user/yukee07" class="on-nav-item">About</a></li>
-                                <li data-section="conversations" class=""><a href="/user/yukee07/conversations" class="on-nav-item">Conversations</a></li>
-                                <li data-section="following" class=""><a href="/user/yukee07/following" class="on-nav-item">Following</a></li>
+                                <li data-section="about" class="active"><a href="" class="on-nav-item about-tab">About</a></li>
+                                <li data-section="conversations" class=""><a href="" class="on-nav-item conversations-tab">Conversations</a></li>
+                                <li data-section="following" class=""><a href="" class="on-nav-item following-tab">Following</a></li>
                             </ul>
                         </nav>
                         <div class="actions" role="menu">
@@ -271,7 +271,7 @@
                                 <!--no - description-->
                                 <div class="no-description">
                                     <div>Help people get to know you</div>
-                                    <button class="btn btn-orange on-edit">Add Description</button>
+                                    <button class="btn btn-orange on-edit add-description-btn">Add Description</button>
                                 </div>
                                 <!--has description-->
                                 <div class="description">

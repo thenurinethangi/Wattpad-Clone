@@ -38,9 +38,9 @@ public class StoryServiceImpl implements StoryService {
 
             Story story = storyOptional.get();
 
-            if(story.getPublishedOrDraft()==0){
-                throw new NotFoundException("Story not found.");
-            }
+//            if(story.getPublishedOrDraft()==0){
+//                throw new NotFoundException("Story not found.");
+//            }
 
             StoryDTO storyDTO = new StoryDTO();
             storyDTO.setId(story.getId());
@@ -807,6 +807,7 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
+    @Transactional
     public void deleteStoryByStoryId(String username, long storyId) {
 
         try {
@@ -834,6 +835,7 @@ public class StoryServiceImpl implements StoryService {
             Story story = storyOptional.get();
 
             storyRepository.delete(story);
+            storyRepository.flush();
         }
         catch (AccessDeniedException | NotFoundException e){
             throw e;

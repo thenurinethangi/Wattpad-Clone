@@ -120,7 +120,7 @@ async function loadUserData() {
                 }
             }
             else {
-                $('#profile-pic').attr('src', `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${user.profilePicPath}`);
+                $('#profile-pic').attr('src', `${user.profilePicPath}`);
 
                 if(user.coverPicPath==null){
                     const randomIndex = Math.floor(Math.random() * profileColors.length);
@@ -142,6 +142,7 @@ async function loadUserData() {
                 $('#reading-list-setting').remove();
                 $('#add-reading-list').remove();
                 $('#story-setting').remove();
+                $('.no-description').remove();
             }
 
             if(user.about==null){
@@ -172,6 +173,7 @@ async function loadUserData() {
                 $('.facebook').find('a').text(user.fullName.split(' ')[0]+'\'s Facebook profile');
             }
 
+            $('.following-tab').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile-following.html?userId=${user.userId}`);
 
         })
         .catch(error => {
@@ -530,6 +532,52 @@ showMoreReadingListBtn.addEventListener('click',async function (event) {
 
     readingListCount+=2;
     loadUserReadingLists();
+
+});
+
+
+
+
+//click on edit profile
+let editProfileBtn = $('.edit-profile')[0];
+editProfileBtn.addEventListener('click',async function (event) {
+
+    let userId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("userId")) {
+        userId = params.get("userId");
+    }
+
+    if (userId == null) {
+        //load chapter not found page
+        return;
+    }
+
+    window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile-edit-page.html?userId=${userId}`;
+
+});
+
+
+
+
+//click on edit profile
+let addDescriptionBtn = $('.add-description-btn')[0];
+addDescriptionBtn.addEventListener('click',async function (event) {
+
+    let userId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("userId")) {
+        userId = params.get("userId");
+    }
+
+    if (userId == null) {
+        //load chapter not found page
+        return;
+    }
+
+    window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile-edit-page.html?userId=${userId}`;
 
 });
 

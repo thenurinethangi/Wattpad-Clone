@@ -545,6 +545,37 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Internal Server Error.");
         }
     }
+
+    @Override
+    public void updateUser(UserDTO userDTO) {
+
+        try {
+            Optional<User> optionalUser = userRepository.findById((int) userDTO.getId());
+            if (!optionalUser.isPresent()) {
+                throw new UserNotFoundException("User not found.");
+            }
+            User user = optionalUser.get();
+
+            user.setAbout(userDTO.getAbout());
+            user.setLocation(userDTO.getLocation());
+            user.setCoverPicPath(userDTO.getCoverPicPath());
+            user.setFacebookLink(userDTO.getFacebookLink());
+            user.setFullName(userDTO.getFullName());
+            user.setWebsiteLink(userDTO.getWebsiteLink());
+            user.setCoverPicPath(userDTO.getCoverPicPath());
+            user.setPronouns(userDTO.getPronouns());
+            user.setProfilePicPath(userDTO.getProfilePicPath());
+
+            userRepository.save(user);
+
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Internal Server Error.");
+        }
+    }
 }
 
 

@@ -17,4 +17,6 @@ public interface UserService {
     UserProfileStoriesResponseDTO getStoriesByUserId(String username, long id, long storyCount);
 
     List<UserProfileReadingListResponseDTO> getReadingListByUserId(long id, long readingListCount);
+
+    void updateUser(UserDTO userDTO);
 }

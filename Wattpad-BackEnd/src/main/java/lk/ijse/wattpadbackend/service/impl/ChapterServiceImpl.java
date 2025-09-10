@@ -44,9 +44,9 @@ public class ChapterServiceImpl implements ChapterService {
 
             Chapter chapter = chapterOptional.get();
 
-            if(chapter.getPublishedOrDraft()==0){
-                throw new NotFoundException("Chapter not found.");
-            }
+//            if(chapter.getPublishedOrDraft()==0){
+//                throw new NotFoundException("Chapter not found.");
+//            }
 
             ChapterDTO chapterDTO = new ChapterDTO();
 

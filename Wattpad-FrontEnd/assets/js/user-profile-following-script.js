@@ -142,6 +142,8 @@ async function loadUserData() {
                 $('#story-setting').remove();
             }
 
+            $('.about-tab').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${user.userId}`);
+
         })
         .catch(error => {
             try {

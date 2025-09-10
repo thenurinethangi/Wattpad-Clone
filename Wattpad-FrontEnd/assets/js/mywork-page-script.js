@@ -167,13 +167,13 @@ async function loadPublishedStories() {
                                                                     </a>
                                                                 </li>
                                                                 <li role="none">
-                                                                    <a ${story.storyId} role="menuitem" href="#" class="on-set-storyId on-unpublish-story">
+                                                                    <a data-story-id="${story.storyId}" role="menuitem" href="#" class="on-set-storyId on-unpublish-story">
 <!--                                                                        <span class="fa fa-library fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> -->
                                                                         Unpublish
                                                                     </a>
                                                                 </li>
                                                                 <li role="none">
-                                                                    <a ${story.storyId} role="menuitem" href="#" class="on-set-storyId on-delete-story">
+                                                                    <a data-story-id="${story.storyId}" role="menuitem" href="#" class="on-set-storyId on-delete-story">
 <!--                                                                        <span class="fa fa-trash fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> -->
                                                                         Delete Story
                                                                     </a>
@@ -362,7 +362,7 @@ async function loadAllStories() {
                                                                 </li>
                                                                 ${story.publishedOrDraft===1
                                                                 ? `<li role="none">
-                                                                        <a ${story.storyId} role="menuitem" href="#" class="on-set-storyId on-unpublish-story">
+                                                                        <a data-story-id="${story.storyId}" role="menuitem" href="#" class="on-set-storyId on-unpublish-story">
 <!--                                                                            <span class="fa fa-library fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> -->
                                                                             Unpublish
                                                                         </a>
@@ -370,7 +370,7 @@ async function loadAllStories() {
                                                                 : ``
                                                                 }
                                                                 <li role="none">
-                                                                    <a ${story.storyId} role="menuitem" href="#" class="on-set-storyId on-delete-story">
+                                                                    <a data-story-id="${story.storyId}" role="menuitem" href="#" class="on-set-storyId on-delete-story">
 <!--                                                                        <span class="fa fa-trash fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> -->
                                                                         Delete Story
                                                                     </a>
@@ -496,6 +496,8 @@ $(document).on('click', '.on-delete-story', function (e) {
 
     e.preventDefault();
     let storyId = $(this).data('story-id');
+
+    console.log(storyId)
 
     confirmAction(
         'Delete Story?',

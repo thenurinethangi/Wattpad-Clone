@@ -8,10 +8,7 @@ import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -67,6 +64,15 @@ public class UserController {
 
         List<UserProfileReadingListResponseDTO> userProfileReadingListResponseDTO = userService.getReadingListByUserId(id,readingListCount);
         return new APIResponse(202,"Successfully load reading lists by user.",userProfileReadingListResponseDTO);
+    }
+
+    @PutMapping()
+    public APIResponse updateUser(@RequestBody UserDTO userDTO){
+
+        System.out.println(userDTO);
+
+        userService.updateUser(userDTO);
+        return new APIResponse(202,"Successfully update the user details.",null);
     }
 }
 
