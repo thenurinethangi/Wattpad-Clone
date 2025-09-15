@@ -81,7 +81,7 @@ async function loadPublishedStories() {
                                                     </div>
                                                     <div class="story-wrapper">
                                                         <div class="story-image" aria-hidden="true">
-                                                            <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.storyCoverImagePath}" alt="Temp 2" height="78" class="cover cover-sm-works">
+                                                            <img style="object-fit: cover;" src="${story.storyCoverImagePath}" alt="Temp 2" height="78" class="cover cover-sm-works">
                                                         </div>
                                                         <div class="story-info">
                                                             <h3 class="story-title" aria-label="Story Item: Temp 2.">
@@ -161,7 +161,7 @@ async function loadPublishedStories() {
                                                             <div class="triangle"></div>
                                                             <ul id="works-more-options-398855545" class="dropdown-menu align-right" role="menu">
                                                                 <li role="none">
-                                                                    <a target="_blank" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}" class="on-view-as-reader" data-id="398855545" data-url="https://www.wattpad.com/story/398855545-temp-2" role="menuitem">
+                                                                    <a target="_self" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}" class="on-view-as-reader" data-id="398855545" data-url="https://www.wattpad.com/story/398855545-temp-2" role="menuitem">
 <!--                                                                        <span class="fa fa-view fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> -->
                                                                         View as reader
                                                                     </a>
@@ -272,20 +272,20 @@ async function loadAllStories() {
                                                     </div>
                                                     <div class="story-wrapper">
                                                         <div class="story-image" aria-hidden="true">
-                                                            <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.storyCoverImagePath}" alt="Temp 2" height="78" class="cover cover-sm-works">
+                                                            <img style="object-fit: cover;" src="${story.storyCoverImagePath}" alt="Temp 2" height="78" class="cover cover-sm-works">
                                                         </div>
                                                         <div class="story-info">
                                                             <h3 class="story-title" aria-label="Story Item: Temp 2.">
-                                                                <a class="on-show-details" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.storyCoverImagePath}">
+                                                                <a class="on-show-details" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-edit-page.html?storyId=${story.storyId}">
                                                                     <strong>${story.storyTitle}</strong>
                                                                 </a>
                                                             </h3>
                                                             <div class="counts">
-                                                                ${story. ublishedPartsCount>0
+                                                                ${story.publishedOrDraft===1 && story.publishedPartsCount>0
                                                                 ? `<span class="publish-count"><strong>${story.publishedPartsCount} Published Part</strong></span>`
                                                                 : ``
                                                                 }
-                                                                ${story. draftPartsCount>0
+                                                                ${story.draftPartsCount>0
                                                                 ?`<span class="publish-count draft-count"><strong>${story.draftPartsCount} Drafts</strong></span>`
                                                                 :``
                                                                 }
@@ -355,7 +355,7 @@ async function loadAllStories() {
                                                             <div class="triangle"></div>
                                                             <ul id="works-more-options-398855545" class="dropdown-menu align-right" role="menu">
                                                                 <li role="none">
-                                                                    <a target="_blank" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}" class="on-view-as-reader" data-id="398855545" data-url="https://www.wattpad.com/story/398855545-temp-2" role="menuitem">
+                                                                    <a target="_self" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}" class="on-view-as-reader" data-id="398855545" data-url="https://www.wattpad.com/story/398855545-temp-2" role="menuitem">
 <!--                                                                        <span class="fa fa-view fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> -->
                                                                         View as reader
                                                                     </a>
@@ -367,7 +367,12 @@ async function loadAllStories() {
                                                                             Unpublish
                                                                         </a>
                                                                    </li>`
-                                                                : ``
+                                                                : `<li role="none">
+                                                                        <a data-story-id="${story.storyId}" role="menuitem" href="#" class="on-set-storyId on-publish-story">
+<!--                                                                            <span class="fa fa-library fa-wp-neutral-2 " aria-hidden="true" style="font-size:15px;"></span> -->
+                                                                            Publish
+                                                                        </a>
+                                                                   </li>`
                                                                 }
                                                                 <li role="none">
                                                                     <a data-story-id="${story.storyId}" role="menuitem" href="#" class="on-set-storyId on-delete-story">
@@ -477,6 +482,71 @@ $(document).on('click', '.on-unpublish-story', function (e) {
 
                     loadPublishedStories();
                     loadAllStories();
+
+                })
+                .catch(error => {
+                    let response = JSON.parse(error.message);
+                    console.log(response);
+                });
+
+        }
+    );
+});
+
+
+
+
+// Unpublish story
+$(document).on('click', '.on-publish-story', function (e) {
+
+    e.preventDefault();
+    let storyId = $(this).data('story-id');
+
+    confirmAction(
+        'Publish Story?',
+        'Do you want to select a story to be published?',
+        'Yes, Publish',
+        () => {
+
+            fetch('http://localhost:8080/api/v1/story/publish/'+storyId, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errData => {
+                            throw new Error(JSON.stringify(errData));
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+
+                    if(data.data===true){
+                        loadPublishedStories();
+                        loadAllStories();
+
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Successfully republished story.',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2500
+                        });
+                    }
+                    else{
+                        Swal.fire({
+                            title: 'Fail',
+                            text: 'The story does not have any published parts and cannot be republished.',
+                            icon: 'fail',
+                            showConfirmButton: false,
+                            timer: 2500
+                        });
+                    }
 
                 })
                 .catch(error => {

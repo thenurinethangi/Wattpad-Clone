@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wattpad Admin Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #fff5f0 100%);
+            color: #222;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 97, 34, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff6122;
+        }
+
+        .admin-badge {
+            background: linear-gradient(135deg, #ff6122, #ff8555);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #ff6122, #ff8555);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 97, 34, 0.3);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 97, 34, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            min-height: 90vh;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+            z-index: 10;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #ff6122;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 97, 34, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6122, #ff8555);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 97, 34, 0.2);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem;
+            fill: #ff6122;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Hero Illustration */
+        .hero-illustration {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            background: #ff6122;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            background: #ff8555;
+            top: 60%;
+            right: 20%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            background: #ff6122;
+            bottom: 30%;
+            left: 30%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .main-illustration {
+            width: 400px;
+            height: 400px;
+            fill: #ff6122;
+            opacity: 0.8;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, #ff6122, #ff8555);
+            color: white;
+            padding: 4rem 2rem;
+            margin-top: 6rem;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stats-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            padding: 1.5rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .main-illustration {
+                width: 300px;
+                height: 300px;
+                margin-top: 2rem;
+            }
+
+            .header {
+                padding: 1rem;
+            }
+
+            .logo-text {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header class="header">
+    <div class="logo">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <path d="M20 0C31.0457 0 40 8.9543 40 20C40 31.0457 31.0457 40 20 40C8.9543 40 0 31.0457 0 20C0 8.9543 8.9543 0 20 0Z" fill="#ff6122"/>
+            <path d="M10 12H30V16H26V28H22V16H18V28H14V16H10V12Z" fill="white"/>
+        </svg>
+        <span class="logo-text">Wattpad</span>
+        <span class="admin-badge">Admin Panel</span>
+    </div>
+    <button class="login-btn" onclick="handleLogin()">Admin Login</button>
+</header>
+
+<!-- Hero Section -->
+<main class="hero">
+    <div class="hero-content">
+        <h1 class="hero-title">Admin Control Center</h1>
+        <p class="hero-subtitle">Manage the world's largest storytelling community</p>
+        <p class="hero-description">
+            Powerful tools to oversee users, stories, reports, and community interactions.
+            Keep Wattpad safe and thriving with comprehensive administrative controls.
+        </p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 24 24">
+                    <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-6h2v6h2v-6c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v6h2v-6c0-2.21-1.79-4-4-4H8c-2.21 0-4 1.79-4 4v6H2v2h20v-2H4z"/>
+                </svg>
+                <h3 class="feature-title">User Management</h3>
+                <p class="feature-description">Monitor user accounts, handle verifications, manage permissions and user safety measures</p>
+            </div>
+
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 24 24">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                </svg>
+                <h3 class="feature-title">Story Moderation</h3>
+                <p class="feature-description">Review reported content, manage story visibility, and ensure community guidelines compliance</p>
+            </div>
+
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 24 24">
+                    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"/>
+                </svg>
+                <h3 class="feature-title">Security & Reports</h3>
+                <p class="feature-description">Handle user reports, manage safety protocols, and maintain platform security standards</p>
+            </div>
+
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                <h3 class="feature-title">Announcements</h3>
+                <p class="feature-description">Create platform-wide announcements, manage notifications, and communicate with the community</p>
+            </div>
+
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                <h3 class="feature-title">Genre Management</h3>
+                <p class="feature-description">Organize content categories, featured stories, and curate trending content across genres</p>
+            </div>
+
+            <div class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 24 24">
+                    <path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                </svg>
+                <h3 class="feature-title">Analytics Dashboard</h3>
+                <p class="feature-description">Monitor platform metrics, user engagement, content performance, and growth statistics</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-illustration">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        <svg class="main-illustration" viewBox="0 0 400 400">
+            <defs>
+                <linearGradient id="adminGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ff6122;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#ff8555;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <circle cx="200" cy="200" r="180" fill="url(#adminGradient)" opacity="0.1"/>
+            <rect x="120" y="120" width="160" height="160" rx="20" fill="url(#adminGradient)" opacity="0.3"/>
+            <rect x="140" y="140" width="120" height="8" rx="4" fill="url(#adminGradient)"/>
+            <rect x="140" y="160" width="80" height="8" rx="4" fill="url(#adminGradient)" opacity="0.7"/>
+            <rect x="140" y="180" width="100" height="8" rx="4" fill="url(#adminGradient)" opacity="0.7"/>
+            <rect x="140" y="220" width="120" height="40" rx="8" fill="url(#adminGradient)" opacity="0.5"/>
+            <circle cx="180" cy="240" r="12" fill="white"/>
+            <circle cx="220" cy="240" r="12" fill="white"/>
+        </svg>
+    </div>
+</main>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="stats-container">
+        <h2 class="stats-title">Platform Overview</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-number">89M+</span>
+                <span class="stat-label">Active Users</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">1.2M+</span>
+                <span class="stat-label">Stories Published Daily</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">200+</span>
+                <span class="stat-label">Countries Worldwide</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Languages Supported</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function handleLogin() {
+        // Add loading animation to button
+        const btn = document.querySelector('.login-btn');
+        const originalText = btn.textContent;
+
+        btn.innerHTML = '<span style="display: inline-flex; align-items: center; gap: 8px;">Logging in... <span style="width: 12px; height: 12px; border: 2px solid white; border-top: 2px solid transparent; border-radius: 50%; animation: spin 1s linear infinite;"></span></span>';
+        btn.disabled = true;
+
+        // Add spin animation
+        const style = document.createElement('style');
+        style.textContent = '@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }';
+        document.head.appendChild(style);
+
+        // Simulate login process
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+            alert('Redirecting to admin dashboard...');
+            // Here you would typically redirect to the actual admin dashboard
+            // window.location.href = '/admin/dashboard';
+        }, 2000);
+    }
+
+    // Add scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observe feature cards for animation
+    document.querySelectorAll('.feature-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    // Add floating animation to shapes
+    document.querySelectorAll('.shape').forEach((shape, index) => {
+        shape.style.animationDelay = `${index * 2}s`;
+    });
+
+    // Add hover effect to feature cards
+    document.querySelectorAll('.feature-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            const icon = card.querySelector('.feature-icon');
+            icon.style.transform = 'scale(1.1) rotate(5deg)';
+            icon.style.transition = 'transform 0.3s ease';
+        });
+
+        card.addEventListener('mouseleave', () => {
+            const icon = card.querySelector('.feature-icon');
+            icon.style.transform = 'scale(1) rotate(0deg)';
+        });
+    });
+</script>
+</body>
+</html>

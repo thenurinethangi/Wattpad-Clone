@@ -15,4 +15,6 @@ public interface SearchService {
     SearchResponseDTO getAllStoriesThatMatchToSearchedKeyWordAndCriteria(String input, SearchCriteriaDTO searchCriteriaDTO);
 
     List<SearchProfileReturnDTO> getAllProfilesThatMatchToSearchedKeyWord(String username,String input);
+
+    SearchResponseDTO getAllStoriesThatMatchToSearchedKeyWordAndLimitedCount(String input, int count);
 }

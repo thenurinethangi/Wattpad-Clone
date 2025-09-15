@@ -1,22 +1,19 @@
 package lk.ijse.wattpadbackend.service.impl;
 
 import lk.ijse.wattpadbackend.dto.LibraryStoryDTO;
-import lk.ijse.wattpadbackend.entity.Chapter;
-import lk.ijse.wattpadbackend.entity.Library;
-import lk.ijse.wattpadbackend.entity.LibraryStory;
-import lk.ijse.wattpadbackend.entity.User;
+import lk.ijse.wattpadbackend.entity.*;
 import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
-import lk.ijse.wattpadbackend.repository.LibraryRepository;
-import lk.ijse.wattpadbackend.repository.LibraryStoryRepository;
-import lk.ijse.wattpadbackend.repository.UserRepository;
+import lk.ijse.wattpadbackend.repository.*;
 import lk.ijse.wattpadbackend.service.LibraryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +22,8 @@ public class LibraryServiceImpl implements LibraryService {
     private final LibraryRepository libraryRepository;
     private final UserRepository userRepository;
     private final LibraryStoryRepository libraryStoryRepository;
+    private final ChapterRepository chapterRepository;
+    private final StoryRepository storyRepository;
 
     @Override
     public List<LibraryStoryDTO> getLibraryStories(String name) {
@@ -162,6 +161,164 @@ public class LibraryServiceImpl implements LibraryService {
                 throw new NotFoundException("Story not found in given id in your library.");
             }
 
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean checkSpecificStoryExitInTheLibraryByChapterId(String name, long chapterId) {
+
+        try {
+            User user = userRepository.findByUsername(name);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Chapter> optionalChapter = chapterRepository.findById((int) chapterId);
+            if(!optionalChapter.isPresent()){
+                throw new NotFoundException("Chapter not found.");
+            }
+            Chapter chapter = optionalChapter.get();
+            Story story = chapter.getStory();
+
+            Library library = libraryRepository.findByUser(user);
+            List<LibraryStory> libraryStoryList = library.getLibraryStories();
+            for (LibraryStory x : libraryStoryList){
+                if(x.getStory().getId()==story.getId()){
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    @Transactional
+    public void addStoryToLibraryByChapterId(String name, long chapterId) {
+
+        try {
+            User user = userRepository.findByUsername(name);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Chapter> optionalChapter = chapterRepository.findById((int) chapterId);
+            if (!optionalChapter.isPresent()) {
+                throw new NotFoundException("Chapter not found.");
+            }
+            Chapter chapter = optionalChapter.get();
+            Story story = chapter.getStory();
+            System.out.println(story);
+
+            Library library = libraryRepository.findByUser(user);
+            System.out.println(library);
+            List<LibraryStory> libraryStoryList = library.getLibraryStories();
+            for (LibraryStory x : libraryStoryList){
+                if(x.getStory().getId()==story.getId()){
+                    System.out.println("delete");
+                    libraryStoryRepository.deleteById((int) x.getId());
+                    libraryStoryRepository.flush();
+                    return;
+                }
+            }
+
+            System.out.println("add");
+            LibraryStory libraryStory = new LibraryStory();
+            libraryStory.setStory(story);
+            libraryStory.setLibrary(library);
+            libraryStoryRepository.save(libraryStory);
+            return;
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean checkSpecificStoryExitInTheLibraryByStoryId(String name, long storyId) {
+
+        try {
+            User user = userRepository.findByUsername(name);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Story> optionalStory = storyRepository.findById((int) storyId);
+            if(!optionalStory.isPresent()){
+                throw new NotFoundException("Story not found.");
+            }
+            Story story = optionalStory.get();
+
+            Library library = libraryRepository.findByUser(user);
+            List<LibraryStory> libraryStoryList = library.getLibraryStories();
+            for (LibraryStory x : libraryStoryList){
+                if(x.getStory().getId()==story.getId()){
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void addOrRemoveStoryToLibraryByStoryId(String name, long storyId) {
+
+        try {
+            User user = userRepository.findByUsername(name);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Story> optionalStory = storyRepository.findById((int) storyId);
+            if (!optionalStory.isPresent()) {
+                throw new NotFoundException("Story not found.");
+            }
+            Story story = optionalStory.get();
+
+            Library library = libraryRepository.findByUser(user);
+            List<LibraryStory> libraryStoryList = library.getLibraryStories();
+            for (LibraryStory x : libraryStoryList){
+                if(x.getStory().getId()==story.getId()){
+                    System.out.println("delete");
+                    libraryStoryRepository.deleteById((int) x.getId());
+                    libraryStoryRepository.flush();
+                    return;
+                }
+            }
+
+            System.out.println("add");
+            LibraryStory libraryStory = new LibraryStory();
+            libraryStory.setStory(story);
+            libraryStory.setLibrary(library);
+            libraryStoryRepository.save(libraryStory);
+            return;
         }
         catch (UserNotFoundException e) {
             throw e;

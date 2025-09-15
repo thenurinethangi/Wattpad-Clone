@@ -5,7 +5,7 @@
 }
 
 body{
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
     background-color: rgb(255, 255, 255);
     font-family: var(--primary-font-face);
     display: none;
@@ -1072,6 +1072,70 @@ button {
 
 
 
+/* Add these styles to enable automatic sliding */
+.hero-splide {
+    visibility: visible; /* Ensure slider is visible by default */
+}
+/*hero-splide*/
+
+.hero-splide-track {
+    padding: 0; /* Remove padding to ensure smooth sliding */
+}
+/*hero-splide-track*/
+
+.hero-splide__list {
+    animation: slide 75s infinite alternate; /* Set animation duration and infinite loop */
+    display: flex;
+}
+/*hero-splide__list*/
+
+@keyframes slide {
+    0% { transform: translateX(0); } /* Slide 1 */
+    6.67% { transform: translateX(0); } /* Pause at slide 1 */
+    13.33% { transform: translateX(-101%); } /* Slide 2, increased by 1% */
+    20% { transform: translateX(-101%); } /* Pause at slide 2 */
+    26.67% { transform: translateX(-202%); } /* Slide 3, increased by 2% */
+    33.33% { transform: translateX(-202%); } /* Pause at slide 3 */
+    40% { transform: translateX(-303%); } /* Slide 4, increased by 3% */
+    46.67% { transform: translateX(-303%); } /* Pause at slide 4 */
+    53.33% { transform: translateX(-404%); } /* Slide 5, increased by 4% */
+    60% { transform: translateX(-404%); } /* Pause at slide 5 */
+    66.67% { transform: translateX(-505%); } /* Slide 6, increased by 5% */
+    73.33% { transform: translateX(-505%); } /* Pause at slide 6 */
+    80% { transform: translateX(-606%); } /* Slide 7, increased by 6% */
+    86.67% { transform: translateX(-606%); } /* Pause at slide 7 */
+    93.33% { transform: translateX(-707%); } /* Slide 8, increased by 7% */
+    100% { transform: translateX(-707%); } /* Pause at slide 8 */
+    106.67% { transform: translateX(-808%); } /* Slide 9, increased by 8% */
+    113.33% { transform: translateX(-808%); } /* Pause at slide 9 */
+    120% { transform: translateX(-909%); } /* Slide 10, increased by 9% */
+    126.67% { transform: translateX(-909%); } /* Pause at slide 10 */
+    133.33% { transform: translateX(-1010%); } /* Slide 11, increased by 10% */
+    140% { transform: translateX(-1010%); } /* Pause at slide 11 */
+    146.67% { transform: translateX(-1111%); } /* Slide 12, increased by 11% */
+    153.33% { transform: translateX(-1111%); } /* Pause at slide 12 */
+    160% { transform: translateX(-1212%); } /* Slide 13, increased by 12% */
+    166.67% { transform: translateX(-1212%); } /* Pause at slide 13 */
+    173.33% { transform: translateX(-1313%); } /* Slide 14, increased by 13% */
+    180% { transform: translateX(-1313%); } /* Pause at slide 14 */
+    186.67% { transform: translateX(-1414%); } /* Slide 15, increased by 14% */
+    193.33% { transform: translateX(-1414%); } /* Pause at slide 15 */
+    200% { transform: translateX(0); } /* Return to slide 1 */
+}
+
+
+/* Adjust slide width to match container */
+.hero-splide__slide {
+    width: 100% !important; /* Ensure each slide takes full width */
+    margin-right: 24px; /* Maintain spacing between slides */
+}
+/*hero-splide__slide*/
+
+/* Hide arrows if automatic sliding is desired */
+.hero-splide__arrows {
+    display: none; /* Remove arrows for auto-slide focus */
+}
+/*hero-splide__arrows*/
 
 
 
@@ -1079,6 +1143,103 @@ button {
 
 
 
+/* Define the scroll-override class to enable manual scrolling and hide scrollbar */
+#splide02.scroll-override, #splide03.scroll-override, #splide04.scroll-override, #splide06.scroll-override, #splide07.scroll-override, #splide10.scroll-override, #splide14.scroll-override, #splide16.scroll-override, #splide21.scroll-override, #splide23.scroll-override {
+    overflow-x: auto !important; /* Force manual scrolling on X-axis */
+    overflow-y: hidden !important; /* Prevent vertical overflow */
+    -webkit-overflow-scrolling: touch !important; /* Smooth scrolling on mobile */
+    scroll-behavior: smooth !important; /* Smooth scroll effect */
+    max-height: 238px !important; /* Default height, overridden by specific rules */
+    position: relative !important; /* Ensure proper positioning */
+    width: 100% !important; /* Ensure full width */
+    background-color: rgb(255, 255, 255) !important; /* Match page background */
+
+    /* Hide scrollbar for Firefox */
+    scrollbar-width: none !important;
+
+    /* Hide scrollbar for IE and Edge */
+    -ms-overflow-style: none !important;
+}
+
+/* Specific height adjustments for each section */
+#splide02.scroll-override {
+    max-height: 238px !important; /* Match story card height for #splide02 */
+}
+
+#splide03.scroll-override {
+    max-height: 246px !important; /* Match story card height for #splide03 */
+}
+
+#splide04.scroll-override {
+    max-height: 268px !important; /* Match story card height for #splide04 */
+}
+
+#splide06.scroll-override {
+    max-height: 283.5px !important; /* Match story card height for #splide06 */
+}
+
+#splide07.scroll-override {
+    max-height: 247px !important; /* Match story card height for #splide07 */
+}
+
+#splide10.scroll-override {
+    max-height: 247px !important; /* Match story card height for #splide10 */
+}
+
+#splide14.scroll-override {
+    max-height: 247px !important; /* Match story card height for #splide14 */
+}
+
+#splide16.scroll-override {
+    max-height: 247px !important; /* Match story card height for #splide16 */
+}
+
+#splide21.scroll-override {
+    max-height: 247px !important; /* Match story card height for #splide21 */
+}
+
+#splide23.scroll-override {
+    max-height: 290px !important; /* Match story card height for #splide23 */
+}
+
+/* Hide scrollbar for Chrome, Safari, and Opera */
+#splide02.scroll-override::-webkit-scrollbar, #splide03.scroll-override::-webkit-scrollbar, #splide04.scroll-override::-webkit-scrollbar, #splide06.scroll-override::-webkit-scrollbar, #splide07.scroll-override::-webkit-scrollbar, #splide10.scroll-override::-webkit-scrollbar, #splide14.scroll-override::-webkit-scrollbar, #splide16.scroll-override::-webkit-scrollbar, #splide21.scroll-override::-webkit-scrollbar, #splide23.scroll-override::-webkit-scrollbar {
+    display: none !important; /* Completely hide scrollbar */
+}
+
+/* Override splide__track's overflow to allow scrolling */
+#splide02.scroll-override .splide__track, #splide03.scroll-override .splide__track, #splide04.scroll-override .splide__track, #splide06.scroll-override .splide__track, #splide07.scroll-override .splide__track, #splide10.scroll-override .splide__track, #splide14.scroll-override .splide__track, #splide16.scroll-override .splide__track, #splide21.scroll-override .splide__track, #splide23.scroll-override .splide__track {
+    overflow-x: visible !important; /* Override hidden to allow scroll */
+    overflow-y: hidden !important; /* Keep vertical overflow hidden */
+    padding: 0 !important; /* Ensure no padding affects scrolling */
+    display: block !important; /* Allow proper containment */
+    width: 100% !important; /* Full width of container */
+}
+
+/* Force the list to be scrollable and disable Splide animation */
+#splide02.scroll-override .splide__list, #splide03.scroll-override .splide__list, #splide04.scroll-override .splide__list, #splide06.scroll-override .splide__list, #splide07.scroll-override .splide__list, #splide10.scroll-override .splide__list, #splide14.scroll-override .splide__list, #splide16.scroll-override .splide__list, #splide21.scroll-override .splide__list, #splide23.scroll-override .splide__list {
+    display: flex !important; /* Keep items in a row */
+    width: max-content !important; /* Allow all items to fit without wrapping */
+    margin: 0 !important; /* Remove default margins */
+    padding: 0 !important; /* Remove default padding */
+    transform: none !important; /* Override Splide's transform */
+    transition: none !important; /* Disable Splide animation */
+    position: static !important; /* Reset any positioning */
+    min-width: 0 !important; /* Prevent width collapse */
+}
+
+/* Override any parent container restricting overflow */
+.iLjsG {
+    overflow-x: visible !important; /* Ensure parent allows overflow */
+    max-width: 100% !important; /* Prevent width constraints */
+    position: relative !important; /* Maintain context */
+    width: 100% !important; /* Ensure full width */
+}
+
+/* Additional specificity to override Splide defaults */
+#splide02.scroll-override .splide__track.splide__track--draggable, #splide03.scroll-override .splide__track.splide__track--draggable, #splide04.scroll-override .splide__track.splide__track--draggable, #splide06.scroll-override .splide__track.splide__track--draggable, #splide07.scroll-override .splide__track.splide__track--draggable, #splide10.scroll-override .splide__track.splide__track--draggable, #splide14.scroll-override .splide__track.splide__track--draggable, #splide16.scroll-override .splide__track.splide__track--draggable, #splide21.scroll-override .splide__track.splide__track--draggable, #splide23.scroll-override .splide__track.splide__track--draggable {
+    overflow-x: visible !important; /* Specifically target draggable track */
+}
 
 
 
@@ -1086,6 +1247,64 @@ button {
 
 
 
+/* Hide scrollbar while keeping scroll functionality for Browse genres */
+
+/* Enable scrolling on the main container */
+#splide22 {
+    overflow-x: auto !important; /* Keep horizontal scrolling enabled */
+    overflow-y: hidden !important;
+    scroll-behavior: smooth !important;
+
+    /* Hide scrollbar for Firefox */
+    scrollbar-width: none !important;
+
+    /* Hide scrollbar for IE and Edge */
+    -ms-overflow-style: none !important;
+}
+
+/* Hide scrollbar for Chrome, Safari, and Opera */
+#splide22::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* Also target the track and ensure it can scroll */
+#splide22 .splide__track {
+    overflow-x: auto !important; /* Enable scrolling on track too */
+    overflow-y: hidden !important;
+
+    /* Hide scrollbar for Firefox */
+    scrollbar-width: none !important;
+
+    /* Hide scrollbar for IE and Edge */
+    -ms-overflow-style: none !important;
+}
+
+#splide22 .splide__track::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* Target the class from your HTML that might have scrollbar */
+.splide.scroll-override {
+    overflow-x: auto !important; /* Keep scrolling functionality */
+    overflow-y: hidden !important;
+
+    /* Hide scrollbar for Firefox */
+    scrollbar-width: none !important;
+
+    /* Hide scrollbar for IE and Edge */
+    -ms-overflow-style: none !important;
+}
+
+.splide.scroll-override::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* Ensure smooth scrolling with touch */
+#splide22,
+#splide22 .splide__track,
+.splide.scroll-override {
+    -webkit-overflow-scrolling: touch !important;
+}
 
 
 

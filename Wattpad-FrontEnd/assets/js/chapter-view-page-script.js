@@ -78,13 +78,20 @@ async function loadChapterData() {
 
             let chapter = data.data;
 
+            if(chapter.isFromCurrentUser===0){
+                $('.writer-button-group').remove();
+            }
+            $('.writer-button-group').find('a').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/create-chapter-page.html?chapterId=${chapter.id}&storyId=${chapter.storyId}&isEdit=true`);
+
             //set data attribute
             $('#chapter-text-body').attr('data-story-id',chapter.storyId);
 
             //top bar left
-            $('#story-cover-image').attr('src', `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${chapter.storyCoverImagePath}`);
+            $('#story-cover-image').attr('src', `${chapter.storyCoverImagePath}`);
             $('#story-title').text(chapter.storyTitle);
             $('#author').text('by '+chapter.username);
+            $('.navigate-to-story').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${chapter.storyId}`);
+            $('.chap-title').text(chapter.storyTitle);
 
             //set all chapters - dropdown
             $('#chapters-list').empty();
@@ -111,38 +118,63 @@ async function loadChapterData() {
                 $('#vote-icon').css('color', '#6f6f6f');
             }
 
-            //chapter cover image
-            if(chapter.coverImagePath!=null){
-
+            //chapter cover
+            if (chapter.coverImagePath != null) {
                 $('#media-container').empty();
 
-                let chapterCoverImageContainer = `
-          <!--hidden attribute should remove if chapter have cover image-->
+                let chapterCoverMediaContainer = "";
+
+                if (chapter.coverImagePath.includes("youtube.com/embed")) {
+                    chapterCoverMediaContainer = `
           <div class="media-wrapper">
-            <div class="hover-wrapper" style="background-image: url(https://img.wattpad.com/bcover/353771202-1920-k85442.jpg);">
+            <div class="hover-wrapper" style="background-color: #000;">
+              <div class="background-lg media background" style="display: flex; justify-content: center; align-items: center;">
+                <iframe id="chapter-cover-video"
+                        src="${chapter.coverImagePath}"
+                        frameborder="0"
+                        allowfullscreen
+                        style="width: 100%; height: 370px; border-radius: 8px;">
+                </iframe>
+              </div>
+            </div>
+          </div>`;
+                } else {
+                    chapterCoverMediaContainer = `
+          <div class="media-wrapper">
+            <div class="hover-wrapper" style="background-image: url(https://w0.peakpx.com/wallpaper/410/412/HD-wallpaper-plain-black-black.jpg);">
               <div class="background-lg media background" style="display: flex; justify-content: center; align-items: center;">
                 <span class="fa fa-left fa-wp-neutral-5 btn btn-link on-prev-media hidden-xs invisible" aria-hidden="true" style="font-size:24px;"></span>
-                <div class="media-item image   on-full-size-banner ">
-                  <img id="chapter-cover-image" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${chapter.coverImagePath}" alt="">
+                <div class="media-item image on-full-size-banner">
+                  <img id="chapter-cover-image" src="${chapter.coverImagePath}" alt="">
                 </div>
                 <span class="fa fa-right fa-wp-neutral-5 btn btn-link on-next-media hidden-xs invisible" aria-hidden="true" style="font-size:24px;"></span>
               </div>
             </div>
-          </div>`
+          </div>`;
+                }
 
-                $('#media-container').append(chapterCoverImageContainer);
-
+                $('#media-container').append(chapterCoverMediaContainer);
             }
 
             //stats and title
-            $('#chapter-title').text(chapter.title);
+            if(chapter.isPublishedOrDraft===1){
+                $('#chapter-title').text(chapter.title);
+            }
+            else{
+                $('#chapter-title').html(`${chapter.title} <span style="display: inline; visibility: visible; opacity: 1; color: #c3d8dc; padding-left: 12px;" class="draft-tag">(Draft)</span>`);
+            }
             $('.reads').html(`<i class="fa-solid fa-star fa-wp-neutral-2" style="font-size: 12px;"></i> ` + chapter.views);
             $('.votes').html(`<i class="fa-solid fa-star fa-wp-neutral-2" style="font-size: 12px;"></i> ` + chapter.likes);
             $('.comments').html(`<i class="fa-solid fa-star fa-wp-neutral-2" style="font-size: 12px;"></i> ` + chapter.comments);
-            $('#author-profile-pic').attr('src', `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${chapter.userProfilePicPath}`);
-            $('#author-profile-link').attr('href', `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${chapter.userId}`);
+            $('#author-profile-pic').attr('src', `${chapter.userProfilePicPath}`);
+            $('.author-profile-link').attr('href', `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${chapter.userId}`);
             $('#author-username').text(chapter.username);
 
+            $('#chapter-body').empty();
+            if(chapter.paragraphDTOList.length<=0){
+                let p = `<p>This chapter contains no content.</p>`
+                $('#chapter-body').append(p);
+            }
             for (let i = 0; i < chapter.paragraphDTOList.length; i++) {
 
                 let paragraph = chapter.paragraphDTOList[i];
@@ -171,7 +203,7 @@ async function loadChapterData() {
                 }
                 else if(paragraph.contentType==='image'){
                     let para = `<div class="chapter-content" data-comment-count="${paragraph.commentCount}" style="margin-bottom: 47px; margin-top: 30px; position: relative;">
-                                        <img class="chapter-content" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${paragraph.content}" style="width: 100%;" alt="content image">
+                                        <img class="chapter-content" src="${paragraph.content}" style="width: 100%;" alt="content image">
                                         
                                          ${paragraph.commentCount !== "0"
                                          ? `<div class="comment-icon" data-paragraph-id="${paragraph.id}" style="position: absolute; right: 0; bottom: -37px;; text-align: center; width: 24px;">
@@ -302,7 +334,7 @@ async function loadRecommendationStories() {
                             <div class="description">${story.description}</div>
                             <div class="tag-meta clearfix">
                               <ul class="tag-items">
-                                ${story.tags.slice(0, 3).map(tag => `<li style="padding-right: 0; width: fit-content;"><a class="tag-item on-navigate" href="/stories/ricciardo">${tag}</a></li>`).join('')}
+                                ${story.tags.slice(0, 3).map(tag => `<li style="padding-right: 0; width: fit-content;"><a class="tag-item on-navigate" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/tag-stories-page.html?tag=${tag}">${tag}</a></li>`).join('')}
                                 
                                 ${story.tags.length-3>0
                                 ? `<li><span class="num-not-shown on-story-preview">+${story.tags.length-3} more</span></li>`
@@ -415,11 +447,68 @@ async function loadAlsoYouWillLikeStories() {
 
 
 
+async function loadNextChapter() {
+
+    let chapterId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("chapterId")) {
+        chapterId = params.get("chapterId");
+    }
+
+    if(chapterId==null){
+        //load chapter not found page
+        return;
+    }
+
+    await fetch('http://localhost:8080/api/v1/chapter/next/'+chapterId, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            let chapter = data.data;
+
+            if(chapter==null){
+                $('.continue-next-chapter').remove();
+            }
+            else {
+                $('.parts-end').remove();
+                $('.next-chapter-link').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${chapter.id}`);
+            }
+
+        })
+        .catch(error => {
+            try {
+                let errorResponse = JSON.parse(error.message);
+                console.error('Error:', errorResponse);
+            } catch (e) {
+                console.error('Error:', error.message);
+            }
+        });
+}
+
+
+
+
 async function run() {
     await loadChapterData();
     await loadRecommendationStories();
     await loadAlsoYouWillLikeStories();
-    loadFirstTwoCommentsOfChapter();
+    await loadFirstTwoCommentsOfChapter();
+    loadNextChapter();
 }
 
 run();
@@ -440,7 +529,7 @@ chapterListDropDown.addEventListener('click',function (event) {
 });
 
 
-//when click on the document chapter list disapear
+//when click on the document chapter list disappear
 $(document).on('click', function (e) {
     if (
         $(e.target).closest('#funbar-part-details').length > 0 ||
@@ -540,9 +629,10 @@ $(document).on('click','.comment-icon',function (event) {
 });
 
 
-function paragraphCommentsSetToTheModel(paragraphId) {
 
-    fetch('http://localhost:8080/api/v1/paragraph/all/comments/'+paragraphId, {
+// function paragraphCommentsSetToTheModel(paragraphId) {
+function paragraphCommentsSetToTheModel(paragraphId) {
+    fetch('http://localhost:8080/api/v1/paragraph/all/comments/' + paragraphId, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -576,10 +666,10 @@ function paragraphCommentsSetToTheModel(paragraphId) {
     </header>
     <div class="drawer-body">
       <div class="paragraph-content">
-        ${response.contentType==='text'
+        ${response.contentType === 'text'
                 ? `<pre>${response.content}</pre>`
                 : response.contentType === 'image'
-                    ? `<img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${response.content}" alt="image" style="width: 100%;">`
+                    ? `<img src="${response.content}" alt="image" style="width: 100%;">`
                     : `<iframe width="100%" height="320" src="${response.content}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
             }
         
@@ -596,22 +686,22 @@ function paragraphCommentsSetToTheModel(paragraphId) {
           </div>
         </div>
         ${response.singleCommentDTOList.map(comment => `
-        <div class="comment-card-container">
+        <div class="comment-card-container" data-comment-id="${comment.id}">
           <div>
             <div class="dsContainer__RRG6K commentCardContainer__P0qWo">
               <div class="dsColumn__PqDUP">
                 <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${comment.userId}" aria-label="Jeon_Taeshu">
-                  <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${comment.userProfilePic}" aria-hidden="true" alt="Jeon_Taeshu" class="avatar__Ygp0_ comment_card_avatar__zKv1t">
+                  <img style="object-fit: cover;" src="${comment.userProfilePic}" aria-hidden="true" alt="Jeon_Taeshu" class="avatar__Ygp0_ comment_card_avatar__zKv1t">
                 </a>
               </div>
               <div class="dsColumn__PqDUP commentCardContentContainer__F9gGk gap8__gx3K6">
                 <div class="dsRow__BXK6n gap8__gx3K6 authorProfileRow__GMsIH">
                   <h3 aria-hidden="true" class="dsMargin__Gs6Tj title-action">${comment.username}</h3>
                   <div class="dsRow__BXK6n badgeRow__bzi6i">
-                    ${comment.isCommentByAuthor===1
-                    ? `<div class="pill__HVTvX text-caption" style="color: rgb(255, 255, 255); background-color: rgb(169, 62, 25);">Writer</div>`
-                    : ``
-                    }
+                    ${comment.isCommentByAuthor === 1
+                ? `<div class="pill__HVTvX text-caption" style="color: rgb(255, 255, 255); background-color: rgb(169, 62, 25);">Writer</div>`
+                : ``
+            }
                   </div> 
                 </div>
                 <div class="dsRow__BXK6n commentCardContent__Vc9vg">
@@ -622,27 +712,27 @@ function paragraphCommentsSetToTheModel(paragraphId) {
                   <button class="replyButton__kdyts button__Meavz title-action reply-btn" data-paragraph-comment-id="${comment.id}" aria-label="Reply to comment">Reply</button>
                 </div>
                 <div class="dsRow__BXK6n viewRepliesRow__nKbo7 gap4__udBQg">
-                ${comment.replyCount!=='0'
+                ${comment.replyCount !== '0'
                 ? `<button class="replyButton__kdyts button__Meavz title-action view-replies-btn" data-paragraph-comment-id="${comment.id}" aria-label="View replies">View ${comment.replyCount} Reply</button>`
                 : ``
-                }
+            }
                 </div>
               </div>
               <div class="dsColumn__PqDUP likeColumn__bveEu">
-                <button class="button__Meavz" aria-label="More options">
+                <button data-id="${comment.id}" data-type="comment" class="button__Meavz more-options-unique" aria-label="More options">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z" fill="#686868"></path></svg>
                 </button>
                 <div class="dsColumn__PqDUP">
                   <button class="button__Meavz like-btn" data-paragraph-comment-id="${comment.id}" data-paragraph-id="${response.paragraphId}" aria-label="Like this comment">
-                    ${comment.isCurrentUserLiked===1
-                    ? `<svg width="16" height="14" viewBox="0 0 16 14" fill="#ff6122" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#ff6122" fill="#ff6122" stroke-width="1.5" stroke-linecap="round"></path></svg>`
-                    : `<svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>`
-                    }
+                    ${comment.isCurrentUserLiked === 1
+                ? `<svg width="16" height="14" viewBox="0 0 16 14" fill="#ff6122" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#ff6122" fill="#ff6122" stroke-width="1.5" stroke-linecap="round"></path></svg>`
+                : `<svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>`
+            }
                   </button>
-                    ${comment.likes!=='0'
-                    ? `<span class="text-caption" style="font-weight: 700; font-size: 12px ; color: #121212;">${comment.likes}</span>`
-                    : ``
-                    }
+                    ${comment.likes !== '0'
+                ? `<span class="text-caption" style="font-weight: 700; font-size: 12px; color: #121212;">${comment.likes}</span>`
+                : ``
+            }
                 </div>
               </div>
             </div>
@@ -672,17 +762,29 @@ function paragraphCommentsSetToTheModel(paragraphId) {
 
 $(document).on('click','.close-btn',function (event) {
 
+    loadChapterData();
     $('.paragraph-comments-drawer').css('display','none');
 
 });
 
 
-$(document).on('click', function (e) {
+// $(document).on('click', function (e) {
+//
+//     if ($(e.target).closest('.paragraph-comments-drawer').length > 0 || $(e.target.closest('.comment-icon').length > 0)) {
+//         // $('.paragraph-comments-drawer').css('display','block');
+//     }
+//     else {
+//         $('.paragraph-comments-drawer').css('display','none');
+//     }
+// });
 
-    if ($(e.target).closest('.paragraph-comments-drawer').length > 0 || $(e.target.closest('.comment-icon').length > 0)) {
+$(document).on('click', function (e) {
+    const isInDrawer = $(e.target).closest('.paragraph-comments-drawer').length > 0;
+    const isCommentIcon = $(e.target).closest('.comment-icon').length > 0;
+
+    if (isInDrawer || isCommentIcon) {
         // $('.paragraph-comments-drawer').css('display','block');
-    }
-    else {
+    } else {
         $('.paragraph-comments-drawer').css('display','none');
     }
 });
@@ -815,21 +917,19 @@ $(document).on('click','.like-btn',function (event) {
 
 
 
-
 //when click on view reply button see all the replies that comment have
 $(document).on('click','.view-replies-btn',function (event) {
-
     let paragraphCommentId = $(this).data('paragraph-comment-id');
     loadRepliesByParagraphCommentId(paragraphCommentId,$(this));
-
     $(this).hide();
     $(this)[0].style.setProperty('display', 'none', 'important');
 });
 
 
-function loadRepliesByParagraphCommentId(paragraphCommentId,thisElement) {
 
-    fetch('http://localhost:8080/api/v1/paragraph/comment/reply/'+paragraphCommentId, {
+// function loadRepliesByParagraphCommentId(paragraphCommentId, thisElement) {
+function loadRepliesByParagraphCommentId(paragraphCommentId, thisElement) {
+    fetch('http://localhost:8080/api/v1/paragraph/comment/reply/' + paragraphCommentId, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -847,26 +947,25 @@ function loadRepliesByParagraphCommentId(paragraphCommentId,thisElement) {
         .then(data => {
             console.log('Success:', data);
 
-            thisElement.closest('.comment-card-container').find('.reply-container').empty();
+            let replyContainer = thisElement.closest('.comment-card-container').find('.reply-container');
+            replyContainer.empty();
 
             for (let i = 0; i < data.data.length; i++) {
-
                 let reply = data.data[i];
-
                 let singleReply = `
-  <div class="comment-card-container reply-card-container" data-paragraph-comment-id="${reply.paragraphCommentId}">
+  <div class="comment-card-container reply-card-container" data-paragraph-comment-id="${reply.paragraphCommentId}" data-reply-id="${reply.replyId}">
     <div>
       <div class="dsContainer__RRG6K commentCardContainer__P0qWo replyCard__Ft5hc">
         <div class="dsColumn__PqDUP">
-          <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${reply.userId}" aria-label="romancefanatic13">
-            <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${reply.userProfilePic}" aria-hidden="true" alt="romancefanatic13" class="avatar__Ygp0_ comment_card_reply_avatar__niNAw">
+          <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${reply.userId}" aria-label="${reply.username}">
+            <img style="object-fit: cover;" src="${reply.userProfilePic}" aria-hidden="true" alt="${reply.username}" class="avatar__Ygp0_ comment_card_reply_avatar__niNAw">
           </a>
         </div>
         <div class="dsColumn__PqDUP commentCardContentContainer__F9gGk gap8__gx3K6">
           <div class="dsRow__BXK6n gap8__gx3K6 authorProfileRow__GMsIH">
             <h3 aria-hidden="true" class="dsMargin__Gs6Tj title-action">${reply.username}</h3>
             <div class="dsRow__BXK6n badgeRow__bzi6i">
-                ${reply.isCommentByAuthor===1
+                ${reply.isCommentByAuthor === 1
                     ? `<div class="pill__HVTvX text-caption" style="color: rgb(255, 255, 255); background-color: rgb(169, 62, 25);">Writer</div>`
                     : ``
                 }
@@ -881,44 +980,216 @@ function loadRepliesByParagraphCommentId(paragraphCommentId,thisElement) {
           </div>
         </div>
         <div class="dsColumn__PqDUP likeColumn__bveEu">
-          <button class="button__Meavz" aria-label="More options">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z" fill="#686868"></path></svg>
+          <button data-id="${reply.replyId}" data-type="reply" class="button__Meavz more-options-unique" aria-label="More options">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 12C17 13.1046 17.8954 14 19 14Z" fill="#686868"></path></svg>
           </button>
           <div class="dsColumn__PqDUP">
             <button class="button__Meavz like-btn-reply" data-reply-id="${reply.replyId}" data-paragraph-comment-id="${reply.paragraphCommentId}" aria-label="Like this comment">
-                ${reply.isCurrentUserLiked===1
+                ${reply.isCurrentUserLiked === 1
                     ? `<svg width="16" height="14" viewBox="0 0 16 14" fill="#ff6122" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#ff6122" fill="#ff6122" stroke-width="1.5" stroke-linecap="round"></path></svg>`
                     : `<svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>`
                 }
             </button>
-              ${reply.likes!=='0'
-                    ? `<span class="text-caption" style="font-weight: 700; font-size: 12px ; color: #121212;">${reply.likes}</span>`
+              ${reply.likes !== '0'
+                    ? `<span class="text-caption" style="font-weight: 700; font-size: 12px; color: #121212;">${reply.likes}</span>`
                     : ``
                 }
           </div>
         </div>
       </div>
     </div>
-    <!--here put the reply to reply input field-->
-    
   </div>
 `;
-                thisElement.closest('.comment-card-container').find('.reply-container').append(singleReply);
+                replyContainer.append(singleReply);
             }
 
+            // Ensure reply container is visible
+            replyContainer.show();
         })
         .catch(error => {
             let response = JSON.parse(error.message);
-            console.log(response);
+            console.log('Error:', response);
         });
 }
 
 
+// Close dropdown when clicking outside, but not the model
+$(document).on('click', function (event) {
+    let $target = $(event.target);
+    if (!$target.closest('.comment-options-dropdown').length && !$target.closest('.more-options-unique').length) {
+        $('.comment-options-dropdown').remove();
+    }
+});
+
+// Ensure the close button on the model works as intended
+$(document).on('click', '.close-btn', function () {
+    $('.paragraph-comments-drawer').remove();
+});
 
 
-//when click on like icon on comment add or remove like
+
+$(document).ready(function () {
+    // Handle 3 dots click
+    $(document).on('click', '.more-options-unique', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Remove old dropdowns
+        $('.comment-options-dropdown').remove();
+
+        const $btn = $(this);
+        let id = $btn.data('id');
+        let type = $btn.data('type');
+
+        let data = {
+            'id': id,
+            'type': type
+        };
+
+        fetch('http://localhost:8080/api/v1/chapter/comment/reply/check', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+
+                let res = data.data;
+
+                // Build dropdown
+                const $dropdown = $(`
+            <div class="comment-options-dropdown"
+                 style="position:absolute; background:#ffffff; border:1px solid rgba(204,204,204,0.87);
+                        border-radius:4px; box-shadow:0 2px 6px rgba(0,0,0,0.15);
+                        min-width:120px; padding:5px 0; z-index:99999; display: flex; flex-direction: column;">
+                        ${res === true ? `<button data-id="${id}" data-type="${type}" class="option delete-option" style="border: none; background-color: #fff; padding-block: 3px; font-size: 14px; border-bottom: 1px solid rgba(128,128,128,0.2);">Delete</button>` : `<button data-id="${id}" data-type="${type}" class="option edit-option" style="border: none; background-color: #fff; padding-block: 3px; font-size: 14px; border-bottom: 1px solid rgba(128,128,128,0.2);">Mute</button>`}
+                <button data-id="${id}" data-type="${type}" class="option edit-option" style="border: none; background-color: #fff; padding-block: 3px; font-size: 14px; border-bottom: 1px solid rgba(128,128,128,0.2);">Report</button>
+            </div>
+        `);
+
+                // Attach to body
+                $('body').append($dropdown);
+
+                // Position just below the button
+                const rect = $btn[0].getBoundingClientRect();
+                const dropdownWidth = $dropdown.outerWidth();
+                const windowWidth = $(window).width();
+
+                let left = rect.left + window.scrollX;
+
+                if (left + dropdownWidth > windowWidth - 10) {
+                    left = windowWidth - dropdownWidth - 10;
+                }
+
+                $dropdown.css({
+                    left: left + 'px',
+                    top: rect.bottom + window.scrollY + 'px'
+                });
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+            });
+    });
+
+    // Close on outside click
+    $(document).on('click', function (event) {
+        let $target = $(event.target);
+        if (!$target.closest('.comment-options-dropdown').length && !$target.closest('.more-options-unique').length) {
+            $('.comment-options-dropdown').remove();
+        }
+    });
+});
+
+
+
+// Click on delete option
+$(document).on('click', '.delete-option', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    let $button = $(this);
+    let id = $button.data('id');
+    let type = $button.data('type');
+
+    console.log('Delete clicked - ID:', id, 'Type:', type, 'Button:', $button);
+
+    let data = {
+        'id': id,
+        'type': type
+    };
+
+    fetch('http://localhost:8080/api/v1/chapter/comment/reply/delete', {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            // Debug the DOM path
+            let $cardToRemove = $button.closest(type === 'comment' ? '.comment-card-container' : '.reply-card-container');
+            console.log('Closest card found:', $cardToRemove);
+
+            // Fallback: Search by data-id if closest fails
+            if ($cardToRemove.length === 0) {
+                console.log('Closest failed, searching by data-id');
+                if (type === 'comment') {
+                    $cardToRemove = $(`.comment-card-container[data-comment-id="${id}"]`);
+                } else {
+                    $cardToRemove = $(`.reply-card-container[data-reply-id="${id}"]`);
+                }
+                console.log('Searched card:', $cardToRemove);
+            }
+
+            if ($cardToRemove.length > 0) {
+                $cardToRemove.remove();
+                console.log(`Removed ${type} with ID: ${id}`);
+            } else {
+                console.log(`No ${type} found with ID: ${id} to remove`);
+            }
+
+            // Remove the dropdown
+            $('.comment-options-dropdown').remove();
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log('Error:', response);
+        });
+});
+
+// Close model when clicking the close button
+$(document).on('click', '.close-btn', function () {
+    $('.paragraph-comments-drawer').remove();
+});
+
+
+
+
+//when click on like icon on reply add or remove like
 $(document).on('click','.like-btn-reply',function (event) {
-
     let replyId = $(this).data('reply-id');
     let paragraphCommentId = $(this).data('paragraph-comment-id');
 
@@ -950,13 +1221,11 @@ $(document).on('click','.like-btn-reply',function (event) {
                     let no = Number(value);
                     no+=1;
                     $(this).siblings('.text-caption').text(no);
-                }
-                else{
-                    let newCaption = $('<span class="text-caption" style="font-weight: 700; font-size: 12px ; color: #121212;">1</span>');
+                } else {
+                    let newCaption = $('<span class="text-caption" style="font-weight: 700; font-size: 12px; color: #121212;">1</span>');
                     $(this).after(newCaption);
                 }
-            }
-            else{
+            } else {
                 $(this).find('svg').attr('fill','none');
                 $(this).find('svg').find('path').attr('fill','none');
                 $(this).find('svg').find('path').attr('stroke','#121212');
@@ -968,45 +1237,36 @@ $(document).on('click','.like-btn-reply',function (event) {
 
                     if(no<=0){
                         $(this).siblings('.text-caption').remove();
-                    }
-                    else {
+                    } else {
                         $(this).siblings('.text-caption').text(no);
                     }
                 }
             }
-
         })
         .catch(error => {
             let response = JSON.parse(error.message);
-            console.log(response);
+            console.log('Error:', response);
         });
-
 });
-
-
 
 
 //when click on reply btn show the input field
 $(document).on('click','.reply-btn',function (event) {
-
     let paragraphCommentId = $(this).data('paragraph-comment-id');
-
     let replyContainer = $(this).closest(".comment-card-container").find(".reply-container");
 
     if (replyContainer.prev(".reply-input-field").length === 0) {
-
         let inputField = `
 <div class="new-comment-field reply reply-input-field">
     <div>
         <div class="textboxContainer__mbQss">
-            <textarea placeholder="Write a reply..." class="text-body-sm defaultHeight__PP_LO" aria-label="To enrich screen reader interactions, please activate Accessibility in Grammarly extension settings" spellcheck="false" style="height: 48px;"></textarea>
+            <textarea placeholder="Write a reply..." class="text-body-sm defaultHeight__PP_LO" aria-label="Write a reply" spellcheck="false" style="height: 48px;"></textarea>
             <button class="send-reply-btn" data-paragraph-comment-id="${paragraphCommentId}" type="button" disabled="" aria-label="send">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.2424 13.7576L1.59386 9.91382C0.766235 9.54598 0.81481 8.35534 1.66965 8.05615L21.6485 1.06354C21.6779 1.05253 21.7077 1.04296 21.7378 1.03481C22.096 0.935758 22.4419 1.04489 22.6811 1.26776C22.6899 1.27595 22.6985 1.28433 22.7071 1.29289C22.7157 1.30146 22.7241 1.31014 22.7322 1.31893C22.9554 1.55835 23.0645 1.90478 22.9649 2.26344C22.9568 2.29301 22.9474 2.32229 22.9366 2.35116L15.9439 22.3304C15.6447 23.1852 14.454 23.2338 14.0862 22.4061L10.2424 13.7576ZM18.1943 4.39148L4.71107 9.11061L10.7785 11.8073L18.1943 4.39148ZM12.1927 13.2215L14.8894 19.2889L19.6085 5.80568L12.1927 13.2215Z" fill="#111111"></path></svg>
             </button>
         </div>
     </div>
 </div>`;
-
         replyContainer.before(inputField);
     }
 });
@@ -1022,21 +1282,19 @@ $(document).on('input', '.reply-input-field textarea', function () {
 });
 
 
-
 //click on send btn in reply input field send add a reply to a comment
 $(document).on('click','.send-reply-btn',function (event) {
-
     let thisElement = $(this);
     let card = thisElement.closest('.comment-card-container');
     let replyBtn = card.find('.reply-btn');
     let viewRepliesBtn = card.find('.view-replies-btn');
-
+    let replyContainer = card.find('.reply-container');
     let replyText = $(this).closest('.reply-input-field').find('textarea').val();
     let paragraphCommentId = $(this).data('paragraph-comment-id');
 
     let data = {
         'replyMessage': replyText
-    }
+    };
 
     fetch('http://localhost:8080/api/v1/paragraph/comment/reply/'+paragraphCommentId, {
         method: 'POST',
@@ -1045,7 +1303,6 @@ $(document).on('click','.send-reply-btn',function (event) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-
     })
         .then(response => {
             if (!response.ok) {
@@ -1056,33 +1313,31 @@ $(document).on('click','.send-reply-btn',function (event) {
             return response.json();
         })
         .then(data => {
-            console.log('Success:', data);
-
-            viewRepliesBtn.css('display','none');
-            loadRepliesByParagraphCommentId(paragraphCommentId,replyBtn);
-
+            console.log('Reply added:', data);
+            // Remove input field
+            thisElement.closest('.reply-input-field').remove();
+            // Hide view replies button
+            viewRepliesBtn.hide();
+            // Ensure reply container is visible
+            replyContainer.show();
+            // Reload all replies to include the new one
+            loadRepliesByParagraphCommentId(paragraphCommentId, replyBtn);
         })
         .catch(error => {
             let response = JSON.parse(error.message);
-            console.log(response);
+            console.log('Error:', response);
         });
-
-    $(this).closest('.reply-input-field').remove();
 });
-
-
 
 
 //when click on the reply button in reply add a reply to a reply
 $(document).on('click', '.reply-reply-btn', function (event) {
-
     let thisElement = $(this);
     let replyCard = thisElement.closest('.reply-card-container');
-    let paragraphCommentId= replyCard.data('paragraph-comment-id');
+    let paragraphCommentId = replyCard.data('paragraph-comment-id');
 
     if (replyCard.find('.replyTo.reply').length === 0) {
         let username = thisElement.closest('.comment-card-container').find('h3.title-action').text().trim();
-
         let inputField = `
         <div class="new-comment-field replyTo reply">
             <div class="reply-to-user">Replying to ${username}</div>
@@ -1092,7 +1347,7 @@ $(document).on('click', '.reply-reply-btn', function (event) {
                               class="text-body-sm defaultHeight__PP_LO" 
                               spellcheck="true" 
                               style="height: 48px;" data-username="${username}">@${username} </textarea>
-                    <button data-paragraph-comment-id="${paragraphCommentId}" class="send-reply-reply-btn" type="button" aria-label="send">
+                    <button data-paragraph-comment-id="${paragraphCommentId}" class="send-reply-reply-btn" type="button" disabled="" aria-label="send">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10.2424 13.7576L1.59386 9.91382C0.766235 9.54598 0.81481 8.35534 1.66965 8.05615L21.6485 1.06354C21.6779 1.05253 21.7077 1.04296 21.7378 1.03481C22.096 0.935758 22.4419 1.04489 22.6811 1.26776C22.6899 1.27595 22.6985 1.28433 22.7071 1.29289C22.7157 1.30146 22.7241 1.31014 22.7322 1.31893C22.9554 1.55835 23.0645 1.90478 22.9649 2.26344C22.9568 2.29301 22.9474 2.32229 22.9366 2.35116L15.9439 22.3304C15.6447 23.1852 14.454 23.2338 14.0862 22.4061L10.2424 13.7576ZM18.1943 4.39148L4.71107 9.11061L10.7785 11.8073L18.1943 4.39148ZM12.1927 13.2215L14.8894 19.2889L19.6085 5.80568L12.1927 13.2215Z" fill="#111111"></path>
                         </svg>
@@ -1100,47 +1355,144 @@ $(document).on('click', '.reply-reply-btn', function (event) {
                 </div>
             </div>
         </div>`;
-
         replyCard.append(inputField);
     }
 });
 
 
+$(document).on('input', '.replyTo textarea', function () {
+    let btn = $(this).closest('.replyTo').find('.send-reply-reply-btn');
+    let replyText = $(this).val().trim();
+    let repliedUsername = $(this).data('username');
+    repliedUsername = '@' + repliedUsername;
+    let usernameLength = repliedUsername.length;
+    let actualReply = replyText.substring(usernameLength).trim();
+    if (actualReply.length > 0) {
+        btn.prop('disabled', false);
+    } else {
+        btn.prop('disabled', true);
+    }
+});
 
 
 //click on send btn in reply reply input field send add a reply to a reply
-$(document).on('click','.send-reply-reply-btn',function (event) {
+// $(document).on('click', '.send-reply-reply-btn', function (event) {
+//     let thisElement = $(this);
+//     let paragraphCommentId = $(this).data('paragraph-comment-id');
+//     let replyText = thisElement.closest('.replyTo.reply').find('textarea').val().trim();
+//     let repliedUsername = thisElement.closest('.replyTo.reply').find('textarea').data('username');
+//     repliedUsername = '@' + repliedUsername;
+//     let usernameLength = repliedUsername.length;
+//     let actualReply = replyText.substring(usernameLength).trim();
+//
+//     if (replyText === repliedUsername || replyText.length <= 0 || actualReply.length <= 0) {
+//         return;
+//     }
+//
+//     let data = { 'replyMessage': repliedUsername + ' ' + actualReply };
+//
+//     fetch('http://localhost:8080/api/v1/paragraph/comment/reply/' + paragraphCommentId, {
+//         method: 'POST',
+//         credentials: 'include',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify(data)
+//     })
+//         .then(response => {
+//             if (!response.ok) {
+//                 return response.json().then(errData => {
+//                     throw new Error(JSON.stringify(errData));
+//                 });
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             console.log('Reply-to-reply added:', data);
+//             // Remove input field
+//             thisElement.closest('.replyTo.reply').remove();
+//             // Find the main comment card
+//             let mainCard = thisElement.parents('.comment-card-container').last();
+//             let replyBtn = mainCard.find('.reply-btn');
+//             let viewRepliesBtn = mainCard.find('.view-replies-btn');
+//             let replyContainer = mainCard.find('.reply-container');
+//             // Hide view replies button
+//             viewRepliesBtn.hide();
+//             // Ensure reply container is visible
+//             replyContainer.show();
+//             // Immediately append the new reply to the UI
+//             let newReply = `
+//               <div class="comment-card-container reply-card-container" data-paragraph-comment-id="${paragraphCommentId}">
+//                 <div>
+//                   <div class="dsContainer__RRG6K commentCardContainer__P0qWo replyCard__Ft5hc">
+//                     <div class="dsColumn__PqDUP">
+//                       <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${data.userId}" aria-label="${data.username}">
+//                         <img style="object-fit: cover;" src="${data.userProfilePic || '/default-profile.png'}" aria-hidden="true" alt="${data.username}" class="avatar__Ygp0_ comment_card_reply_avatar__niNAw">
+//                       </a>
+//                     </div>
+//                     <div class="dsColumn__PqDUP commentCardContentContainer__F9gGk gap8__gx3K6">
+//                       <div class="dsRow__BXK6n gap8__gx3K6 authorProfileRow__GMsIH">
+//                         <h3 aria-hidden="true" class="dsMargin__Gs6Tj title-action">${data.username}</h3>
+//                         <div class="dsRow__BXK6n badgeRow__bzi6i">
+//                           ${data.isCommentByAuthor === 1
+//                 ? `<div class="pill__HVTvX text-caption" style="color: rgb(255, 255, 255); background-color: rgb(169, 62, 25);">Writer</div>`
+//                 : ``
+//             }
+//                         </div>
+//                       </div>
+//                       <div class="dsRow__BXK6n commentCardContent__Vc9vg">
+//                         <pre class="text-body-sm" style="color: #222;">${data.replyMessage}</pre>
+//                       </div>
+//                       <div class="dsRow__BXK6n commentCardContent__Vc9vg commentCardMeta__Xy9U9">
+//                         <p class="postedDate__xcq5D text-caption">${data.time}</p>
+//                         <button class="replyButton__kdyts button__Meavz text-meta reply-reply-btn" style="font-size: 12px; font-weight: 700;" aria-label="Reply to comment">Reply</button>
+//                       </div>
+//                     </div>
+//                     <div class="dsColumn__PqDUP likeColumn__bveEu">
+//                       <button class="button__Meavz" aria-label="More options">
+//                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 12C17 13.1046 17.8954 14 19 14Z" fill="#686868"></path></svg>
+//                       </button>
+//                       <div class="dsColumn__PqDUP">
+//                         <button class="button__Meavz like-btn-reply" data-reply-id="${data.replyId}" data-paragraph-comment-id="${paragraphCommentId}" aria-label="Like this comment">
+//                           <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>
+//                         </button>
+//                       </div>
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//             `;
+//             replyContainer.append(newReply);
+//             // Scroll to the new reply
+//             replyContainer.find('.reply-card-container').last()[0].scrollIntoView({ behavior: 'smooth' });
+//             // Reload all replies to ensure consistency with backend data
+//             loadRepliesByParagraphCommentId(paragraphCommentId, replyBtn);
+//         })
+//         .catch(error => {
+//             let response = JSON.parse(error.message);
+//             console.log('Error:', response);
+//         });
+// });
 
+
+$(document).on('click', '.send-reply-reply-btn', function (event) {
     let thisElement = $(this);
-    let replyBtn1 = thisElement.closest('.replyTo.reply').closest('.comment-card-container').find('.reply-btn');
-    let card = thisElement.closest('.comment-card-container');
-    let replyBtn = card.find('.reply-btn');
-    let viewRepliesBtn = card.find('.view-replies-btn');
-
-    let replyText = $(this).closest('.replyTo.reply').find('textarea').val().trim();
-    let repliedUsername = $(this).closest('.replyTo.reply').find('textarea').data('username');
-    repliedUsername = '@'+repliedUsername;
     let paragraphCommentId = $(this).data('paragraph-comment-id');
-
+    let replyText = thisElement.closest('.replyTo.reply').find('textarea').val().trim();
+    let repliedUsername = thisElement.closest('.replyTo.reply').find('textarea').data('username');
+    repliedUsername = '@' + repliedUsername;
     let usernameLength = repliedUsername.length;
-    let actualReply = replyText.substring(usernameLength,replyText.length).trim();
+    let actualReply = replyText.substring(usernameLength).trim();
 
-    if(replyText===repliedUsername || replyText.length<=0 || actualReply.length<=0){
+    if (replyText === repliedUsername || replyText.length <= 0 || actualReply.length <= 0) {
         return;
     }
 
-    let data = {
-        'replyMessage': repliedUsername+' '+actualReply
-    }
+    let data = { 'replyMessage': repliedUsername + ' ' + actualReply };
 
-    fetch('http://localhost:8080/api/v1/paragraph/comment/reply/'+paragraphCommentId, {
+    fetch('http://localhost:8080/api/v1/paragraph/comment/reply/' + paragraphCommentId, {
         method: 'POST',
         credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
-
     })
         .then(response => {
             if (!response.ok) {
@@ -1151,104 +1503,73 @@ $(document).on('click','.send-reply-reply-btn',function (event) {
             return response.json();
         })
         .then(data => {
-            console.log('Success:', data);
-
-            viewRepliesBtn.css('display','none');
-
-            fetch('http://localhost:8080/api/v1/paragraph/comment/reply/'+paragraphCommentId, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        return response.json().then(errData => {
-                            throw new Error(JSON.stringify(errData));
-                        });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Success:', data);
-
-                    // viewRepliesBtn.closest('.comment-card-container').find('.reply-container').empty();
-                    let topCard = thisElement.parents('.comment-card-container').first();
-                    let replyContainer = topCard.find('.reply-container');
-                    replyContainer.empty();
-
-                    for (let i = 0; i < data.data.length; i++) {
-
-                        let reply = data.data[i];
-
-                        let singleReply = `
-  <div class="comment-card-container reply-card-container" data-paragraph-comment-id="${reply.paragraphCommentId}">
-    <div>
-      <div class="dsContainer__RRG6K commentCardContainer__P0qWo replyCard__Ft5hc">
-        <div class="dsColumn__PqDUP">
-          <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${reply.userId}" aria-label="romancefanatic13">
-            <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${reply.userProfilePic}" aria-hidden="true" alt="romancefanatic13" class="avatar__Ygp0_ comment_card_reply_avatar__niNAw">
-          </a>
-        </div>
-        <div class="dsColumn__PqDUP commentCardContentContainer__F9gGk gap8__gx3K6">
-          <div class="dsRow__BXK6n gap8__gx3K6 authorProfileRow__GMsIH">
-            <h3 aria-hidden="true" class="dsMargin__Gs6Tj title-action">${reply.username}</h3>
-            <div class="dsRow__BXK6n badgeRow__bzi6i">
-                ${reply.isCommentByAuthor===1
-                            ? `<div class="pill__HVTvX text-caption" style="color: rgb(255, 255, 255); background-color: rgb(169, 62, 25);">Writer</div>`
-                            : ``
-                        }
-            </div>
-          </div>
-          <div class="dsRow__BXK6n commentCardContent__Vc9vg">
-            <pre class="text-body-sm" style="color: #222;">${reply.replyMessage}</pre>
-          </div>
-          <div class="dsRow__BXK6n commentCardContent__Vc9vg commentCardMeta__Xy9U9">
-            <p class="postedDate__xcq5D text-caption">${reply.time}</p>
-            <button class="replyButton__kdyts button__Meavz text-meta reply-reply-btn" style="font-size: 12px; font-weight: 700;" aria-label="Reply to comment">Reply</button>
-          </div>
-        </div>
-        <div class="dsColumn__PqDUP likeColumn__bveEu">
-          <button class="button__Meavz" aria-label="More options">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z" fill="#686868"></path></svg>
-          </button>
-          <div class="dsColumn__PqDUP">
-            <button class="button__Meavz like-btn-reply" data-reply-id="${reply.replyId}" data-paragraph-comment-id="${reply.paragraphCommentId}" aria-label="Like this comment">
-                ${reply.isCurrentUserLiked===1
-                            ? `<svg width="16" height="14" viewBox="0 0 16 14" fill="#ff6122" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#ff6122" fill="#ff6122" stroke-width="1.5" stroke-linecap="round"></path></svg>`
-                            : `<svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>`
-                        }
-            </button>
-              ${reply.likes!=='0'
-                            ? `<span class="text-caption" style="font-weight: 700; font-size: 12px ; color: #121212;">${reply.likes}</span>`
-                            : ``
-                        }
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--here put the reply to reply input field-->
-    
-  </div>
-`;
-                        // viewRepliesBtn.closest('.comment-card-container').find('.reply-container').append(singleReply);
-                        replyContainer.append(singleReply);
-                    }
-
-                })
-                .catch(error => {
-                    let response = JSON.parse(error.message);
-                    console.log(response);
-                });
-
+            console.log('Reply-to-reply added:', data);
+            // Remove input field
+            thisElement.closest('.replyTo.reply').remove();
+            // Find the main comment card
+            let mainCard = thisElement.parents('.comment-card-container').last();
+            let replyBtn = mainCard.find('.reply-btn');
+            let viewRepliesBtn = mainCard.find('.view-replies-btn');
+            let replyContainer = mainCard.find('.reply-container');
+            // Hide view replies button
+            viewRepliesBtn.hide();
+            // Ensure reply container is visible
+            replyContainer.show();
+            // Find the replied-to reply card (parent of the reply-reply-btn)
+            let repliedToCard = thisElement.closest('.reply-card-container');
+            // Immediately append the new reply after the replied-to reply
+            let newReply = `
+              <div class="comment-card-container reply-card-container" data-paragraph-comment-id="${paragraphCommentId}">
+                <div>
+                  <div class="dsContainer__RRG6K commentCardContainer__P0qWo replyCard__Ft5hc">
+                    <div class="dsColumn__PqDUP">
+                      <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${data.userId}" aria-label="${data.username}">
+                        <img style="object-fit: cover;" src="${data.userProfilePic || '/default-profile.png'}" aria-hidden="true" alt="${data.username}" class="avatar__Ygp0_ comment_card_reply_avatar__niNAw">
+                      </a>
+                    </div>
+                    <div class="dsColumn__PqDUP commentCardContentContainer__F9gGk gap8__gx3K6">
+                      <div class="dsRow__BXK6n gap8__gx3K6 authorProfileRow__GMsIH">
+                        <h3 aria-hidden="true" class="dsMargin__Gs6Tj title-action">${data.username}</h3>
+                        <div class="dsRow__BXK6n badgeRow__bzi6i">
+                          ${data.isCommentByAuthor === 1
+                ? `<div class="pill__HVTvX text-caption" style="color: rgb(255, 255, 255); background-color: rgb(169, 62, 25);">Writer</div>`
+                : ``
+            }
+                        </div>
+                      </div>
+                      <div class="dsRow__BXK6n commentCardContent__Vc9vg">
+                        <pre class="text-body-sm" style="color: #222;">${data.replyMessage}</pre>
+                      </div>
+                      <div class="dsRow__BXK6n commentCardContent__Vc9vg commentCardMeta__Xy9U9">
+                        <p class="postedDate__xcq5D text-caption">${data.time}</p>
+                        <button class="replyButton__kdyts button__Meavz text-meta reply-reply-btn" style="font-size: 12px; font-weight: 700;" aria-label="Reply to comment">Reply</button>
+                      </div>
+                    </div>
+                    <div class="dsColumn__PqDUP likeColumn__bveEu">
+                      <button class="button__Meavz" aria-label="More options">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 12C17 13.1046 17.8954 14 19 14Z" fill="#686868"></path></svg>
+                      </button>
+                      <div class="dsColumn__PqDUP">
+                        <button class="button__Meavz like-btn-reply" data-reply-id="${data.replyId}" data-paragraph-comment-id="${paragraphCommentId}" aria-label="Like this comment">
+                          <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+            // Append the new reply after the replied-to reply
+            repliedToCard.after(newReply);
+            // Scroll to the new reply
+            $(newReply).find('.reply-card-container')[0].scrollIntoView({ behavior: 'smooth' });
+            // Reload all replies to ensure consistency with backend data
+            loadRepliesByParagraphCommentId(paragraphCommentId, replyBtn);
         })
         .catch(error => {
             let response = JSON.parse(error.message);
-            console.log(response);
+            console.log('Error:', response);
         });
-
-    $(this).closest('.replyTo.reply').remove();
 });
 
 
@@ -1320,7 +1641,7 @@ async function loadFirstTwoCommentsOfChapter() {
                           <div class="dsContainer__RRG6K commentCardContainer__P0qWo">
                             <div class="dsColumn__PqDUP">
                               <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${comment.userId}" aria-label="Lio_tiger007">
-                                <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${comment.userProfilePic}" aria-hidden="true" alt="Lio_tiger007" class="avatar__Ygp0_ comment_card_avatar__zKv1t">
+                                <img style="object-fit: cover;" src="${comment.userProfilePic}" aria-hidden="true" alt="Lio_tiger007" class="avatar__Ygp0_ comment_card_avatar__zKv1t">
                               </a>
                             </div>
                             <div class="dsColumn__PqDUP commentCardContentContainer__F9gGk gap8__gx3K6">
@@ -1342,14 +1663,14 @@ async function loadFirstTwoCommentsOfChapter() {
                               </div>
                             </div>
                             <div class="dsColumn__PqDUP likeColumn__bveEu">
-                              <button class="button__Meavz" aria-label="More options">
+                              <button data-id="${comment.id}" data-type="chapterComment" class="button__Meavz more-options-unique" aria-label="More options">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z" fill="#686868"></path></svg>
                               </button>
                               <div class="dsColumn__PqDUP">
                                 <button class="button__Meavz chapter-comment-like-btn" data-chapter-comment-id="${comment.id}" aria-label="Like this comment">
                                     ${comment.isCurrentUserLiked===1
-                                    ? `<svg width="16" height="14" viewBox="0 0 16 14" fill="#ff6122" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#ff6122" fill="#ff6122" stroke-width="1.5" stroke-linecap="round"></path></svg>`
-                                    : `<svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>`
+                                    ? `<svg data-chapter-comment-id="${comment.id}" width="16" height="14" viewBox="0 0 16 14" fill="#ff6122" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#ff6122" fill="#ff6122" stroke-width="1.5" stroke-linecap="round"></path></svg>`
+                                    : `<svg data-chapter-comment-id="${comment.id}" width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.34234 1.76718L9.34246 1.76706C9.66387 1.44447 10.0454 1.18869 10.4651 1.01423C10.8848 0.839765 11.3345 0.75 11.7887 0.75C12.2429 0.75 12.6926 0.839765 13.1123 1.01423C13.532 1.18869 13.9135 1.44447 14.2349 1.76706L14.2352 1.76731C14.5568 2.08975 14.812 2.47273 14.9862 2.89442C15.1603 3.31611 15.25 3.76819 15.25 4.22479C15.25 4.68139 15.1603 5.13346 14.9862 5.55515C14.812 5.97684 14.5568 6.35982 14.2352 6.68226L14.2351 6.68239L13.4237 7.49635L7.99979 12.9376L2.57588 7.49635L1.76452 6.68239C1.11521 6.031 0.75 5.14702 0.75 4.22479C0.75 3.30255 1.11521 2.41857 1.76452 1.76718C2.41375 1.11588 3.29378 0.750411 4.21089 0.750411C5.128 0.750411 6.00803 1.11588 6.65726 1.76718L7.46862 2.58114L7.9998 3.11402L8.53097 2.58114L9.34234 1.76718Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round"></path></svg>`
                                     }
                                 </button>
                                 ${comment.likes!=='0'
@@ -1381,6 +1702,8 @@ async function loadFirstTwoCommentsOfChapter() {
 $(document).on('click','.chapter-comment-like-btn',function (event) {
 
     let chapterCommentId = $(this).data('chapter-comment-id');
+    console.log(chapterCommentId)
+    console.log('-------------');
 
     fetch('http://localhost:8080/api/v1/chapter/comment/like/'+chapterCommentId, {
         method: 'POST',
@@ -1503,7 +1826,7 @@ $(document).on('click','.show-more-btn',async function (event) {
                           <div class="dsContainer__RRG6K commentCardContainer__P0qWo">
                             <div class="dsColumn__PqDUP">
                               <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${comment.userId}" aria-label="Lio_tiger007">
-                                <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${comment.userProfilePic}" aria-hidden="true" alt="Lio_tiger007" class="avatar__Ygp0_ comment_card_avatar__zKv1t">
+                                <img style="object-fit: cover;" src="${comment.userProfilePic}" aria-hidden="true" alt="Lio_tiger007" class="avatar__Ygp0_ comment_card_avatar__zKv1t">
                               </a>
                             </div>
                             <div class="dsColumn__PqDUP commentCardContentContainer__F9gGk gap8__gx3K6">
@@ -1525,7 +1848,7 @@ $(document).on('click','.show-more-btn',async function (event) {
                               </div>
                             </div>
                             <div class="dsColumn__PqDUP likeColumn__bveEu">
-                              <button class="button__Meavz" aria-label="More options">
+                              <button data-id="${comment.id}" data-type="chapterComment" class="button__Meavz more-options-unique" aria-label="More options">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z" fill="#686868"></path></svg>
                               </button>
                               <div class="dsColumn__PqDUP">
@@ -1613,6 +1936,8 @@ $(document).on('click','.send-chapter-comment-btn',function (event) {
             console.log('Success:', data);
 
             $(this).closest('.bottom-comment-field').find('textarea').val('');
+            $('.comments-empty-stage').closest('div').remove();
+
             loadFirstTwoCommentsOfChapter();
 
         })
@@ -1624,6 +1949,309 @@ $(document).on('click','.send-chapter-comment-btn',function (event) {
 });
 
 
+
+
+// Load "My Library"
+function loadLibrary($dropdown, chapterId) {
+
+    return fetch('http://localhost:8080/api/v1/library/check/story/' + chapterId, {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData)); });
+            }
+            return response.json();
+        })
+        .then(data => {
+            const $ul = $dropdown.find('.lists-menu');
+            $ul.empty();
+
+            $ul.append(`
+                <li>
+                  <a class="on-modify-list my-library" data-list-id="0">
+                    <span class="fa fa-library fa-wp-neutral-2"></span>
+                    <span class="reading-list-name">My Library (Private)</span>
+                    ${data.data === true
+                ? `<div class="status" style="transform: translateX(25px);">
+                              <i class="fa-regular fa-circle-check" style="color: #00b2b2; font-size: 17px; transform: translateX(27px);"></i>
+                           </div>`
+                : ``}
+                  </a>
+                </li>
+            `);
+        });
+}
+
+//add story to library
+$(document).on('click','.my-library',function (event) {
+
+    let chapterId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("chapterId")) {
+        chapterId = params.get("chapterId");
+    }
+
+    if(chapterId==null){
+        //load chapter not found page
+        return;
+    }
+
+    fetch('http://localhost:8080/api/v1/library/add/remove/story/byChapter/'+chapterId, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            let chapterId = new URLSearchParams(window.location.search).get("chapterId");
+            const $dropdown = $(this).closest('.add-to-library');
+            refreshLists($dropdown, chapterId);
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+        });
+});
+
+
+// Load all reading lists
+function loadReadingLists($dropdown, chapterId) {
+
+    return fetch('http://localhost:8080/api/v1/readingList/all/check/story/' + chapterId, {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData)); });
+            }
+            return response.json();
+        })
+        .then(data => {
+            const $ul = $dropdown.find('.lists-menu');
+
+            data.data.forEach(list => {
+                $ul.append(`
+                    <li>
+                      <a class="on-modify-list my-list" data-list-id="${list.readingListId}">
+                        <span class="fa fa-reading-list fa-wp-neutral-2"></span>
+                        <span class="reading-list-name">${list.listName}</span>
+                        ${list.isStoryExit === 1
+                    ? `<div class="status" style="transform: translateX(25px);">
+                                  <i class="fa-regular fa-circle-check" style="color: #00b2b2; font-size: 17px; transform: translateX(27px);"></i>
+                               </div>`
+                    : ``}
+                      </a>
+                    </li>
+                `);
+            });
+        });
+}
+
+
+//add story to library
+$(document).on('click','.my-list',function (event) {
+
+    let chapterId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("chapterId")) {
+        chapterId = params.get("chapterId");
+    }
+
+    if(chapterId==null){
+        //load chapter not found page
+        return;
+    }
+
+    let listId = $(this).data('list-id');
+    console.log(listId);
+
+    fetch('http://localhost:8080/api/v1/readingList/add/remove/story/byChapter/'+listId+'/'+chapterId, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            let chapterId = new URLSearchParams(window.location.search).get("chapterId");
+            const $dropdown = $(this).closest('.add-to-library');
+            refreshLists($dropdown, chapterId);
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+        });
+});
+
+
+// Wrapper to refresh both Library + Reading Lists
+function refreshLists($dropdown, chapterId) {
+
+    return Promise.all([
+        loadLibrary($dropdown, chapterId),
+        loadReadingLists($dropdown, chapterId)
+    ]);
+}
+
+
+// Open dropdown
+$(document).on('click', '.on-lists-add-clicked', function (e) {
+
+    e.preventDefault();
+
+    let chapterId = new URLSearchParams(window.location.search).get("chapterId");
+    if (!chapterId) return;
+
+    const $dropdown = $(this).closest('.button-group').find('.add-to-library');
+
+    // Reload lists each time before showing
+    refreshLists($dropdown, chapterId).then(() => {
+        $dropdown.css({
+            display: 'block',
+            visibility: 'visible',
+            opacity: 1
+        });
+    });
+});
+
+
+// Close dropdown when clicking outside
+$(document).on('click', function (e) {
+
+    if (!$(e.target).closest('.button-group').length) {
+        $('.add-to-library').css({
+            display: 'none',
+            visibility: 'hidden',
+            opacity: 0
+        });
+    }
+});
+
+
+// Create new reading list
+$(document).on('click', '.on-create-list', function () {
+
+    const listName = $('#new-reading-list').val().trim();
+    if (!listName) {
+        alert("Please enter a reading list name.");
+        return;
+    }
+
+    fetch('http://localhost:8080/api/v1/readingList/create/new', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ listName: listName })
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => {
+                    throw new Error(JSON.stringify(err)); });
+            }
+            return response.json();
+        })
+        .then(data => {
+            $('#new-reading-list').val('');
+
+            if (data.data === false) {
+                alert("Reading list with this name already exists, try another.");
+            } else {
+                let chapterId = new URLSearchParams(window.location.search).get("chapterId");
+                const $dropdown = $(this).closest('.add-to-library');
+                refreshLists($dropdown, chapterId);
+            }
+
+        })
+        .catch(error => {
+            console.error("Error creating list:", error);
+            alert("Failed to create reading list. Try again.");
+        });
+});
+
+
+
+
+
+
+
+
+
+
+//header js
+let search = $('.search')[0];
+search.addEventListener('click',function (event) {
+
+    window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/search.html';
+});
+
+function headerData() {
+
+    fetch('http://localhost:8080/user/current', {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('POST Data:', data);
+            const currentUser = data.data;
+
+            $('.your-profile').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${currentUser.id}`);
+            $('.user-profile-pic').attr('src',`${currentUser.profilePicPath}`);
+
+        })
+        .catch(error => {
+            console.error('Fetch error:', error.message);
+            let response = JSON.parse(error.message);
+        });
+}
+headerData();
 
 
 

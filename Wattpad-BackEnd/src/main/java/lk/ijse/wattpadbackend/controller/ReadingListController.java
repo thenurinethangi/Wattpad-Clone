@@ -1,9 +1,6 @@
 package lk.ijse.wattpadbackend.controller;
 
-import lk.ijse.wattpadbackend.dto.ReadingListEditRequestDTO;
-import lk.ijse.wattpadbackend.dto.ReadingListEditResponseDTO;
-import lk.ijse.wattpadbackend.dto.ReadingListsDTO;
-import lk.ijse.wattpadbackend.dto.SingleReadingListDTO;
+import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.service.ReadingListService;
 import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
@@ -89,6 +86,51 @@ public class ReadingListController {
         List<SingleReadingListDTO> singleReadingListDTOList = readingListService.getAllLikedReadingLists(auth.getName());
 
         return new APIResponse(202,"Successfully loaded all liked readingLists.",singleReadingListDTOList);
+    }
+
+    @GetMapping("/all/check/story/{chapterId}")
+    public APIResponse getAllReadingListsAndCheckTheSpecificStoryExit(@PathVariable long chapterId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        List<AddToReadingListResponseDTO> addToReadingListResponseDTOList = readingListService.getAllReadingListsAndCheckTheSpecificStoryExit(auth.getName(),chapterId);
+
+        return new APIResponse(202,"Successfully loaded all your readingLists and check story exit or not.",addToReadingListResponseDTOList);
+    }
+
+    @GetMapping("/all/check/story/byStoryId/{storyId}")
+    public APIResponse getAllReadingListsAndCheckTheSpecificStoryExitByStoryId(@PathVariable long storyId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        List<AddToReadingListResponseDTO> addToReadingListResponseDTOList = readingListService.getAllReadingListsAndCheckTheSpecificStoryExitByStoryId(auth.getName(),storyId);
+
+        return new APIResponse(202,"Successfully loaded all your readingLists and check story exit or not.",addToReadingListResponseDTOList);
+    }
+
+    @PostMapping("/create/new")
+    public APIResponse addNewReadingList(@RequestBody CreateNewListRequestDTO createNewListRequestDTO){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean result = readingListService.addNewReadingList(auth.getName(),createNewListRequestDTO);
+        return new APIResponse(202,"Successfully created new reading list", result);
+    }
+
+    @PostMapping("/add/remove/story/byChapter/{listId}/{chapterId}")
+    public APIResponse addOrRemoveStoryToReadingListByChapterId(@PathVariable long listId, @PathVariable long chapterId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        readingListService.addOrRemoveStoryToReadingListByChapterId(auth.getName(),listId,chapterId);
+
+        return new APIResponse(202,"Successfully added or removed story to reading list id: "+listId,null);
+    }
+
+    @PostMapping("/add/remove/story/byStory/{listId}/{storyId}")
+    public APIResponse addOrRemoveStoryToReadingListByStoryId(@PathVariable long listId, @PathVariable long storyId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        readingListService.addOrRemoveStoryToReadingListByStoryId(auth.getName(),listId,storyId);
+
+        return new APIResponse(202,"Successfully added or removed story to reading list id: "+listId,null);
     }
 }
 

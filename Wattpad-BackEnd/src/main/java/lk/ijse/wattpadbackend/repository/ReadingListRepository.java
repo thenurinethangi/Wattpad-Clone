@@ -17,4 +17,6 @@ public interface ReadingListRepository extends JpaRepository<ReadingList,Integer
     List<ReadingList> findAllByUserId(@Param("id") long id);
 
     List<ReadingList> findAllByOrderByVotesDesc();
+
+    ReadingList findByListNameAndUser(String listName, User user);
 }

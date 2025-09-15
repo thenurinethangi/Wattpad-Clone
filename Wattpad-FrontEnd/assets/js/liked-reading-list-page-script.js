@@ -58,6 +58,13 @@ async function loadAllLikedReadingLists() {
 
             let likedReadingLists = data.data;
 
+            $('.liked-reading-list-count-container').html(`${likedReadingLists.length} list<span class="WSJNV"></span>
+                                                                <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="" aria-hidden="false">
+                                                                   <title id="">WpLock</title>
+                                                                   <path d="M6 10H5a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-7a3 3 0 0 0-3-3h-1V7A6 6 0 0 0 6 7v3Zm2 0V7a4 4 0 1 1 8 0v3H8Zm11 2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h14Z" fill="#121212"></path>
+                                                                </svg>
+                                                            Hidden from your profile`);
+
             for (let i = 0; i < likedReadingLists.length; i++) {
 
                 let readingList = likedReadingLists[i];
@@ -69,26 +76,26 @@ async function loadAllLikedReadingLists() {
         <div class="jtQrZ">
           <div class="IAzmt MDIEi" style="row-gap:4px;column-gap:4px">
             <div class="zv-c6">
-              <div class="coverWrapper__t2Ve8" data-testid="cover">
+              <div class="coverWrapper__t2Ve8" data-testid="cover" style="height: 100%; display: flex; justify-content: center; align-items: center; background-color: #e2e2e2;">
                 ${readingList.threeStoriesCoverImagePath[0] === "wattpad-logo-white.svg"
-                    ? `<img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${readingList.threeStoriesCoverImagePath[0]}" alt="" data-testid="image"/>`
-                    : `<img style="width: 100%; height: 100%;" class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${readingList.threeStoriesCoverImagePath[0]}" alt="" data-testid="image"/>`
+                    ? `<img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${readingList.threeStoriesCoverImagePath[0]}" alt="" data-testid="image" style="width: 50%;"/>`
+                    : `<img style="width: 100%; height: 100%;" class="cover__BlyZa flexible__bq0Qp" src="${readingList.threeStoriesCoverImagePath[0]}" alt="" data-testid="image"/>`
                 }
               </div>
             </div>
             <div class="dyxxG">
-              <div class="coverWrapper__t2Ve8" data-testid="cover">
+              <div class="coverWrapper__t2Ve8" data-testid="cover" style="height: 100%; display: flex; justify-content: center; align-items: center; background-color: #e2e2e2;">
                 ${readingList.threeStoriesCoverImagePath[1] === "wattpad-logo-white.svg"
-                    ? `<img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${readingList.threeStoriesCoverImagePath[1]}" alt="" data-testid="image"/>`
-                    : `<img style="width: 100%; height: 100%;" class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${readingList.threeStoriesCoverImagePath[1]}" alt="" data-testid="image"/>`
+                    ? `<img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${readingList.threeStoriesCoverImagePath[1]}" alt="" data-testid="image" style="width: 50%;"/>`
+                    : `<img style="width: 100%; height: 100%;" class="cover__BlyZa flexible__bq0Qp" src="${readingList.threeStoriesCoverImagePath[1]}" alt="" data-testid="image"/>`
                 }
               </div>
             </div>
             <div class="dyxxG">
-              <div class="coverWrapper__t2Ve8" data-testid="cover">
+              <div class="coverWrapper__t2Ve8" data-testid="cover" style="height: 100%; display: flex; justify-content: center; align-items: center; background-color: #e2e2e2;">
                 ${readingList.threeStoriesCoverImagePath[2] === "wattpad-logo-white.svg"
-                    ? `<img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${readingList.threeStoriesCoverImagePath[2]}" alt="" data-testid="image"/>`
-                    : `<img style="width: 100%; height: 100%;" class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${readingList.threeStoriesCoverImagePath[2]}" alt="" data-testid="image"/>`
+                    ? `<img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${readingList.threeStoriesCoverImagePath[2]}" alt="" data-testid="image" style="width: 50%;"/>`
+                    : `<img style="width: 100%; height: 100%;" class="cover__BlyZa flexible__bq0Qp" src="${readingList.threeStoriesCoverImagePath[2]}" alt="" data-testid="image"/>`
                 }
               </div>
             </div>
@@ -102,10 +109,10 @@ async function loadAllLikedReadingLists() {
         <div class="L7Od7">
           <div class="Sz3nA TBzDA">
             <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${readingList.userId}" aria-label="">
-              <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${readingList.userProfilePicPath}" aria-hidden="true" alt="" class="avatar__Ygp0_ avatar_sm__zq5iO"/>
+              <img style="object-fit: cover;" src="${readingList.userProfilePicPath}" aria-hidden="true" alt="" class="avatar__Ygp0_ avatar_sm__zq5iO"/>
             </a>
             <div class="af6dp">
-              <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${readingList.userId}" aria-label="by werewolf. Tap to go to the author&#x27;s profile page." class="o3vx0">werewolf</a>
+              <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${readingList.userId}" aria-label="by werewolf. Tap to go to the author&#x27;s profile page." class="o3vx0">${readingList.username}</a>
             </div>
           </div>
         </div>

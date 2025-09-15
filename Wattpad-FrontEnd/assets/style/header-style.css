@@ -107,5 +107,33 @@
     transform: translateY(-2px);
 }
 
+.profile-dropdown>.header-list>li>a{
+    color: #222; !important;
+}
+
+.profile-dropdown>.header-list>li>a:hover{
+    color: #222; !important;
+}
+
+a {
+    color: inherit;
+}
+
+a:hover {
+    color: inherit;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charSet="utf-8"/>
+  <link rel="icon" type="image/ico" href="assets/image/wattpad-icon-2-removebg-preview.ico">
+  <title>Admin - Wattpad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Thenuri Nethangi">
+  <meta name="keywords" content="online stories, read stories, write stories, wattpad alternative, fiction platform, storytelling, novels, short stories, creative writing, user-generated stories">
+  <meta name="description" content="Discover and share captivating stories on our platform. Read novels, write your own tales, and connect with a community of passionate readers and writers.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="preload" as="font" href="assets/fonts/SourceSansPro-Regular.ttf" crossorigin="anonymous"/>
+  <link rel="preload" as="font" href="assets/fonts/SourceSansPro-SemiBold.ttf" crossorigin="anonymous"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton+SC&family=Cinzel+Decorative:wght@400;700;900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Roboto:ital,wght@1,800&family=Rubik:ital@0;1&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style/variables.css">
+  <link rel="stylesheet" href="assets/style/ad-login-style.css">
+  <style></style>
+</head>
+<body>
+<div class="login-container">
+  <div class="logo-section">
+    <div class="logo"><img style="width: 100%; height: 100%;" src="assets/image/wattpad-logo.svg" alt="Wattpad Logo" class="logo"></div>
+<!--    <h1 class="brand-name">Wattpad</h1>-->
+    <p class="tagline">Wattpad Admin</p>
+  </div>
+
+  <form id="loginForm">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-input"
+              placeholder="Enter your username"
+              required
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-input"
+              placeholder="Enter your password"
+              required
+      >
+    </div>
+
+    <div class="form-options">
+      <a href="#" class="forgot-password">Forgot Password?</a>
+    </div>
+
+    <button type="submit" class="sign-in-btn">
+      <div class="loading" id="loading"></div>
+      <span id="btnText">Sign In</span>
+    </button>
+  </form>
+
+  <div class="admin-note">
+    <h4>Admin Access Only</h4>
+    <p>This is a restricted area. Only authorized administrators can access this system using valid credentials.</p>
+  </div>
+</div>
+
+<script>
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const loading = document.getElementById('loading');
+    const btnText = document.getElementById('btnText');
+    const submitBtn = document.querySelector('.sign-in-btn');
+
+    if (!username || !password) {
+      showMessage('Please fill in all fields', 'error');
+      return;
+    }
+
+    // Show loading state
+    loading.style.display = 'inline-block';
+    btnText.textContent = 'Signing In...';
+    submitBtn.disabled = true;
+
+    // Simulate authentication (replace with actual authentication logic)
+    setTimeout(() => {
+      // Example credentials (replace with your actual authentication)
+      if (username === 'admin' && password === 'admin123') {
+        showMessage('Login successful! Redirecting...', 'success');
+        setTimeout(() => {
+          // Redirect to admin dashboard
+          window.location.href = 'admin-dashboard.html';
+        }, 1500);
+      } else {
+        showMessage('Invalid username or password', 'error');
+        resetForm();
+      }
+    }, 2000);
+  });
+
+  function resetForm() {
+    const loading = document.getElementById('loading');
+    const btnText = document.getElementById('btnText');
+    const submitBtn = document.querySelector('.sign-in-btn');
+
+    loading.style.display = 'none';
+    btnText.textContent = 'Sign In';
+    submitBtn.disabled = false;
+  }
+
+  function showMessage(message, type) {
+    // Remove existing message
+    const existingMessage = document.querySelector('.message');
+    if (existingMessage) {
+      existingMessage.remove();
+    }
+
+    // Create new message
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${type}`;
+    messageDiv.style.cssText = `
+                padding: 15px 20px;
+                border-radius: 12px;
+                margin: 20px 0;
+                font-size: 14px;
+                font-weight: 600;
+                text-align: center;
+                animation: slideIn 0.3s ease;
+                ${type === 'success'
+            ? 'background: rgba(34, 197, 94, 0.1); color: #16a34a; border: 1px solid rgba(34, 197, 94, 0.2);'
+            : 'background: rgba(239, 68, 68, 0.1); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.2);'
+    }
+            `;
+    messageDiv.textContent = message;
+
+    // Add CSS animation
+    const style = document.createElement('style');
+    style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateY(-10px); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+            `;
+    document.head.appendChild(style);
+
+    // Insert message
+    document.getElementById('loginForm').appendChild(messageDiv);
+
+    // Remove message after 5 seconds
+    setTimeout(() => {
+      if (messageDiv.parentNode) {
+        messageDiv.remove();
+      }
+    }, 5000);
+  }
+
+  // Handle forgot password click
+  document.querySelector('.forgot-password').addEventListener('click', function(e) {
+    e.preventDefault();
+    showMessage('Please contact the system administrator to reset your password.', 'info');
+  });
+
+  // Add input validation feedback
+  document.querySelectorAll('.form-input').forEach(input => {
+    input.addEventListener('blur', function() {
+      if (this.value.trim() === '') {
+        this.style.borderColor = '#ef4444';
+      } else {
+        this.style.borderColor = '#e1e5e9';
+      }
+    });
+
+    input.addEventListener('input', function() {
+      this.style.borderColor = '#e1e5e9';
+    });
+  });
+</script>
+</body>
+</html>

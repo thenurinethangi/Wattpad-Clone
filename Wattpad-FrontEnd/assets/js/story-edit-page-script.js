@@ -133,7 +133,7 @@ async function loadAllChapters() {
                         </div>
                         <div class="part-meta vcenter">
                           <div class="part-name col-xs-12">
-                            <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/create-chapter-page.html?storyId=${storyId}" class="auto-shorten on-navigate">${chapter.chapterTitle}</a>
+                            <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/create-chapter-page.html?chapterId=${chapter.chapterId}&storyId=${storyId}&isEdit=true" class="auto-shorten on-navigate">${chapter.chapterTitle}</a>
                           </div>
                           <div class="part-detail">
                             <div class="col-xs-10 col-sm-5">
@@ -248,7 +248,7 @@ async function loadStoryDetailsWhenPageLoading() {
         .then(data => {
             console.log('Success:', data);
 
-            $('.cover.cover-xlg.edit-cover').attr('src',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${data.data.coverImagePath}`);
+            $('.cover.cover-xlg.edit-cover').attr('src',`${data.data.coverImagePath}`);
             $('#story-title-top').text(data.data.title);
 
         })
@@ -306,7 +306,7 @@ async function loadStoryDetails() {
             $('.table-of-content-tab').removeClass('active');
             $('.story-details-tab').addClass('active');
 
-            $('.cover.cover-xlg.edit-cover').attr('src',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${data.data.coverImagePath}`);
+            $('.cover.cover-xlg.edit-cover').attr('src',`${data.data.coverImagePath}`);
             $('#story-title').text(story.title);
             $('.story-description').text(story.description);
 

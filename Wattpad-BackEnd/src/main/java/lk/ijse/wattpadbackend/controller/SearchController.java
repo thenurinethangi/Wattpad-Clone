@@ -38,6 +38,13 @@ public class SearchController {
         return new APIResponse(202,"Successfully load stories by searched keyword",searchResponseDTO);
     }
 
+    @GetMapping("/by/{input}/{count}")
+    public APIResponse getAllStoriesThatMatchToSearchedKeyWordAndLimitedCount(@PathVariable String input,@PathVariable int count){
+
+        SearchResponseDTO searchResponseDTO = searchService.getAllStoriesThatMatchToSearchedKeyWordAndLimitedCount(input,count);
+        return new APIResponse(202,"Successfully load stories by searched keyword(more load)",searchResponseDTO);
+    }
+
     @PostMapping("/by/criteria/{input}")
     public APIResponse getAllStoriesThatMatchToSearchedKeyWordAndCriteria(@PathVariable String input, @RequestBody SearchCriteriaDTO searchCriteriaDTO){
 

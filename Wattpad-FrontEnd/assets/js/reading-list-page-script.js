@@ -78,19 +78,19 @@ async function loadReadingLists() {
                                     <div class="D5ByT zv-c6">
                                         ${singleReadingList.threeStoriesCoverImagePath[0] === "wattpad-logo-white.svg"
                                         ? `<img class="FB8MI" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${singleReadingList.threeStoriesCoverImagePath[0]}" alt="Wattpad Logo"/>`
-                                        : `<img style="width: 100%; height: 100%;" class="FB8MI" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${singleReadingList.threeStoriesCoverImagePath[0]}" alt="Wattpad Logo"/>`
+                                        : `<img style="width: 100%; height: 100%;" class="FB8MI" src="${singleReadingList.threeStoriesCoverImagePath[0]}" alt="Story cover"/>`
                                         }
                                     </div>
                                     <div class="D5ByT dyxxG">
                                         ${singleReadingList.threeStoriesCoverImagePath[1] === "wattpad-logo-white.svg"
                                         ? `<img class="FB8MI" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${singleReadingList.threeStoriesCoverImagePath[1]}" alt="Wattpad Logo"/>`
-                                        : `<img style="width: 100%; height: 100%;" class="FB8MI" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${singleReadingList.threeStoriesCoverImagePath[1]}" alt="Wattpad Logo"/>`
+                                        : `<img style="width: 100%; height: 100%;" class="FB8MI" src="${singleReadingList.threeStoriesCoverImagePath[1]}" alt="Story cover"/>`
                                         }
                                     </div>
                                     <div class="D5ByT dyxxG">
                                         ${singleReadingList.threeStoriesCoverImagePath[2] === "wattpad-logo-white.svg"
                                         ? `<img class="FB8MI" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${singleReadingList.threeStoriesCoverImagePath[2]}" alt="Wattpad Logo"/>`
-                                        : `<img style="width: 100%; height: 100%;" class="FB8MI" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${singleReadingList.threeStoriesCoverImagePath[2]}" alt="Wattpad Logo"/>`
+                                        : `<img style="width: 100%; height: 100%;" class="FB8MI" src="${singleReadingList.threeStoriesCoverImagePath[2]}" alt="Story cover"/>`
                                         }
                                     </div>
                                 </div>
@@ -219,6 +219,111 @@ $(document).on('click', '.delete-btn', function (event) {
     });
 });
 
+
+
+//create new reading list model open
+let createNewReadingListModel = $('#create-new-reading-list')[0];
+createNewReadingListModel.addEventListener('click',function (event) {
+
+    $('#create-new-reading-list-model').css({
+        'display': 'block',
+        'visibility': 'visible',
+        'opacity': 1
+    });
+
+});
+
+
+//disable and enable create btn
+let inputField = $('.reading-list-input-field')[0];
+inputField.addEventListener('keyup',function (event) {
+
+    if(inputField.value.length>0){
+        $('.create-btn').removeAttr('disabled');
+    }
+    else{
+        $('.create-btn').attr('disabled', 'disabled');
+    }
+});
+
+
+//close btn in create new reading list model
+let closeBtn = $('.close-btn')[0];
+closeBtn.addEventListener('click',function (event) {
+
+    $('#create-new-reading-list-model').css({
+        'display': 'none',
+        'visibility': 'hidden',
+        'opacity': 0
+    });
+
+});
+
+
+//create btn in create new reading list model
+let createBtn = $('.create-btn')[0];
+createBtn.addEventListener('click',function (event) {
+
+    let listName = $('.reading-list-input-field').val();
+
+    let data = {
+        'listName': listName
+    }
+
+    fetch('http://localhost:8080/api/v1/readingList/create/new', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            if(data.data===true){
+                $('#create-new-reading-list-model').css({
+                    'display': 'none',
+                    'visibility': 'hidden',
+                    'opacity': 0
+                });
+
+                loadReadingLists();
+            }
+            else{
+                $('#create-new-reading-list-model').css({
+                    'display': 'none',
+                    'visibility': 'hidden',
+                    'opacity': 0
+                });
+
+                Swal.fire({
+                    title: 'Warn!',
+                    text: 'A reading list with this name already exists. Please use a different name.',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+
+            }
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+
+        });
+
+});
 
 
 

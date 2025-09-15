@@ -205,7 +205,7 @@ async function loadFollowingUsers() {
                 const randomColor = profileColors[randomIndex];
 
                 let singleUser = `
-                        <article class="user-card">
+                        <article class="user-card" style="width: 220px;">
                             ${user.coverPicPath===null
                             ? `<div class="background background-sm" style="background-image: url( '${user.coverPicPath}' );"></div>`
                             : `<div class="background background-sm" style="background-color: ${randomColor}"></div>`
@@ -215,7 +215,7 @@ async function loadFollowingUsers() {
                                  <p style="font-weight: 500; font-size: 3em; text-align: center; transform: translateY(28px); color: #fff;">${user.fullName.substring(0,1).toUpperCase()}</p>
                                </a>`
                             : `<a class="avatar avatar-lg on-navigate" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${user.userId}">
-                                <img src="${user.profilePicPath}">
+                                <img style="object-fit: cover;" src="${user.profilePicPath}">
                                </a>`
                             }
                             <div class="content">
@@ -362,3 +362,243 @@ async function run() {
 }
 
 run();
+
+
+
+
+//click on edit profile
+let editProfileBtn = $('.on-edit-profile')[0];
+editProfileBtn.addEventListener('click',async function (event) {
+
+    let userId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("userId")) {
+        userId = params.get("userId");
+    }
+
+    if (userId == null) {
+        //load chapter not found page
+        return;
+    }
+
+    window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile-edit-page.html?userId=${userId}`;
+
+});
+
+
+
+
+// Open followers modal and load followers
+let openFollowersModelBtn = $('.open-followers-model')[0];
+if (openFollowersModelBtn) {
+    openFollowersModelBtn.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const $modal = $('#follower-modal');
+        $modal.css({
+            'display': 'block',
+            'visibility': 'visible',
+            'opacity': 1
+        });
+
+        loadFollowers(); // Load followers when modal opens
+    });
+}
+
+// Close followers modal
+let followersModelCloseBtn = $('.followers-model-close-btn')[0];
+if (followersModelCloseBtn) {
+    followersModelCloseBtn.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        $('#follower-modal').css({
+            'display': 'none',
+            'visibility': 'hidden',
+            'opacity': 0
+        });
+    });
+}
+
+// Load all followers from backend
+let followersCount = 6;
+function loadFollowers() {
+
+    let userId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("userId")) {
+        userId = params.get("userId");
+    }
+
+    if (userId == null) {
+        // load chapter not found page
+        return;
+    }
+
+    fetch('http://localhost:8080/user/followers/'+userId+'/'+followersCount, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Followers data:', data);
+            const $userRowItems = $('#user-row-items');
+            $userRowItems.empty();
+
+            if(data.data.isMoreFollowingUsersAvailable===0){
+                $('.show-more-followers').remove();
+            }
+
+            if (data.data && data.data.followingUserDTOList.length > 0) {
+                data.data.followingUserDTOList.forEach(follower => {
+                    const isFollowing = follower.isFollowedByTheCurrentUser;
+                    $userRowItems.append(`
+                        <div class="col-xs-12">
+                            <div class="pull-left">
+                                <a class="avatar avatar-sm3 on-navigate" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${follower.userId}">
+                                    <img style="object-fit: cover;" alt="${follower.username}" src="${follower.profilePicPath || `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/avatar.jpg`}">
+                                </a>
+                            </div>
+                            <div class="user-data pull-left truncate-width">
+                                <a class="alt-link on-navigate fullname" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${follower.userId}">
+                                    ${follower.fullName || follower.username}
+                                    <span class="username">@${follower.username}</span>
+                                </a>
+                                <ul>
+                                    <li>${follower.work || 0} Work${follower.work !== 1 ? 's' : ''}</li>
+                                    <li>${follower.followers || 0} Follower${follower.followers !== 1 ? 's' : ''}</li>
+                                </ul>
+                            </div>
+                            <div class="follow">
+                                <button class="btn btn-fan btn-white on-follow" data-target="${follower.userId}" data-following="false" role="button" style="display: ${isFollowing ? 'none' : 'inline-block'};">
+                                    <i class="fa-solid fa-user-plus" style="font-size:15px; color: gray;"></i>
+                                    <span class="truncate">Follow</span>
+                                </button>
+                                <button class="btn btn-fan on-following" data-target="${follower.userId}" data-following="true" role="button" style="display: ${isFollowing ? 'inline-block' : 'none'}; background: none; color: #000;">
+                                    <i class="fa-solid fa-user-check" style="font-size:15px; color: gray;"></i>
+                                    <span class="truncate">Following</span>
+                                </button>
+                            </div>
+                        </div>
+                    `);
+                });
+                $('.modal-title').text(`${data.data.followingUserDTOList.length} Follower${data.data.length !== 1 ? 's' : ''}`);
+            } else {
+                $userRowItems.append('<div class="col-xs-12">No followers found.</div>');
+                $('.modal-title').text('0 Followers');
+            }
+        })
+        .catch(error => {
+            console.error('Error loading followers:', error);
+            $('#user-row-items').html('<div class="col-xs-12">Failed to load followers.</div>');
+        });
+}
+
+
+let showMoreFollowersBtn = $('.showmore-followers-btn')[0];
+showMoreFollowersBtn.addEventListener('click',function (event) {
+
+    followersCount+=6;
+    loadFollowers();
+});
+
+
+// Handle follow button click
+$(document).on('click', '.on-follow', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const $button = $(this);
+    const userId = $button.data('target');
+
+    fetch(`http://localhost:8080/api/v1/follow/add/${userId}`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Follow success:', data);
+            $button.hide();
+            $button.next('.on-following').show();
+            loadFollowingUsers();
+        })
+        .catch(error => {
+            console.error('Error following user:', error);
+            alert('Failed to follow user.');
+        });
+});
+
+// Handle following button click
+$(document).on('click', '.on-following', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const $button = $(this);
+    const userId = $button.data('target');
+
+    fetch(`http://localhost:8080/api/v1/follow/remove/${userId}`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Unfollow success:', data);
+            $button.hide();
+            $button.prev('.on-follow').show();
+            loadFollowingUsers();
+        })
+        .catch(error => {
+            console.error('Error unfollowing user:', error);
+            alert('Failed to unfollow user.');
+        });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

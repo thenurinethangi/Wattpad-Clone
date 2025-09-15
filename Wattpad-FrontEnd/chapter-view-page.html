@@ -20,6 +20,12 @@
   <link rel="stylesheet" href="assets/style/header-dropdowns-style.css">
   <link rel="stylesheet" href="assets/style/chapter-view-page-style.css">
   <link rel="stylesheet" href="assets/style/footer-style.css">
+  <style>
+    .story-vote:hover{
+      color: #ff6122; !important;
+    }
+
+  </style>
 </head>
 <body>
 
@@ -28,7 +34,7 @@
   <div class="header-left-side">
     <nav class="navigation-left">
       <ul class="navigation-left-list">
-        <li class="navigation-left-list-item"><a href="landing-page.html" title="Wattpad Home" aria-label="Home"><img src="assets/image/wattpad-logo.svg" alt="Wattpad Logo"></a></li>
+        <li class="navigation-left-list-item"><a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/home-page.html" title="Wattpad Home" aria-label="Home"><img src="assets/image/wattpad-logo.svg" alt="Wattpad Logo"></a></li>
         <li class="navigation-left-list-item discover-dropdown"><div id="discover-dropdown"><button>Browse<img class="drop-down-icon" src="assets/image/wp-chevron-down.svg" alt=""></button></div></li>
         <li class="navigation-left-list-item community-dropdown"><div id="community-dropdown"><button>Community<img class="drop-down-icon" src="assets/image/wp-chevron-down.svg" alt=""></button></div></li>
       </ul>
@@ -42,7 +48,7 @@
         <button aria-label="Search">
           <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5999 6.49844C1.5999 3.79224 3.79371 1.59844 6.4999 1.59844C9.2061 1.59844 11.3999 3.79224 11.3999 6.49844C11.3999 9.20463 9.2061 11.3984 6.4999 11.3984C3.79371 11.3984 1.5999 9.20463 1.5999 6.49844ZM6.4999 0.398438C3.13097 0.398438 0.399902 3.1295 0.399902 6.49844C0.399902 9.86737 3.13097 12.5984 6.4999 12.5984C7.99441 12.5984 9.36338 12.061 10.4241 11.1688C10.4515 11.2618 10.5019 11.3494 10.5752 11.4227L13.0501 13.8976C13.2844 14.1319 13.6643 14.1319 13.8986 13.8976C14.133 13.6633 14.133 13.2834 13.8986 13.0491L11.4238 10.5742C11.3504 10.5008 11.2629 10.4505 11.1699 10.423C12.0623 9.36227 12.5999 7.99313 12.5999 6.49844C12.5999 3.1295 9.86884 0.398438 6.4999 0.398438Z" fill="#121212" fill-opacity="0.64"></path></svg>
         </button>
-        <input class="search-input" type="text" placeholder="Search" name="query" autocomplete="off">
+        <input class="search-input search" type="text" placeholder="Search" name="query" autocomplete="off">
       </form>
     </div>
   </div>
@@ -53,7 +59,7 @@
     </ul>
     <div class="navigation-right-list-two-container">
       <ul class="navigation-right-list-two">
-        <li><img src="assets/image/my-image-01.jpg" style="width: 32px; border-radius: 100%; background-color: #eee; box-shadow: 0.5px 0.5px 10px rgba(211,211,211,0.37);" alt="profile picture"></li>
+        <li><img class="user-profile-pic" src="assets/image/my-image-01.jpg" style="object-fit: cover; width: 32px; height: 32px; border-radius: 100%; background-color: #eee; box-shadow: 0.5px 0.5px 10px rgba(211,211,211,0.37);" alt="profile picture"></li>
         <li><img class="S1mMa" src="assets/image/wp-chevron-down.svg" alt="" data-testid="wp_chevron_down"></li>
       </ul>
     </div>
@@ -76,7 +82,7 @@
             <!--b1-->
             <span class="toc-full">
                             <span class="cover cover-xxs">
-                                <img id="story-cover-image" src="https://img.wattpad.com/cover/353771202-64-k85442.jpg" alt="𝕃𝕠𝕧𝕖 𝔼𝕞𝕓𝕣𝕒𝕔𝕖 ᵒⁿʰᵒˡᵈ">
+                                <img id="story-cover-image" src="https://img.wattpad.com/cover/353771202-64-k85442.jpg" alt="Story cover">
                             </span>
               <!--b2-->
                             <span class="info">
@@ -92,7 +98,7 @@
           <div id="chapters-list-container" class="dropdown-menu pull-left">
             <!--c1-->
             <div class="toc-header text-center">
-              <h6><a class="on-navigate" href="">The Lost Kingdom</a></h6>
+              <h6><a class="on-navigate navigate-to-story" href="">The Lost Kingdom</a></h6>
               <small>Table of contents</small>
             </div>
             <!--c2-->
@@ -106,22 +112,81 @@
         <!--top bar -> vote/add library side-->
         <!--a2-->
         <div id="funbar-controls" style="display: flex;">
+          <!--edit btn-->
+          <div class="button-group relative inline-block hidden-mobile writer-button-group">
+            <a class="btn btn-link" href="">
+              <i class="fa-solid fa-pencil" style="color: #e64809; margin-right: 5px; font-size: 16px;"></i>
+              <span class="hidden-mobile hidden-xs hidden-sm story-edit" style="color: #e64809; font-weight: 600; font-size: 16px;">Edit part</span>
+            </a>
+          </div>
           <!--plus btn-->
           <div class="button-group relative inline-block" style="border-left: 1px solid transparent;">
             <!--plus icon-->
             <button class="btn btn-story-lists btn-sm btn-orange on-lists-add-clicked" data-component-name="top_right_add" data-story-id="353771202" aria-label="Add to List">
-              <span class="fa fa-plus fa-wp-neutral-5 " aria-hidden="true" style="font-size:10px;"></span>
+              <svg width="12" height="12" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <line x1="8" y1="2" x2="8" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
             </button>
             <div class="triangle"></div>
             <!--add to reading list container-->
-            <div class="dropdown-menu dropdown-menu-right add-to-library">
-              <ul class="lists-menu"></ul>
+            <div class="dropdown-menu dropdown-menu-right add-to-library" style="display: none; visibility: hidden; opacity: 0;">
+              <ul class="lists-menu" data-story-id="397138907">
+                <li>
+                  <a class="on-modify-list" data-list-id="0">
+                    <span class="fa fa-library fa-wp-neutral-2 " aria-hidden="true" style="font-size:autopx;"></span>
+                    <span class="reading-list-name">My Library (Private)</span>
+                    <div class="status">
+                      <span class="check hidden fa-stack fa-lg in-list">
+                        <span class="fa fa-circle-empty fa-wp-base-2 fa-stack-2x " aria-hidden="true" style="font-size:autopx;"></span>
+                        <span class="fa fa-check fa-wp-base-2 fa-stack-1x " aria-hidden="true" style="font-size:autopx;"></span>
+                      </span>
+                      <span class="hidden spinner">
+                        <span class="fa fa-loading fa-spin fa-wp-base-2 " aria-hidden="true" style="font-size:18px;"></span>
+                      </span>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="on-modify-list" data-list-id="1736461758">
+                    <span class="fa fa-reading-list fa-wp-neutral-2 " aria-hidden="true" style="font-size:autopx;"></span>
+                    <span class="reading-list-name">yukee07's Reading List</span>
+                    <div class="status">
+                      <span class="check hidden fa-stack fa-lg in-list">
+                        <span class="fa fa-circle-empty fa-wp-base-2 fa-stack-2x " aria-hidden="true" style="font-size:autopx;"></span>
+                        <span class="fa fa-check fa-wp-base-2 fa-stack-1x " aria-hidden="true" style="font-size:autopx;"></span>
+                      </span>
+                      <span class="hidden spinner">
+                        <span class="fa fa-loading fa-spin fa-wp-base-2 " aria-hidden="true" style="font-size:18px;"></span>
+                      </span>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="on-modify-list" data-list-id="1761803156">
+                    <span class="fa fa-reading-list fa-wp-neutral-2 " aria-hidden="true" style="font-size:autopx;"></span>
+                    <span class="reading-list-name">warewolf</span>
+                    <div class="status">
+                      <span class="check hidden fa-stack fa-lg in-list">
+                        <span class="fa fa-circle-empty fa-wp-base-2 fa-stack-2x " aria-hidden="true" style="font-size:autopx;"></span>
+                        <span class="fa fa-check fa-wp-base-2 fa-stack-1x " aria-hidden="true" style="font-size:autopx;"></span>
+                      </span>
+                      <span class="hidden spinner">
+                        <span class="fa fa-loading fa-spin fa-wp-base-2 " aria-hidden="true" style="font-size:18px;"></span>
+                      </span>
+                    </div>
+                  </a>
+                </li>
+              </ul>
               <div class="inputs">
                 <label for="new-reading-list" class="sr-only">New Reading List</label>
                 <span class="fa fa-warning fa-wp-errorbackground error-feedback " aria-hidden="true" style="font-size:12px;"></span>
                 <input id="new-reading-list" type="text" class="form-control list-name list-error-placeholder" placeholder="Add new reading list...">
-                <button class="btn btn-orange on-create-list" type="button" data-story-id="353771202">
-                  <span class="fa fa-plus fa-wp-neutral-5 " aria-hidden="true" style="font-size:9px;"></span>
+                <button class="btn btn-orange on-create-list" type="button" data-story-id="397138907">
+                  <svg width="11" height="11" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <line x1="8" y1="2" x2="8" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
                 </button>
               </div>
             </div>
@@ -162,7 +227,9 @@
             <div class="">
               <header class="panel panel-reading text-center" style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;width: 100%;">
                 <!--d1-->
-                <h1 id="chapter-title" class="h2" style="font-size: 32px; font-weight: 600; color: #222; margin: 48px 0 30px 24px;width: 100%;">introduction</h1>
+                <h1 id="chapter-title" class="h2" style="font-size: 32px; font-weight: 600; color: #222; margin: 48px 0 30px 24px;width: 100%;">introduction
+                  <span class="draft-tag">(Draft)</span>
+                </h1>
                 <!--d2-->
                 <div class="story-stats" style="display: flex; justify-content: center; width: 100%; transform: translateX(16px);">
                                     <span class="reads" data-toggle="tooltip" data-placement="bottom" title="1,924 Read" style="font-size:16px; display: flex; justify-content: center; align-items: center; gap: 3px;">
@@ -182,7 +249,7 @@
                 <!--d3-->
                 <div class="author hidden-lg" style="margin: 10px auto 18px; font-size: 16px; font-weight: 400; width: 100%; padding-right: 20px;">
                   <a class="on-navigate avatar avatar-sm center-block author-profile-link" href="/user/Minki__04">
-                    <img id="author-profile-pic" class="on-hover" data-toggle="tooltip" data-placement="right" title="" alt="Writer: Minki__04" src="https://img.wattpad.com/useravatar/Minki__04.32.661189.jpg" data-original-title="Writer: Minki__04">
+                    <img id="author-profile-pic" class="on-hover" data-toggle="tooltip" data-placement="right" title="" alt="Author profile pic" src="https://img.wattpad.com/useravatar/Minki__04.32.661189.jpg" style="object-fit: cover;">
                   </a>
                   by <a id="author-username" class="on-navigate author-profile-link" href="/user/Minki__04">Minki__04</a>
                 </div>
@@ -265,14 +332,26 @@
 
         <!--comment section and story recommendation section-->
         <footer class="footer-comment">
+          <!--end of the parts-->
+          <div class="row part-content parts-end" style="width: 80%; height: 150px;">
+            <div style="width: 100%;" class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+              <div class="component-wrapper" id="component-storypartnavigation-story-part-navigation-%2f24743407-the-cellar-publishing-and-fan-funding">
+                <div id="story-part-navigation">
+                  <div class="message">
+                    <div class="top-message">🎉 You've finished reading <span class="title chap-title">The Cellar</span> 🎉</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <!--comment section-->
           <div class="container container-1">
             <!--continue to next part or story over button or text-->
-            <div class="row part-content" style="width: 100%;">
+            <div class="row part-content continue-next-chapter" style="width: 100%;">
               <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-7 col-md-offset-1 col-lg-6 col-lg-offset-3 part-col part-navigation" style="width: 100%; padding-inline: 0; margin-left: 0">
                 <div class="component-wrapper" id="component-storypartnavigation-story-part-navigation-%2f1388504625-introduction" style="width: 100%;">
                   <div id="story-part-navigation">
-                    <a href="https://www.wattpad.com/1394938115-chapter-1" class="button__Y70Pw primary-variant__NO4pv default-accent__Pc0Pm medium-size__CLqD3 clickable__iYXtN full-width__dXWyx with-padding__cVt72" style="color: #fff;">
+                    <a href="" class="button__Y70Pw primary-variant__NO4pv default-accent__Pc0Pm medium-size__CLqD3 clickable__iYXtN full-width__dXWyx with-padding__cVt72 next-chapter-link" style="color: #fff;">
                       <span class="background-overlay__mCEaX"></span>Continue to next part
                     </a>
                   </div>
@@ -407,7 +486,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="lib/jquery-3.7.1.min.js"></script>
-<script src="assets/js/header-script.js"></script>
+<!--<script src="assets/js/header-script.js"></script>-->
 <script src="assets/js/chapter-view-page-script.js"></script>
 </body>
 </html>

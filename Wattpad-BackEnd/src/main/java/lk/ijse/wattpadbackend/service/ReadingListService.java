@@ -1,9 +1,6 @@
 package lk.ijse.wattpadbackend.service;
 
-import lk.ijse.wattpadbackend.dto.ReadingListEditRequestDTO;
-import lk.ijse.wattpadbackend.dto.ReadingListEditResponseDTO;
-import lk.ijse.wattpadbackend.dto.ReadingListsDTO;
-import lk.ijse.wattpadbackend.dto.SingleReadingListDTO;
+import lk.ijse.wattpadbackend.dto.*;
 
 import java.util.List;
 
@@ -24,4 +21,14 @@ public interface ReadingListService {
     String addOrRemoveLikeFromTheReadingList(String name, long readingListId);
 
     List<SingleReadingListDTO> getAllLikedReadingLists(String name);
+
+    List<AddToReadingListResponseDTO> getAllReadingListsAndCheckTheSpecificStoryExit(String name, long chapterId);
+
+    boolean addNewReadingList(String name, CreateNewListRequestDTO createNewListRequestDTO);
+
+    void addOrRemoveStoryToReadingListByChapterId(String name, long listId, long chapterId);
+
+    List<AddToReadingListResponseDTO> getAllReadingListsAndCheckTheSpecificStoryExitByStoryId(String name, long storyId);
+
+    void addOrRemoveStoryToReadingListByStoryId(String name, long listId, long storyId);
 }

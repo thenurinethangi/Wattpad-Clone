@@ -210,7 +210,7 @@ async function loadAllStoriesInSelectedGenre(data) {
                                         <!--image-->
                                         <a class="on-story-preview cover cover-lg" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}">
                                             <div class="fixed-ratio fixed-ratio-cover">
-                                                <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.coverImagePath}" alt="Story cover">
+                                                <img style="object-fit: cover;" src="${story.coverImagePath}" alt="Story cover">
                                                 <div class="story-rank">
                                                     <span>#${story.rankNo}</span>
                                                 </div>

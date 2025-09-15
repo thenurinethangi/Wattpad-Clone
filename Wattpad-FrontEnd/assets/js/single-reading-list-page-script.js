@@ -163,7 +163,6 @@ async function loadAllStoriesInReadingList() {
             }
 
             if(readingList.currentUserLikedOrNot === true){
-                console.log(100000000000)
                 $('#like-icon path').attr('fill', '#ff6122');
                 $('#like-icon path').attr('stroke', '#ff6122');
             }
@@ -185,7 +184,7 @@ async function loadAllStoriesInReadingList() {
                         <div class="gbXNH">
                             <a class="HsS0N" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}">
                                 <div class="_2Bg8X">
-                                    <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.storyCoverImagePath}" alt="Story cover"/>
+                                    <img src="${story.storyCoverImagePath}" alt="Story cover"/>
                                 </div>
                             </a>
                         </div>
@@ -248,17 +247,17 @@ async function loadAllStoriesInReadingList() {
                                 <div class="-GazY" data-testid="tag-meta">
                                     <ul class="l4JT9">
                                         <li>
-                                            <a class="no-text-decoration-on-focus no-text-decoration-on-hover pill__pziVI light-variant__fymht default-size__BJ5Po default-accent__YcamO square-shape__V66Yy clickable__llABU gap-for-default-pill__d6nVx" href="https://www.wattpad.com/stories/youngadult">
+                                            <a class="no-text-decoration-on-focus no-text-decoration-on-hover pill__pziVI light-variant__fymht default-size__BJ5Po default-accent__YcamO square-shape__V66Yy clickable__llABU gap-for-default-pill__d6nVx" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/tag-stories-page.html?tag=${story.tags[0]}">
                                                 <span class="typography-label-small-semi">${story.tags[0]}</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="no-text-decoration-on-focus no-text-decoration-on-hover pill__pziVI light-variant__fymht default-size__BJ5Po default-accent__YcamO square-shape__V66Yy clickable__llABU gap-for-default-pill__d6nVx" href="https://www.wattpad.com/stories/hot">
+                                            <a class="no-text-decoration-on-focus no-text-decoration-on-hover pill__pziVI light-variant__fymht default-size__BJ5Po default-accent__YcamO square-shape__V66Yy clickable__llABU gap-for-default-pill__d6nVx" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/tag-stories-page.html?tag=${story.tags[1]}">
                                                 <span class="typography-label-small-semi">${story.tags[1]}</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="no-text-decoration-on-focus no-text-decoration-on-hover pill__pziVI light-variant__fymht default-size__BJ5Po default-accent__YcamO square-shape__V66Yy clickable__llABU gap-for-default-pill__d6nVx" href="https://www.wattpad.com/stories/hunter">
+                                            <a class="no-text-decoration-on-focus no-text-decoration-on-hover pill__pziVI light-variant__fymht default-size__BJ5Po default-accent__YcamO square-shape__V66Yy clickable__llABU gap-for-default-pill__d6nVx" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/tag-stories-page.html?tag=${story.tags[2]}">
                                                 <span class="typography-label-small-semi">${story.tags[2]}</span>
                                             </a>
                                         </li>

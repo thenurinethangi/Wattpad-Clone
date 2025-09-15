@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wattpad Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #ff6122;
+            --primary-dark: #e55520;
+            --primary-light: #ff8951;
+            --secondary: #6c5ce7;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #e17055;
+            --info: #74b9ff;
+
+            --dark-bg: #0f1419;
+            --dark-surface: #1a1f2e;
+            --dark-card: #252d42;
+            --dark-border: #2d3748;
+            --dark-text: #e2e8f0;
+            --dark-text-muted: #94a3b8;
+
+            --light-bg: #f8fafc;
+            --light-surface: #ffffff;
+            --light-card: #ffffff;
+            --light-border: #e2e8f0;
+            --light-text: #1a202c;
+            --light-text-muted: #718096;
+
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --gradient-orange: linear-gradient(135deg, #ff6122 0%, #ff8951 100%);
+
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--light-bg);
+            color: var(--light-text);
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        body.dark {
+            background: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        /* Glassmorphism effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dark .glass {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--light-surface);
+            border-right: 1px solid var(--light-border);
+            padding: 2rem 0;
+            z-index: 1000;
+            transition: var(--transition);
+            overflow-y: auto;
+        }
+
+        .dark .sidebar {
+            background: var(--dark-surface);
+            border-right: 1px solid var(--dark-border);
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .logo-container {
+            padding: 0 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-orange);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-orange);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: var(--transition);
+        }
+
+        .collapsed .logo-text {
+            opacity: 0;
+            width: 0;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0 1rem;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            color: var(--light-text-muted);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark .nav-link {
+            color: var(--dark-text-muted);
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: var(--gradient-orange);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .nav-link:hover::before {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: white;
+            transform: translateX(4px);
+        }
+
+        .nav-link.active {
+            background: var(--gradient-orange);
+            color: white;
+        }
+
+        .nav-icon {
+            width: 20px;
+            font-size: 1.2rem;
+        }
+
+        .nav-text {
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .collapsed .nav-text {
+            opacity: 0;
+            width: 0;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+
+        .main-content.expanded {
+            margin-left: 80px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--light-surface);
+            border-bottom: 1px solid var(--light-border);
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .dark .header {
+            background: rgba(26, 31, 46, 0.9);
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--light-text);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .dark .menu-toggle {
+            color: var(--dark-text);
+        }
+
+        .menu-toggle:hover {
+            background: var(--light-border);
+        }
+
+        .dark .menu-toggle:hover {
+            background: var(--dark-border);
+        }
+
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient-orange);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--light-text);
+            cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .dark .theme-toggle {
+            color: var(--dark-text);
+        }
+
+        .theme-toggle:hover {
+            background: var(--light-border);
+            transform: rotate(180deg);
+        }
+
+        .dark .theme-toggle:hover {
+            background: var(--dark-border);
+        }
+
+        .notifications {
+            position: relative;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--light-text);
+            cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .dark .notifications {
+            color: var(--dark-text);
+        }
+
+        .notifications:hover {
+            background: var(--light-border);
+        }
+
+        .dark .notifications:hover {
+            background: var(--dark-border);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 8px;
+            height: 8px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .user-profile:hover {
+            background: var(--light-border);
+        }
+
+        .dark .user-profile:hover {
+            background: var(--dark-border);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-info h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .user-info p {
+            font-size: 0.8rem;
+            color: var(--light-text-muted);
+        }
+
+        .dark .user-info p {
+            color: var(--dark-text-muted);
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            padding: 2rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--light-card);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark .stat-card {
+            background: var(--dark-card);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-orange);
+        }
+
+        .stat-card:nth-child(2)::before { background: var(--gradient-1); }
+        .stat-card:nth-child(3)::before { background: var(--gradient-2); }
+        .stat-card:nth-child(4)::before { background: var(--gradient-3); }
+        .stat-card:nth-child(5)::before { background: var(--gradient-4); }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .stat-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--light-text-muted);
+        }
+
+        .dark .stat-title {
+            color: var(--dark-text-muted);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            background: var(--gradient-orange);
+        }
+
+        .stat-card:nth-child(2) .stat-icon { background: var(--gradient-1); }
+        .stat-card:nth-child(3) .stat-icon { background: var(--gradient-2); }
+        .stat-card:nth-child(4) .stat-icon { background: var(--gradient-3); }
+        .stat-card:nth-child(5) .stat-icon { background: var(--gradient-4); }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--light-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .dark .stat-value {
+            color: var(--dark-text);
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .stat-change.positive {
+            color: var(--success);
+        }
+
+        .stat-change.negative {
+            color: var(--danger);
+        }
+
+        /* Charts Section */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 1200px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-card {
+            background: var(--light-card);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .dark .chart-card {
+            background: var(--dark-card);
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--light-text);
+        }
+
+        .dark .chart-title {
+            color: var(--dark-text);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        /* Lists Section */
+        .lists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .list-card {
+            background: var(--light-card);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .dark .list-card {
+            background: var(--dark-card);
+        }
+
+        .list-header {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--light-border);
+        }
+
+        .dark .list-header {
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .list-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--light-text);
+        }
+
+        .dark .list-title {
+            color: var(--dark-text);
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--light-border);
+            transition: var(--transition);
+        }
+
+        .dark .list-item {
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .list-item:hover {
+            background: var(--light-border);
+            border-radius: var(--border-radius);
+            margin: 0 -1rem;
+            padding: 1rem;
+        }
+
+        .dark .list-item:hover {
+            background: var(--dark-border);
+        }
+
+        .item-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--gradient-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: var(--light-text);
+            margin-bottom: 0.25rem;
+        }
+
+        .dark .item-name {
+            color: var(--dark-text);
+        }
+
+        .item-subtitle {
+            font-size: 0.9rem;
+            color: var(--light-text-muted);
+        }
+
+        .dark .item-subtitle {
+            color: var(--dark-text-muted);
+        }
+
+        .item-value {
+            font-weight: 600;
+            color: var(--primary);
+            text-align: right;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .main-content.expanded {
+                margin-left: 0;
+            }
+
+            .header {
+                padding: 1rem;
+            }
+
+            .dashboard-content {
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lists-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* Stagger animations */
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+        .stat-card:nth-child(5) { animation-delay: 0.5s; }
+
+        /* Overlay for mobile */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+<div class="overlay" id="overlay"></div>
+
+<!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+    <div class="logo-container">
+        <div class="logo">W</div>
+        <div class="logo-text">Wattpad</div>
+    </div>
+
+    <ul class="nav-menu">
+        <li class="nav-item">
+            <a href="#dashboard" class="nav-link active">
+                <i class="fas fa-home nav-icon"></i>
+                <span class="nav-text">Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#users" class="nav-link">
+                <i class="fas fa-users nav-icon"></i>
+                <span class="nav-text">Manage Users</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#stories" class="nav-link">
+                <i class="fas fa-book nav-icon"></i>
+                <span class="nav-text">Manage Stories</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#transactions" class="nav-link">
+                <i class="fas fa-credit-card nav-icon"></i>
+                <span class="nav-text">Transactions</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#announcements" class="nav-link">
+                <i class="fas fa-bullhorn nav-icon"></i>
+                <span class="nav-text">Announcements</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#genres" class="nav-link">
+                <i class="fas fa-tags nav-icon"></i>
+                <span class="nav-text">Genres</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#reports" class="nav-link">
+                <i class="fas fa-flag nav-icon"></i>
+                <span class="nav-text">Reports</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#settings" class="nav-link">
+                <i class="fas fa-cog nav-icon"></i>
+                <span class="nav-text">Settings</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<!-- Main Content -->
+<main class="main-content" id="mainContent">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1 class="header-title">Hello Thenuri 👋</h1>
+        </div>
+
+        <div class="header-right">
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-sun"></i>
+            </button>
+
+            <button class="notifications">
+                <i class="fas fa-bell"></i>
+                <div class="notification-badge"></div>
+            </button>
+
+            <div class="user-profile">
+                <div class="user-avatar">TH</div>
+                <div class="user-info">
+                    <h3>Thenuri</h3>
+                    <p>Administrator</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-content">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card fade-in-up">
+                <div class="stat-header">
+                    <div class="stat-title">Monthly Transactions</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                </div>
+                <div class="stat-value">120</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    12% vs last month
+                </div>
+            </div>
+
+            <div class="stat-card fade-in-up">
+                <div class="stat-header">
+                    <div class="stat-title">Stories Created</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                </div>
+                <div class="stat-value">450</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    8% vs last month
+                </div>
+            </div>
+
+            <div class="stat-card fade-in-up">
+                <div class="stat-header">
+                    <div class="stat-title">Total Users</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="stat-value">5,000</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    15% vs last month
+                </div>
+            </div>
+
+            <div class="stat-card fade-in-up">
+                <div class="stat-header">
+                    <div class="stat-title">Premium Buys</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                </div>
+                <div class="stat-value">300</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    6% conversion rate
+                </div>
+            </div>
+
+            <div class="stat-card fade-in-up">
+                <div class="stat-header">
+                    <div class="stat-title">Active Users</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                </div>
+                <div class="stat-value">3,500</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    70% engagement
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h2 class="chart-title">User Registrations</h2>
+                    <div>
+                        <select style="padding: 0.5rem; border-radius: 8px; border: 1px solid var(--light-border);">
+                            <option>This Month</option>
+                            <option>Last Month</option>
+                            <option>Last 3 Months</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="registrationChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h2 class="chart-title">Genre Distribution</h2>
+                </div>
+                <div class="chart-container">
+                    <canvas id="genreChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lists Section -->
+        <div class="lists-grid">
+            <!-- Top Stories -->
+            <div class="list-card">
+                <div class="list-header">
+                    <h2 class="list-title">📚 Top Stories</h2>
+                </div>
+
+                <div class="list-item">
+                    <div class="item-avatar" style="background: var(--gradient-2);">📖</div>
+                    <div class="item-info">
+                        <div class="item-name">The Midnight Library</div>
+                        <div class="item-subtitle">by @author_sarah</div>
+                    </div>
+                    <div class="item-value">
+                        <div>15.2K views</div>
+                        <div style="font-size: 0.8rem; color: var(--success);">⭐ 4.9</div>
+                    </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="item-avatar" style="background: var(--gradient-3);">💫</div>
+                    <div class="item-info">
+                        <div class="item-name">Starlight Dreams</div>
+                        <div class="item-subtitle">by @dream_writer</div>
+                    </div>
+                    <div class="item-value">
+                        <div>12.8K views</div>
+                        <div style="font-size: 0.8rem; color: var(--success);">⭐ 4.8</div>
+                    </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="item-avatar" style="background: var(--gradient-4);">🌙</div>
+                    <div class="item-info">
+                        <div class="item-name">Moonlit Romance</div>
+                        <div class="item-subtitle">by @romance_queen</div>
+                    </div>
+                    <div class="item-value">
+                        <div>10.1K views</div>
+                        <div style="font-size: 0.8rem; color: var(--success);">⭐ 4.7</div>
+                    </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="item-avatar" style="background: var(--gradient-1);">🗡️</div>
+                    <div class="item-info">
+                        <div class="item-name">Dragon's Quest</div>
+                        <div class="item-subtitle">by @fantasy_master</div>
+                    </div>
+                    <div class="item-value">
+                        <div>9.5K views</div>
+                        <div style="font-size: 0.8rem; color: var(--success);">⭐ 4.6</div>
+                    </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="item-avatar" style="background: var(--gradient-orange);">❤️</div>
+                    <div class="item-info">
+                        <div class="item-name">Hearts Collide</div>
+                        <div class="item-subtitle">by @love_stories</div>
+                    </div>
+                    <div class="item-value">
+                        <div>8.9K views</div>
+                        <div style="font-size: 0.8rem; color: var(--success);">⭐ 4.5</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Users -->
+            <div class="list-card">
+                <div class="list-header">
+                    <h2 class="list-title">👑 Top Authors</h2>
+                </div>
+
+                <div class="list-item">
+                    <div class="item-avatar" style="background: var(--gradient-orange);">AS</div>
+                    <div class="item-info">
+                        <div class="item-name">Author Sarah</div>
+                        <div class="item-subtitle">@author_sarah</div>
+                    </div>
+                    <div class="item-value">
+                        <div>25 stories</div>
+                        <div style="font-size: 0.8rem; color: var(--info);">👥 12.5K followers</div>
+                    </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="item-avatar" style="background: var(--gradient-1);">DW</div>
+                    <div class="item-info">
+                        <div class="item-name">Dream Writer</div>
+                        <div class="item-subtitle">@dream_writer</div>
+                    </div>
+                    <div class="item-value">
+                        <div>18 stories</div>
+                        <div style="font-size: 0.8rem; color: var(--info);">👥 8.2K followers</div>
+                    </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="item-avatar" style="background: var(--gradient-2);">RQ</div>
+                    <div class="item-info">
+                        <div class="item-name">Romance Queen</div>
+                        <div class="item-subtitle">@romance_queen</div>
+                    </div>
+                    <div class="item-value">
+                        <div>22 stories</div>
+                        <div style="font-size: 0.8rem; color: var(--info);">👥 7.8K followers</div>
+                    </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="item-avatar" style="background: var(--gradient-3);">FM</div>
+                    <div class="item-info">
+                        <div class="item-name">Fantasy Master</div>
+                        <div class="item-subtitle">@fantasy_master</div>
+                    </div>
+                    <div class="item-value">
+                        <div>15 stories</div>
+                        <div style="font-size: 0.8rem; color: var(--info);">👥 6.1K followers</div>
+                    </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="item-avatar" style="background: var(--gradient-4);">LS</div>
+                    <div class="item-info">
+                        <div class="item-name">Love Stories</div>
+                        <div class="item-subtitle">@love_stories</div>
+                    </div>
+                    <div class="item-value">
+                        <div>12 stories</div>
+                        <div style="font-size: 0.8rem; color: var(--info);">👥 5.3K followers</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Reports -->
+            <div class="list-card">
+                <div class="list-header">
+                    <h2 class="list-title">🚨 Recent Reports</h2>
+                </div>
+
+                <div class="list-item">
+                    <div class="item-avatar" style="background: var(--danger);">⚠️</div>
+                    <div class="item-info">
+                        <div class="item-name">Inappropriate Content</div>
+                        <div class="item-subtitle">Story: "Forbidden Tales"</div>
+                    </div>
+                    <div class="item-value">
+                        <div style="color: var(--danger);">High Priority</div>
+                        <div style="font-size: 0.8rem; color: var(--danger);">🚩 15 reports</div>
+                    </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="item-avatar" style="background: var(--warning);">🔄</div>
+                    <div class="item-info">
+                        <div class="item-name">Spam Account</div>
+                        <div class="item-subtitle">User: @fake_user123</div>
+                    </div>
+                    <div class="item-value">
+                        <div style="color: var(--warning);">Medium</div>
+                        <div style="font-size: 0.8rem; color: var(--warning);">🚩 8 reports</div>
+                    </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="item-avatar" style="background: var(--info);">💬</div>
+                    <div class="item-info">
+                        <div class="item-name">Harassment</div>
+                        <div class="item-subtitle">User: @trouble_maker</div>
+                    </div>
+                    <div class="item-value">
+                        <div style="color: var(--danger);">High Priority</div>
+                        <div style="font-size: 0.8rem; color: var(--danger);">🚩 12 reports</div>
+                    </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="item-avatar" style="background: var(--success);">✅</div>
+                    <div class="item-info">
+                        <div class="item-name">Copyright Issue</div>
+                        <div class="item-subtitle">Story: "Copied Dreams"</div>
+                    </div>
+                    <div class="item-value">
+                        <div style="color: var(--success);">Resolved</div>
+                        <div style="font-size: 0.8rem; color: var(--success);">🚩 6 reports</div>
+                    </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="item-avatar" style="background: var(--warning);">📱</div>
+                    <div class="item-info">
+                        <div class="item-name">Fake Profile</div>
+                        <div class="item-subtitle">User: @imposter_account</div>
+                    </div>
+                    <div class="item-value">
+                        <div style="color: var(--warning);">Under Review</div>
+                        <div style="font-size: 0.8rem; color: var(--warning);">🚩 4 reports</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    const themeIcon = themeToggle.querySelector('i');
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+        body.classList.add('dark');
+        themeIcon.className = 'fas fa-moon';
+    }
+
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark');
+        const isDark = body.classList.contains('dark');
+        themeIcon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+
+    // Sidebar Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');
+    const overlay = document.getElementById('overlay');
+
+    menuToggle.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+            // Mobile behavior
+            sidebar.classList.toggle('mobile-open');
+            overlay.classList.toggle('active');
+        } else {
+            // Desktop behavior
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+        }
+    });
+
+    overlay.addEventListener('click', () => {
+        sidebar.classList.remove('mobile-open');
+        overlay.classList.remove('active');
+    });
+
+    // Navigation
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+
+            // Close mobile menu
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('mobile-open');
+                overlay.classList.remove('active');
+            }
+        });
+    });
+
+    // Charts
+    const ctx1 = document.getElementById('registrationChart').getContext('2d');
+    const registrationChart = new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+            datasets: [{
+                label: 'New Users',
+                data: [120, 190, 300, 250],
+                borderColor: '#ff6122',
+                backgroundColor: 'rgba(255, 97, 34, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                pointRadius: 6,
+                pointHoverRadius: 8,
+                pointBackgroundColor: '#ff6122',
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 2,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff',
+                    cornerRadius: 8,
+                    displayColors: false
+                }
+            },
+            scales: {
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(148, 163, 184, 0.1)',
+                        drawBorder: false
+                    },
+                    ticks: { color: '#94a3b8' }
+                }
+            },
+            elements: {
+                point: {
+                    hoverBackgroundColor: '#ff6122'
+                }
+            }
+        }
+    });
+
+    const ctx2 = document.getElementById('genreChart').getContext('2d');
+    const genreChart = new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+            labels: ['Romance', 'Fantasy', 'Mystery', 'Sci-Fi', 'Drama'],
+            datasets: [{
+                data: [40, 25, 15, 12, 8],
+                backgroundColor: [
+                    '#ff6122',
+                    '#667eea',
+                    '#f093fb',
+                    '#4facfe',
+                    '#43e97b'
+                ],
+                borderWidth: 0,
+                cutout: '70%'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 20,
+                        usePointStyle: true,
+                        color: '#64748b'
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff',
+                    cornerRadius: 8,
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.parsed + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Responsive handling
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            sidebar.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+        }
+    });
+
+    // Add loading animation
+    window.addEventListener('load', () => {
+        document.body.style.opacity = '1';
+    });
+
+    // Smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
+
+    // Add some interactivity to stat cards
+    document.querySelectorAll('.stat-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-8px) scale(1.02)';
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+
+    // Notifications click handler
+    document.querySelector('.notifications').addEventListener('click', () => {
+        // Add notification popup logic here
+        console.log('Notifications clicked');
+    });
+
+    // User profile click handler
+    document.querySelector('.user-profile').addEventListener('click', () => {
+        // Add user menu dropdown logic here
+        console.log('User profile clicked');
+    });
+</script>
+</body>
+</html>

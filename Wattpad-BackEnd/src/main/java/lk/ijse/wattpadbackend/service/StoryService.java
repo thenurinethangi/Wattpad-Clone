@@ -27,4 +27,6 @@ public interface StoryService {
     void unpublishedStoryByStoryId(String name, long storyId);
 
     void deleteStoryByStoryId(String name, long storyId);
+
+    boolean publishedStoryByStoryId(String name, long storyId);
 }

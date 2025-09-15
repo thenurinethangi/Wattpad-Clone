@@ -1,9 +1,13 @@
 package lk.ijse.wattpadbackend.repository;
 
+import lk.ijse.wattpadbackend.entity.ReadingList;
 import lk.ijse.wattpadbackend.entity.ReadingListStory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ReadingListStoryRepository extends JpaRepository<ReadingListStory,Integer> {
+    List<ReadingListStory> findAllByReadingList(ReadingList readingList);
 }

@@ -53,6 +53,7 @@ public class ChapterServiceImpl implements ChapterService {
             chapterDTO.setId(chapter.getId());
             chapterDTO.setTitle(chapter.getTitle());
             chapterDTO.setCoverImagePath(chapter.getCoverImagePath());
+            chapterDTO.setIsPublishedOrDraft(chapter.getPublishedOrDraft());
 
             long likesLong = chapter.getLikes();
 
@@ -153,6 +154,16 @@ public class ChapterServiceImpl implements ChapterService {
             User user = userRepository.findByUsername(username);
             if(user==null){
                 throw new UserNotFoundException("User not found.");
+            }
+
+            chapterDTO.setIsFromCurrentUser(0);
+            long storyId = chapter.getStory().getId();
+            List<Story> storyList = storyRepository.findAllByUser(user);
+            for (Story y : storyList) {
+                if (storyId == y.getId()) {
+                    chapterDTO.setIsFromCurrentUser(1);
+                    break;
+                }
             }
 
             ChapterLike chapterLike = chapterLikeRepository.findByChapterAndUser(chapter,user);
@@ -639,11 +650,15 @@ public class ChapterServiceImpl implements ChapterService {
 
                 }
 
-                if(amount-singleCommentDTOList.size()<=singleCommentDTOList1.size()){
-                    singleCommentDTOList1.subList(0, (int) (amount-singleCommentDTOList.size()));
+                long remaining = amount - singleCommentDTOList.size();
+
+                if (remaining > 0) {
+                    if (remaining <= singleCommentDTOList1.size()) {
+                        singleCommentDTOList1 = singleCommentDTOList1.subList(0, (int) remaining);
+                    }
+                    singleCommentDTOList.addAll(singleCommentDTOList1);
                 }
 
-                singleCommentDTOList.addAll(0,singleCommentDTOList1);
             }
 
             return singleCommentDTOList;
@@ -668,7 +683,38 @@ public class ChapterServiceImpl implements ChapterService {
 
             Optional<ChapterComment> optionalChapterComment = chapterCommentRepository.findById((int) id);
             if(!optionalChapterComment.isPresent()){
-                throw new NotFoundException("Comment not found.");
+                Optional<ParagraphComment> optionalParagraphComment = paragraphCommentRepository.findById((int) id);
+                if(!optionalParagraphComment.isPresent()){
+                    throw new NotFoundException("Comment not found.");
+                }
+                ParagraphComment paragraphComment = optionalParagraphComment.get();
+
+                CommentLike commentLike = commentLikeRepository.findByParagraphCommentAndUser(paragraphComment,user);
+                if(commentLike==null){
+                    CommentLike commentLike1 = new CommentLike();
+                    commentLike1.setParagraphComment(paragraphComment);
+                    commentLike1.setUser(user);
+
+                    commentLikeRepository.save(commentLike1);
+
+                    long likes = paragraphComment.getLikes();
+                    likes++;
+                    paragraphComment.setLikes(likes);
+                    paragraphCommentRepository.save(paragraphComment);
+
+                    return "Liked";
+                }
+                else{
+                    commentLikeRepository.delete(commentLike);
+
+                    long likes = paragraphComment.getLikes();
+                    likes--;
+                    paragraphComment.setLikes(likes);
+                    paragraphCommentRepository.save(paragraphComment);
+
+                    return "Unliked";
+                }
+
             }
             ChapterComment chapterComment = optionalChapterComment.get();
 
@@ -1021,6 +1067,240 @@ public class ChapterServiceImpl implements ChapterService {
 
         }
         catch (AccessDeniedException | NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<ParagraphDTO> loadAllParagraphByChapterId(String username, long chapterId, long storyId) {
+
+        try{
+            User user = userRepository.findByUsername(username);
+            if(user==null){
+                throw new UserNotFoundException("User not found.");
+            }
+
+            boolean bool = false;
+            List<Story> storyList = user.getStories();
+            for(Story x : storyList){
+                if(x.getId()==storyId){
+                    bool = true;
+                    break;
+                }
+            }
+            if(!bool){
+                throw new AccessDeniedException("You haven't not access to this function");
+            }
+
+            Optional<Chapter> optionalChapter = chapterRepository.findById((int) chapterId);
+            if(!optionalChapter.isPresent()){
+                throw new NotFoundException("Chapter not found.");
+            }
+            Chapter chapter = optionalChapter.get();
+
+            Optional<Story> optionalStory = storyRepository.findById((int) storyId);
+            if(!optionalStory.isPresent()){
+                throw new NotFoundException("Story not found.");
+            }
+            Story story = optionalStory.get();
+
+            List<Paragraph> paragraphList = chapter.getParagraphs();
+
+            List<ParagraphDTO> paragraphDTOList = new ArrayList<>();
+            for (Paragraph x : paragraphList){
+                ParagraphDTO paragraphDTO = new ParagraphDTO();
+                paragraphDTO.setId(x.getId());
+                paragraphDTO.setContentType(x.getContentType());
+                paragraphDTO.setContent(x.getContent());
+                paragraphDTO.setSequenceNo(x.getSequenceNo());
+                paragraphDTOList.add(paragraphDTO);
+            }
+
+            return paragraphDTOList;
+
+        }
+        catch (AccessDeniedException | NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public ChapterDTO loadNextChapter(long chapterId) {
+
+        try{
+            Optional<Chapter> optionalChapter = chapterRepository.findById((int) chapterId);
+            if(!optionalChapter.isPresent()){
+                throw new NotFoundException("Chapter not found.");
+            }
+            Chapter chapter = optionalChapter.get();
+            Story story =  chapter.getStory();
+
+            List<Chapter> chapterList = chapterRepository.findAllByStory(story);
+            for (int i = 0; i < chapterList.size(); i++) {
+                if(chapterList.get(i).getId()==chapter.getId()){
+                    if(chapterList.size()>i+1){
+                        Chapter x = chapterList.get(i+1);
+                        ChapterDTO chapterDTO = new ChapterDTO();
+                        chapterDTO.setId(x.getId());
+                        return chapterDTO;
+                    }
+                    else{
+                        return null;
+                    }
+                }
+            }
+            return null;
+
+        }
+        catch (NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean checkCurrentCommentOrReplyByCurrentUser(String username, UserCommentTypeDTO userCommentTypeDTO) {
+
+        try {
+            User currentUser = userRepository.findByUsername(username);
+            if (currentUser == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            if(userCommentTypeDTO.getType().equals("comment")){
+                Optional<ParagraphComment> optionalParagraphComment = paragraphCommentRepository.findById((int) userCommentTypeDTO.getId());
+                if(!optionalParagraphComment.isPresent()){
+                    throw new NotFoundException("Paragraph comment not found.");
+                }
+                ParagraphComment paragraphComment = optionalParagraphComment.get();
+                if(paragraphComment.getUser().getId()==currentUser.getId()){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            else if(userCommentTypeDTO.getType().equals("reply")){
+                Optional<Reply> optionalReply = replyRepository.findById((int) userCommentTypeDTO.getId());
+                if(!optionalReply.isPresent()){
+                    throw new NotFoundException("Reply not found.");
+                }
+                Reply reply = optionalReply.get();
+                if(reply.getUser().getId()==currentUser.getId()){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            else{
+                Optional<ChapterComment> optionalChapterComment = chapterCommentRepository.findById((int) userCommentTypeDTO.getId());
+                if(!optionalChapterComment.isPresent()){
+                    Optional<ParagraphComment> optionalParagraphComment = paragraphCommentRepository.findById((int) userCommentTypeDTO.getId());
+                    if(!optionalParagraphComment.isPresent()){
+                        throw new NotFoundException("Comment not found.");
+                    }
+                    ParagraphComment paragraphComment = optionalParagraphComment.get();
+                    if(paragraphComment.getUser().getId()==currentUser.getId()){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                ChapterComment chapterComment = optionalChapterComment.get();
+                if(chapterComment.getUser().getId()==currentUser.getId()){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+        }
+        catch (NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteCommentOrReply(String username, UserCommentTypeDTO userCommentTypeDTO) {
+
+        try {
+            User currentUser = userRepository.findByUsername(username);
+            if (currentUser == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            if(userCommentTypeDTO.getType().equals("comment")){
+                Optional<ParagraphComment> optionalParagraphComment = paragraphCommentRepository.findById((int) userCommentTypeDTO.getId());
+                if(!optionalParagraphComment.isPresent()){
+                    throw new NotFoundException("Paragraph comment not found.");
+                }
+                ParagraphComment paragraphComment = optionalParagraphComment.get();
+                if(paragraphComment.getUser().getId()==currentUser.getId()){
+                    paragraphCommentRepository.delete(paragraphComment);
+                    paragraphCommentRepository.flush();
+                }
+                else{
+                    throw new AccessDeniedException("You haven't access for this");
+                }
+            }
+            else if(userCommentTypeDTO.getType().equals("reply")){
+                Optional<Reply> optionalReply = replyRepository.findById((int) userCommentTypeDTO.getId());
+                if(!optionalReply.isPresent()){
+                    throw new NotFoundException("Reply not found.");
+                }
+                Reply reply = optionalReply.get();
+                if(reply.getUser().getId()==currentUser.getId()){
+                    replyRepository.delete(reply);
+                    replyRepository.flush();
+                }
+                else{
+                    throw new AccessDeniedException("You haven't access for this");
+                }
+            }
+            else {
+                Optional<ChapterComment> optionalChapterComment = chapterCommentRepository.findById((int) userCommentTypeDTO.getId());
+                if(!optionalChapterComment.isPresent()){
+                    Optional<ParagraphComment> optionalParagraphComment = paragraphCommentRepository.findById((int) userCommentTypeDTO.getId());
+                    if(!optionalParagraphComment.isPresent()){
+                        throw new NotFoundException("Comment not found.");
+                    }
+                    ParagraphComment paragraphComment = optionalParagraphComment.get();
+                    if(paragraphComment.getUser().getId()==currentUser.getId()){
+                        paragraphCommentRepository.delete(paragraphComment);
+                        paragraphCommentRepository.flush();
+                        return;
+                    }
+                    else{
+                        throw new AccessDeniedException("You haven't access for this");
+                    }
+                }
+                ChapterComment chapterComment = optionalChapterComment.get();
+                if(chapterComment.getUser().getId()==currentUser.getId()){
+                    chapterCommentRepository.delete(chapterComment);
+                    chapterCommentRepository.flush();
+                }
+                else{
+                    throw new AccessDeniedException("You haven't access for this");
+                }
+            }
+
+        }
+        catch (NotFoundException e){
             throw e;
         }
         catch (RuntimeException e) {

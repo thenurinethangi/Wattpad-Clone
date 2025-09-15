@@ -1,8 +1,7 @@
 package lk.ijse.wattpadbackend.service;
 
-import lk.ijse.wattpadbackend.dto.UserDTO;
-import lk.ijse.wattpadbackend.dto.UserProfileReadingListResponseDTO;
-import lk.ijse.wattpadbackend.dto.UserProfileStoriesResponseDTO;
+import jakarta.validation.Valid;
+import lk.ijse.wattpadbackend.dto.*;
 
 import java.util.List;
 
@@ -23,4 +22,18 @@ public interface UserService {
     void followAOtherUser(String name, long id);
 
     void unfollowAOtherUser(String name, long id);
+
+    UserDTO getCurrentUserData(String name);
+
+    boolean changeUserUsername(String name, UserDTO userDTO);
+
+    boolean changeUserPassword(String name, UpdatePasswordDTO updatePasswordDTO);
+
+    boolean changeUserEmail(String name, @Valid ChangeEmailDTO changeEmailDTO);
+
+    void changeUserDataInSetting(String name, @Valid UserDataSettingDTO userDataSettingDTO);
+
+    void deactivateCurrentUser(String name);
+
+    UserFollowingResponseDTO getFollowersUsersByUserId(String username, long id, long count);
 }

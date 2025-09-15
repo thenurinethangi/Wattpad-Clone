@@ -240,7 +240,7 @@ async function loadFollowingUsers() {
                     let user = data.data[i];
 
                     let singleFollowingUser = `<a class="avatar avatar-sm2 on-navigate pull-left hide" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${user.id}">
-                                                        <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${user.profilePicPath}">
+                                                        <img style="object-fit: cover;" src="${user.profilePicPath}">
                                                       </a>`
 
                     $('.users.clearfix').append(singleFollowingUser);
@@ -348,7 +348,7 @@ async function loadUserStories() {
                                                 <div class="description">${story.description}</div>
                                                 <div class="tag-meta clearfix">
                                                     <ul class="tag-items">
-                                                        ${story.tags.slice(0, 3).map(item => `<li><a class="tag-item on-navigate" href="">${item}</a></li>`).join("")}
+                                                        ${story.tags.slice(0, 3).map(item => `<li><a class="tag-item on-navigate" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/tag-stories-page.html?tag=${item}">${item}</a></li>`).join("")}
                                                     </ul>
                                                     ${story.tags.length>3
                                                     ? `<span class="num-not-shown on-story-preview" data-story-id="347909844">+${story.tags.length-3} more</span>`
@@ -549,7 +549,7 @@ showMoreReadingListBtn.addEventListener('click',async function (event) {
 
 
 //click on edit profile
-let editProfileBtn = $('.edit-profile')[0];
+let editProfileBtn = $('.on-edit-profile')[0];
 editProfileBtn.addEventListener('click',async function (event) {
 
     let userId = null;
@@ -571,7 +571,7 @@ editProfileBtn.addEventListener('click',async function (event) {
 
 
 
-//click on edit profile
+//click on add decription
 let addDescriptionBtn = $('.add-description-btn')[0];
 addDescriptionBtn.addEventListener('click',async function (event) {
 
@@ -595,6 +595,7 @@ addDescriptionBtn.addEventListener('click',async function (event) {
 
 
 async function run() {
+    await headerData();
     await loadUserData();
     await loadFollowingUsers();
     await loadUserStories();
@@ -705,17 +706,368 @@ $(document).on('click', '.on-unfollow', function (event) {
 
 
 
+// Open followers modal and load followers
+let openFollowersModelBtn = $('.open-followers-model')[0];
+if (openFollowersModelBtn) {
+    openFollowersModelBtn.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const $modal = $('#follower-modal');
+        $modal.css({
+            'display': 'block',
+            'visibility': 'visible',
+            'opacity': 1
+        });
+
+        loadFollowers(); // Load followers when modal opens
+    });
+}
+
+// Close followers modal
+let followersModelCloseBtn = $('.followers-model-close-btn')[0];
+if (followersModelCloseBtn) {
+    followersModelCloseBtn.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        $('#follower-modal').css({
+            'display': 'none',
+            'visibility': 'hidden',
+            'opacity': 0
+        });
+    });
+}
+
+// Load all followers from backend
+let followersCount = 6;
+function loadFollowers() {
+
+    let userId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("userId")) {
+        userId = params.get("userId");
+    }
+
+    if (userId == null) {
+        // load chapter not found page
+        return;
+    }
+
+    fetch('http://localhost:8080/user/followers/'+userId+'/'+followersCount, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Followers data:', data);
+            const $userRowItems = $('#user-row-items');
+            $userRowItems.empty();
+
+            if(data.data.isMoreFollowingUsersAvailable===0){
+                $('.show-more-followers').remove();
+            }
+
+            if (data.data && data.data.followingUserDTOList.length > 0) {
+                data.data.followingUserDTOList.forEach(follower => {
+                    const isFollowing = follower.isFollowedByTheCurrentUser;
+                    $userRowItems.append(`
+                        <div class="col-xs-12">
+                            <div class="pull-left">
+                                <a class="avatar avatar-sm3 on-navigate" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${follower.userId}">
+                                    <img style="object-fit: cover;" alt="${follower.username}" src="${follower.profilePicPath || `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/avatar.jpg`}">
+                                </a>
+                            </div>
+                            <div class="user-data pull-left truncate-width">
+                                <a class="alt-link on-navigate fullname" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${follower.userId}">
+                                    ${follower.fullName || follower.username}
+                                    <span class="username">@${follower.username}</span>
+                                </a>
+                                <ul>
+                                    <li>${follower.work || 0} Work${follower.work !== 1 ? 's' : ''}</li>
+                                    <li>${follower.followers || 0} Follower${follower.followers !== 1 ? 's' : ''}</li>
+                                </ul>
+                            </div>
+                            <div class="follow">
+                                <button class="btn btn-fan btn-white on-follow" data-target="${follower.userId}" data-following="false" role="button" style="display: ${isFollowing ? 'none' : 'inline-block'};">
+                                    <i class="fa-solid fa-user-plus" style="font-size:15px; color: gray;"></i>
+                                    <span class="truncate">Follow</span>
+                                </button>
+                                <button class="btn btn-fan on-following" data-target="${follower.userId}" data-following="true" role="button" style="display: ${isFollowing ? 'inline-block' : 'none'}; background: none; color: #000;">
+                                    <i class="fa-solid fa-user-check" style="font-size:15px; color: gray;"></i>
+                                    <span class="truncate">Following</span>
+                                </button>
+                            </div>
+                        </div>
+                    `);
+                });
+                $('.modal-title').text(`${data.data.followingUserDTOList.length} Follower${data.data.length !== 1 ? 's' : ''}`);
+            } else {
+                $userRowItems.append('<div class="col-xs-12">No followers found.</div>');
+                $('.modal-title').text('0 Followers');
+            }
+        })
+        .catch(error => {
+            console.error('Error loading followers:', error);
+            $('#user-row-items').html('<div class="col-xs-12">Failed to load followers.</div>');
+        });
+}
+
+
+let showMoreFollowersBtn = $('.showmore-followers-btn')[0];
+showMoreFollowersBtn.addEventListener('click',function (event) {
+
+    followersCount+=6;
+    loadFollowers();
+});
+
+
+// Handle follow button click
+$(document).on('click', '.on-follow', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const $button = $(this);
+    const userId = $button.data('target');
+
+    fetch(`http://localhost:8080/api/v1/follow/add/${userId}`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Follow success:', data);
+            $button.hide();
+            $button.next('.on-following').show();
+            loadFollowingUsers();
+        })
+        .catch(error => {
+            console.error('Error following user:', error);
+            // alert('Failed to follow user.');
+        });
+});
+
+// Handle following button click
+$(document).on('click', '.on-following', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const $button = $(this);
+    const userId = $button.data('target');
+
+    fetch(`http://localhost:8080/api/v1/follow/remove/${userId}`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Unfollow success:', data);
+            $button.hide();
+            $button.prev('.on-follow').show();
+            loadFollowingUsers();
+        })
+        .catch(error => {
+            console.error('Error unfollowing user:', error);
+            alert('Failed to unfollow user.');
+        });
+});
 
 
 
 
 
+//header script
+
+// Toggle browse dropdown visibility
+let discoverDropDown = $('#discover-dropdown')[0];
+let browseModal = document.getElementById('browse-modal');
+discoverDropDown.addEventListener('click', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (browseModal.style.display === 'none' || browseModal.style.display === '') {
+        browseModal.style.display = 'block';
+        browseModal.style.visibility = 'visible';
+        browseModal.style.opacity = '1';
+    }
+});
+
+// Toggle write dropdown visibility
+let writeDropDown = $('#writer-opportunities-dropdown')[0];
+let writeModal = document.getElementById('write-modal');
+writeDropDown.addEventListener('click', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (writeModal.style.display === 'none' || writeModal.style.display === '') {
+        writeModal.style.display = 'block';
+        writeModal.style.visibility = 'visible';
+        writeModal.style.opacity = '1';
+    }
+});
+
+// Toggle profile dropdown visibility (desktop)
+let profileDropdownDesktop = $('#_83DhP')[0];
+let profileModalDesktop = document.getElementById('profile-modal-desktop');
+profileDropdownDesktop.addEventListener('click', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (profileModalDesktop.style.display === 'none' || profileModalDesktop.style.display === '') {
+        profileModalDesktop.style.display = 'block';
+        profileModalDesktop.style.visibility = 'visible';
+        profileModalDesktop.style.opacity = '1';
+    }
+});
+
+// Toggle profile dropdown visibility (mobile)
+let profileDropdownMobile = $('#navbar-profile-dropdown')[0];
+let profileModalMobile = document.getElementById('profile-modal-mobile');
+profileDropdownMobile.addEventListener('click', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (profileModalMobile.style.display === 'none' || profileModalMobile.style.display === '') {
+        profileModalMobile.style.display = 'block';
+        profileModalMobile.style.visibility = 'visible';
+        profileModalMobile.style.opacity = '1';
+    }
+});
+
+// Close all modals when clicking outside, but allow link navigation
+$('body').on('click', function (event) {
+    let $target = $(event.target);
+
+    // Check if the click is inside a modal or on a link
+    let isInsideModal = $target.closest('#browse-modal, #write-modal, #profile-modal-desktop, #profile-modal-mobile').length > 0;
+    let isLinkClick = $target.is('a') || $target.closest('a').length > 0;
+
+    if (!isInsideModal && !isLinkClick) {
+        browseModal.style.display = 'none';
+        browseModal.style.visibility = 'hidden';
+        browseModal.style.opacity = '0';
+        writeModal.style.display = 'none';
+        writeModal.style.visibility = 'hidden';
+        writeModal.style.opacity = '0';
+        profileModalDesktop.style.display = 'none';
+        profileModalDesktop.style.visibility = 'hidden';
+        profileModalDesktop.style.opacity = '0';
+        profileModalMobile.style.display = 'none';
+        profileModalMobile.style.visibility = 'hidden';
+        profileModalMobile.style.opacity = '0';
+    }
+});
+
+// Ensure links inside modals navigate properly
+$('#browse-modal a, #write-modal a, #profile-modal-desktop a, #profile-modal-mobile a').on('click', function (event) {
+    event.stopPropagation(); // Prevent the click from closing the modal immediately
+    // Navigation will occur naturally due to the href attribute
+});
+
+
+function headerData() {
+
+    fetch('http://localhost:8080/user/current', {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('POST Data:', data);
+            const currentUser = data.data;
+
+            $('.your-profile').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${currentUser.id}`);
+            $('.user-profile-pic').attr('src',`${currentUser.profilePicPath}`);
+
+        })
+        .catch(error => {
+            console.error('Fetch error:', error.message);
+            let response = JSON.parse(error.message);
+        });
+}
 
 
 
+let logOut = $('.logout')[0];
+logOut.addEventListener('click', function (event) {
+    event.preventDefault();
+
+    fetch('http://localhost:8080/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('POST Data:', data);
+
+            window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/login-page.html';
+
+        })
+        .catch(error => {
+            console.error('Fetch error:', error.message);
+            let response = JSON.parse(error.message);
+        });
+
+});
 
 
 
+let search = $('.search')[0];
+search.addEventListener('click',function (event) {
+
+    window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/search.html';
+});
 
 
 

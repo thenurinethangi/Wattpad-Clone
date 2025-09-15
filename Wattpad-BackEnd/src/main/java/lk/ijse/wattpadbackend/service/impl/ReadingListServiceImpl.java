@@ -4,9 +4,7 @@ import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.entity.*;
 import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
-import lk.ijse.wattpadbackend.repository.ReadingListLikeRepository;
-import lk.ijse.wattpadbackend.repository.ReadingListRepository;
-import lk.ijse.wattpadbackend.repository.UserRepository;
+import lk.ijse.wattpadbackend.repository.*;
 import lk.ijse.wattpadbackend.service.ReadingListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +19,9 @@ public class ReadingListServiceImpl implements ReadingListService {
     private final ReadingListRepository readingListRepository;
     private final UserRepository userRepository;
     private final ReadingListLikeRepository readingListLikeRepository;
+    private final ChapterRepository chapterRepository;
+    private final ReadingListStoryRepository readingListStoryRepository;
+    private final StoryRepository storyRepository;
 
     @Override
     public ReadingListsDTO getAllReadingLists(String name) {
@@ -72,7 +73,9 @@ public class ReadingListServiceImpl implements ReadingListService {
                 SingleReadingListDTO readingListDTO = new SingleReadingListDTO();
                 readingListDTO.setReadingListId(x.getId());
                 readingListDTO.setReadingListName(x.getListName());
-                readingListDTO.setStoryCount(x.getStoryCount());
+
+                List<ReadingListStory> readingListStoryList = readingListStoryRepository.findAllByReadingList(x);
+                readingListDTO.setStoryCount(readingListStoryList.size());
 
                 List<ReadingListStory> readingListStories = x.getReadingListStories();
                 List<String> threeStoriesCoverImagePath = new ArrayList<>();
@@ -277,7 +280,9 @@ public class ReadingListServiceImpl implements ReadingListService {
             ReadingListEditResponseDTO readingListEditResponseDTO = new ReadingListEditResponseDTO();
             readingListEditResponseDTO.setReadingListId(readingList.getId());
             readingListEditResponseDTO.setReadingListName(readingList.getListName());
-            readingListEditResponseDTO.setStoryCount(readingList.getStoryCount());
+
+            List<ReadingListStory> readingListStoryList = readingListStoryRepository.findAllByReadingList(readingList);
+            readingListEditResponseDTO.setStoryCount(readingListStoryList.size());
 
             long likes = readingList.getVotes();
 
@@ -495,10 +500,12 @@ public class ReadingListServiceImpl implements ReadingListService {
                 SingleReadingListDTO readingListDTO = new SingleReadingListDTO();
                 readingListDTO.setReadingListId(x.getReadingList().getId());
                 readingListDTO.setReadingListName(x.getReadingList().getListName());
-                readingListDTO.setStoryCount(x.getReadingList().getStoryCount());
                 readingListDTO.setUserId(x.getReadingList().getUser().getId());
                 readingListDTO.setUsername(x.getReadingList().getUser().getUsername());
                 readingListDTO.setUserProfilePicPath(x.getReadingList().getUser().getProfilePicPath());
+
+                List<ReadingListStory> readingListStoryList = readingListStoryRepository.findAllByReadingList(x.getReadingList());
+                readingListDTO.setStoryCount(readingListStoryList.size());
 
                 List<ReadingListStory> readingListStories = x.getReadingList().getReadingListStories();
                 List<String> threeStoriesCoverImagePath = new ArrayList<>();
@@ -516,6 +523,225 @@ public class ReadingListServiceImpl implements ReadingListService {
             }
 
             return singleReadingListDTOList;
+
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<AddToReadingListResponseDTO> getAllReadingListsAndCheckTheSpecificStoryExit(String username, long chapterId) {
+
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Chapter> optionalChapter = chapterRepository.findById((int) chapterId);
+            if(!optionalChapter.isPresent()){
+                throw new NotFoundException("Chapter not found.");
+            }
+            Chapter chapter = optionalChapter.get();
+            Story story = chapter.getStory();
+
+            List<ReadingList> readingListList = readingListRepository.findAllByUser(user);
+
+            List<AddToReadingListResponseDTO> addToReadingListResponseDTOList = new ArrayList<>();
+            for(ReadingList x : readingListList){
+                AddToReadingListResponseDTO dto = new AddToReadingListResponseDTO();
+                dto.setReadingListId(x.getId());
+                dto.setListName(x.getListName());
+
+                dto.setIsStoryExit(0);
+                List<ReadingListStory> readingListStoryList = x.getReadingListStories();
+                for (ReadingListStory y : readingListStoryList){
+                    if(y.getStory().getId()==story.getId()){
+                        dto.setIsStoryExit(1);
+                        break;
+                    }
+                }
+
+                addToReadingListResponseDTOList.add(dto);
+            }
+
+            return addToReadingListResponseDTOList;
+
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean addNewReadingList(String username, CreateNewListRequestDTO createNewListRequestDTO) {
+
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            ReadingList readingList = readingListRepository.findByListNameAndUser(createNewListRequestDTO.getListName(),user);
+            if(readingList!=null){
+                return false;
+            }
+
+            ReadingList readingList1 = new ReadingList();
+            readingList1.setListName(createNewListRequestDTO.getListName());
+            readingList1.setUser(user);
+            readingListRepository.save(readingList1);
+            return true;
+
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void addOrRemoveStoryToReadingListByChapterId(String name, long listId, long chapterId) {
+
+        try {
+            User user = userRepository.findByUsername(name);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Chapter> optionalChapter = chapterRepository.findById((int) chapterId);
+            if (!optionalChapter.isPresent()) {
+                throw new NotFoundException("Chapter not found.");
+            }
+            Chapter chapter = optionalChapter.get();
+            Story story = chapter.getStory();
+            System.out.println(story);
+
+            Optional<ReadingList> optionalReadingList = readingListRepository.findById((int) listId);
+            if(!optionalReadingList.isPresent()){
+                throw new NotFoundException("Reading list not found.");
+            }
+            ReadingList readingList = optionalReadingList.get();
+            System.out.println(readingList);
+
+            List<ReadingListStory> readingListStoryList = readingList.getReadingListStories();
+            for (ReadingListStory x : readingListStoryList){
+                if(x.getStory().getId()==story.getId()){
+                    readingListStoryRepository.delete(x);
+                    readingListStoryRepository.flush();
+                    return;
+                }
+            }
+
+            ReadingListStory readingListStory = new ReadingListStory();
+            readingListStory.setReadingList(readingList);
+            readingListStory.setStory(story);
+            readingListStoryRepository.save(readingListStory);
+
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<AddToReadingListResponseDTO> getAllReadingListsAndCheckTheSpecificStoryExitByStoryId(String username, long storyId) {
+
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Story> optionalStory = storyRepository.findById((int) storyId);
+            if(!optionalStory.isPresent()){
+                throw new NotFoundException("Story not found.");
+            }
+            Story story = optionalStory.get();
+
+            List<ReadingList> readingListList = readingListRepository.findAllByUser(user);
+
+            List<AddToReadingListResponseDTO> addToReadingListResponseDTOList = new ArrayList<>();
+            for(ReadingList x : readingListList){
+                AddToReadingListResponseDTO dto = new AddToReadingListResponseDTO();
+                dto.setReadingListId(x.getId());
+                dto.setListName(x.getListName());
+
+                dto.setIsStoryExit(0);
+                List<ReadingListStory> readingListStoryList = x.getReadingListStories();
+                for (ReadingListStory y : readingListStoryList){
+                    if(y.getStory().getId()==story.getId()){
+                        dto.setIsStoryExit(1);
+                        break;
+                    }
+                }
+
+                addToReadingListResponseDTOList.add(dto);
+            }
+
+            return addToReadingListResponseDTOList;
+
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void addOrRemoveStoryToReadingListByStoryId(String name, long listId, long storyId) {
+
+        try {
+            User user = userRepository.findByUsername(name);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Story> optionalStory = storyRepository.findById((int) storyId);
+            if (!optionalStory.isPresent()) {
+                throw new NotFoundException("Chapter not found.");
+            }
+            Story story = optionalStory.get();
+
+            Optional<ReadingList> optionalReadingList = readingListRepository.findById((int) listId);
+            if(!optionalReadingList.isPresent()){
+                throw new NotFoundException("Reading list not found.");
+            }
+            ReadingList readingList = optionalReadingList.get();
+
+            List<ReadingListStory> readingListStoryList = readingList.getReadingListStories();
+            for (ReadingListStory x : readingListStoryList){
+                if(x.getStory().getId()==story.getId()){
+                    readingListStoryRepository.delete(x);
+                    readingListStoryRepository.flush();
+                    return;
+                }
+            }
+
+            ReadingListStory readingListStory = new ReadingListStory();
+            readingListStory.setReadingList(readingList);
+            readingListStory.setStory(story);
+            readingListStoryRepository.save(readingListStory);
 
         }
         catch (UserNotFoundException e) {

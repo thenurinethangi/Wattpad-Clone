@@ -62,7 +62,18 @@ public class HomeServiceImpl implements HomeService {
             lastOpenedPage--;
 
             List<Chapter> chapterList = chapterRepository.findAllByStory(x.getStory());
-            Chapter lastOpenedChapter = chapterList.get(lastOpenedPage);
+            Chapter lastOpenedChapter = null;
+            if(chapterList.size()>=lastOpenedPage){
+                lastOpenedChapter = chapterList.get(lastOpenedPage);
+            }
+            else{
+                if(!chapterList.isEmpty()){
+                    lastOpenedChapter = chapterList.getFirst();
+                }
+                else{
+                    lastOpenedChapter = null;
+                }
+            }
 
             libraryStoryResponseDTO.setLastReadChapterId(lastOpenedChapter.getId());
 

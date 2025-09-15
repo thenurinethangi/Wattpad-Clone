@@ -1,0 +1,211 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #222;
+    padding: 20px;
+}
+
+.login-container {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    padding: 60px 50px;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/*.login-container::before {*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    height: 4px;*/
+/*    background: linear-gradient(90deg, #ff6122, #ff8a50);*/
+/*}*/
+
+.logo-section {
+    margin-bottom: 40px;
+}
+
+.logo {
+    width: 70px;
+    height: 70px;
+    /*background: linear-gradient(135deg, #ff6122, #ff8a50);*/
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.brand-name {
+    font-size: 32px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 2px;
+    letter-spacing: -0.5px;
+}
+
+.tagline {
+    color: #666;
+    font-size: 24px;
+    font-weight: 600;
+    font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #222;
+    font-size: 14px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: inherit;
+    color: #222;
+    background: #fff;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.form-input:focus {
+    /*border-color: #ff6122;*/
+    background: white;
+    /*box-shadow: 0 0 0 3px rgba(255, 97, 34, 0.1);*/
+    transform: translateY(-2px);
+}
+
+.form-input::placeholder {
+    color: #9ca3af;
+}
+
+.form-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.remember-device {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: #ff6122;
+    cursor: pointer;
+}
+
+.forgot-password {
+    color: #ff6122;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    align-self: flex-end;
+}
+
+.forgot-password:hover {
+    color: #e55a1f;
+    text-decoration: underline;
+}
+
+.sign-in-btn {
+    background-color: #ff6122;
+    color: #ffffff;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 97, 34, 0.3);
+}
+
+.sign-in-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 97, 34, 0.4);
+}
+
+.sign-in-btn:active {
+    transform: translateY(0);
+}
+
+.admin-note {
+    margin-top: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(255, 97, 34, 0.05), rgba(255, 97, 34, 0.1));
+    border-radius: 12px;
+    /*border-left: 4px solid #ff6122;*/
+}
+
+.admin-note h4 {
+    color: #ff6122;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.admin-note p {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.loading {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 40px 30px;
+        margin: 10px;
+    }
+
+    .brand-name {
+        font-size: 28px;
+    }
+}

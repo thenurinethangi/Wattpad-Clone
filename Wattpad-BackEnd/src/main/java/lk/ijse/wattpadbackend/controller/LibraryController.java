@@ -39,6 +39,42 @@ public class LibraryController {
 
         return new APIResponse(202,"Successfully deleted the story from library.",null);
     }
+
+    @GetMapping("/check/story/{chapterId}")
+    public APIResponse checkSpecificStoryExitInTheLibraryByChapterId(@PathVariable long chapterId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean result = libraryService.checkSpecificStoryExitInTheLibraryByChapterId(auth.getName(),chapterId);
+
+        return new APIResponse(202,"Successfully checked story in the library or not by chapter id.",result);
+    }
+
+    @PostMapping("/add/remove/story/byChapter/{chapterId}")
+    public APIResponse addOrRemoveStoryToLibraryByChapterId(@PathVariable long chapterId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        libraryService.addStoryToLibraryByChapterId(auth.getName(),chapterId);
+
+        return new APIResponse(202,"Successfully added or removed story.",null);
+    }
+
+    @GetMapping("/check/story/byStoryId/{storyId}")
+    public APIResponse checkSpecificStoryExitInTheLibraryByStoryId(@PathVariable long storyId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean result = libraryService.checkSpecificStoryExitInTheLibraryByStoryId(auth.getName(),storyId);
+
+        return new APIResponse(202,"Successfully checked story in the library or not by story id.",result);
+    }
+
+    @PostMapping("/add/remove/story/byStory/{storyId}")
+    public APIResponse addOrRemoveStoryToLibraryByStoryId(@PathVariable long storyId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        libraryService.addOrRemoveStoryToLibraryByStoryId(auth.getName(),storyId);
+
+        return new APIResponse(202,"Successfully added or removed story.",null);
+    }
 }
 
 

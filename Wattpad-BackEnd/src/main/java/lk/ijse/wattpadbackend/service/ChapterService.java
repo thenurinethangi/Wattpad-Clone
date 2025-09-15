@@ -28,8 +28,15 @@ public interface ChapterService {
 
     long createPublishAndSaveChapter(long storyId, ChapterSaveRequestDTO chapterSaveRequestDTO);
 
-
     void makeStoryUnpublishByStoryId(String name, long chapterId, long storyId);
 
     void makeChapterDeleteByChapterId(String name, long chapterId, long storyId);
+
+    List<ParagraphDTO> loadAllParagraphByChapterId(String name, long chapterId, long storyId);
+
+    ChapterDTO loadNextChapter(long chapterId);
+
+    boolean checkCurrentCommentOrReplyByCurrentUser(String name, UserCommentTypeDTO userCommentTypeDTO);
+
+    void deleteCommentOrReply(String name, UserCommentTypeDTO userCommentTypeDTO);
 }

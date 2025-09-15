@@ -46,8 +46,10 @@ public class User {
 
     private String location;
 
+    @Lob
     private String profilePicPath;
 
+    @Lob
     private String coverPicPath;
 
     private int isVerify = 0;

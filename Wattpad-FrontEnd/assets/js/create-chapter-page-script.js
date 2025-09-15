@@ -1,3 +1,76 @@
+// robust auto-resize
+function autoResizeTextarea(el) {
+    if (!el) return;
+    // reset, let browser recalc scrollHeight
+    el.style.height = 'auto';
+    // add a tiny extra to avoid 1px clipping on some browsers
+    el.style.height = (el.scrollHeight + 2) + 'px';
+}
+
+// wait until element (and its ancestors) are visible, then call cb
+function waitUntilVisibleAndThen(el, cb, attempts = 0) {
+    if (!el) return;
+    const style = window.getComputedStyle(el);
+    const visible = style.display !== 'none' && style.visibility !== 'hidden' && el.offsetWidth > 0 && el.offsetHeight > 0;
+    if (visible || attempts > 40) {
+        // double rAF + small timeout for safety
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            cb();
+            // one more fallback tick
+            setTimeout(cb, 50);
+        }));
+    } else {
+        // try again shortly (will stop after ~1s with attempts cap)
+        setTimeout(() => waitUntilVisibleAndThen(el, cb, attempts + 1), 25);
+    }
+}
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // === Helpers ===
+    function autoResizeTextarea(el) {
+        if (!el) return;
+        el.style.height = "auto";
+        el.style.height = (el.scrollHeight + 2) + "px"; // +2px avoids clipping
+    }
+
+    function waitUntilVisibleAndThen(el, cb, attempts = 0) {
+        if (!el) return;
+        const style = window.getComputedStyle(el);
+        const visible =
+            style.display !== "none" &&
+            style.visibility !== "hidden" &&
+            el.offsetWidth > 0 &&
+            el.offsetHeight > 0;
+
+        if (visible || attempts > 40) {
+            requestAnimationFrame(() =>
+                requestAnimationFrame(() => {
+                    cb();
+                    setTimeout(cb, 50); // fallback tick
+                })
+            );
+        } else {
+            setTimeout(() => waitUntilVisibleAndThen(el, cb, attempts + 1), 50);
+        }
+    }
+
+    // === Run for all existing .paragraph-textarea ===
+    document.querySelectorAll(".paragraph-textarea").forEach((ta) => {
+        waitUntilVisibleAndThen(ta, () => autoResizeTextarea(ta));
+        ta.addEventListener("input", function () {
+            autoResizeTextarea(this);
+        });
+    });
+
+});
+
+
+
+
 //check user register or not
 window.onload = function () {
 
@@ -344,32 +417,32 @@ async function collectAndPrepareContentForForm() {
 
         console.log("Final payload:", data);
 
-        fetch(`http://localhost:8080/api/v1/chapter/save/${chapterId}/${storyId}`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(errData => {
-                        throw new Error(JSON.stringify(errData));
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Success:', data);
-                localStorage.setItem("isSaved", "true");
-                $('.saved-indicator').text('Saved');
-                $('#save-spinner').addClass('hidden');
-            })
-            .catch(error => {
-                let response = JSON.parse(error.message);
-                console.log(response);
-            });
+        // fetch(`http://localhost:8080/api/v1/chapter/save/${chapterId}/${storyId}`, {
+        //     method: 'POST',
+        //     credentials: 'include',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(data)
+        // })
+        //     .then(response => {
+        //         if (!response.ok) {
+        //             return response.json().then(errData => {
+        //                 throw new Error(JSON.stringify(errData));
+        //             });
+        //         }
+        //         return response.json();
+        //     })
+        //     .then(data => {
+        //         console.log('Success:', data);
+        //         localStorage.setItem("isSaved", "true");
+        //         $('.saved-indicator').text('Saved');
+        //         $('#save-spinner').addClass('hidden');
+        //     })
+        //     .catch(error => {
+        //         let response = JSON.parse(error.message);
+        //         console.log(response);
+        //     });
     }
     else if (!params.has("chapterId") && params.has("storyId") && !localStorage.getItem('chapterId')) {
         storyId = params.get("storyId");
@@ -382,33 +455,33 @@ async function collectAndPrepareContentForForm() {
 
         console.log("Final payload:", data);
 
-        fetch(`http://localhost:8080/api/v1/chapter/createAndSave/${storyId}`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(errData => {
-                        throw new Error(JSON.stringify(errData));
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Success:', data);
-                localStorage.setItem("chapterId", data.data);
-                localStorage.setItem("isSaved", "true");
-                $('.saved-indicator').text('Saved');
-                $('#save-spinner').addClass('hidden');
-            })
-            .catch(error => {
-                let response = JSON.parse(error.message);
-                console.log(response);
-            });
+        // fetch(`http://localhost:8080/api/v1/chapter/createAndSave/${storyId}`, {
+        //     method: 'POST',
+        //     credentials: 'include',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(data)
+        // })
+        //     .then(response => {
+        //         if (!response.ok) {
+        //             return response.json().then(errData => {
+        //                 throw new Error(JSON.stringify(errData));
+        //             });
+        //         }
+        //         return response.json();
+        //     })
+        //     .then(data => {
+        //         console.log('Success:', data);
+        //         localStorage.setItem("chapterId", data.data);
+        //         localStorage.setItem("isSaved", "true");
+        //         $('.saved-indicator').text('Saved');
+        //         $('#save-spinner').addClass('hidden');
+        //     })
+        //     .catch(error => {
+        //         let response = JSON.parse(error.message);
+        //         console.log(response);
+        //     });
     }
     else if (!params.has("chapterId") && params.has("storyId") && localStorage.getItem('chapterId')) {
         storyId = params.get("storyId");
@@ -422,37 +495,41 @@ async function collectAndPrepareContentForForm() {
 
         console.log("Final payload:", data);
 
-        fetch(`http://localhost:8080/api/v1/chapter/save/${chapterId}/${storyId}`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(errData => {
-                        throw new Error(JSON.stringify(errData));
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Success:', data);
-                localStorage.setItem("isSaved", "true");
-                $('.saved-indicator').text('Saved');
-                $('#save-spinner').addClass('hidden');
-            })
-            .catch(error => {
-                let response = JSON.parse(error.message);
-                console.log(response);
-            });
+        // fetch(`http://localhost:8080/api/v1/chapter/save/${chapterId}/${storyId}`, {
+        //     method: 'POST',
+        //     credentials: 'include',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(data)
+        // })
+        //     .then(response => {
+        //         if (!response.ok) {
+        //             return response.json().then(errData => {
+        //                 throw new Error(JSON.stringify(errData));
+        //             });
+        //         }
+        //         return response.json();
+        //     })
+        //     .then(data => {
+        //         console.log('Success:', data);
+        //         localStorage.setItem("isSaved", "true");
+        //         $('.saved-indicator').text('Saved');
+        //         $('#save-spinner').addClass('hidden');
+        //     })
+        //     .catch(error => {
+        //         let response = JSON.parse(error.message);
+        //         console.log(response);
+        //     });
     }
 }
 
 
 async function buildParagraphArray(contentStructure) {
+
+    console.log("-------")
+    console.log(contentStructure)
+
     let paragraphAr = [];
 
     for (let i = 0; i < contentStructure.paragraphs.length; i++) {
@@ -762,9 +839,30 @@ async function publish() {
 
 
 
-//load chapter content if the chapter going to edit
-function loadChapterContent() {
+function check() {
 
+    const params = new URLSearchParams(window.location.search);
+
+    let cId = null;
+    let storyId = null;
+    let isEdit = null;
+
+    if (params.has("chapterId") && params.has("storyId") && params.has("isEdit")) {
+        cId = params.get("chapterId");
+        storyId = params.get("storyId");
+        isEdit = params.get("isEdit");
+
+        loadChapterData();
+        loadChapterContent();
+    }
+}
+check();
+
+
+
+
+//load chapter content(paragraph) if the chapter going to edit
+function loadChapterContent() {
     let cId = null;
     let storyId = null;
     const params = new URLSearchParams(window.location.search);
@@ -774,13 +872,12 @@ function loadChapterContent() {
         storyId = params.get("storyId");
     }
 
-    fetch(`http://localhost:8080/api/v1/chapter/publishAndSave/${chapterId}/${storyId}`, {
+    fetch(`http://localhost:8080/api/v1/chapter/paragraph/${cId}/${storyId}`, {
         method: 'GET',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+        }
     })
         .then(response => {
             if (!response.ok) {
@@ -793,12 +890,193 @@ function loadChapterContent() {
         .then(data => {
             console.log('Success:', data);
 
+            const editor = document.getElementById('contentEditor');
+            // clear initial dummy paragraph if editing existing chapter
+            editor.innerHTML = "";
+
+            data.data.forEach(paragraph => {
+                const paragraphId = generateUniqueId("paragraph_container");
+                const textareaId = generateUniqueId("textarea");
+                const popupId = generateUniqueId("popup");
+
+                // wrapper
+                const container = document.createElement("div");
+                container.className = "paragraph-container";
+                container.setAttribute("id", paragraphId);
+                container.setAttribute("data-paragraph-id", paragraphId);
+
+                // textarea (always included)
+                const textarea = document.createElement("textarea");
+                textarea.className = "paragraph-textarea";
+                textarea.id = textareaId;
+                textarea.placeholder = "Type your text";
+                textarea.value = (paragraph.contentType === "text" ? paragraph.content : "");
+                textarea.setAttribute("onkeydown", "handleKeyDown(event, this)");
+                textarea.setAttribute("oninput", "updateWordCount()");
+                container.appendChild(textarea);
+
+                autoResizeTextarea(textarea);
+
+                requestAnimationFrame(() => autoResizeTextarea(textarea));
+
+                textarea.addEventListener("input", function () {
+                    autoResizeTextarea(this);
+                });
+
+                // if media exists
+                if (paragraph.contentType === "image") {
+                    const mediaDiv = document.createElement("div");
+                    mediaDiv.className = "embedded-media";
+                    mediaDiv.setAttribute("data-media-type", "image");
+                    mediaDiv.innerHTML = `
+                        <img src="${paragraph.content}" alt="image">
+                        <button class="media-remove-btn" onclick="removeMedia(this)">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    container.appendChild(mediaDiv);
+                } else if (paragraph.contentType === "link") {
+                    const videoId = extractYouTubeId(paragraph.content);
+                    if (videoId) {
+                        const mediaDiv = document.createElement("div");
+                        mediaDiv.className = "embedded-media";
+                        mediaDiv.setAttribute("data-media-type", "video");
+                        mediaDiv.setAttribute("data-video-url", paragraph.content);
+                        mediaDiv.setAttribute("data-video-id", videoId);
+                        mediaDiv.innerHTML = `
+                            <iframe src="https://www.youtube.com/embed/${videoId}" 
+                                frameborder="0" allowfullscreen></iframe>
+                            <button class="media-remove-btn" onclick="removeMedia(this)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        `;
+                        container.appendChild(mediaDiv);
+                    }
+                }
+
+                // popup (must always exist for new additions)
+                const popup = document.createElement("div");
+                popup.className = "add-media-popup";
+                popup.id = popupId;
+                popup.innerHTML = `
+                    <div class="media-option" onclick="addMediaToCurrentParagraph('image')">
+                        <i class="fas fa-image"></i>
+                        <span>Add Image</span>
+                    </div>
+                    <div class="media-option" onclick="addMediaToCurrentParagraph('video')">
+                        <i class="fas fa-video"></i>
+                        <span>Add Video</span>
+                    </div>
+                    <div class="media-option" onclick="hideMediaPopup()">
+                        <i class="fas fa-times"></i>
+                        <span>Continue Writing</span>
+                    </div>
+                `;
+                container.appendChild(popup);
+
+                editor.appendChild(container);
+
+                // 1) ensure textarea is resized once it becomes visible
+                waitUntilVisibleAndThen(textarea, () => {
+                    autoResizeTextarea(textarea);
+                });
+
+                // 2) also resize on input so it grows as user types
+                textarea.addEventListener("input", function () {
+                    autoResizeTextarea(this);
+                });
+            });
+
+            updateWordCount();
         })
         .catch(error => {
             let response = JSON.parse(error.message);
             console.log(response);
         });
 }
+
+
+
+
+//load chapter details if the chapter going to edit
+function loadChapterData() {
+
+    let cId = null;
+    let storyId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("chapterId") && params.has("storyId")) {
+        cId = params.get("chapterId");
+        storyId = params.get("storyId");
+    }
+
+    fetch(`http://localhost:8080/api/v1/chapter/${cId}`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            let chapter = data.data;
+
+            $('#chapter-title').text(chapter.title);
+            $('#chapterTitleEdit').text(chapter.title);
+
+            if (chapter && chapter.coverImagePath) {
+
+                if (/\.(jpg|jpeg|png|gif|webp)$/i.test(chapter.coverImagePath)) {
+                    document.querySelector(".media-buttons").innerHTML = `
+            <img src="${chapter.coverImagePath}" style="object-fit:contain;">
+            <div style="background-color: rgba(0,0,0,0.87); width: 39px; height: 39px; border-radius: 100%; display: flex; justify-content: center; align-items: center; position: absolute; right: 12px; bottom: 10px;">
+                <svg fill="#222222" stroke="#ffffff" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class="fa-4x edit-media on-show-media-menu">
+                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                </svg>
+            </div>`;
+                }
+                else if (chapter.coverImagePath.includes("youtube.com/embed/") || chapter.coverImagePath.includes("youtu.be/")) {
+                    let videoId = null;
+
+                    // Extract video ID
+                    if (chapter.coverImagePath.includes("embed/")) {
+                        videoId = chapter.coverImagePath.split("embed/").pop();
+                    } else if (chapter.coverImagePath.includes("youtu.be/")) {
+                        videoId = chapter.coverImagePath.split("youtu.be/").pop();
+                    }
+
+                    if (videoId) {
+                        document.querySelector(".media-buttons").innerHTML = `
+                <iframe width="100%" height="340" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+                <div style="background-color: rgba(0,0,0,0.87); width: 39px; height: 39px; border-radius: 100%; display: flex; justify-content: center; align-items: center; position: absolute; right: 12px; bottom: 10px;">
+                    <svg fill="#222222" stroke="#ffffff" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class="fa-4x edit-media on-show-media-menu">
+                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                    </svg>
+                </div>`;
+                    }
+                }
+            }
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+        });
+}
+
+
+
+
 
 
 

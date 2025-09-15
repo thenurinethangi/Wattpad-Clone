@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wattpad Admin Panel</title>
+    <link rel="icon" type="image/ico" href="assets/image/wattpad-icon-2-removebg-preview.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --theme-color: #ff6122;
+            --background-color: #ffffff;
+            --text-color: #222;
+            --font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--background-color);
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            height: 40px; /* Adjust based on your logo size */
+        }
+
+        .header-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .login-btn {
+            background-color: var(--theme-color);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background-color: #e55a1f; /* Darker shade of orange */
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+            background: linear-gradient(to right, var(--theme-color), #ff8c4e); /* Gradient for visual appeal */
+            color: #ffffff;
+            position: relative;
+        }
+
+        .main-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .main-content p {
+            font-size: 20px;
+            max-width: 800px;
+            margin-bottom: 40px;
+        }
+
+        .features-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+        }
+
+        .feature-item {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 200px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+
+        .feature-text {
+            font-size: 16px;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        footer {
+            background-color: var(--theme-color);
+            color: #ffffff;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo-container">
+        <img class="logo" src="assets/image/wattpad-logo.svg" alt="Wattpad Logo">
+        <span class="header-text">Admin Panel</span>
+    </div>
+    <a href="admin-login.html" class="login-btn">Login</a>
+</header>
+
+<main class="main-content">
+    <h1>Wattpad Admin Panel</h1>
+    <p>Manage users, stories, handle reports, announcements, genres, and more. Keep the storytelling community thriving and safe!</p>
+    <div class="features-grid">
+        <div class="feature-item">
+            <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff6122">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            <span class="feature-text">Manage Users</span>
+        </div>
+        <div class="feature-item">
+            <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff6122">
+                <path d="M3 4v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm16 16H5V4h14v16zm-6-14h-2v2h2V6zm0 4h-2v2h2v-2zm0 4h-2v2h2v-2zm-4-8H7v2h2V6zm0 4H7v2h2v-2zm0 4H7v2h2v-2z"/>
+            </svg>
+            <span class="feature-text">Manage Stories</span>
+        </div>
+        <div class="feature-item">
+            <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff6122">
+                <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H6V4h2v8l2.5-1.5L13 12V4h5v16z"/>
+            </svg>
+            <span class="feature-text">Handle Reports</span>
+        </div>
+        <div class="feature-item">
+            <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff6122">
+                <path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM5 10h9v2H5zm0 3h9v2H5zm0 3h9v2H5z"/>
+            </svg>
+            <span class="feature-text">Announcements</span>
+        </div>
+        <div class="feature-item">
+            <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff6122">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V8h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+            </svg>
+            <span class="feature-text">Manage Genres</span>
+        </div>
+    </div>
+</main>
+
+<script src="admin-landing-script.js"></script>
+</body>
+</html>

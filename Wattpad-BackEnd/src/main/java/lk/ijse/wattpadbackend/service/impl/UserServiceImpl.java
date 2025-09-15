@@ -1,9 +1,6 @@
 package lk.ijse.wattpadbackend.service.impl;
 
-import lk.ijse.wattpadbackend.dto.StoryDTO;
-import lk.ijse.wattpadbackend.dto.UserDTO;
-import lk.ijse.wattpadbackend.dto.UserProfileReadingListResponseDTO;
-import lk.ijse.wattpadbackend.dto.UserProfileStoriesResponseDTO;
+import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.entity.*;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
 import lk.ijse.wattpadbackend.repository.FollowingRepository;
@@ -78,6 +75,7 @@ public class UserServiceImpl implements UserService {
             userDTO.setJoinedDate(user.getJoinedDate());
             userDTO.setUsername(user.getUsername());
             userDTO.setPronouns(user.getPronouns());
+            userDTO.setBirthday(user.getBirthday());
 
             if(user.getId()== currentUser.getId()){
                 userDTO.setIsCurrentUser(1);
@@ -582,6 +580,7 @@ public class UserServiceImpl implements UserService {
             throw e;
         }
         catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("Internal Server Error.");
         }
     }
@@ -635,6 +634,307 @@ public class UserServiceImpl implements UserService {
                 System.out.println("exit");
                 followingRepository.delete(following);
             }
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Internal Server Error.");
+        }
+    }
+
+    @Override
+    public UserDTO getCurrentUserData(String username) {
+
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setBirthday(user.getBirthday());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setAbout(user.getAbout());
+            userDTO.setFacebookLink(user.getFacebookLink());
+            userDTO.setWebsiteLink(user.getWebsiteLink());
+            userDTO.setFullName(user.getFullName());
+            userDTO.setLocation(user.getLocation());
+            userDTO.setCoverPicPath(user.getCoverPicPath());
+            userDTO.setProfilePicPath(user.getProfilePicPath());
+            userDTO.setJoinedDate(user.getJoinedDate());
+            userDTO.setUsername(user.getUsername());
+            userDTO.setPronouns(user.getPronouns());
+            userDTO.setBirthday(user.getBirthday());
+
+            return userDTO;
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Internal Server Error.");
+        }
+    }
+
+    @Override
+    public boolean changeUserUsername(String username, UserDTO userDTO) {
+
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            if(!user.getPassword().equals(userDTO.getPassword())){
+                return false;
+            }
+            else{
+                user.setUsername(userDTO.getUsername());
+                userRepository.save(user);
+                return true;
+            }
+
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Internal Server Error.");
+        }
+    }
+
+    @Override
+    public boolean changeUserPassword(String username, UpdatePasswordDTO updatePasswordDTO) {
+
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            if(!user.getPassword().equals(updatePasswordDTO.getCurrentPassword())){
+                return false;
+            }
+            else{
+                user.setPassword(updatePasswordDTO.getNewPassword());
+                userRepository.save(user);
+                return true;
+            }
+
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Internal Server Error.");
+        }
+    }
+
+    @Override
+    public boolean changeUserEmail(String username, ChangeEmailDTO changeEmailDTO) {
+
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            if(!user.getPassword().equals(changeEmailDTO.getPassword())){
+                return false;
+            }
+            else{
+                user.setEmail(changeEmailDTO.getNewEmail());
+                userRepository.save(user);
+                return true;
+            }
+
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Internal Server Error.");
+        }
+    }
+
+    @Override
+    public void changeUserDataInSetting(String username, UserDataSettingDTO userDataSettingDTO) {
+
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            user.setBirthday(userDataSettingDTO.getBirthday());
+            userRepository.save(user);
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Internal Server Error.");
+        }
+    }
+
+    @Override
+    public void deactivateCurrentUser(String username) {
+
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            user.setIsActive(0);
+            userRepository.save(user);
+        }
+        catch (UserNotFoundException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Internal Server Error.");
+        }
+    }
+
+    @Override
+    public UserFollowingResponseDTO getFollowersUsersByUserId(String username, long id, long count) {
+
+        try {
+            User currentUser = userRepository.findByUsername(username);
+            if(currentUser==null){
+                throw new UserNotFoundException("User not found, Please signup");
+            }
+
+            Optional<User> optionalUser = userRepository.findById((int) id);
+            if (!optionalUser.isPresent()) {
+                throw new UserNotFoundException("User not found.");
+            }
+            User user = optionalUser.get();
+
+            List<Following> followingList = followingRepository.findAllByUser(user);
+
+            UserFollowingResponseDTO userFollowingResponseDTO = new UserFollowingResponseDTO();
+
+            long returnCount = 0;
+            if(followingList.size()>=count){
+                returnCount = count;
+                if(followingList.size()>count){
+                    userFollowingResponseDTO.setIsMoreFollowingUsersAvailable(1);
+                }
+                else {
+                    userFollowingResponseDTO.setIsMoreFollowingUsersAvailable(0);
+                }
+            }
+            else {
+                returnCount = followingList.size();
+                userFollowingResponseDTO.setIsMoreFollowingUsersAvailable(0);
+            }
+
+            List<FollowingUserDTO> followingUserDTOList = new ArrayList<>();
+            for (Following x : followingList){
+                Optional<User> optionalUser1 = userRepository.findById((int) x.getFollowedUserId());
+                if(!optionalUser1.isPresent()){
+                    continue;
+                }
+                User y = optionalUser1.get();
+
+                FollowingUserDTO followingUserDTO = new FollowingUserDTO();
+                followingUserDTO.setUserId(y.getId());
+                followingUserDTO.setUsername(y.getUsername());
+                followingUserDTO.setFullName(y.getFullName());
+                followingUserDTO.setProfilePicPath(y.getProfilePicPath());
+                followingUserDTO.setCoverPicPath(y.getCoverPicPath());
+
+                List<Story> storyList = y.getStories();
+                int a = 0;
+                for(Story z : storyList){
+                    if(z.getPublishedOrDraft()==1){
+                        a++;
+                    }
+                }
+                followingUserDTO.setWork(a);
+
+                List<Following> followings = followingRepository.findAllByFollowedUserId(x.getId());
+
+                long followingLong = followings.size();
+
+                String followingInStr = "";
+                if(followingLong<=1000){
+                    followingInStr = String.valueOf(followingLong);
+                }
+                else if (followingLong >= 1000 && followingLong < 1000000) {
+                    double value = (double) followingLong / 1000;
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        followingInStr = vStr.split("\\.0")[0] + "K";
+                    } else {
+                        followingInStr = vStr + "K";
+                    }
+                }
+                else if(followingLong>=1000000){
+                    double value = (double) followingLong/1000000;
+
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        followingInStr = vStr.split("\\.0")[0] + "M";
+                    } else {
+                        followingInStr = value+"M";
+                    }
+                }
+                followingUserDTO.setFollowings(followingInStr);
+
+                List<Following> followers = followingRepository.findAllByUser(user);
+
+                long followersLong = followers.size();
+
+                String followersInStr = "";
+                if(followersLong<=1000){
+                    followersInStr = String.valueOf(followersLong);
+                }
+                else if (followersLong >= 1000 && followersLong < 1000000) {
+                    double value = (double) followersLong / 1000;
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        followersInStr = vStr.split("\\.0")[0] + "K";
+                    } else {
+                        followersInStr = vStr + "K";
+                    }
+                }
+                else if(followersLong>=1000000){
+                    double value = (double) followersLong/1000000;
+
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        followersInStr = vStr.split("\\.0")[0] + "M";
+                    } else {
+                        followersInStr = value+"M";
+                    }
+                }
+                followingUserDTO.setFollowers(followersInStr);
+
+                followingUserDTO.setIsFollowedByTheCurrentUser(0);
+                List<Following> f = followingRepository.findAllByFollowedUserId(currentUser.getId());
+                for(Following z : f){
+                    if(z.getUser().getId()==y.getId()){
+                        followingUserDTO.setIsFollowedByTheCurrentUser(1);
+                        break;
+                    }
+                }
+
+                followingUserDTOList.add(followingUserDTO);
+            }
+
+            userFollowingResponseDTO.setFollowingUserDTOList(followingUserDTOList);
+            return userFollowingResponseDTO;
+
         }
         catch (UserNotFoundException e) {
             throw e;

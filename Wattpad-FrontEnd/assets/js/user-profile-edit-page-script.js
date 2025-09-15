@@ -44,7 +44,6 @@ window.onload = function () {
 
 //load user data
 async function loadUserData() {
-
     let userId = null;
     const params = new URLSearchParams(window.location.search);
 
@@ -52,12 +51,12 @@ async function loadUserData() {
         userId = params.get("userId");
     }
 
-    if(userId==null){
+    if (userId == null) {
         //load chapter not found page
         return;
     }
 
-    await fetch('http://localhost:8080/user/'+userId, {
+    await fetch('http://localhost:8080/user/' + userId, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -119,7 +118,6 @@ async function loadUserData() {
             if (user.coverPicPath) {
                 document.querySelector('.background').src = `${user.coverPicPath}`;
             }
-
         })
         .catch(error => {
             try {
@@ -131,15 +129,11 @@ async function loadUserData() {
         });
 }
 
-
-
-
 async function run() {
     await loadUserData();
 }
 
 run();
-
 
 
 
@@ -165,14 +159,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Validate file type
                 if (file.type.startsWith('image/')) {
                     profilePicChanged = true;
+                    profilePicFile = file;
                     // Create object URL for the selected image
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        // Set the image source to the selected image
                         profilePicImg.src = e.target.result;
-
-                        // Optional: Send the file to server for upload (uncomment if needed)
-                        // uploadImage(file, 'profile', user.profilePicPath);
                     };
                     reader.readAsDataURL(file);
                 } else {
@@ -193,14 +184,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Validate file type
                 if (file.type.startsWith('image/')) {
                     coverChanged = true;
+                    coverFile = file;
                     // Create object URL for the selected image
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        // Set the background image source to the selected image
                         coverImg.src = e.target.result;
-
-                        // Optional: Send the file to server for upload (uncomment if needed)
-                        // uploadImage(file, 'cover', user.coverPicPath);
                     };
                     reader.readAsDataURL(file);
                 } else {
@@ -212,10 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
-
 document.addEventListener('DOMContentLoaded', () => {
-
     let userId = null;
     const params = new URLSearchParams(window.location.search);
 
@@ -223,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
         userId = params.get("userId");
     }
 
-    if(userId==null){
+    if (userId == null) {
         //load chapter not found page
         return;
     }
@@ -266,7 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function uploadToImgbb(file) {
-        // Convert to base64 without the data: prefix
         const dataUrl = await readFileAsDataURL(file);
         const base64 = dataUrl.split(',')[1];
 
@@ -282,7 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return json.data.url; // full imgbb URL
     }
 
-    // Small safe getter
     function safeSrc(el) {
         return el && el.src ? el.src : null;
     }
@@ -298,9 +281,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             profilePicFile = f;
             profilePicChanged = true;
-            // preview
             readFileAsDataURL(f).then(dataUrl => {
-                profilePicImg.src = dataUrl; // preview as data URL
+                profilePicImg.src = dataUrl;
             }).catch(() => {
                 Swal.fire('Error', 'Failed to preview profile image.', 'error');
             });
@@ -317,9 +299,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             coverFile = f;
             coverChanged = true;
-            // preview
             readFileAsDataURL(f).then(dataUrl => {
-                coverImg.src = dataUrl; // preview as data URL
+                coverImg.src = dataUrl;
             }).catch(() => {
                 Swal.fire('Error', 'Failed to preview cover image.', 'error');
             });
@@ -356,14 +337,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         return;
                     }
                 } else {
-                    // Not changed → keep existing src (old URL) if exists
-                    const cur = safeSrc(profilePicImg) || initialProfileSrc;
-                    if (cur) {
-                        // take only the file name part
-                        profilePicPathToSend = cur.split("/").pop();
-                    } else {
-                        profilePicPathToSend = null;
-                    }
+                    // Not changed → use existing src URL if exists, null if no initial image
+                    profilePicPathToSend = safeSrc(profilePicImg) || null;
                 }
 
                 // 2) COVER PIC
@@ -380,9 +355,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         return;
                     }
                 } else {
-                    // Not changed → if initial/cur cover is the default black, send null, else keep existing URL
-                    const cur = safeSrc(profilePicImg) || initialProfileSrc;
-                    profilePicPathToSend = cur || null;
+                    // Not changed → use existing src URL if exists and not default, null if default or no image
+                    const currentCoverSrc = safeSrc(coverImg) || initialCoverSrc;
+                    coverPicPathToSend = (currentCoverSrc && currentCoverSrc !== DEFAULT_COVER_SRC) ? currentCoverSrc : null;
                 }
 
                 // Build payload
@@ -400,8 +375,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(payload);
 
                 // Send final update to backend
-                // saveButton.disabled = true;
-                saveButton.textContent = 'Save Changes';
+                saveButton.disabled = true;
+                saveButton.textContent = 'Saving...';
                 const resp = await fetch('http://localhost:8080/user', {
                     method: 'PUT',
                     credentials: 'include',
@@ -415,7 +390,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 Swal.fire('Success', 'Profile updated successfully!', 'success')
-                    .then(() => location.reload());
+                    .then(() => {
+                        // window.location.reload();
+                        saveButton.disabled = false;
+                        saveButton.textContent = 'Save Changes';
+                    });
             } catch (err) {
                 console.error(err);
                 try {
@@ -436,12 +415,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- CANCEL BUTTON ---
     if (cancelButton) {
         cancelButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            location.reload();
+            let userId = null;
+            const params = new URLSearchParams(window.location.search);
+
+            if (params.has("userId")) {
+                userId = params.get("userId");
+            }
+
+            if(userId==null){
+                //load chapter not found page
+                return;
+            }
+
+            window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${userId}`;
         });
     }
 });
-
 
 
 

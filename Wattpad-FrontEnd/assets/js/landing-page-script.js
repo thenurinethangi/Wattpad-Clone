@@ -40,77 +40,76 @@ discoverDropDown.addEventListener('click',function (event) {
     <div class="discover-categories-container" style="display: flex;">
         <div class="discover-categories" style="display: flex;">
             <ul class="row" style="display: flex; width: 570px; padding-left: 10px;">
-                <li class="browse-title" style="width: 570px;">Browse</li>
-                <li>
-                    <a href="/stories/romance" class="on-topic">Romance</a>
-                </li>
-                <li>
-                    <a href="/stories/fanfiction" class="on-topic">Fanfiction</a>
-                </li>
-                <li>
-                    <a href="/stories/lgbt" class="on-topic">LGBTQ+</a>
-                </li>
-                <li>
-                    <a href="https://www.wattpad.com/catalog/wattpadoriginals" class="on-topic">Wattpad
-                        Originals</a>
-                </li>
-                <li>
-                    <a href="/stories/werewolf" class="on-topic">Werewolf</a>
-                </li>
-                <li>
-                    <a href="/stories/newadult" class="on-topic">New Adult</a>
-                </li>
-                <li>
-                    <a href="/stories/fantasy" class="on-topic">Fantasy</a>
-                </li>
-                <li>
-                    <a href="/stories/shortstory" class="on-topic">Short Story</a>
-                </li>
-                <li>
-                    <a href="/stories/teenfiction" class="on-topic">Teen Fiction</a>
-                </li>
-                <li>
-                    <a href="/stories/historicalfiction" class="on-topic">Historical Fiction</a>
-                </li>
-                <li>
-                    <a href="/stories/paranormal" class="on-topic">Paranormal</a>
-                </li>
-                <li>
-                    <a href="https://www.wattpad.com/list/551324301" class="on-topic">Editor's Picks</a>
-                </li>
-                <li>
-                    <a href="/stories/humor" class="on-topic">Humor</a>
-                </li>
-                <li>
-                    <a href="/stories/horror" class="on-topic">Horror</a>
-                </li>
-                <li>
-                    <a href="/stories/contemporarylit" class="on-topic">Contemporary Lit</a>
-                </li>
-                <li>
-                    <a href="/stories/diverselit" class="on-topic">Diverse Lit</a>
-                </li>
-                <li>
-                    <a href="/stories/mystery" class="on-topic">Mystery</a>
-                </li>
-                <li>
-                    <a href="/stories/thriller" class="on-topic">Thriller</a>
-                </li>
-                <li>
-                    <a href="/stories/sciencefiction" class="on-topic">Science Fiction</a>
-                </li>
-                <li>
-                    <a href="https://www.wattpad.com/user/TheWattys" class="on-topic">The Wattys</a>
-                </li>
-                <li>
-                    <a href="/stories/adventure" class="on-topic">Adventure</a>
-                </li>
-                <li>
-                    <a href="/stories/nonfiction" class="on-topic">Non-Fiction</a>
-                </li>
-                <li>
-                    <a href="/stories/poetry" class="on-topic">Poetry</a>
-                </li>
+                    <li class="browse-title" style="width: 570px;">Browse</li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Romance" class="on-topic">Romance</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Fanfiction" class="on-topic">Fanfiction</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=LGBTQ%2B" class="on-topic">LGBTQ+</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Wattpad Originals" class="on-topic">Wattpad Originals</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Werewolf" class="on-topic">Werewolf</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=New Adult" class="on-topic">New Adult</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Fantasy" class="on-topic">Fantasy</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Short Story" class="on-topic">Short Story</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Teen Fiction" class="on-topic">Teen Fiction</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Historical Fiction" class="on-topic">Historical Fiction</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Paranormal" class="on-topic">Paranormal</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Humor" class="on-topic">Editor's Picks</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Humor" class="on-topic">Humor</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Horror" class="on-topic">Horror</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Contemporary Lit" class="on-topic">Contemporary Lit</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Diverse Lit" class="on-topic">Diverse Lit</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Mystery" class="on-topic">Mystery</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Thriller" class="on-topic">Thriller</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Science Fiction" class="on-topic">Science Fiction</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=TheWattys" class="on-topic">The Wattys</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Adventure" class="on-topic">Adventure</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Non-Fiction" class="on-topic">Non-Fiction</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Poetry" class="on-topic">Poetry</a>
+                    </li>
             </ul>
         </div>
     </div>
@@ -141,10 +140,10 @@ writeDropDown.addEventListener('click',function (event) {
     <div class="MaVh4 V-8Oa M33oU">
         <ul class="_0X2RS" aria-label="Write">
             <li class="fnWge">
-                <a class="c97t-" href="#" rel="nofollow"><img class="_5Aey9" alt="Create a new story" src="assets/image/create-story.svg">Create a new story</a>
+                <a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/create-story-page.html" rel="nofollow"><img class="_5Aey9" alt="Create a new story" src="assets/image/create-story.svg">Create a new story</a>
             </li>
             <li class="fnWge">
-                <a class="c97t-" href="#" target="_self">My Stories</a>
+                <a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/mywork-page.html" target="_self">My Stories</a>
             </li>
         </ul>
     </div>

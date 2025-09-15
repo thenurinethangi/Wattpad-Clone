@@ -7,6 +7,7 @@
     <meta name="author" content="Thenuri Nethangi">
     <meta name="keywords" content="online stories, read stories, write stories, wattpad alternative, fiction platform, storytelling, novels, short stories, creative writing, user-generated stories">
     <meta name="description" content="Discover and share captivating stories on our platform. Read novels, write your own tales, and connect with a community of passionate readers and writers.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="assets/style/desktop-web.d4472ed8-remove-min.css">
     <!--for header-->
     <link rel="stylesheet" href="assets/style/css-bundle-TDTK4GB6.css"/>
@@ -18,15 +19,205 @@
     <link rel="stylesheet" href="assets/style/react-tooltip-HIHMAPNF.css"/>
     <link rel="stylesheet" href="assets/style/splide.min-AQNS3YPQ.css"/>
     <link rel="stylesheet" href="assets/style/footer-style.css">
+    <style>
+        .text-red {
+            color: red;
+            font-size: 0.9em;
+        }
+        .text-green {
+            color: green;
+            font-size: 0.9em;
+        }
+
+    </style>
 </head>
-<body class="theme-6">
+<body class="theme-6" style="display: none; visibility: hidden; opacity: 0;">
+
+<!--username change model-->
+<div id="generic-modal" class="modal fade in username-change-model" role="dialog" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <div class="component-wrapper" id="component-usersettingsmodal-user-settings-modal-%2fsettings">
+                        <div id="user-settings-modal">
+                            <button class="close on-close" aria-label="Close">
+                                <i class="fa-solid fa-xmark close-username-change-model"></i>
+                            </button>
+                            <header class="panel-heading">
+                                <h3>Change username</h3>
+                            </header>
+                            <div class="panel-body">
+                                <div class="body-text">
+                                    <div>
+                                        <p>Your username is important, here are a few things you need to know before you change it:</p>
+                                        <ol>
+                                            <li>It takes up to 24 hours for all changes to take effect. Your profile and stories may be inaccessible during this time.</li>
+                                            <li>Your user profile and widget links will change and the old ones will no longer work.</li>
+                                            <li>You will need to re-login using your new username.</li>
+                                        </ol>
+                                        <form class="on-form-submit">
+                                            <input type="hidden" name="id" value="520620392">
+                                            <div class="input-group-vertical">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="username">New Username</label>
+                                                    <input id="username" class="form-control input-lg enable username-input" name="username" type="text" value="">
+                                                    <small class="username-status"></small>
+                                                </div>
+                                                <div class="form-group has-feedback">
+                                                    <label class="control-label" for="password">Confirm Password</label>
+                                                    <input id="password" class="form-control input-lg enable password-input password-hide" name="password" type="password" value="">
+                                                    <input style="display: none;" id="password-show" class="form-control input-lg enable password-input password-show" name="password" type="text" value="">
+                                                    <span role="button" tabindex="-1" style="display: flex; justify-content: flex-end; transform: translateY(-30px) translateX(-10px);">
+                                                        <i style="color: #BDBDBD;" class="fa-solid fa-eye-slash show-password"></i>
+                                                        <i style="color: #BDBDBD; display: none;" class="fa-solid fa-eye hide-password"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <input type="submit" class="btn btn-lg btn-orange btn-block enable change-username-btn" value="Save">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div></div>
+        </div>
+    </div>
+</div>
+
+
+<!--password change model-->
+<div id="generic-modal" class="modal fade in change-password-model" role="dialog" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <div class="component-wrapper" id="component-usersettingsmodal-user-settings-modal-%2fsettings">
+                        <div id="user-settings-modal">
+                            <button class="close on-close" aria-label="Close">
+                                <i class="fa-solid fa-xmark close-password-change-model"></i>
+                            </button>
+                            <header class="panel-heading">
+                                <h3>Change password</h3>
+                            </header>
+                            <div class="panel-body">
+                                <div class="body-text">
+                                    <form class="on-form-submit">
+                                        <input type="hidden" name="id" value="520620392">
+                                        <div class="form-group has-feedback">
+                                            <label class="control-label" for="old_password">Current Password</label>
+                                            <div class="password-container">
+                                                <div class="password-container">
+                                                    <input type="password" id="old_password" class="form-control password-field enable input-lg password-hide current-password-field" name="old_password" placeholder="Current Password" aria-label="Current Password" required="">
+                                                    <input style="position: relative; transform: translateX(17px); padding-left: 10px; display: none;" type="text" id="old_password-show-input" class="form-control password-field enable input-lg password-show current-password-field" name="old_password" placeholder="Current Password" aria-label="Current Password" required="">
+                                                    <span role="button" tabindex="-1" style="position: absolute; right: 10px; top: 47px;">
+                                                        <i style="color: #BDBDBD;" class="fa-solid fa-eye-slash show-password"></i>
+                                                        <i style="color: #BDBDBD; position: absolute; right: 2px; z-index: 1000; display: none;" class="fa-solid fa-eye hide-password"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="password-fields">
+                                            <div class="form-group has-feedback">
+                                                <div class="field-container">
+                                                    <label class="control-label" for="new_password">New Password</label>
+                                                    <div class="password-container">
+                                                        <input type="password" id="new_password" class="form-control password-field enable input-lg password-hide new-password-field" name="new_password" placeholder="New Password" required="">
+                                                        <input style="position: relative; transform: translateX(17px); padding-left: 10px; display: none; font-weight: 500;" type="text" id=new_password-show-input" class="form-control password-field enable input-lg password-show new-password-field" name="new_password" placeholder="New Password" required="">
+                                                        <span role="button" tabindex="-1" style="position: absolute; right: 10px; top: 21px;">
+                                                            <i style="color: #BDBDBD;" class="fa-solid fa-eye-slash show-password"></i>
+                                                            <i style="color: #BDBDBD; position: absolute; right: 2px; z-index: 1000; display: none;" class="fa-solid fa-eye hide-password"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div aria-live="assertive">
+                                                        <div style="display: none;" class="field-message password-strength error-msg new-password-error-msg">Your password doesn't meet the requirements.</div>
+                                                    </div>
+                                                    <div aria-live="polite"></div>
+                                                </div>
+                                                <div class="field-container">
+                                                    <label class="control-label" for="confirm_password">Re-enter password</label>
+                                                    <div class="password-container">
+                                                        <input type="password" id="confirm_password" class="form-control password-field enable input-lg password-hide confirm-password-field" name="confirm_password" placeholder="Re-enter password" required="">
+                                                        <input style="position: relative; transform: translateX(17px); padding-left: 10px; display: none; font-weight: 500;" type="text" id=confirm_password-show-input" class="form-control password-field enable input-lg password-show confirm-password-field" name="confirm_password" placeholder="Re-enter password" required="">
+                                                        <span role="button" tabindex="-1" style="position: absolute; right: 10px; top: 21px;">
+                                                            <i style="color: #BDBDBD;" class="fa-solid fa-eye-slash show-password"></i>
+                                                            <i style="color: #BDBDBD; position: absolute; right: 2px; z-index: 1000; display: none;" class="fa-solid fa-eye hide-password"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div aria-live="assertive">
+                                                        <div style="display: none;" class="field-message match-message error-msg confirm-password-error-msg">Passwords do not match.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="save-button button__Y70Pw primary-variant__NO4pv default-accent__Pc0Pm medium-size__CLqD3 clickable__iYXtN full-width__dXWyx with-padding__cVt72 password-save-btn" disabled="">
+                                            <span class="background-overlay__mCEaX"></span>Save
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div></div>
+        </div>
+    </div>
+</div>
+
+
+<!--change email model-->
+<div id="generic-modal" class="modal fade in change-email-model" role="dialog" aria-hidden="false" style="display: none; background-color: rgba(0,0,0,0.39);">
+    <div class="modal-dialog">
+        <div class="modal-content change-email-modal-wrapper">
+            <div class="modal-body" style="box-shadow: 1px 10px 10px rgba(0,0,0,0.13);">
+                <div>
+                    <div class="component-wrapper" id="component-usersettingsmodal-user-settings-modal-%2fsettings">
+                        <div id="user-settings-modal" class="change-email-modal-content">
+                            <button class="close on-close" aria-label="Close" tabindex="0">
+                                <i class="fa-solid fa-xmark close-email-change-model"></i>
+                            </button>
+                            <h1>Change email</h1>
+                            <p class="modal-message">You registered your account with <strong id="old-email">nanayakkarayukee@gmail.com</strong>. If this is incorrect, you can change your email here.</p>
+                            <form class="on-form-submit">
+                                <input type="hidden" name="id" value="520620392">
+                                <div class="input-group-vertical">
+                                    <div class="form-group has-feedback">
+                                        <label class="control-label" for="new_email">New Email</label>
+                                        <input id="new_email" class="form-control input-bg enable change-email-input" name="email" type="email" value=""></div>
+                                        <p style="display: none;" class="user-error-message new-email-error-message">The email address is invalid.</p>
+                                    <div class="form-group">
+                                        <label class="control-label" for="confirm_email">Confirm New Email</label>
+                                        <input id="confirm_email" class="form-control input-bg enable change-email-input" name="confirm_email" type="text" value="">
+                                        <p style="display: none;" class="user-error-message confirm-email-error-message">Please ensure the email fields match.</p>
+                                    </div>
+                                    <div class="form-group has-feedback password">
+                                        <label class="control-label" for="password">Confirm Password</label>
+                                        <input type="password" id="password" class="form-control input-bg enable change-email-input password-hide confirm-email-password-field" name="password" required="">
+                                        <input style="position: relative; padding-left: 16px; display: none; font-weight: 500;" type="text" id=password" class="form-control input-bg enable change-email-input password-show confirm-email-password-field" name="password" required="">
+                                        <span role="button" tabindex="-1" style="position: absolute; right: 10px; top: 53px;">
+                                            <i style="color: #BDBDBD;" class="fa-solid fa-eye-slash show-password"></i>
+                                            <i style="color: #BDBDBD; position: absolute; right: 2px; z-index: 1000; display: none;" class="fa-solid fa-eye hide-password"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <input type="submit" class="btn-primary btn-md btn-save email-save-btn" disabled="" value="Change email">
+                                <button class="btn-secondary btn-md btn-cancel">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- --------------------header---------------------- -->
-<header class="_07XRA">
+<header class="_07XRA" style="padding-bottom: 0;">
     <nav class="gMmKF">
         <ul class="sGq-H">
             <li class="Gzeg3">
-                <a class="zIi3k" href="" title="Wattpad Home" aria-label="Home">
+                <a class="zIi3k" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/home-page.html" title="Wattpad Home" aria-label="Home">
                     <img class="At9TR" src="assets/image/wattpad-logo.svg" alt="Wattpad Logo"/>
                 </a>
             </li>
@@ -35,6 +226,37 @@
                     <button class="DMdhq OCdPW">
                         Browse<img class="S1mMa" src="assets/image/wp-chevron-down.svg" alt=""/>
                     </button>
+                </div>
+                <!--browser dropdown with unique ID-->
+                <div id="browse-modal" style="height: 340px; width: 570px; transform: translateX(248px) translateY(180px); display: none; visibility: hidden; opacity: 0;" class="MaVh4 V-8Oa MllQ5" aria-labelledby="browse-dropdown">
+                    <div class="zCGIO" style="width: 100%;">
+                        <ul class="_0X2RS" aria-label="Browse">
+                            <li class="WlC60">Browse</li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Romance">Romance</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Fanfiction">Fanfiction</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=LGBTQ%2B">LGBTQ+</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Wattpad Originals">Wattpad Originals</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Werewolf">Werewolf</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=New Adult">New Adult</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Fantasy">Fantasy</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Short Story">Short Story</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Teen Fiction">Teen Fiction</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Historical Fiction">Historical Fiction</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Paranormal">Paranormal</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Editor's Picks">Editor's Picks</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Humor">Humor</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Horror">Horror</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Contemporary Lit">Contemporary Lit</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Diverse Lit">Diverse Lit</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Mystery">Mystery</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Thriller">Thriller</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Science Fiction">Science Fiction</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=TheWattys">The Wattys</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Adventure">Adventure</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Non-Fiction">Non-Fiction</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Poetry">Poetry</a></li>
+                        </ul>
+                    </div>
                 </div>
             </li>
             <li class="NkmE9">
@@ -48,7 +270,7 @@
     </nav>
     <div class="lXfdp gMmKF">
         <div class="wDLq1">
-            <form class="VOZUu" action="" method="post" role="search" name="search">
+            <form class="VOZUu search" action="" method="post" role="search" name="search">
                 <button class="_8r2SK U-dRJ" type="submit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5999 6.49844C1.5999 3.79224 3.79371 1.59844 6.4999 1.59844C9.2061 1.59844 11.3999 3.79224 11.3999 6.49844C11.3999 9.20463 9.2061 11.3984 6.4999 11.3984C3.79371 11.3984 1.5999 9.20463 1.5999 6.49844ZM6.4999 0.398438C3.13097 0.398438 0.399902 3.1295 0.399902 6.49844C0.399902 9.86737 3.13097 12.5984 6.4999 12.5984C7.99441 12.5984 9.36338 12.061 10.4241 11.1688C10.4515 11.2618 10.5019 11.3494 10.5752 11.4227L13.0501 13.8976C13.2844 14.1319 13.6643 14.1319 13.8986 13.8976C14.133 13.6633 14.133 13.2834 13.8986 13.0491L11.4238 10.5742C11.3504 10.5008 11.2629 10.4505 11.1699 10.423C12.0623 9.36227 12.5999 7.99313 12.5999 6.49844C12.5999 3.1295 9.86884 0.398438 6.4999 0.398438Z" fill="#121212" fill-opacity="0.64"></path></svg>
                 </button>
@@ -63,6 +285,13 @@
                     <button class="DMdhq OCdPW">
                         Write<img class="S1mMa" src="assets/image/wp-chevron-down.svg" alt=""/>
                     </button>
+                    <!--write dropdown with unique ID-->
+                    <div id="write-modal" style="display: none; visibility: hidden; opacity: 0" class="MaVh4 V-8Oa M33oU" aria-labelledby="create-dropdown">
+                        <ul class="_0X2RS" aria-label="Write">
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/create-story-page.html" rel="nofollow"><img class="_5Aey9" alt="Create a new story" src="assets/image/create-story.svg">Create a new story</a></li>
+                            <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/mywork-page.html" target="_self" rel="nofollow">My Stories</a></li>
+                        </ul>
+                    </div>
                 </div>
             </li>
             <li class="oAArJ">
@@ -78,10 +307,25 @@
             <button aria-label="Profile Dropdown" class="DMdhq OCdPW">
                 <div data-testid="avatar">
                     <span class="ZzUPU dJHSN"></span>
-                    <img src="https://img.wattpad.com/useravatar/7.128.jpg" aria-hidden="true" alt="yukee07" class="avatar__Ygp0_ avatar_sm__zq5iO"/>
+                    <img style="object-fit: cover;" src="https://img.wattpad.com/useravatar/7.128.jpg" aria-hidden="true" alt="yukee07" class="avatar__Ygp0_ avatar_sm__zq5iO user-profile-pic"/>
                 </div>
                 <img class="S1mMa" src="assets/image/wp-chevron-down.svg" alt=""/>
             </button>
+            <!--profile dropdown with unique ID-->
+            <div id="profile-modal-desktop" style="display: none; visibility: hidden; opacity: 0;" class="MaVh4 xhwfO V-8Oa XouMr" aria-labelledby="profile-dropdown">
+                <ul class="_0X2RS" aria-label="Profile">
+                    <li class="fnWge"><a class="c97t- your-profile" href="https://www.wattpad.com/user/yukee07" target="_self" rel="nofollow">My Profile</a></li>
+                    <hr class="usEA6">
+                    <li class="fnWge"><a class="c97t-" href="https://www.wattpad.com/inbox" target="_self" rel="nofollow">Inbox</a></li>
+                    <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/notification-page.html" target="_self" rel="nofollow">Notifications</a></li>
+                    <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/library-page.html" target="_self" rel="nofollow">Library</a></li>
+                    <hr class="usEA6">
+                    <li class="fnWge"><button class="c97t-">Language: English</button></li>
+                    <li class="fnWge"><a class="c97t-" href="https://support.wattpad.com" target="_self" rel="nofollow">Help</a></li>
+                    <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/setting-page.html" target="_self" rel="nofollow">Settings</a></li>
+                    <li class="fnWge"><a class="c97t- logout" href="" target="_self" rel="nofollow">Log Out</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -94,8 +338,23 @@
             <a class="_7sbji" href=""><svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="var(--ds-neutral-80-solid)" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><g><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></g></svg></a>
             <div id="navbar-profile-dropdown" class="avnzx false ">
                 <button aria-label="Profile Dropdown" class="DMdhq">
-                    <img src="https://img.wattpad.com/useravatar/7.128.jpg" aria-hidden="true" alt="yukee07" class="avatar__Ygp0_ avatar_sm__zq5iO"/>
+                    <img style="object-fit: cover;" src="https://img.wattpad.com/useravatar/7.128.jpg" aria-hidden="true" alt="yukee07" class="avatar__Ygp0_ avatar_sm__zq5iO user-profile-pic"/>
                 </button>
+                <!--profile dropdown with unique ID for mobile-->
+                <div id="profile-modal-mobile" style="display: none; visibility: hidden; opacity: 0;" class="MaVh4 xhwfO V-8Oa XouMr" aria-labelledby="profile-dropdown">
+                    <ul class="_0X2RS" aria-label="Profile">
+                        <li class="fnWge"><a class="c97t- your-profile" href="https://www.wattpad.com/user/yukee07" target="_self" rel="nofollow">My Profile</a></li>
+                        <hr class="usEA6">
+                        <li class="fnWge"><a class="c97t-" href="https://www.wattpad.com/inbox" target="_self" rel="nofollow">Inbox</a></li>
+                        <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/notification-page.html" target="_self" rel="nofollow">Notifications</a></li>
+                        <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/library-page.html" target="_self" rel="nofollow">Library</a></li>
+                        <hr class="usEA6">
+                        <li class="fnWge"><button class="c97t-">Language: English</button></li>
+                        <li class="fnWge"><a class="c97t-" href="https://support.wattpad.com" target="_self" rel="nofollow">Help</a></li>
+                        <li class="fnWge"><a class="c97t-" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/setting-page.html" target="_self" rel="nofollow">Settings</a></li>
+                        <li class="fnWge"><a class="c97t- logout" href="" target="_self" rel="nofollow">Log Out</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="bsrGk">
@@ -152,8 +411,8 @@
                                         <div class="col-xs-6 account-label">
                                             <label class="profile-label">Username</label>
                                         </div>
-                                        <div class="col-xs-6 account-value">yukee07
-                                            <button class="info" id="changeUsername">change</button>
+                                        <div class="col-xs-6 account-value username">yukee07
+                                            <button type="button" class="info" id="changeUsername">change</button>
                                         </div>
                                     </div>
                                     <div>
@@ -161,7 +420,7 @@
                                             <label class="profile-label">Password</label>
                                         </div>
                                         <div class="col-xs-6 account-value">
-                                            <span>********
+                                            <span class="password">********
                                                 <button class="info" id="changePassword">change</button>
                                             </span>
                                         </div>
@@ -170,7 +429,7 @@
                                         <div class="col-xs-6 account-label">
                                             <label class="profile-label">Email</label>
                                         </div>
-                                        <div class="col-xs-6 account-value">nanayakkarayukee@gmail.com
+                                        <div class="col-xs-6 account-value email">nanayakkarayukee@gmail.com
                                             <button class="info" id="changeEmail">change</button>
                                         </div>
                                     </div>
@@ -182,7 +441,7 @@
                                             <div class="birthdate-wrapper">
                                                 <input id="birthdate" type="date" name="birthdate" max="2025-07-27" value="2002-05-02">
                                                 <span id="dob-tooltip" class="help">
-                                                    <span class="fa fa-info fa-wp-neutral-2" aria-hidden="true" style="font-size: 16px;"></span>
+                                                    <i class="fa-solid fa-circle-info"></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -195,7 +454,7 @@
                                             <input type="checkbox" name="betaEnabled" id="betaEnabled" value="false">
                                             <a class="info" href="https://support.wattpad.com/hc/en-us/articles/201708720-Becoming-a-Beta-tester" target="_blank" rel="noopener noreferrer">Learn more</a>
                                             <span id="beta-tooltip" class="help">
-                                                <span class="fa fa-info fa-wp-neutral-2" aria-hidden="true" style="font-size: 16px;"></span>
+                                                <i class="fa-solid fa-circle-info"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -207,12 +466,12 @@
                                             <a href="/settings/your-wattpad-data">HTML</a>
                                             <a href="/settings/your-wattpad-data?json=1" style="padding-left: 5px;">JSON</a>
                                             <span id="info-tooltip" class="help">
-                                                <span class="fa fa-info fa-wp-neutral-2" aria-hidden="true" style="font-size: 16px;"></span>
+                                                <i class="fa-solid fa-circle-info"></i>
                                             </span>
                                         </div>
                                     </div>
                                     <div class="submit">
-                                        <button class="button__Y70Pw primary-variant__NO4pv default-accent__Pc0Pm medium-size__CLqD3 with-padding__cVt72">
+                                        <button id="submit" class="button__Y70Pw primary-variant__NO4pv default-accent__Pc0Pm medium-size__CLqD3 with-padding__cVt72">
                                             <span class="background-overlay__mCEaX"></span>
                                             Submit
                                         </button>
@@ -221,7 +480,7 @@
                             </form>
                             <!--close account-->
                             <div class="close-account">
-                                <a href="/close-account">Close Account</a>
+                                <a href="" class="close-account-link">Close Account</a>
                             </div>
                         </div>
                     </div>
@@ -481,5 +740,10 @@
         <li class="uilPN">© 2025 Wattpad</li>
     </ul>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="assets/js/new-header-script.js"></script>
+<script src="assets/js/setting-page-script.js"></script>
 </body>
 </html>

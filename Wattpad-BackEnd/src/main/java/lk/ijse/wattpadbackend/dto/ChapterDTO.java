@@ -19,6 +19,7 @@ public class ChapterDTO {
     private String views;
     private String likes;
     private String comments;
+    private int isPublishedOrDraft;
     private long storyId;
     private String storyTitle;
     private String storyCoverImagePath;
@@ -28,6 +29,7 @@ public class ChapterDTO {
     private int isLiked;
     private List<ParagraphDTO> paragraphDTOList;
     private List<ChapterSimpleDTO> chapterSimpleDTOList;
+    private int isFromCurrentUser;
 }
 
 

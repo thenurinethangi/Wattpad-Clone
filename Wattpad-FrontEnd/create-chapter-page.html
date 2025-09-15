@@ -37,6 +37,25 @@
       100% { transform: rotate(360deg); }
     }
 
+    /*.paragraph-textarea {*/
+    /*  resize: none;       !* prevent manual drag *!*/
+    /*  overflow: hidden;   !* hide scrollbars *!*/
+    /*  min-height: 40px;   !* optional *!*/
+    /*}*/
+
+    .paragraph-textarea {
+      width: 100%;
+      border: none;
+      outline: none;
+      resize: none;          /* disable manual resize */
+      overflow: hidden;      /* no scrollbars */
+      background: transparent;
+      /*font-family: inherit;*/
+      /*font-size: inherit;*/
+      line-height: 1.6;      /* matches your text paragraphs */
+      padding: 0;
+    }
+
   </style>
 </head>
 <body style="display: none; visibility: hidden; opacity: 0;">
@@ -389,16 +408,6 @@
     collectAndPrepareContentForForm(); // Prepare all content
     document.getElementById('chapterForm').submit(); // Submit the form
   }
-
-  // Function for preview (still uses JS to open a new tab)
-  // function previewChapter() {
-  //   collectAndPrepareContentForForm();
-  //   const contentJson = document.getElementById('chapterContentJsonInput').value;
-  //   const chapterTitle = document.getElementById('chapterTitleInput').value;
-  //   // You might need a server endpoint that specifically handles preview data
-  //   // For simplicity, passing JSON as a query parameter (might exceed URL limits for large content)
-  //   window.open(`/chapters/preview?title=${encodeURIComponent(chapterTitle)}&content=${encodeURIComponent(contentJson)}`, '_blank');
-  // }
 
 
   // Auto-save functionality (still uses fetch because it's background)

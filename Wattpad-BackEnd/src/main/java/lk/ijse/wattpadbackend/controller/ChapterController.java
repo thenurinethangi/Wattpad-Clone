@@ -131,6 +131,40 @@ public class ChapterController {
         chapterService.makeChapterDeleteByChapterId(auth.getName(),chapterId,storyId);
         return new APIResponse(202,"Successfully deleted chapter id: : "+chapterId,null);
     }
+
+    @GetMapping("/paragraph/{chapterId}/{storyId}")
+    public APIResponse loadAllParagraphByChapterId(@PathVariable long chapterId, @PathVariable long storyId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        List<ParagraphDTO> paragraphDTOList = chapterService.loadAllParagraphByChapterId(auth.getName(),chapterId,storyId);
+        return new APIResponse(202,"Successfully loaded all the paragraphs of chapter id: "+chapterId,paragraphDTOList);
+    }
+
+    @GetMapping("/next/{chapterId}")
+    public APIResponse loadNextChapter(@PathVariable long chapterId){
+
+        ChapterDTO chapterDTO = chapterService.loadNextChapter(chapterId);
+        return new APIResponse(202,"Successfully loaded next chapter",chapterDTO);
+    }
+
+    @PostMapping("/comment/reply/check")
+    public APIResponse checkCurrentCommentOrReplyByCurrentUser(@RequestBody UserCommentTypeDTO userCommentTypeDTO){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean result = chapterService.checkCurrentCommentOrReplyByCurrentUser(auth.getName(),userCommentTypeDTO);
+        return new APIResponse(202,"Successfully check comment or reply by current user",result);
+    }
+
+    @DeleteMapping("/comment/reply/delete")
+    public APIResponse deleteCommentOrReply(@RequestBody UserCommentTypeDTO userCommentTypeDTO){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        chapterService.deleteCommentOrReply(auth.getName(),userCommentTypeDTO);
+        return new APIResponse(202,"Successfully delete comment or reply",null);
+    }
 }
 
 

@@ -78,6 +78,9 @@ async function loadAllProfileThatMatchToSearchedKeyWord() {
         .then(data => {
             console.log('Success:', data);
 
+            $('.stories-tab').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/search-stories-page.html?search=${search}`);
+            $('.profiles-tab').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/search-profile-page.html?search=${search}`);
+
             $('#profile-container').empty();
 
             for (let i = 0; i < data.data.length; i++) {
@@ -88,7 +91,7 @@ async function loadAllProfileThatMatchToSearchedKeyWord() {
                                             <li class="list-group-item new-item">
                                                 <div class="profile-card">
                                                     <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${user.userId}" class="profile-card-data">
-                                                        <img class="display-pic" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${user.profilePicPath}" alt="mystrie" aria-hidden="true">
+                                                        <img class="display-pic" style="object-fit: cover;" src="${user.profilePicPath}" alt="mystrie" aria-hidden="true">
                                                         <div class="card-content">
                                                             <div class="sr-only">mystrie @mystrie</div>
                                                             <div class="name-and-badges" aria-hidden="true">

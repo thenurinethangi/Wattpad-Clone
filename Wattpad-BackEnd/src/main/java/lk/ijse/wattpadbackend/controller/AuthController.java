@@ -182,6 +182,19 @@ public class AuthController {
 
         return new APIResponse(202,"Password Changed Successfully.",null);
     }
+
+    @PostMapping("/logout")
+    public APIResponse logout(HttpServletResponse response){
+
+        Cookie cookie = new Cookie("jwtToken", null);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+
+        return new APIResponse(202,"Logout Successful.",null);
+    }
 }
 
 
