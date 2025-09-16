@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wattpad Admin - Create New Admin</title>
+    <link rel="icon" type="image/ico" href="assets/image/wattpad-icon-2-removebg-preview.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/style/ad-new-ad-style.css">
+</head>
+<body>
+<div class="dashboard-container">
+    <!-- Sidebar (Same as Admin Page) -->
+    <nav class="sidebar">
+        <img class="logo" src="assets/image/wattpad-logo.svg" alt="Wattpad Logo" onclick="navigateToDashboard()">
+        <ul>
+            <li><a href="admin-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="admin-page.html"><i class="fas fa-users"></i> Manage Admins</a></li>
+            <li><a href="#"><i class="fas fa-book"></i> Manage Stories</a></li>
+            <li><a href="#"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
+            <li><a href="#"><i class="fas fa-bullhorn"></i> Announcements</a></li>
+            <li><a href="#"><i class="fas fa-tags"></i> Genres</a></li>
+            <li><a href="#"><i class="fas fa-flag"></i> Reports</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="breadcrumb">
+            <a href="admin-dashboard.html">Dashboard</a> > Create Admin
+        </div>
+        <h1 class="page-title">Admin  (New)</h1>
+
+        <div class="form-container">
+            <div class="input-row">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" placeholder="Enter full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter username" required>
+                </div>
+            </div>
+            <div class="input-row">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter email" required>
+                </div>
+                <div class="form-group">
+                    <label for="pronounce">Pronounce</label>
+                    <select id="pronounce" required>
+                        <option value="" disabled selected>Select pronouns</option>
+                        <option value="He/Him">He/Him</option>
+                        <option value="She/Her">She/Her</option>
+                        <option value="They/Them">They/Them</option>
+                        <option value="Other">Other</option>
+                        <option value="Not Prefer to Say">Not Prefer to Say</option>
+                    </select>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="cancel-btn" onclick="navigateToAdminPage()"><i class="fas fa-times"></i> Cancel</button>
+                <button class="save-btn" onclick="saveAdmin()"><i class="fas fa-save"></i> Save</button>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+    function navigateToDashboard() {
+        window.location.href = 'admin-dashboard.html';
+    }
+
+    function navigateToAdminPage() {
+        window.location.href = 'admin-page.html';
+    }
+
+    function saveAdmin() {
+        const fullName = document.getElementById('fullName').value;
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const pronounce = document.getElementById('pronounce').value;
+
+        if (fullName && username && email && pronounce) {
+            const newAdmin = {
+                fullName: fullName,
+                username: username,
+                email: email,
+                pronounce: pronounce,
+                status: 'active'
+            };
+            console.log('New Admin Created:', newAdmin); // For now, log to console; replace with API call
+            alert('Admin created successfully!'); // Temporary feedback
+            // Clear fields
+            document.getElementById('fullName').value = '';
+            document.getElementById('username').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('pronounce').value = '';
+        } else {
+            alert('Please fill in all fields.');
+        }
+    }
+</script>
+</body>
+</html>

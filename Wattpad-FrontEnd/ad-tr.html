@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wattpad Admin - Transactions</title>
+  <link rel="icon" type="image/ico" href="assets/image/wattpad-icon-2-removebg-preview.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --theme-color: #ff6122;
+      --background-color: #ffffff;
+      --text-color: #222;
+      --font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --sidebar-bg: #f8f9fa;
+      --card-bg: #ffffff;
+      --shadow: 0 6px 20px rgba(255, 97, 34, 0.1);
+      --green: #4caf50;
+      --gray: #9e9e9e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--background-color);
+      color: var(--text-color);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .dashboard-container {
+      display: flex;
+      width: 100%;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: #ffffff;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      height: 100vh;
+      position: fixed;
+      overflow-y: auto;
+    }
+
+    .sidebar .logo {
+      height: 40px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      margin-left: 15px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar ul li {
+      margin-bottom: 15px;
+    }
+
+    .sidebar ul li a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 600;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .sidebar ul li a:hover {
+      background: var(--theme-color);
+      color: #ffffff;
+    }
+
+    .sidebar ul li a i {
+      font-size: 20px;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 30px;
+      width: calc(100% - 250px);
+      background-color: #ffffff;
+    }
+
+    .breadcrumb {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .breadcrumb a {
+      color: var(--theme-color);
+      text-decoration: none;
+    }
+
+    .page-title {
+      font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 25px;
+      margin-top: 25px;
+      color: #ff6122;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 12px rgba(255, 97, 34, 0.075);
+      padding: 25px 17px;
+      border-radius: 10px;
+    }
+
+    .search-bar {
+      flex: 1;
+      margin-right: 20px;
+    }
+
+    .search-bar input {
+      font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      width: 100%;
+      padding: 12px 12px 12px 32px;
+      border: 1px solid #eeeeee;
+      border-radius: 8px;
+      font-size: 15px;
+      background-color: rgba(255, 97, 34, 0.01);
+    }
+
+    .sort-combo {
+      width: 150px;
+      margin-right: 20px;
+    }
+
+    .sort-combo select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #eeeeee;
+      font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      border-radius: 8px;
+      font-size: 15px;
+      background-color: rgba(255, 97, 34, 0.01);
+    }
+
+    .transaction-list {
+      display: flex;
+      flex-direction: column;
+      background-color: #ffffff;
+      box-shadow: 0 4px 12px rgba(255, 97, 34, 0.075);
+    }
+
+    .transaction-columns {
+      display: grid;
+      grid-template-columns: 50px 150px 100px 100px 150px 100px;
+      gap: 10px;
+      padding: 15px;
+      background: #f5f5f5;
+      border-radius: 8px 8px 0 0;
+      font-weight: 550;
+      color: #222222;
+      font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 15px;
+    }
+
+    .transaction-row {
+      display: grid;
+      grid-template-columns: 50px 150px 100px 100px 150px 100px;
+      gap: 10px;
+      padding: 15px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      transition: box-shadow 0.3s ease;
+      margin-bottom: 10px;
+    }
+
+    .transaction-row:hover {
+      box-shadow: var(--shadow);
+    }
+
+    .action-icons a {
+      margin-right: 10px;
+      color: var(--theme-color);
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .action-icons a:hover {
+      color: #e55a1f;
+    }
+
+    .pagination-container {
+      padding: 20px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 12px rgba(255, 97, 34, 0.075);
+      border-top: 1px solid #e9ecef;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pagination-info {
+      color: #6c757d;
+      font-size: 14px;
+    }
+
+    .pagination-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .pagination-btn {
+      padding: 8px 12px;
+      border: 1px solid #e9ecef;
+      background: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+
+    .pagination-btn:hover:not(:disabled) {
+      background: #ff6122;
+      color: white;
+      border-color: #ff6122;
+    }
+
+    .pagination-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .pagination-btn.active {
+      background: #ff6122;
+      color: white;
+      border-color: #ff6122;
+    }
+
+    .page-numbers {
+      display: flex;
+      gap: 5px;
+    }
+  </style>
+</head>
+<body>
+<div class="dashboard-container">
+  <!-- Sidebar (Same as Admin Page) -->
+  <nav class="sidebar">
+    <img class="logo" src="assets/image/wattpad-logo.svg" alt="Wattpad Logo" onclick="navigateToDashboard()">
+    <ul>
+      <li><a href="admin-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+      <li><a href="admin-page.html"><i class="fas fa-users"></i> Manage Admins</a></li>
+      <li><a href="#"><i class="fas fa-book"></i> Manage Stories</a></li>
+      <li><a href="#"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
+      <li><a href="#"><i class="fas fa-bullhorn"></i> Announcements</a></li>
+      <li><a href="#"><i class="fas fa-tags"></i> Genres</a></li>
+      <li><a href="#"><i class="fas fa-flag"></i> Reports</a></li>
+      <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="breadcrumb">
+      <a href="admin-dashboard.html">Dashboard</a> > Transactions
+    </div>
+    <h1 class="page-title">Transactions</h1>
+
+    <div class="controls">
+      <div class="search-bar" style="display: flex;">
+        <i class="fa-solid fa-magnifying-glass" style="position: absolute; color: lightgray; margin-left: 10px; margin-top: 15px;"></i>
+        <input type="text" id="searchInput" placeholder="Search">
+      </div>
+      <div class="sort-combo">
+        <select id="statusSort">
+          <option value="all">All</option>
+          <option value="premium">Premium Buy</option>
+          <option value="coins">Coins Buy</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="transaction-list">
+      <div class="transaction-columns">
+        <div>ID</div>
+        <div>Date Time</div>
+        <div>User ID</div>
+        <div>Amount</div>
+        <div>Reason</div>
+        <div>Action</div>
+      </div>
+      <!-- Transaction List -->
+      <div id="transactionList">
+        <!-- Loading state initially -->
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          Loading transactions...
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container">
+      <div class="pagination-info" id="paginationInfo">
+        Showing 1-10 of 156 transactions
+      </div>
+      <div class="pagination-controls">
+        <button class="pagination-btn" id="prevBtn" onclick="previousPage()">Previous</button>
+        <div class="page-numbers" id="pageNumbers">
+          <!-- Page numbers will be generated dynamically -->
+        </div>
+        <button class="pagination-btn" id="nextBtn" onclick="nextPage()">Next</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  let currentPage = 0;
+  let transactions = []; // Will store all transactions from the array
+  let filteredTransactions = []; // Will store filtered transactions
+
+  // Initialize with the sample transactions array
+  const allTransactions = [
+    { id: 'T001', dateTime: '2025-09-15 14:30', userId: 'U001', amount: 9.99, reason: 'Premium Buy' },
+    { id: 'T002', dateTime: '2025-09-15 14:45', userId: 'U002', amount: 5.00, reason: 'Coins Buy' },
+    { id: 'T003', dateTime: '2025-09-16 09:15', userId: 'U003', amount: 9.99, reason: 'Premium Buy' },
+    { id: 'T004', dateTime: '2025-09-16 10:00', userId: 'U004', amount: 3.50, reason: 'Coins Buy' },
+    { id: 'T005', dateTime: '2025-09-16 11:30', userId: 'U005', amount: 9.99, reason: 'Premium Buy' },
+    { id: 'T006', dateTime: '2025-09-16 12:15', userId: 'U006', amount: 2.00, reason: 'Coins Buy' },
+    { id: 'T007', dateTime: '2025-09-16 13:00', userId: 'U007', amount: 9.99, reason: 'Premium Buy' },
+    { id: 'T008', dateTime: '2025-09-16 13:45', userId: 'U008', amount: 5.50, reason: 'Coins Buy' },
+    { id: 'T009', dateTime: '2025-09-16 14:00', userId: 'U009', amount: 9.99, reason: 'Premium Buy' },
+    { id: 'T010', dateTime: '2025-09-16 14:20', userId: 'U010', amount: 4.00, reason: 'Coins Buy' },
+  ];
+
+  // Extend sample data to simulate more records
+  for (let i = 10; i < 156; i++) {
+    const baseTransaction = allTransactions[i % 10];
+    allTransactions.push({
+      id: `T${String(i + 1).padStart(3, '0')}`,
+      dateTime: new Date(Date.now() - (155 - i) * 3600000).toISOString().slice(0, 16).replace('T', ' '),
+      userId: `U${String(i + 1).padStart(3, '0')}`,
+      amount: (i % 2 === 0 ? 9.99 : Math.random() * 5 + 1).toFixed(2),
+      reason: i % 2 === 0 ? 'Premium Buy' : 'Coins Buy'
+    });
+  }
+
+  transactions = [...allTransactions]; // Initialize with all transactions
+  filteredTransactions = [...transactions];
+
+  function displayTransactions() {
+    const transactionList = document.querySelector('.transaction-list');
+    transactionList.innerHTML = ''; // Clear existing content
+    transactionList.appendChild(createColumns());
+
+    const startIndex = currentPage * 10;
+    const endIndex = startIndex + 10;
+    const pageTransactions = filteredTransactions.slice(startIndex, endIndex);
+
+    if (pageTransactions.length === 0) {
+      transactionList.innerHTML = '<div class="loading"><div style="font-size: 48px; margin-bottom: 15px;">📭</div>No transactions found</div>';
+    } else {
+      pageTransactions.forEach(transaction => {
+        const row = document.createElement('div');
+        row.classList.add('transaction-row');
+        row.innerHTML = `
+                    <div>${transaction.id || 'N/A'}</div>
+                    <div>${transaction.dateTime || 'N/A'}</div>
+                    <div>${transaction.userId || 'N/A'}</div>
+                    <div>$${transaction.amount || '0.00'}</div>
+                    <div>${transaction.reason || 'N/A'}</div>
+                    <div class="action-icons"><a href="#" onclick="printInvoice('${transaction.id}')" title="Print Invoice"><i class="fas fa-print"></i></a></div>
+                `;
+        transactionList.appendChild(row);
+      });
+    }
+  }
+
+  function createColumns() {
+    const columns = document.createElement('div');
+    columns.classList.add('transaction-columns');
+    columns.innerHTML = `
+            <div>ID</div>
+            <div>Date Time</div>
+            <div>User ID</div>
+            <div>Amount</div>
+            <div>Reason</div>
+            <div>Action</div>
+        `;
+    return columns;
+  }
+
+  function updatePagination() {
+    const totalPages = Math.ceil(filteredTransactions.length / 10);
+    document.getElementById('prevBtn').classList.toggle('disabled', currentPage === 0);
+    document.getElementById('nextBtn').classList.toggle('disabled', currentPage * 10 >= filteredTransactions.length);
+  }
+
+  function searchTransactions() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    filteredTransactions = transactions.filter(transaction =>
+            (transaction.id && transaction.id.toString().toLowerCase().includes(query)) ||
+            (transaction.dateTime && transaction.dateTime.toLowerCase().includes(query)) ||
+            (transaction.userId && transaction.userId.toLowerCase().includes(query)) ||
+            (transaction.amount && transaction.amount.toString().includes(query)) ||
+            (transaction.reason && transaction.reason.toLowerCase().includes(query))
+    );
+    currentPage = 0;
+    displayTransactions();
+    updatePagination();
+  }
+
+  function sortTransactions() {
+    const reason = document.getElementById('statusSort').value;
+    filteredTransactions = transactions.filter(transaction => reason === 'all' || (transaction.reason && transaction.reason === (reason === 'premium' ? 'Premium Buy' : 'Coins Buy')));
+    currentPage = 0;
+    displayTransactions();
+    updatePagination();
+  }
+
+  function navigateToDashboard() {
+    window.location.href = 'admin-dashboard.html';
+  }
+
+  function printInvoice(transactionId) {
+    alert(`Printing invoice for transaction ID: ${transactionId}`); // Replace with actual print logic
+  }
+
+  // Load first page of transactions
+  document.addEventListener('DOMContentLoaded', () => {
+    displayTransactions(); // Initial display with all transactions
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      if (!document.getElementById('nextBtn').classList.contains('disabled')) {
+        currentPage++;
+        displayTransactions();
+      }
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      if (!document.getElementById('prevBtn').classList.contains('disabled') && currentPage > 0) {
+        currentPage--;
+        displayTransactions();
+      }
+    });
+
+    document.getElementById('searchInput').addEventListener('input', searchTransactions);
+    document.getElementById('statusSort').addEventListener('change', sortTransactions);
+  });
+</script>
+</body>
+</html>

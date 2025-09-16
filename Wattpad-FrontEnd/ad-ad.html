@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wattpad Admin - Manage Admins</title>
+  <link rel="icon" type="image/ico" href="assets/image/wattpad-icon-2-removebg-preview.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/style/ad-ad-style.css">
+</head>
+<body>
+<div class="dashboard-container">
+  <!-- Sidebar (Same as Dashboard) -->
+  <nav class="sidebar">
+    <img class="logo" src="assets/image/wattpad-logo.svg" alt="Wattpad Logo" onclick="navigateToDashboard()">
+    <ul>
+      <li><a href="admin-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+      <li><a href="#"><i class="fas fa-users"></i> Manage Users</a></li>
+      <li><a href="#"><i class="fas fa-book"></i> Manage Stories</a></li>
+      <li><a href="#"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
+      <li><a href="#"><i class="fas fa-bullhorn"></i> Announcements</a></li>
+      <li><a href="#"><i class="fas fa-tags"></i> Genres</a></li>
+      <li><a href="#"><i class="fas fa-flag"></i> Reports</a></li>
+      <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="breadcrumb">
+      <a href="admin-dashboard.html">Dashboard</a> > Admin
+    </div>
+    <h1 class="page-title">Admin</h1>
+
+    <div class="controls">
+      <div class="search-bar" style="display: flex;">
+        <i class="fa-solid fa-magnifying-glass" style="position: absolute; color: lightgray; margin-left: 10px; margin-top: 15px;"></i>
+        <input type="text" id="searchInput" placeholder="Search">
+      </div>
+      <div class="sort-combo">
+        <select id="statusSort">
+          <option value="all">All</option>
+          <option value="active">Active</option>
+          <option value="deactive">Deactive</option>
+        </select>
+      </div>
+      <i class="fa-solid fa-plus" style="position: absolute; right: 187px; color: #ffffff; font-size: 12px; padding-right: 3px;"></i>
+      <button class="create-btn" onclick="navigateToCreateAdmin()">Create New Admin</button>
+    </div>
+
+    <div class="admin-list" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(255, 97, 34, 0.075);">
+      <div class="admin-columns">
+        <div>ID</div>
+        <div>Profile Pic</div>
+        <div>Full Name</div>
+        <div>Username</div>
+        <div>Email</div>
+        <div>Pronounce</div>
+        <div>Status</div>
+      </div>
+      <!-- Admin List -->
+      <div id="adminList">
+        <!-- Loading state initially -->
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          Loading administrators...
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(255, 97, 34, 0.075);">
+      <div class="pagination-info" id="paginationInfo">
+        Showing 1-10 of 156 administrators
+      </div>
+      <div class="pagination-controls">
+        <button class="pagination-btn" id="prevBtn" onclick="previousPage()">Previous</button>
+        <div class="page-numbers" id="pageNumbers">
+          <!-- Page numbers will be generated dynamically -->
+        </div>
+        <button class="pagination-btn" id="nextBtn" onclick="nextPage()">Next</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  let currentPage = 0;
+  let admins = []; // Will store all admins from the array
+  let filteredAdmins = []; // Will store filtered admins
+
+  // Initialize with the sample admins array
+  const allAdmins = [
+    { id: 'A001', profilePic: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&h=100&fit=crop&crop=face', fullName: 'Sarah Johnson', username: 'sarah_admin', email: 'sarah.johnson@wattpad.com', pronouns: 'she/her', status: 'active' },
+    { id: 'A002', profilePic: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face', fullName: 'Michael Chen', username: 'mike_admin', email: 'michael.chen@wattpad.com', pronouns: 'he/him', status: 'active' },
+    { id: 'A003', profilePic: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face', fullName: 'Emily Rodriguez', username: 'emily_admin', email: 'emily.rodriguez@wattpad.com', pronouns: 'she/her', status: 'inactive' },
+    { id: 'A004', profilePic: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face', fullName: 'David Wilson', username: 'david_admin', email: 'david.wilson@wattpad.com', pronouns: 'he/him', status: 'active' },
+    { id: 'A005', profilePic: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face', fullName: 'Lisa Thompson', username: 'lisa_admin', email: 'lisa.thompson@wattpad.com', pronouns: 'she/her', status: 'active' },
+    { id: 'A006', profilePic: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face', fullName: 'James Anderson', username: 'james_admin', email: 'james.anderson@wattpad.com', pronouns: 'he/him', status: 'inactive' },
+    { id: 'A007', profilePic: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=100&h=100&fit=crop&crop=face', fullName: 'Maria Garcia', username: 'maria_admin', email: 'maria.garcia@wattpad.com', pronouns: 'she/her', status: 'active' },
+    { id: 'A008', profilePic: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=100&h=100&fit=crop&crop=face', fullName: 'Robert Brown', username: 'robert_admin', email: 'robert.brown@wattpad.com', pronouns: 'he/him', status: 'active' },
+    { id: 'A009', profilePic: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&h=100&fit=crop&crop=face', fullName: 'Jennifer Lee', username: 'jennifer_admin', email: 'jennifer.lee@wattpad.com', pronouns: 'she/her', status: 'active' },
+    { id: 'A010', profilePic: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=100&h=100&fit=crop&crop=face', fullName: 'Christopher Davis', username: 'chris_admin', email: 'christopher.davis@wattpad.com', pronouns: 'he/him', status: 'inactive' },
+    // ... (extend as needed, but using the first 10 for initial load)
+  ];
+
+  // Extend sample data to simulate more records (optional, based on your earlier code)
+  for (let i = 10; i < 156; i++) {
+    const baseAdmin = allAdmins[i % 10];
+    allAdmins.push({
+      id: `A${String(i + 1).padStart(3, '0')}`,
+      profilePic: baseAdmin.profilePic,
+      fullName: `${baseAdmin.fullName} ${i > 9 ? Math.floor(i / 10) : ''}`,
+      username: `${baseAdmin.username}_${i + 1}`,
+      email: `admin${i + 1}@wattpad.com`,
+      pronouns: baseAdmin.pronouns,
+      status: i % 2 === 0 ? 'active' : 'inactive'
+    });
+  }
+
+  admins = [...allAdmins]; // Initialize with all admins
+  filteredAdmins = [...admins];
+
+  function displayAdmins() {
+    const adminList = document.querySelector('.admin-list');
+    adminList.innerHTML = ''; // Clear existing content
+    adminList.appendChild(createColumns());
+
+    const startIndex = currentPage * 10;
+    const endIndex = startIndex + 10;
+    const pageAdmins = filteredAdmins.slice(startIndex, endIndex);
+
+    if (pageAdmins.length === 0) {
+      adminList.innerHTML = '<div class="loading"><div style="font-size: 48px; margin-bottom: 15px;">📭</div>No administrators found</div>';
+    } else {
+      pageAdmins.forEach(admin => {
+        const row = document.createElement('div');
+        row.classList.add('admin-row');
+        row.innerHTML = `
+                <div>${admin.id || 'N/A'}</div>
+                <div class="admin-profile"><img src="${admin.profilePic || 'default-profile.jpg'}" alt="${admin.fullName || 'Admin'}"></div>
+                <div>${admin.fullName || 'N/A'}</div>
+                <div>${admin.username || 'N/A'}</div>
+                <div>${admin.email || 'N/A'}</div>
+                <div>${admin.pronouns || 'N/A'}</div>
+                <div class="${admin.status === 'active' ? 'status-active' : 'status-deactive'}">${admin.status || 'N/A'}</div>
+            `;
+        adminList.appendChild(row);
+      });
+    }
+  }
+
+  function createColumns() {
+    const columns = document.createElement('div');
+    columns.classList.add('admin-columns');
+    columns.innerHTML = `
+        <div>ID</div>
+        <div>Profile Pic</div>
+        <div>Full Name</div>
+        <div>Username</div>
+        <div>Email</div>
+        <div>Pronounce</div>
+        <div>Status</div>
+    `;
+    return columns;
+  }
+
+  function updatePagination() {
+    const totalPages = Math.ceil(filteredAdmins.length / 10);
+    document.getElementById('prevBtn').classList.toggle('disabled', currentPage === 0);
+    document.getElementById('nextBtn').classList.toggle('disabled', currentPage * 10 >= filteredAdmins.length);
+  }
+
+  function searchAdmins() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    filteredAdmins = admins.filter(admin =>
+            (admin.id && admin.id.toString().toLowerCase().includes(query)) ||
+            (admin.fullName && admin.fullName.toLowerCase().includes(query)) ||
+            (admin.username && admin.username.toLowerCase().includes(query)) ||
+            (admin.email && admin.email.toLowerCase().includes(query)) ||
+            (admin.pronouns && admin.pronouns.toLowerCase().includes(query)) ||
+            (admin.status && admin.status.toLowerCase().includes(query))
+    );
+    currentPage = 0;
+    displayAdmins();
+    updatePagination();
+  }
+
+  function sortAdmins() {
+    const status = document.getElementById('statusSort').value;
+    filteredAdmins = admins.filter(admin => status === 'all' || (admin.status && admin.status === status));
+    currentPage = 0;
+    displayAdmins();
+    updatePagination();
+  }
+
+  function navigateToCreateAdmin() {
+    window.location.href = 'create-admin.html';
+  }
+
+  function navigateToDashboard() {
+    window.location.href = 'admin-dashboard.html';
+  }
+
+  // Load first page of admins
+  document.addEventListener('DOMContentLoaded', () => {
+    displayAdmins(); // Initial display with all admins
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      if (!document.getElementById('nextBtn').classList.contains('disabled')) {
+        currentPage++;
+        displayAdmins();
+      }
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      if (!document.getElementById('prevBtn').classList.contains('disabled') && currentPage > 0) {
+        currentPage--;
+        displayAdmins();
+      }
+    });
+
+    document.getElementById('searchInput').addEventListener('input', searchAdmins);
+    document.getElementById('statusSort').addEventListener('change', sortAdmins);
+  });
+</script>
+</body>
+</html>

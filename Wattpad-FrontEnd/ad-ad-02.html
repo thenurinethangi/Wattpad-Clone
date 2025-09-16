@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Management - Wattpad</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/style/ad-ad-02-style.css">
+</head>
+<body>
+<div class="container">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="logo">
+            <h1>
+                <div class="logo-icon">W</div>
+                WATTPAD
+            </h1>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <div class="nav-icon">📊</div>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <div class="nav-icon">📝</div>
+                    <span>Content</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <div class="nav-icon">👥</div>
+                    <span>Customers</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <div class="nav-icon">📦</div>
+                    <span>Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <div class="nav-icon">🔄</div>
+                    <span>Clean Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <div class="nav-icon">📋</div>
+                    <span>Graphic Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <div class="nav-icon">📊</div>
+                    <span>Data Room</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <div class="nav-icon">📄</div>
+                    <span>Check For Content</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <div class="nav-icon">🚚</div>
+                    <span>Shipping</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <div class="nav-icon">📦</div>
+                    <span>Products</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link active">
+                    <div class="nav-icon">👤</div>
+                    <span>Admin</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="#">Dashboard</a> > Admin
+        </div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Admin</h1>
+        </div>
+
+        <!-- Controls Section -->
+        <div class="controls-section">
+            <div class="controls-top">
+                <button class="create-btn" onclick="navigateToCreateAdmin()">
+                    <span>+</span>
+                    Create New Admin
+                </button>
+            </div>
+
+            <div class="filters-row">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search by ID, name, username, email..." id="searchInput">
+                    <div class="search-icon">🔍</div>
+                </div>
+                <select class="status-filter" id="statusFilter">
+                    <option value="all">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Admin List Container -->
+        <div class="admin-list-container">
+            <!-- Table Header -->
+            <div class="table-header">
+                <div>ID</div>
+                <div>Profile</div>
+                <div>Full Name</div>
+                <div>Username</div>
+                <div>Email</div>
+                <div>Pronouns</div>
+                <div>Status</div>
+            </div>
+
+            <!-- Admin List -->
+            <div id="adminList">
+                <!-- Loading state initially -->
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    Loading administrators...
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-container">
+                <div class="pagination-info" id="paginationInfo">
+                    Showing 1-10 of 156 administrators
+                </div>
+                <div class="pagination-controls">
+                    <button class="pagination-btn" id="prevBtn" onclick="previousPage()">Previous</button>
+                    <div class="page-numbers" id="pageNumbers">
+                        <!-- Page numbers will be generated dynamically -->
+                    </div>
+                    <button class="pagination-btn" id="nextBtn" onclick="nextPage()">Next</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    // Sample admin data - replace with actual API calls
+    const sampleAdmins = [
+        {
+            id: 'A001',
+            profilePic: 'https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=100&h=100&fit=crop&crop=face',
+            fullName: 'Sarah Johnson',
+            username: 'sarah_admin',
+            email: 'sarah.johnson@wattpad.com',
+            pronouns: 'she/her',
+            status: 'active'
+        },
+        {
+            id: 'A002',
+            profilePic: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
+            fullName: 'Michael Chen',
+            username: 'mike_admin',
+            email: 'michael.chen@wattpad.com',
+            pronouns: 'he/him',
+            status: 'active'
+        },
+        {
+            id: 'A003',
+            profilePic: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face',
+            fullName: 'Emily Rodriguez',
+            username: 'emily_admin',
+            email: 'emily.rodriguez@wattpad.com',
+            pronouns: 'she/her',
+            status: 'inactive'
+        },
+        {
+            id: 'A004',
+            profilePic: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
+            fullName: 'David Wilson',
+            username: 'david_admin',
+            email: 'david.wilson@wattpad.com',
+            pronouns: 'he/him',
+            status: 'active'
+        },
+        {
+            id: 'A005',
+            profilePic: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face',
+            fullName: 'Lisa Thompson',
+            username: 'lisa_admin',
+            email: 'lisa.thompson@wattpad.com',
+            pronouns: 'she/her',
+            status: 'active'
+        },
+        {
+            id: 'A006',
+            profilePic: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face',
+            fullName: 'James Anderson',
+            username: 'james_admin',
+            email: 'james.anderson@wattpad.com',
+            pronouns: 'he/him',
+            status: 'inactive'
+        },
+        {
+            id: 'A007',
+            profilePic: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=100&h=100&fit=crop&crop=face',
+            fullName: 'Maria Garcia',
+            username: 'maria_admin',
+            email: 'maria.garcia@wattpad.com',
+            pronouns: 'she/her',
+            status: 'active'
+        },
+        {
+            id: 'A008',
+            profilePic: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=100&h=100&fit=crop&crop=face',
+            fullName: 'Robert Brown',
+            username: 'robert_admin',
+            email: 'robert.brown@wattpad.com',
+            pronouns: 'he/him',
+            status: 'active'
+        },
+        {
+            id: 'A009',
+            profilePic: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&h=100&fit=crop&crop=face',
+            fullName: 'Jennifer Lee',
+            username: 'jennifer_admin',
+            email: 'jennifer.lee@wattpad.com',
+            pronouns: 'she/her',
+            status: 'active'
+        },
+        {
+            id: 'A010',
+            profilePic: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=100&h=100&fit=crop&crop=face',
+            fullName: 'Christopher Davis',
+            username: 'chris_admin',
+            email: 'christopher.davis@wattpad.com',
+            pronouns: 'he/him',
+            status: 'inactive'
+        }
+    ];
+
+    // Extend sample data to simulate more records
+    const allAdmins = [];
+    for (let i = 0; i < 156; i++) {
+        const baseAdmin = sampleAdmins[i % sampleAdmins.length];
+        allAdmins.push({
+            ...baseAdmin,
+            id: `A${String(i + 1).padStart(3, '0')}`,
+            fullName: `${baseAdmin.fullName} ${i > 9 ? Math.floor(i/10) : ''}`,
+            username: `${baseAdmin.username}_${i + 1}`,
+            email: `admin${i + 1}@wattpad.com`
+        });
+    }
+
+    // Pagination state
+    let currentPage = 1;
+    const itemsPerPage = 10;
+    let filteredAdmins = [...allAdmins];
+
+    // Initialize the page
+    function initializePage() {
+        loadAdmins();
+        setupEventListeners();
+    }
+
+    // Setup event listeners
+    function setupEventListeners() {
+        document.getElementById('searchInput').addEventListener('input', handleSearch);
+        document.getElementById('statusFilter').addEventListener('change', handleStatusFilter);
+    }
+
+    // Load and display admins
+    function loadAdmins() {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const adminsToShow = filteredAdmins.slice(startIndex, endIndex);
+
+        const adminListContainer = document.getElementById('adminList');
+
+        if (adminsToShow.length === 0) {
+            adminListContainer.innerHTML = `
+                    <div class="loading">
+                        <div style="font-size: 48px; margin-bottom: 15px;">📭</div>
+                        No administrators found
+                    </div>
+                `;
+        } else {
+            adminListContainer.innerHTML = adminsToShow.map(admin => `
+                    <div class="admin-row">
+                        <div class="admin-id">${admin.id}</div>
+                        <div>
+                            <img src="${admin.profilePic}" alt="${admin.fullName}" class="profile-pic">
+                        </div>
+                        <div>
+                            <div class="admin-name">${admin.fullName}</div>
+                            <div class="admin-username">@${admin.username}</div>
+                        </div>
+                        <div class="admin-username">@${admin.username}</div>
+                        <div class="admin-email">${admin.email}</div>
+                        <div class="admin-pronouns">${admin.pronouns}</div>
+                        <div>
+                            <span class="status-badge ${admin.status === 'active' ? 'status-active' : 'status-inactive'}">
+                                ${admin.status.charAt(0).toUpperCase() + admin.status.slice(1)}
+                            </span>
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        updatePagination();
+    }
+
+    // Handle search
+    function handleSearch() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const statusFilter = document.getElementById('statusFilter').value;
+
+        filteredAdmins = allAdmins.filter(admin => {
+            const matchesSearch =
+                admin.id.toLowerCase().includes(searchTerm) ||
+                admin.fullName.toLowerCase().includes(searchTerm) ||
+                admin.username.toLowerCase().includes(searchTerm) ||
+                admin.email.toLowerCase().includes(searchTerm) ||
+                admin.pronouns.toLowerCase().includes(searchTerm);
+
+            const matchesStatus = statusFilter === 'all' || admin.status === statusFilter;
+
+            return matchesSearch && matchesStatus;
+        });
+
+        currentPage = 1;
+        loadAdmins();
+    }
+
+    // Handle status filter
+    function handleStatusFilter() {
+        handleSearch(); // Reuse search logic
+    }
+
+    // Update pagination
+    function updatePagination() {
+        const totalPages = Math.ceil(filteredAdmins.length / itemsPerPage);
+        const startIndex = (currentPage - 1) * itemsPerPage + 1;
+        const endIndex = Math.min(currentPage * itemsPerPage, filteredAdmins.length);
+
+        // Update pagination info
+        document.getElementById('paginationInfo').textContent =
+            `Showing ${startIndex}-${endIndex} of ${filteredAdmins.length} administrators`;
+
+        // Update pagination controls
+        document.getElementById('prevBtn').disabled = currentPage === 1;
+        document.getElementById('nextBtn').disabled = currentPage === totalPages;
+
+        // Generate page numbers
+        const pageNumbersContainer = document.getElementById('pageNumbers');
+        const pageNumbers = [];
+
+        // Always show first page
+        if (totalPages > 0) pageNumbers.push(1);
+
+        // Show pages around current page
+        for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+            if (!pageNumbers.includes(i)) {
+                pageNumbers.push(i);
+            }
+        }
+
+        // Always show last page
+        if (totalPages > 1 && !pageNumbers.includes(totalPages)) {
+            pageNumbers.push(totalPages);
+        }
+
+        pageNumbersContainer.innerHTML = pageNumbers.map(pageNum => `
+                <button class="pagination-btn ${pageNum === currentPage ? 'active' : ''}"
+                        onclick="goToPage(${pageNum})">${pageNum}</button>
+            `).join('');
+    }
+
+    // Navigation functions
+    function previousPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            loadAdmins();
+        }
+    }
+
+    function nextPage() {
+        const totalPages = Math.ceil(filteredAdmins.length / itemsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            loadAdmins();
+        }
+    }
+
+    function goToPage(page) {
+        currentPage = page;
+        loadAdmins();
+    }
+
+    // Navigate to create admin page
+    function navigateToCreateAdmin() {
+        // In a real application, this would navigate to the create admin page
+        alert('Navigate to Create New Admin page');
+    }
+
+    // Initialize the page when DOM is loaded
+    document.addEventListener('DOMContentLoaded', initializePage);
+</script>
+</body>
+</html>
