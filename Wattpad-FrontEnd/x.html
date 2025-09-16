@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wattpad Admin - Manage Stories</title>
+    <link rel="icon" type="image/ico" href="assets/image/wattpad-icon-2-removebg-preview.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --theme-color: #ff6122;
+            --background-color: #ffffff;
+            --text-color: #222;
+            --font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            --sidebar-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 6px 20px rgba(255, 97, 34, 0.1);
+            --green: #4caf50;
+            --gray: #9e9e9e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            display: flex;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--sidebar-bg);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+        }
+
+        .sidebar .logo {
+            height: 50px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar ul li a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            background: var(--theme-color);
+            color: #ffffff;
+        }
+
+        .sidebar ul li a i {
+            font-size: 20px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+            width: calc(100% - 250px);
+        }
+
+        .breadcrumb {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .breadcrumb a {
+            color: var(--theme-color);
+            text-decoration: none;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--theme-color);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(255, 97, 34, 0.075);
+            padding: 25px 17px;
+            border-radius: 10px;
+        }
+
+        .add-story {
+            flex: 1;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .add-story input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px 0 0 8px;
+            font-size: 16px;
+            margin-right: -1px;
+        }
+
+        .add-story button {
+            background-color: var(--theme-color);
+            color: #ffffff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .add-story button:hover {
+            background-color: #e55a1f;
+        }
+
+        .search-bar {
+            flex: 1;
+            margin-right: 20px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 12px 12px 32px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: rgba(255, 97, 34, 0.01);
+        }
+
+        .search-bar i {
+            position: absolute;
+            color: lightgray;
+            margin-left: 10px;
+            margin-top: 15px;
+        }
+
+        .sort-combo {
+            width: 150px;
+            margin-right: 20px;
+        }
+
+        .sort-combo select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: rgba(255, 97, 34, 0.01);
+        }
+
+        .story-list {
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(255, 97, 34, 0.075);
+        }
+
+        .story-columns {
+            display: grid;
+            grid-template-columns: 50px 200px 150px 150px 150px 100px;
+            gap: 10px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px 8px 0 0;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 1px solid #eee;
+        }
+
+        .story-row {
+            display: grid;
+            grid-template-columns: 50px 200px 150px 150px 150px 100px;
+            gap: 10px;
+            padding: 15px;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .story-row:hover {
+            box-shadow: var(--shadow);
+        }
+
+        .status-published {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .status-draft {
+            color: var(--gray);
+            font-weight: 600;
+        }
+
+        .action-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .action-icons a {
+            color: #ff6122;
+            text-decoration: none;
+            font-size: 18px;
+            margin-right: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .action-icons a:hover {
+            color: #e55a1f;
+        }
+
+        .pagination {
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(255, 97, 34, 0.075);
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .pagination-info {
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .pagination-btn {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: var(--theme-color);
+            color: white;
+            border-color: var(--theme-color);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+    <!-- Sidebar (Same as Admin Page) -->
+    <nav class="sidebar">
+        <img class="logo" src="assets/image/wattpad-logo.svg" alt="Wattpad Logo" onclick="navigateToDashboard()">
+        <ul>
+            <li><a href="admin-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="admin-page.html"><i class="fas fa-users"></i> Manage Admins</a></li>
+            <li><a href="#"><i class="fas fa-book"></i> Manage Stories</a></li>
+            <li><a href="#"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
+            <li><a href="#"><i class="fas fa-bullhorn"></i> Announcements</a></li>
+            <li><a href="genres-page.html"><i class="fas fa-tags"></i> Genres</a></li>
+            <li><a href="#"><i class="fas fa-flag"></i> Reports</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="breadcrumb">
+            <a href="admin-dashboard.html">Dashboard</a> > Manage Stories
+        </div>
+        <h1 class="page-title">Manage Stories</h1>
+
+        <div class="controls">
+            <div class="add-story">
+                <input type="text" id="newStoryInput" placeholder="Enter story title">
+                <button onclick="addNewStory()">Add</button>
+            </div>
+            <div class="search-bar" style="display: flex;">
+                <i class="fa-solid fa-magnifying-glass" style="position: absolute; color: lightgray; margin-left: 10px; margin-top: 15px;"></i>
+                <input type="text" id="searchInput" placeholder="Search">
+            </div>
+            <div class="sort-combo">
+                <select id="statusSort">
+                    <option value="all">All</option>
+                    <option value="published">Published</option>
+                    <option value="draft">Draft</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="story-list">
+            <div class="story-columns">
+                <div>ID</div>
+                <div>Title</div>
+                <div>Author</div>
+                <div>Genre</div>
+                <div>Status</div>
+                <div>Action</div>
+            </div>
+            <!-- Story List -->
+            <div id="storyList">
+                <!-- Loading state initially -->
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    Loading stories...
+                </div>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <div class="pagination-info" id="paginationInfo">
+                Showing 1-10 of 25 stories
+            </div>
+            <div class="pagination-controls">
+                <button class="pagination-btn" id="prevBtn" onclick="previousPage()">Previous</button>
+                <div class="page-numbers" id="pageNumbers">
+                    <!-- Page numbers will be generated dynamically -->
+                </div>
+                <button class="pagination-btn" id="nextBtn" onclick="nextPage()">Next</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    let currentPage = 0;
+    let stories = []; // Will store all stories
+    let filteredStories = []; // Will store filtered stories
+
+    // Sample stories data
+    const allStories = [
+        { id: 'S001', title: 'Love in the Shadows', author: 'Sarah Johnson', genre: 'Romance', status: 'published' },
+        { id: 'S002', title: 'Dragon Realm', author: 'Michael Chen', genre: 'Fantasy', status: 'published' },
+        { id: 'S003', title: 'Beyond the Stars', author: 'Emily Rodriguez', genre: 'Science Fiction', status: 'draft' },
+        { id: 'S004', title: 'The Silent Clue', author: 'David Wilson', genre: 'Mystery', status: 'published' },
+        { id: 'S005', title: 'Chasing Shadows', author: 'Lisa Thompson', genre: 'Thriller', status: 'draft' },
+        { id: 'S006', title: 'Haunted Nights', author: 'James Anderson', genre: 'Horror', status: 'published' },
+        { id: 'S007', title: 'Jungle Quest', author: 'Maria Garcia', genre: 'Adventure', status: 'draft' },
+        { id: 'S008', title: 'Victorian Secrets', author: 'Robert Brown', genre: 'Historical', status: 'published' },
+        { id: 'S009', title: 'Whispers of Love', author: 'Jennifer Lee', genre: 'Romance', status: 'draft' },
+        { id: 'S010', title: 'City of Dreams', author: 'Christopher Davis', genre: 'Fantasy', status: 'published' },
+        { id: 'S011', title: 'The Last Mission', author: 'Anna Smith', genre: 'Action', status: 'published' },
+        { id: 'S012', title: 'Tears of Joy', author: 'Tom Hardy', genre: 'Drama', status: 'draft' },
+        { id: 'S013', title: 'Laugh Out Loud', author: 'Emma Watson', genre: 'Comedy', status: 'published' },
+        { id: 'S014', title: 'Dark Alley', author: 'John Doe', genre: 'Crime', status: 'draft' },
+        { id: 'S015', title: 'My Life Story', author: 'Jane Austen', genre: 'Biography', status: 'published' },
+        { id: 'S016', title: 'Mindset Magic', author: 'Mark Twain', genre: 'Self-Help', status: 'draft' },
+        { id: 'S017', title: 'Wanderlust', author: 'Lucy Stone', genre: 'Travel', status: 'published' },
+        { id: 'S018', title: 'Chef’s Delight', author: 'Chef Paul', genre: 'Cooking', status: 'draft' },
+        { id: 'S019', title: 'Canvas Life', author: 'Artist Kim', genre: 'Art', status: 'published' },
+        { id: 'S020', title: 'Melody of Life', author: 'Musician Jay', genre: 'Music', status: 'draft' },
+        { id: 'S021', title: 'Silent Echoes', author: 'Silent Joe', genre: 'Poetry', status: 'published' },
+        { id: 'S022', title: 'Future Wars', author: 'Sci-Fi Sam', genre: 'Science Fiction', status: 'draft' },
+        { id: 'S023', title: 'Golden Age', author: 'History Helen', genre: 'Historical', status: 'published' },
+        { id: 'S024', title: 'Dark Secrets', author: 'Mystery Mike', genre: 'Mystery', status: 'draft' },
+        { id: 'S025', title: 'Epic Journey', author: 'Adventure Alex', genre: 'Adventure', status: 'published' }
+    ];
+
+    stories = [...allStories]; // Initialize with all stories
+    filteredStories = [...stories];
+
+    function displayStories() {
+        const storyList = document.getElementById('storyList');
+        storyList.innerHTML = ''; // Clear existing content
+        storyList.appendChild(createColumns());
+
+        const startIndex = currentPage * 10;
+        const endIndex = startIndex + 10;
+        const pageStories = filteredStories.slice(startIndex, endIndex);
+
+        if (pageStories.length === 0) {
+            storyList.innerHTML = '<div class="loading"><div style="font-size: 48px; margin-bottom: 15px;">📭</div>No stories found</div>';
+        } else {
+            pageStories.forEach(story => {
+                const row = document.createElement('div');
+                row.classList.add('story-row');
+                row.innerHTML = `
+                        <div>${story.id}</div>
+                        <div>${story.title}</div>
+                        <div>${story.author}</div>
+                        <div>${story.genre}</div>
+                        <div class="${story.status === 'published' ? 'status-published' : 'status-draft'}">${story.status}</div>
+                        <div class="action-icons">
+                            <a href="#" onclick="editStory('${story.id}')" title="Edit"><i class="fas fa-pen" style="color: #ff6122; margin-right: 10px;"></i></a>
+                            <a href="#" onclick="deleteStory('${story.id}')" title="Delete"><i class="fas fa-trash-can" style="color: #ff6122;"></i></a>
+                        </div>
+                    `;
+                storyList.appendChild(row);
+            });
+        }
+    }
+
+    function createColumns() {
+        const columns = document.createElement('div');
+        columns.classList.add('story-columns');
+        columns.innerHTML = `
+                <div>ID</div>
+                <div>Title</div>
+                <div>Author</div>
+                <div>Genre</div>
+                <div>Status</div>
+                <div>Action</div>
+            `;
+        return columns;
+    }
+
+    function updatePagination() {
+        const totalPages = Math.ceil(filteredStories.length / 10);
+        const startIndex = currentPage * 10 + 1;
+        const endIndex = Math.min(startIndex + 9, filteredStories.length);
+        document.getElementById('paginationInfo').textContent = `Showing ${startIndex}-${endIndex} of ${filteredStories.length} stories`;
+        document.getElementById('prevBtn').classList.toggle('disabled', currentPage === 0);
+        document.getElementById('nextBtn').classList.toggle('disabled', currentPage * 10 >= filteredStories.length);
+    }
+
+    function searchStories() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        filteredStories = stories.filter(story =>
+            story.id.toLowerCase().includes(query) ||
+            story.title.toLowerCase().includes(query) ||
+            story.author.toLowerCase().includes(query) ||
+            story.genre.toLowerCase().includes(query) ||
+            story.status.toLowerCase().includes(query)
+        );
+        currentPage = 0;
+        displayStories();
+        updatePagination();
+    }
+
+    function sortStories() {
+        const status = document.getElementById('statusSort').value;
+        filteredStories = stories.filter(story => status === 'all' || story.status === status);
+        currentPage = 0;
+        displayStories();
+        updatePagination();
+    }
+
+    function addNewStory() {
+        const storyTitle = document.getElementById('newStoryInput').value.trim();
+        if (storyTitle && !stories.some(s => s.title.toLowerCase() === storyTitle.toLowerCase())) {
+            const newStory = {
+                id: `S${String(stories.length + 1).padStart(3, '0')}`,
+                title: storyTitle,
+                author: 'New Author',
+                genre: 'Unassigned',
+                status: 'draft'
+            };
+            stories.push(newStory);
+            filteredStories = [...stories];
+            displayStories();
+            updatePagination();
+            document.getElementById('newStoryInput').value = ''; // Clear input
+            alert('New story added!');
+        } else if (stories.some(s => s.title.toLowerCase() === storyTitle.toLowerCase())) {
+            alert('Story title already exists!');
+        } else {
+            alert('Please enter a story title.');
+        }
+    }
+
+    function editStory(storyId) {
+        alert(`Edit story with ID: ${storyId}`); // Replace with actual edit logic
+    }
+
+    function deleteStory(storyId) {
+        if (confirm(`Are you sure you want to delete story with ID: ${storyId}?`)) {
+            stories = stories.filter(s => s.id !== storyId);
+            filteredStories = [...stories];
+            displayStories();
+            updatePagination();
+            alert('Story deleted!');
+        }
+    }
+
+    function navigateToDashboard() {
+        window.location.href = 'admin-dashboard.html';
+    }
+
+    function previousPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            displayStories();
+            updatePagination();
+        }
+    }
+
+    function nextPage() {
+        if (currentPage * 10 < filteredStories.length) {
+            currentPage++;
+            displayStories();
+            updatePagination();
+        }
+    }
+
+    // Initial display
+    document.addEventListener('DOMContentLoaded', () => {
+        displayStories();
+        updatePagination();
+
+        document.getElementById('searchInput').addEventListener('input', searchStories);
+        document.getElementById('statusSort').addEventListener('change', sortStories);
+        document.getElementById('prevBtn').addEventListener('click', previousPage);
+        document.getElementById('nextBtn').addEventListener('click', nextPage);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wattpad Admin - Announcements</title>
+    <link rel="icon" type="image/ico" href="assets/image/wattpad-icon-2-removebg-preview.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/style/ad-anounce-style.css">
+</head>
+<body>
+<div class="dashboard-container">
+    <!-- Sidebar (Same as Admin Page) -->
+    <nav class="sidebar">
+        <img class="logo" src="assets/image/wattpad-logo.svg" alt="Wattpad Logo" onclick="navigateToDashboard()">
+        <ul>
+            <li><a href="admin-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="admin-page.html"><i class="fas fa-users"></i> Manage Admins</a></li>
+            <li><a href="manage-stories.html"><i class="fas fa-book"></i> Manage Stories</a></li>
+            <li><a href="#"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
+            <li><a href="#"><i class="fas fa-bullhorn"></i> Announcements</a></li>
+            <li><a href="genres-page.html"><i class="fas fa-tags"></i> Genres</a></li>
+            <li><a href="#"><i class="fas fa-flag"></i> Reports</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Modal -->
+        <div id="announcementModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Announcement (New)</h2>
+                <input type="text" id="modalTitle" placeholder="Title" required>
+                <textarea id="modalDescription" placeholder="Description" required></textarea>
+                <select id="modalUserType" onchange="toggleUserId()">
+                    <option value="all">All Users</option>
+                    <option value="verified">Verified Users</option>
+                    <option value="specific">Specific User</option>
+                </select>
+                <input type="text" id="modalUserId" placeholder="User Id" disabled>
+                <button id="sendBtn" onclick="sendAnnouncement()">Send</button>
+            </div>
+        </div>
+
+        <div class="breadcrumb">
+            <a href="admin-dashboard.html">Dashboard</a> > Announcements
+        </div>
+        <h1 class="page-title">Announcements</h1>
+
+        <div class="controls">
+            <input type="date" class="date-input" id="dateFilter" onchange="filterAnnouncements()">
+            <select class="user-type-select" id="userTypeFilter" onchange="filterAnnouncements()">
+                <option value="all">All Users</option>
+                <option value="verified">Verified Users</option>
+                <option value="specific">Specific User</option>
+            </select>
+            <input style="width: 250px;" type="text" class="user-id-input" id="userIdInput" placeholder="Enter User ID" onkeyup="filterAnnouncements()" disabled>
+            <button id="createAnnouncementBtn" class="create-btn"><i  style="font-size: 13px; color: #222222; margin-right: 5px;" class="fa-solid fa-plus"></i>New</button>
+        </div>
+
+        <div class="announcement-container" id="announcementContainer">
+            <!-- Announcements will be loaded here -->
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                Loading announcements...
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-container">
+            <div class="pagination-info" id="paginationInfo">
+                Showing 1-10 of 156 transactions
+            </div>
+            <div class="pagination-controls">
+                <button class="pagination-btn" id="prevBtn" onclick="previousPage()">Previous</button>
+                <div class="page-numbers" id="pageNumbers">
+                    <!-- Page numbers will be generated dynamically -->
+                </div>
+                <button class="pagination-btn" id="nextBtn" onclick="nextPage()">Next</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    let currentPage = 0;
+    let announcements = []; // Will store all announcements
+    let filteredAnnouncements = []; // Will store filtered announcements
+
+    // Sample announcements data
+    const allAnnouncements = [
+        { id: 'A001', title: 'Explore our Coin Shop!', description: 'Earn bonus Coins by completing offers or watching videos!', date: '2025-09-13 03:30', sentTo: 'all' },
+        { id: 'A002', title: 'Looking for your first read?', description: 'Check out our curated fan favorites!', date: '2025-09-09 04:32', sentTo: 'all' },
+        { id: 'A003', title: 'Complete our Checklist!', description: 'Finish your first month tasks on Wattpad!', date: '2025-09-07 04:33', sentTo: 'all' },
+        { id: 'A004', title: "Don't know where to start?", description: 'Explore community happenings and Editor\'s picks!', date: '2025-09-06 05:15', sentTo: 'all' },
+        { id: 'A005', title: 'New Feature Alert!', description: 'Try our enhanced reading mode!', date: '2025-09-05 14:20', sentTo: 'verified' },
+        { id: 'A006', title: 'Weekly Highlights', description: 'Top stories this week you should read!', date: '2025-09-04 09:10', sentTo: 'all' },
+        { id: 'A007', title: 'User Feedback Needed', description: 'Share your thoughts on new updates!', date: '2025-09-03 16:45', sentTo: 'verified' },
+        { id: 'A008', title: 'Special Event Invite', description: 'Join our live author Q&A!', date: '2025-09-02 11:30', sentTo: 'specific', userId: 'U123' },
+        { id: 'A009', title: 'Story Contest Open!', description: 'Submit your best work for a chance to win!', date: '2025-09-01 08:00', sentTo: 'all' },
+        { id: 'A010', title: 'Maintenance Notice', description: 'Scheduled downtime this weekend.', date: '2025-08-31 19:00', sentTo: 'all' },
+        { id: 'A011', title: 'New Genre Added', description: 'Check out the new Adventure category!', date: '2025-08-30 13:25', sentTo: 'verified' },
+        { id: 'A012', title: 'Premium Offer', description: 'Get 50% off your first month!', date: '2025-08-29 10:15', sentTo: 'specific', userId: 'U456' }
+    ];
+
+    announcements = [...allAnnouncements];
+    filteredAnnouncements = [...announcements];
+
+    function displayAnnouncements() {
+        const announcementContainer = document.getElementById('announcementContainer');
+        announcementContainer.innerHTML = ''; // Clear existing content
+
+        const startIndex = currentPage * 10;
+        const endIndex = startIndex + 10;
+        const pageAnnouncements = filteredAnnouncements.slice(startIndex, endIndex);
+
+        if (pageAnnouncements.length === 0) {
+            announcementContainer.innerHTML = '<div class="loading"><div style="font-size: 48px; margin-bottom: 15px;">📭</div>No announcements found</div>';
+        } else {
+            pageAnnouncements.forEach(announcement => {
+                const div = document.createElement('div');
+                div.classList.add('announcement');
+                div.innerHTML = `
+                        <div class="content">
+                            <h3>${announcement.title}</h3>
+                            <p>${announcement.description}</p>
+                            <p style="font-size: 13.5px; color: #6f6f6f; margin-bottom: 0; padding-bottom: 0;" class="date-send">${new Date(announcement.date).toLocaleString()}</p>
+                            <p style="font-size: 13.5px; color: #ff6122;" class="sent-to">Sent to: ${announcement.sentTo === 'specific' ? `${announcement.sentTo} (ID: ${announcement.userId})` : announcement.sentTo}</p>
+                        </div>
+                        <div class="details">
+                            <svg class="trash-can" width="23" height="23" viewBox="0 0 24 24" fill="#222" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 7V20C6 21.1 6.9 22 8 22H16C17.1 22 18 21.1 18 20V7H6ZM8 9H16V20H8V9ZM15.5 4L14.5 3H9.5L8.5 4H5V6H19V4H15.5Z"/>
+                            </svg>
+                        </div>
+                    `;
+                announcementContainer.appendChild(div);
+            });
+        }
+    }
+
+    function filterAnnouncements() {
+        const date = document.getElementById('dateFilter').value;
+        const userType = document.getElementById('userTypeFilter').value;
+        const userId = document.getElementById('userIdInput').value.trim();
+        document.getElementById('userIdInput').disabled = userType !== 'specific';
+
+        filteredAnnouncements = announcements.filter(announcement => {
+            const matchesDate = !date || announcement.date.startsWith(date);
+            const matchesUserType = userType === 'all' ||
+                (userType === 'verified' && announcement.sentTo === 'verified') ||
+                (userType === 'specific' && announcement.sentTo === 'specific' && announcement.userId === userId);
+            return matchesDate && matchesUserType;
+        });
+
+        currentPage = 0;
+        displayAnnouncements();
+        updatePagination();
+    }
+
+    function updatePagination() {
+        const totalPages = Math.ceil(filteredAnnouncements.length / 10);
+        document.getElementById('prevBtn').classList.toggle('disabled', currentPage === 0);
+        document.getElementById('nextBtn').classList.toggle('disabled', currentPage * 10 >= filteredAnnouncements.length);
+    }
+
+    function previousPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            displayAnnouncements();
+            updatePagination();
+        }
+    }
+
+    function nextPage() {
+        if (currentPage * 10 < filteredAnnouncements.length) {
+            currentPage++;
+            displayAnnouncements();
+            updatePagination();
+        }
+    }
+
+    function navigateToDashboard() {
+        window.location.href = 'admin-dashboard.html';
+    }
+
+    // Initial display
+    document.addEventListener('DOMContentLoaded', () => {
+        displayAnnouncements();
+        updatePagination();
+
+        document.getElementById('userTypeFilter').addEventListener('change', filterAnnouncements);
+        document.getElementById('dateFilter').addEventListener('change', filterAnnouncements);
+        document.getElementById('userIdInput').addEventListener('input', filterAnnouncements);
+    });
+
+
+
+
+
+    document.getElementById('createAnnouncementBtn').addEventListener('click', function() {
+        document.getElementById('announcementModal').style.display = 'flex';
+    });
+
+    document.querySelector('.close-btn').addEventListener('click', function() {
+        document.getElementById('announcementModal').style.display = 'none';
+    });
+
+    function toggleUserId() {
+        const userType = document.getElementById('modalUserType').value;
+        document.getElementById('modalUserId').disabled = userType !== 'specific';
+        if (userType !== 'specific') {
+            document.getElementById('modalUserId').value = '';
+        }
+    }
+
+    function sendAnnouncement() {
+        const title = document.getElementById('modalTitle').value.trim();
+        const description = document.getElementById('modalDescription').value.trim();
+        const userType = document.getElementById('modalUserType').value;
+        const userId = document.getElementById('modalUserId').value.trim();
+
+        if (title && description) {
+            const newAnnouncement = {
+                id: `A${String(announcements.length + 1).padStart(3, '0')}`,
+                title: title,
+                description: description,
+                date: new Date().toISOString().slice(0, 16),
+                sentTo: userType,
+                userId: userType === 'specific' ? userId : undefined
+            };
+            announcements.push(newAnnouncement);
+            filteredAnnouncements = [...announcements];
+            displayAnnouncements();
+            updatePagination();
+            document.getElementById('announcementModal').style.display = 'none';
+            document.getElementById('modalTitle').value = '';
+            document.getElementById('modalDescription').value = '';
+            document.getElementById('modalUserId').value = '';
+            alert('Announcement sent!');
+        } else {
+            alert('Please fill in all required fields.');
+        }
+    }
+
+    // Ensure modal closes on outside click
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('announcementModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+</script>
+</body>
+</html>
