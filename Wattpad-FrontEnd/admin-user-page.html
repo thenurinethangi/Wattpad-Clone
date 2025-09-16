@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wattpad Admin - Users</title>
+    <link rel="icon" type="image/ico" href="assets/image/wattpad-icon-2-removebg-preview.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/style/admin-user-page-style.css">
+</head>
+<body>
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <img class="logo" src="assets/image/wattpad-logo.svg" alt="Wattpad Logo" onclick="navigateToDashboard()">
+        <ul>
+            <li><a href="admin-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="admin-page.html"><i class="fas fa-users"></i> Manage Admins</a></li>
+            <li><a href="#"><i class="fas fa-users-cog"></i> Manage Users</a></li>
+            <li><a href="manage-stories.html"><i class="fas fa-book"></i> Manage Stories</a></li>
+            <li><a href="#"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
+            <li><a href="#"><i class="fas fa-bullhorn"></i> Announcements</a></li>
+            <li><a href="genres-page.html"><i class="fas fa-tags"></i> Genres</a></li>
+            <li><a href="#"><i class="fas fa-flag"></i> Reports</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="breadcrumb">
+            <a href="admin-dashboard.html">Dashboard</a> > User
+        </div>
+        <h1 class="page-title">User</h1>
+
+        <div class="controls">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search users..." onkeyup="filterUsers()">
+            <select class="status-select" id="statusFilter" onchange="filterUsers()">
+                <option value="all">All Status</option>
+                <option value="active">Active</option>
+                <option value="inactive">Deactive</option>
+            </select>
+            <select class="verified-select" id="verifiedFilter" onchange="filterUsers()">
+                <option value="all">All Users</option>
+                <option value="verified">Verified</option>
+                <option value="normal">Normal</option>
+            </select>
+            <select class="rank-select" id="rankFilter" onchange="filterUsers()">
+                <option value="all">All Ranks</option>
+                <option value="top">Top Rank</option>
+                <option value="bottom">Bottom Rank</option>
+            </select>
+        </div>
+
+        <div class="user-container" id="userContainer">
+            <!-- Users will be loaded here -->
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                Loading users...
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-container">
+            <div class="pagination-info" id="paginationInfo">
+                Showing 1-12 of 248 users
+            </div>
+            <div class="pagination-controls">
+                <button class="pagination-btn" id="prevBtn" onclick="previousPage()">Previous</button>
+                <div class="page-numbers" id="pageNumbers">
+                    <!-- Page numbers will be generated dynamically -->
+                </div>
+                <button class="pagination-btn" id="nextBtn" onclick="nextPage()">Next</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    let currentPage = 0;
+    let users = [];
+    let filteredUsers = [];
+
+    // Sample users data
+    const allUsers = [
+        {
+            id: 'U001',
+            fullname: 'Emma Johnson',
+            username: '@emmajohnson',
+            email: 'emma.johnson@email.com',
+            joinedDate: '2023-05-15',
+            status: 'active',
+            verified: true,
+            avatar: 'https://i.pravatar.cc/150?img=1',
+            cover: 'https://picsum.photos/320/80?random=1',
+            stories: 12,
+            views: 45000,
+            likes: 3200,
+            reports: 1,
+            recentReports: 0,
+            engagement: 'high',
+            rank: 1
+        },
+        {
+            id: 'U002',
+            fullname: 'Marcus Chen',
+            username: '@marcuswrites',
+            email: 'marcus.chen@email.com',
+            joinedDate: '2023-03-22',
+            status: 'active',
+            verified: false,
+            avatar: 'https://i.pravatar.cc/150?img=2',
+            cover: 'https://picsum.photos/320/80?random=2',
+            stories: 8,
+            views: 28000,
+            likes: 1900,
+            reports: 0,
+            recentReports: 0,
+            engagement: 'medium',
+            rank: 15
+        },
+        {
+            id: 'U003',
+            fullname: 'Sophia Williams',
+            username: '@sophiawrites',
+            email: 'sophia.williams@email.com',
+            joinedDate: '2023-07-10',
+            status: 'inactive',
+            verified: true,
+            avatar: 'https://i.pravatar.cc/150?img=3',
+            cover: 'https://picsum.photos/320/80?random=3',
+            stories: 25,
+            views: 67000,
+            likes: 5400,
+            reports: 2,
+            recentReports: 1,
+            engagement: 'high',
+            rank: 3
+        },
+        {
+            id: 'U004',
+            fullname: 'Alex Rodriguez',
+            username: '@alexreads',
+            email: 'alex.rodriguez@email.com',
+            joinedDate: '2023-01-18',
+            status: 'active',
+            verified: false,
+            avatar: 'https://i.pravatar.cc/150?img=4',
+            cover: 'https://picsum.photos/320/80?random=4',
+            stories: 5,
+            views: 12000,
+            likes: 800,
+            reports: 0,
+            recentReports: 0,
+            engagement: 'low',
+            rank: 89
+        },
+        {
+            id: 'U005',
+            fullname: 'Isabella Martinez',
+            username: '@bellabooks',
+            email: 'isabella.martinez@email.com',
+            joinedDate: '2023-06-30',
+            status: 'active',
+            verified: true,
+            avatar: 'https://i.pravatar.cc/150?img=5',
+            cover: 'https://picsum.photos/320/80?random=5',
+            stories: 18,
+            views: 52000,
+            likes: 4100,
+            reports: 1,
+            recentReports: 0,
+            engagement: 'high',
+            rank: 7
+        },
+        {
+            id: 'U006',
+            fullname: 'James Thompson',
+            username: '@jamestales',
+            email: 'james.thompson@email.com',
+            joinedDate: '2023-04-12',
+            status: 'active',
+            verified: false,
+            avatar: 'https://i.pravatar.cc/150?img=6',
+            cover: 'https://picsum.photos/320/80?random=6',
+            stories: 10,
+            views: 22000,
+            likes: 1500,
+            reports: 0,
+            recentReports: 0,
+            engagement: 'medium',
+            rank: 34
+        },
+        {
+            id: 'U007',
+            fullname: 'Ava Davis',
+            username: '@avastories',
+            email: 'ava.davis@email.com',
+            joinedDate: '2023-08-05',
+            status: 'inactive',
+            verified: false,
+            avatar: 'https://i.pravatar.cc/150?img=7',
+            cover: 'https://picsum.photos/320/80?random=7',
+            stories: 3,
+            views: 8500,
+            likes: 450,
+            reports: 0,
+            recentReports: 0,
+            engagement: 'low',
+            rank: 156
+        },
+        {
+            id: 'U008',
+            fullname: 'Ryan Miller',
+            username: '@ryanwrites',
+            email: 'ryan.miller@email.com',
+            joinedDate: '2023-02-28',
+            status: 'active',
+            verified: true,
+            avatar: 'https://i.pravatar.cc/150?img=8',
+            cover: 'https://picsum.photos/320/80?random=8',
+            stories: 20,
+            views: 58000,
+            likes: 4800,
+            reports: 3,
+            recentReports: 1,
+            engagement: 'high',
+            rank: 5
+        },
+        {
+            id: 'U009',
+            fullname: 'Mia Wilson',
+            username: '@miabooks',
+            email: 'mia.wilson@email.com',
+            joinedDate: '2023-09-12',
+            status: 'active',
+            verified: false,
+            avatar: 'https://i.pravatar.cc/150?img=9',
+            cover: 'https://picsum.photos/320/80?random=9',
+            stories: 6,
+            views: 15000,
+            likes: 950,
+            reports: 0,
+            recentReports: 0,
+            engagement: 'low',
+            rank: 67
+        },
+        {
+            id: 'U010',
+            fullname: 'Noah Brown',
+            username: '@noahnovels',
+            email: 'noah.brown@email.com',
+            joinedDate: '2023-05-03',
+            status: 'active',
+            verified: true,
+            avatar: 'https://i.pravatar.cc/150?img=10',
+            cover: 'https://picsum.photos/320/80?random=10',
+            stories: 15,
+            views: 40000,
+            likes: 3000,
+            reports: 1,
+            recentReports: 0,
+            engagement: 'medium',
+            rank: 12
+        },
+        {
+            id: 'U011',
+            fullname: 'Charlotte Garcia',
+            username: '@charlottewrites',
+            email: 'charlotte.garcia@email.com',
+            joinedDate: '2023-07-20',
+            status: 'inactive',
+            verified: false,
+            avatar: 'https://i.pravatar.cc/150?img=11',
+            cover: 'https://picsum.photos/320/80?random=11',
+            stories: 4,
+            views: 9000,
+            likes: 600,
+            reports: 0,
+            recentReports: 0,
+            engagement: 'low',
+            rank: 134
+        },
+        {
+            id: 'U012',
+            fullname: 'Liam Anderson',
+            username: '@liamstories',
+            email: 'liam.anderson@email.com',
+            joinedDate: '2023-03-15',
+            status: 'active',
+            verified: true,
+            avatar: 'https://i.pravatar.cc/150?img=12',
+            cover: 'https://picsum.photos/320/80?random=12',
+            stories: 22,
+            views: 61000,
+            likes: 5200,
+            reports: 2,
+            recentReports: 0,
+            engagement: 'high',
+            rank: 2
+        }
+    ];
+
+    users = [...allUsers];
+    filteredUsers = [...users];
+
+    function getEngagementStatus(engagement) {
+        const engagementMap = {
+            'high': 'Elite Creator',
+            'medium': 'Rising Writer',
+            'low': 'New Explorer'
+        };
+        return engagementMap[engagement];
+    }
+
+    function displayUsers() {
+        const userContainer = document.getElementById('userContainer');
+        userContainer.innerHTML = '';
+
+        const startIndex = currentPage * 12;
+        const endIndex = startIndex + 12;
+        const pageUsers = filteredUsers.slice(startIndex, endIndex);
+
+        if (pageUsers.length === 0) {
+            userContainer.innerHTML = '<div class="loading"><div style="font-size: 48px; margin-bottom: 15px;">👥</div>No users found</div>';
+        } else {
+            pageUsers.forEach(user => {
+                const userCard = document.createElement('div');
+                userCard.classList.add('user-card');
+                userCard.innerHTML = `
+                <div class="user-header">
+                    <img src="${user.cover}" alt="Cover" class="user-cover">
+                    <img src="${user.avatar}" alt="${user.fullname}" class="user-avatar">
+                </div>
+                <div class="user-info">
+                    <div class="user-name-row">
+                        <span class="user-fullname">${user.fullname}</span>
+                        ${user.verified ? '<i class="fas fa-check-circle verified-icon"></i>' : ''}
+                    </div>
+                    <div class="username">${user.username}</div>
+                    <div class="user-details">
+                        <div><strong>ID:</strong> ${user.id}</div>
+                        <div><strong>Email:</strong> ${user.email}</div>
+                        <div><strong>Joined:</strong> ${new Date(user.joinedDate).toLocaleDateString()}</div>
+                        <div><strong>Status:</strong> <span class="status-${user.status}">${user.status.charAt(0).toUpperCase() + user.status.slice(1)}</span></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="user-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Stories:</span>
+                            <span class="stat-value">${user.stories}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Views:</span>
+                            <span class="stat-value">${user.views.toLocaleString()}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Likes:</span>
+                            <span class="stat-value">${user.likes.toLocaleString()}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Reports:</span>
+                            <span class="stat-value">${user.reports}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Recent Reports:</span>
+                            <span class="stat-value">${user.recentReports}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Status:</span>
+                            <span class="stat-value engagement-status engagement-${user.engagement}">${getEngagementStatus(user.engagement)}</span>
+                        </div>
+                    </div>
+                    <div class="user-rank">Rank: #${user.rank}</div>
+                    <div class="user-actions">
+                        ${!user.verified ? '<button class="action-btn verify-btn" onclick="verifyUser(\'' + user.id + '\')"><i style="color: goldenrod; font-size: 16px;" class="fas fa-check-circle"></i></button>' : ''}
+                        <button class="action-btn deactivate-btn" onclick="toggleUserStatus('${user.id}')">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+                userContainer.appendChild(userCard);
+            });
+        }
+    }
+
+    function filterUsers() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const statusFilter = document.getElementById('statusFilter').value;
+        const verifiedFilter = document.getElementById('verifiedFilter').value;
+        const rankFilter = document.getElementById('rankFilter').value;
+
+        filteredUsers = users.filter(user => {
+            const matchesSearch = user.fullname.toLowerCase().includes(searchTerm) ||
+                user.username.toLowerCase().includes(searchTerm) ||
+                user.email.toLowerCase().includes(searchTerm);
+
+            const matchesStatus = statusFilter === 'all' || user.status === statusFilter;
+
+            const matchesVerified = verifiedFilter === 'all' ||
+                (verifiedFilter === 'verified' && user.verified) ||
+                (verifiedFilter === 'normal' && !user.verified);
+
+            const matchesRank = rankFilter === 'all' ||
+                (rankFilter === 'top' && user.rank <= 20) ||
+                (rankFilter === 'bottom' && user.rank > 50);
+
+            return matchesSearch && matchesStatus && matchesVerified && matchesRank;
+        });
+
+        currentPage = 0;
+        displayUsers();
+        updatePagination();
+    }
+
+    function updatePagination() {
+        const totalPages = Math.ceil(filteredUsers.length / 12);
+        const startIndex = currentPage * 12 + 1;
+        const endIndex = Math.min((currentPage + 1) * 12, filteredUsers.length);
+
+        document.getElementById('paginationInfo').textContent =
+            `Showing ${startIndex}-${endIndex} of ${filteredUsers.length} users`;
+
+        document.getElementById('prevBtn').disabled = currentPage === 0;
+        document.getElementById('nextBtn').disabled = currentPage >= totalPages - 1;
+    }
+
+    function previousPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            displayUsers();
+            updatePagination();
+        }
+    }
+
+    function nextPage() {
+        const totalPages = Math.ceil(filteredUsers.length / 12);
+        if (currentPage < totalPages - 1) {
+            currentPage++;
+            displayUsers();
+            updatePagination();
+        }
+    }
+
+    function verifyUser(userId) {
+        const user = users.find(u => u.id === userId);
+        if (user) {
+            user.verified = true;
+            filteredUsers = users.filter(u => filteredUsers.includes(u));
+            displayUsers();
+            alert(`${user.fullname} has been verified!`);
+        }
+    }
+
+    function toggleUserStatus(userId) {
+        const user = users.find(u => u.id === userId);
+        if (user) {
+            user.status = user.status === 'active' ? 'inactive' : 'active';
+            filteredUsers = users.filter(u => filteredUsers.includes(u));
+            displayUsers();
+            alert(`${user.fullname} has been ${user.status === 'active' ? 'activated' : 'deactivated'}!`);
+        }
+    }
+
+    function editUser(userId) {
+        alert(`Edit user ${userId} - Feature coming soon!`);
+    }
+
+    function navigateToDashboard() {
+        window.location.href = 'admin-dashboard.html';
+    }
+
+    // Initial display
+    document.addEventListener('DOMContentLoaded', () => {
+        displayUsers();
+        updatePagination();
+    });
+</script>
+</body>
