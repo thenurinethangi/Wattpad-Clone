@@ -2,6 +2,7 @@ package lk.ijse.wattpadbackend.service.impl;
 
 import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.entity.*;
+import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
 import lk.ijse.wattpadbackend.repository.GenreRepository;
 import lk.ijse.wattpadbackend.repository.StoryRepository;
@@ -13,9 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -421,6 +420,158 @@ public class GenreServiceImpl implements GenreService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public List<AdminGenreDTO> getAllGenreForAdmin() {
+
+        try{
+            List<Genre> genreList = genreRepository.findAll();
+
+            List<AdminGenreDTO> adminGenreDTOList = new ArrayList<>();
+            for (Genre x : genreList){
+                AdminGenreDTO adminGenreDTO = new AdminGenreDTO();
+                adminGenreDTO.setId(x.getId());
+                adminGenreDTO.setGenre(x.getGenre());
+
+                List<Story> storyList = storyRepository.findAllByCategory(x.getGenre());
+                long totalStoryCountInGenre = storyList.size();
+
+                String totalStoryCountInGenreInStr = "";
+                if(totalStoryCountInGenre<=1000){
+                    totalStoryCountInGenreInStr = String.valueOf(totalStoryCountInGenre);
+                }
+                else if (totalStoryCountInGenre >= 1000 && totalStoryCountInGenre < 1000000) {
+                    double value = (double) totalStoryCountInGenre / 1000;
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        totalStoryCountInGenreInStr = vStr.split("\\.0")[0] + "K";
+                    } else {
+                        totalStoryCountInGenreInStr = vStr + "K";
+                    }
+                }
+                else if(totalStoryCountInGenre>=1000000){
+                    double value = (double) totalStoryCountInGenre/1000000;
+
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        totalStoryCountInGenreInStr = vStr.split("\\.0")[0] + "M";
+                    } else {
+                        totalStoryCountInGenreInStr = value+"M";
+                    }
+                }
+                adminGenreDTO.setTotalStories(totalStoryCountInGenreInStr);
+
+                long totalStories = storyRepository.findAll().size();
+
+                double percentage = ((double) totalStoryCountInGenre / totalStories) * 100;
+                String status = getGenreStatus(percentage);
+                adminGenreDTO.setStatus(status);
+
+                String percentageStr;
+                if (percentage % 1 == 0) {
+                    percentageStr = String.format("%.0f", percentage);
+                } else {
+                    percentageStr = String.format("%.1f", percentage);
+                }
+                adminGenreDTO.setPercentage(percentageStr);
+
+                adminGenreDTOList.add(adminGenreDTO);
+            }
+
+            Collections.sort(adminGenreDTOList, Comparator.comparing(AdminGenreDTO::getId));
+            return adminGenreDTOList;
+
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void addNewGenre(String genre) {
+
+        try{
+           if(genreRepository.findByGenre(genre).isEmpty()){
+               Genre genre1 = new Genre();
+               genre1.setGenre(genre);
+               genreRepository.save(genre1);
+           }
+           else{
+               throw new RuntimeException("Genre Already Exit.");
+           }
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void removeAGenre(String genreId) {
+
+        try{
+            Optional<Genre> optionalGenre = genreRepository.findById(Integer.valueOf(genreId));
+            if(!optionalGenre.isPresent()){
+                throw new NotFoundException("Genre not found.");
+            }
+            Genre genre = optionalGenre.get();
+
+            genreRepository.delete(genre);
+            genreRepository.flush();
+        }
+        catch (NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void editAGenre(EditGenreDTO editGenreDTO) {
+
+        try{
+            Optional<Genre> optionalGenre = genreRepository.findById((int) editGenreDTO.getGenreId());
+            if(!optionalGenre.isPresent()){
+                throw new NotFoundException("Genre not found.");
+            }
+            Genre genre = optionalGenre.get();
+
+            genre.setGenre(editGenreDTO.getGenre());
+            genreRepository.save(genre);
+        }
+        catch (NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String getGenreStatus(double percentage) {
+        if (percentage >= 20) {
+            return "Very High";
+        } else if (percentage >= 15) {
+            return "High";
+        } else if (percentage >= 10) {
+            return "Above Average";
+        } else if (percentage >= 7) {
+            return "Medium";
+        } else if (percentage >= 4) {
+            return "Below Average";
+        } else if (percentage >= 2) {
+            return "Low";
+        } else if (percentage >= 1) {
+            return "Very Low";
+        } else if (percentage >= 0.5) {
+            return "Rare";
+        } else {
+            return "Niche / Extreme Niche";
+        }
+    }
+
 }
 
 

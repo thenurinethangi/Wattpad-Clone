@@ -3,6 +3,7 @@ package lk.ijse.wattpadbackend.dto;
 import lombok.*;
 
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -10,25 +11,30 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class  StoryDTO {
+public class AdminStoryDTO {
 
     private long id;
     private String title;
-    private String description;
-    private String copyright;
-    private int rating;
     private int status;
     private String views;
     private String likes;
+    private String comments;
     private BigInteger parts;
+    private String genre;
+    private LocalDate publishedDate;
     private String coverImagePath;
+    private int publishedOrDraft;
+    private String totalReports;
+    private String recentReports;
+    private String rank;
+    private int isOriginal;
     private long userId;
     private String username;
-    private String profilePicPath;
-    private List<String> tags;
-    private List<ChapterSimpleDTO> chapterSimpleDTOList;
-    private int publishedOrDraft;
 }
+
+
+
+
 
 
 

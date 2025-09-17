@@ -1,9 +1,6 @@
 package lk.ijse.wattpadbackend.controller;
 
-import lk.ijse.wattpadbackend.dto.GenreDTO;
-import lk.ijse.wattpadbackend.dto.GenreSearchCriteriaDTO;
-import lk.ijse.wattpadbackend.dto.GenreSearchResponseDTO;
-import lk.ijse.wattpadbackend.dto.SelectedGenreDTO;
+import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.service.AuthService;
 import lk.ijse.wattpadbackend.service.GenreService;
 import lk.ijse.wattpadbackend.util.APIResponse;
@@ -20,7 +17,6 @@ import java.util.List;
 public class GenreController {
 
     private final GenreService genreService;
-    private final AuthService authService;
 
     @GetMapping()
     public APIResponse welcomeMessage(){
@@ -48,6 +44,34 @@ public class GenreController {
 
         GenreSearchResponseDTO genreSearchResponseDTO = genreService.getAllStoriesOfSelectedGenre(genre,genreSearchCriteriaDTO);
         return new APIResponse(202,"Successfully load stories from selected genre.",genreSearchResponseDTO);
+    }
+
+    @GetMapping("/admin/all")
+    public APIResponse getAllGenreForAdmin(){
+
+        List<AdminGenreDTO> adminGenreDTOList = genreService.getAllGenreForAdmin();
+        return new APIResponse(202,"Successful load all genre for admin",adminGenreDTOList);
+    }
+
+    @PostMapping("/admin/add/{genre}")
+    public APIResponse addNewGenre(@PathVariable String genre){
+
+        genreService.addNewGenre(genre);
+        return new APIResponse(202,"Successful added new genre",null);
+    }
+
+    @DeleteMapping("/admin/remove/{genreId}")
+    public APIResponse removeAGenre(@PathVariable String genreId){
+
+        genreService.removeAGenre(genreId);
+        return new APIResponse(202,"Successful removed the genre id: "+genreId,null);
+    }
+
+    @PutMapping("/admin/edit")
+    public APIResponse editAGenre(@RequestBody EditGenreDTO editGenreDTO){
+
+        genreService.editAGenre(editGenreDTO);
+        return new APIResponse(202,"Successful edited the genre",null);
     }
 }
 

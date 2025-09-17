@@ -36,4 +36,14 @@ public interface UserService {
     void deactivateCurrentUser(String name);
 
     UserFollowingResponseDTO getFollowersUsersByUserId(String username, long id, long count);
+
+    List<AdminUserDTO> loadUserForAdminBySortingCriteria(long no, AdminUserRequestDTO adminUserRequestDTO);
+
+    List<AdminUserDTO> searchUsers(String searchTerm, AdminUserRequestDTO sort);
+
+    void deactivateUserByUserId(long userId);
+
+    void verifyUserByUserId(long userId);
+
+    long getTotalUserCount();
 }

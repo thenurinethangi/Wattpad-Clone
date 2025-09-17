@@ -62,6 +62,20 @@ public class Story {
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    private int isWattpadOriginal = 0;
+
+    @Transient
+    private long totalViews;
+
+    @Transient
+    private long totalLikes;
+
+    @Transient
+    private long totalViewsAndLikes;
+
+    @Transient
+    private long rank;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -77,6 +91,9 @@ public class Story {
 
     @OneToMany(mappedBy = "story", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Chapter> chapters;
+
+    @OneToMany(mappedBy = "story", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<StoryReport> storyReports;
 
     @Override
     public String toString() {

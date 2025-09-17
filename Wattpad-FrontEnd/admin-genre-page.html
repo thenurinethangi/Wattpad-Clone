@@ -13,16 +13,18 @@
 </head>
 <body>
 <div class="dashboard-container">
-    <!-- Sidebar (Same as Admin Page) -->
+
+    <!-- Sidebar -->
     <nav class="sidebar">
         <img class="logo" src="assets/image/wattpad-logo.svg" alt="Wattpad Logo" onclick="navigateToDashboard()">
         <ul>
-            <li><a href="admin-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="admin-page.html"><i class="fas fa-users"></i> Manage Admins</a></li>
-            <li><a href="#"><i class="fas fa-book"></i> Manage Stories</a></li>
-            <li><a href="#"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
-            <li><a href="#"><i class="fas fa-bullhorn"></i> Announcements</a></li>
-            <li><a href="#"><i class="fas fa-tags"></i> Genres</a></li>
+            <li><a href="admin-dashboard-page.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="admin-admin-page.html"><i class="fas fa-users"></i> Manage Admins</a></li>
+            <li><a href="admin-user-page.html"><i class="fas fa-users-cog"></i> Manage Users</a></li>
+            <li><a href="admin-story-page.html"><i class="fas fa-book"></i> Manage Stories</a></li>
+            <li><a href="admin-transaction-page.html"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
+            <li><a href="admin-announcement-page.html"><i class="fas fa-bullhorn"></i> Announcements</a></li>
+            <li><a href="admin-genre-page.html"><i class="fas fa-tags"></i> Genres</a></li>
             <li><a href="#"><i class="fas fa-flag"></i> Reports</a></li>
             <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
         </ul>
@@ -30,6 +32,19 @@
 
     <!-- Main Content -->
     <main class="main-content">
+
+        <!--model-->
+        <div id="editModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Edit Genre</h2>
+                <input type="hidden" id="editGenreId">
+                <label for="editGenreName">Genre Name:</label>
+                <input type="text" id="editGenreName" placeholder="Enter new genre name">
+                <button onclick="saveGenreChanges()">Edit Genre</button>
+            </div>
+        </div>
+
         <div class="breadcrumb">
             <a href="admin-dashboard.html">Dashboard</a> > Genres
         </div>
@@ -71,182 +86,311 @@
                 </div>
             </div>
         </div>
-
-        <div class="pagination">
-            <div class="pagination-info" id="paginationInfo">
-                Showing 1-10 of 20 genres
-            </div>
-            <div class="pagination-controls">
-                <button class="pagination-btn" id="prevBtn" onclick="previousPage()">Previous</button>
-                <div class="page-numbers" id="pageNumbers">
-                    <!-- Page numbers will be generated dynamically -->
-                </div>
-                <button class="pagination-btn" id="nextBtn" onclick="nextPage()">Next</button>
-            </div>
-        </div>
     </main>
 </div>
 
 <script>
-    let currentPage = 0;
-    let genres = []; // Will store all genres
-    let filteredGenres = []; // Will store filtered genres
+    let genres = []; // Store all genres from backend
+    let filteredGenres = []; // Store filtered/sorted genres for display
 
-    // Sample genres data
-    const allGenres = [
-        { id: 'G001', genre: 'Romance', totalStories: 5000, percentage: 40, popularity: 'high' },
-        { id: 'G002', genre: 'Fantasy', totalStories: 3000, percentage: 25, popularity: 'high' },
-        { id: 'G003', genre: 'Science Fiction', totalStories: 2000, percentage: 15, popularity: 'low' },
-        { id: 'G004', genre: 'Mystery', totalStories: 1500, percentage: 10, popularity: 'low' },
-        { id: 'G005', genre: 'Thriller', totalStories: 1000, percentage: 8, popularity: 'low' },
-        { id: 'G006', genre: 'Horror', totalStories: 800, percentage: 7, popularity: 'low' },
-        { id: 'G007', genre: 'Adventure', totalStories: 600, percentage: 5, popularity: 'low' },
-        { id: 'G008', genre: 'Historical', totalStories: 400, percentage: 3, popularity: 'low' },
-        { id: 'G009', genre: 'Poetry', totalStories: 300, percentage: 2, popularity: 'low' },
-        { id: 'G010', genre: 'Non-Fiction', totalStories: 200, percentage: 1, popularity: 'low' },
-        { id: 'G011', genre: 'Action', totalStories: 5500, percentage: 45, popularity: 'high' },
-        { id: 'G012', genre: 'Drama', totalStories: 3200, percentage: 26, popularity: 'high' },
-        { id: 'G013', genre: 'Comedy', totalStories: 2100, percentage: 16, popularity: 'low' },
-        { id: 'G014', genre: 'Crime', totalStories: 1600, percentage: 11, popularity: 'low' },
-        { id: 'G015', genre: 'Biography', totalStories: 1100, percentage: 9, popularity: 'low' },
-        { id: 'G016', genre: 'Self-Help', totalStories: 900, percentage: 8, popularity: 'low' },
-        { id: 'G017', genre: 'Travel', totalStories: 700, percentage: 6, popularity: 'low' },
-        { id: 'G018', genre: 'Cooking', totalStories: 500, percentage: 4, popularity: 'low' },
-        { id: 'G019', genre: 'Art', totalStories: 400, percentage: 3, popularity: 'low' },
-        { id: 'G020', genre: 'Music', totalStories: 300, percentage: 2, popularity: 'low' }
-    ];
-
-    genres = [...allGenres]; // Initialize with all genres
-    filteredGenres = [...genres];
-
-    function displayGenres() {
+    function displayGenres(genresToDisplay = filteredGenres) {
         const genreList = document.getElementById('genreList');
-        genreList.innerHTML = ''; // Clear existing content
-        // genreList.appendChild(createColumns());
+        genreList.innerHTML = '';
 
-        const startIndex = currentPage * 10;
-        const endIndex = startIndex + 10;
-        const pageGenres = filteredGenres.slice(startIndex, endIndex);
-
-        if (pageGenres.length === 0) {
+        if (genresToDisplay.length === 0) {
             genreList.innerHTML = '<div class="loading"><div style="font-size: 48px; margin-bottom: 15px;">📭</div>No genres found</div>';
         } else {
-            pageGenres.forEach(genre => {
+            genresToDisplay.forEach(genre => {
                 const row = document.createElement('div');
                 row.classList.add('genre-row');
                 row.innerHTML = `
-        <div>${genre.id}</div>
-        <div>${genre.genre}</div>
-        <div>${genre.totalStories}</div>
-        <div>${genre.percentage}%</div>
-        <div class="${genre.popularity === 'high' ? 'status-high' : 'status-low'}">${genre.popularity}</div>
-        <div class="action-icons">
-            <a href="#" onclick="editGenre('${genre.id}')" title="Edit"><i class="fas fa-pen" style="color: rgba(255,97,34,0.93); margin-right: 10px; font-size: 14.5px;"></i></a>
-            <a href="#" onclick="deleteGenre('${genre.id}')" title="Delete"><i class="fas fa-trash" style="color: rgba(255,97,34,0.93); font-size: 14.5px;"></i></a>
-        </div>
-    `;
+                    <div>${genre.id}</div>
+                    <div>${genre.genre}</div>
+                    <div>${genre.totalStories}</div>
+                    <div>${genre.percentage}%</div>
+                    <div>${genre.status}</div>
+                    <div class="action-icons">
+                        <a href="#" onclick="editGenre('${genre.id}')" title="Edit"><i class="fas fa-pen" style="color: rgba(255,97,34,0.93); margin-right: 10px; font-size: 14.5px;"></i></a>
+                        <a href="#" onclick="deleteGenre('${genre.id}')" title="Delete"><i class="fas fa-trash" style="color: rgba(255,97,34,0.93); font-size: 14.5px;"></i></a>
+                    </div>
+                `;
                 genreList.appendChild(row);
             });
         }
     }
 
-    function createColumns() {
-        const columns = document.createElement('div');
-        columns.classList.add('genre-columns');
-        columns.innerHTML = `
-                <div>ID</div>
-                <div>Genre Name</div>
-                <div>Total Stories</div>
-                <div>Percentage (%)</div>
-                <div>Popularity Status</div>
-            `;
-        return columns;
+    function loadGenres() {
+        fetch('http://localhost:8080/genre/admin/all', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                genres = data.data || [];
+                filteredGenres = [...genres];
+                displayGenres();
+            })
+            .catch(error => {
+                console.error('Load Error:', error);
+                let response = JSON.parse(error.message);
+                console.log(response);
+                displayGenres([]);
+            });
     }
 
-    function updatePagination() {
-        const totalPages = Math.ceil(filteredGenres.length / 10);
-        const startIndex = currentPage * 10 + 1;
-        const endIndex = Math.min(startIndex + 9, filteredGenres.length);
-        document.getElementById('paginationInfo').textContent = `Showing ${startIndex}-${endIndex} of ${filteredGenres.length} genres`;
-        document.getElementById('prevBtn').classList.toggle('disabled', currentPage === 0);
-        document.getElementById('nextBtn').classList.toggle('disabled', currentPage * 10 >= filteredGenres.length);
-    }
-
-    function searchGenres() {
-        const query = document.getElementById('searchInput').value.toLowerCase();
-        filteredGenres = genres.filter(genre =>
-            genre.id.toLowerCase().includes(query) ||
-            genre.genre.toLowerCase().includes(query) ||
-            genre.totalStories.toString().includes(query) ||
-            genre.percentage.toString().includes(query) ||
-            genre.popularity.toLowerCase().includes(query)
-        );
-        currentPage = 0;
-        displayGenres();
-        updatePagination();
+    function searchGenres(event) {
+        if (event.key === 'Enter') {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            filteredGenres = genres.filter(genre =>
+                genre.id.includes(query) ||
+                genre.genre.toLowerCase().includes(query) ||
+                genre.totalStories.toString().includes(query) ||
+                genre.percentage.toString().includes(query) ||
+                genre.status.toLowerCase().includes(query)
+            );
+            displayGenres();
+        }
     }
 
     function sortGenres() {
-        const status = document.getElementById('statusSort').value;
-        filteredGenres = genres.filter(genre => status === 'all' || genre.popularity === status);
-        currentPage = 0;
+        const sortValue = document.getElementById('statusSort').value;
+        filteredGenres = [...genres];
+        if (sortValue === 'high') {
+            filteredGenres.sort((a, b) => b.percentage - a.percentage);
+        } else if (sortValue === 'low') {
+            filteredGenres.sort((a, b) => a.percentage - b.percentage);
+        }
         displayGenres();
-        updatePagination();
     }
 
     function addNewGenre() {
         const genreName = document.getElementById('newGenreInput').value.trim();
-        if (genreName && !genres.some(g => g.genre.toLowerCase() === genreName.toLowerCase())) {
-            const newGenre = {
-                id: `G${String(genres.length + 1).padStart(3, '0')}`,
-                genre: genreName,
-                totalStories: 0,
-                percentage: 0,
-                popularity: 'low'
-            };
-            genres.push(newGenre);
-            filteredGenres = [...genres];
-            displayGenres();
-            updatePagination();
-            document.getElementById('newGenreInput').value = ''; // Clear input
-            alert('New genre added!');
-        } else if (genres.some(g => g.genre.toLowerCase() === genreName.toLowerCase())) {
-            alert('Genre already exists!');
+        if (!genreName) return;
+
+        if (!genres.some(g => g.genre.toLowerCase() === genreName.toLowerCase())) {
+
+            fetch('http://localhost:8080/genre/admin/add/'+genreName, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ genre: genreName })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to add genre');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Add Success:', data);
+
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'Successfully added new genre!',
+                        customClass: {
+                            popup: 'modern-swal-wide-short',
+                            title: 'swal-title',
+                            htmlContainer: 'swal-text'
+                        },
+                        timer: 3000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    });
+
+                    loadGenres();
+                    document.getElementById('newGenreInput').value = '';
+                })
+                .catch(error => {
+                    console.error('Add Error:', error);
+                    alert('Error adding genre');
+                });
         } else {
-            alert('Please enter a genre name.');
+            Swal.fire({
+                icon: 'warning',
+                text: 'Genre Already Exist!',
+                customClass: {
+                    popup: 'modern-swal-wide-short',
+                    title: 'swal-title',
+                    htmlContainer: 'swal-text'
+                },
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
+        }
+    }
+
+    function deleteGenre(genreId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to delete this genre?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:8080/genre/admin/remove/${genreId}`, {
+                    method: 'DELETE',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to delete genre');
+                        }
+                        return response.json();
+                    })
+                    .then(() => {
+                        console.log('Delete Success');
+                        loadGenres();
+                        Swal.fire({
+                            title: 'Deleted',
+                            text: 'Genre has been deleted!',
+                            customClass: {
+                                popup: 'modern-swal-wide-short',
+                                title: 'swal-title',
+                                htmlContainer: 'swal-text'
+                            },
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Delete Error:', error);
+                        alert('Error deleting genre');
+                    });
+            }
+        });
+    }
+
+    function editGenre(genreId) {
+        // Check if genres are loaded
+        if (genres.length === 0) {
+            console.error('Genres not loaded yet for ID:', genreId);
+            return;
+        }
+
+        // Find the genre
+        const genreToEdit = genres.find(g => g.id == genreId);
+        if (!genreToEdit) {
+            console.error('Genre not found for ID:', genreId);
+            return;
+        }
+
+        // Dynamically create or update modal
+        let modal = document.getElementById('editModal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'editModal';
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <h2>Edit Genre</h2>
+                    <input type="hidden" id="editGenreId">
+                    <label for="editGenreName">Genre Name:</label>
+                    <input type="text" id="editGenreName" placeholder="Enter new genre name">
+                    <button onclick="saveGenreChanges(${genreId})">Edit</button>
+                </div>
+            `;
+            document.body.appendChild(modal); // Add to body
+        }
+
+        // Set values and show modal
+        document.getElementById('editGenreId').value = genreId;
+        document.getElementById('editGenreName').value = genreToEdit.genre;
+        modal.style.display = 'block';
+        console.log('Modal displayed for genre:', genreId);
+    }
+
+    function saveGenreChanges() {
+        const genreId = document.getElementById('editGenreId').value;
+        const newGenreName = document.getElementById('editGenreName').value.trim();
+        if (!newGenreName) return;
+
+        let data = {
+            'genreId': genreId,
+            'genre': newGenreName
+        }
+
+        console.log(data);
+
+        fetch(`http://localhost:8080/genre/admin/edit`, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to update genre');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Update Success:', data);
+
+                loadGenres();
+                Swal.fire({
+                    title: 'Updated',
+                    text: 'Genre has been updated!',
+                    customClass: {
+                        popup: 'modern-swal-wide-short',
+                        title: 'swal-title',
+                        htmlContainer: 'swal-text'
+                    },
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+                closeModal();
+            })
+            .catch(error => {
+                console.error('Update Error:', error);
+                alert('Error updating genre');
+            });
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('editModal');
+        if (modal) {
+            modal.style.display = 'none';
         }
     }
 
     function navigateToDashboard() {
-        window.location.href = 'admin-dashboard.html';
+        window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-dashboard-page.html';
     }
 
-    function previousPage() {
-        if (currentPage > 0) {
-            currentPage--;
-            displayGenres();
-            updatePagination();
-        }
-    }
-
-    function nextPage() {
-        if (currentPage * 10 < filteredGenres.length) {
-            currentPage++;
-            displayGenres();
-            updatePagination();
-        }
-    }
-
-    // Initial display
     document.addEventListener('DOMContentLoaded', () => {
-        displayGenres();
-        updatePagination();
-
-        document.getElementById('searchInput').addEventListener('input', searchGenres);
+        loadGenres();
+        document.getElementById('searchInput').addEventListener('keyup', searchGenres);
         document.getElementById('statusSort').addEventListener('change', sortGenres);
-        document.getElementById('prevBtn').addEventListener('click', previousPage);
-        document.getElementById('nextBtn').addEventListener('click', nextPage);
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="assets/js/admin-genre-page-script.js"></script>
 </body>
 </html>

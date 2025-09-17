@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -888,6 +890,288 @@ public class StoryServiceImpl implements StoryService {
             return false;
         }
         catch (AccessDeniedException | NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public AdminStoryResponseDTO loadStoriesForAdminBySortingCriteria(long no, AdminStoryRequestDTO adminStoryRequestDTO) {
+
+        try{
+            List<Story> storyList = storyRepository.findAll();
+
+            AdminStoryResponseDTO adminStoryResponseDTO = new AdminStoryResponseDTO();
+            adminStoryResponseDTO.setTotalStories(storyList.size());
+
+            for (Story x : storyList){
+                long totalViews = 0;
+                long totalLikes = 0;
+
+                totalViews+=x.getViews().longValue();
+
+                List<Chapter> chapterList = x.getChapters();
+                for (Chapter z : chapterList){
+                    List<ChapterLike> chapterLikeList = z.getChapterLikes();
+                    totalLikes+=chapterLikeList.size();
+                }
+
+                long total = totalViews+totalLikes;
+                x.setTotalViewsAndLikes(total);
+            }
+
+            List<Story> tempForAddRank = new ArrayList<>();
+            tempForAddRank.addAll(storyList);
+            tempForAddRank.sort(
+                    Comparator.comparingLong(Story::getTotalViewsAndLikes).reversed()
+            );
+            int count = 1;
+            for (Story a : tempForAddRank){
+                a.setRank(count);
+                count++;
+            }
+
+            List<Story> sortAfterStatus = new ArrayList<>();
+            for (Story x : storyList){
+                if(adminStoryRequestDTO.getStatus().equals("all")){
+                    sortAfterStatus.add(x);
+                }
+                else if (adminStoryRequestDTO.getStatus().equals("published")) {
+                    if(x.getPublishedOrDraft()==1){
+                        sortAfterStatus.add(x);
+                    }
+                }
+                else if (adminStoryRequestDTO.getStatus().equals("draft")) {
+                    if(x.getPublishedOrDraft()==0){
+                        sortAfterStatus.add(x);
+                    }
+                }
+            }
+
+            List<Story> sortAfterType = new ArrayList<>();
+            for (Story x : sortAfterStatus){
+                if(adminStoryRequestDTO.getType().equals("all")){
+                    sortAfterType.add(x);
+                }
+                else if (adminStoryRequestDTO.getType().equals("original")) {
+                    if(x.getIsWattpadOriginal()==1){
+                        sortAfterType.add(x);
+                    }
+                }
+                else if (adminStoryRequestDTO.getType().equals("normal")) {
+                    if(x.getIsWattpadOriginal()==0){
+                        sortAfterType.add(x);
+                    }
+                }
+            }
+
+            List<Story> sortAfterRank = new ArrayList<>();
+            if(adminStoryRequestDTO.getRank().equals("all")){
+                for (Story x : sortAfterType) {
+                    long totalViews = 0;
+                    long totalLikes = 0;
+
+                    totalViews+=x.getViews().longValue();
+
+                    List<Chapter> chapterList = x.getChapters();
+                    for (Chapter z : chapterList){
+                        List<ChapterLike> chapterLikeList = z.getChapterLikes();
+                        totalLikes+=chapterLikeList.size();
+                    }
+
+                    long total = totalViews+totalLikes;
+                    x.setTotalViewsAndLikes(total);
+                    x.setTotalLikes(totalLikes);
+                    x.setTotalViews(totalViews);
+                    sortAfterRank.add(x);
+                }
+            }
+            else {
+                List<Story> storyListAfterCalculateTotalViewsAndLikes = new ArrayList<>();
+                for (Story x : sortAfterType) {
+                    long totalViews = 0;
+                    long totalLikes = 0;
+
+                    totalViews+=x.getViews().longValue();
+
+                    List<Chapter> chapterList = x.getChapters();
+                    for (Chapter z : chapterList){
+                        List<ChapterLike> chapterLikeList = z.getChapterLikes();
+                        totalLikes+=chapterLikeList.size();
+                    }
+
+                    long total = totalViews+totalLikes;
+                    x.setTotalViewsAndLikes(total);
+                    x.setTotalLikes(totalLikes);
+                    x.setTotalViews(totalViews);
+                    storyListAfterCalculateTotalViewsAndLikes.add(x);
+                }
+
+                if(adminStoryRequestDTO.getRank().equals("top")){
+                    storyListAfterCalculateTotalViewsAndLikes.sort(
+                            Comparator.comparingLong(Story::getTotalViewsAndLikes).reversed()
+                    );
+                    sortAfterRank.addAll(storyListAfterCalculateTotalViewsAndLikes);
+                }
+                else if(adminStoryRequestDTO.getRank().equals("bottom")){
+                    storyListAfterCalculateTotalViewsAndLikes.sort(
+                            Comparator.comparingLong(Story::getTotalViewsAndLikes)
+                    );
+                    sortAfterRank.addAll(storyListAfterCalculateTotalViewsAndLikes);
+                }
+            }
+
+            List<Story> sortAfterReport = new ArrayList<>();
+            if(adminStoryRequestDTO.getReport().equals("all")){
+                sortAfterReport.addAll(sortAfterRank);
+            }
+            else{
+                List<Story> sortListByReport = new ArrayList<>();
+                sortListByReport.addAll(sortAfterRank);
+                if(adminStoryRequestDTO.getReport().equals("most")){
+                    sortListByReport.sort(
+                            Comparator.comparingInt((Story s) -> s.getStoryReports().size()).reversed()
+                    );
+                }
+                else{
+                    sortListByReport.sort(
+                            Comparator.comparingInt((Story s) -> s.getStoryReports().size())
+                    );
+                }
+                sortAfterReport.addAll(sortListByReport);
+            }
+
+            long end = (no*12)-1;
+            long start = ((end+1)-12);
+
+            List<Story> sortAfterCount = new ArrayList<>();
+            if(sortAfterReport.size()>start){
+                for (long i = start; i <= end; i++) {
+                    if(i<sortAfterReport.size()){
+                        sortAfterCount.add(sortAfterReport.get((int) i));
+                    }
+                    else{
+                        break;
+                    }
+                }
+            }
+
+            adminStoryResponseDTO.setStart(start+1);
+            adminStoryResponseDTO.setEnd(end+1);
+
+            List<AdminStoryDTO> adminStoryDTOS = new ArrayList<>();
+            for (Story x : sortAfterCount){
+                AdminStoryDTO adminStoryDTO = new AdminStoryDTO();
+                adminStoryDTO.setId(x.getId());
+                adminStoryDTO.setTitle(x.getTitle());
+                adminStoryDTO.setStatus(x.getPublishedOrDraft());
+                adminStoryDTO.setCoverImagePath(x.getCoverImagePath());
+                adminStoryDTO.setIsOriginal(x.getIsWattpadOriginal());
+                adminStoryDTO.setPublishedDate(LocalDate.from(x.getCreatedAt()));
+                adminStoryDTO.setUserId(x.getUser().getId());
+                adminStoryDTO.setUsername(x.getUser().getUsername());
+                adminStoryDTO.setGenre(x.getCategory());
+                adminStoryDTO.setRank(String.valueOf(x.getRank()));
+                adminStoryDTO.setTotalReports(String.valueOf(x.getStoryReports().size()));
+                adminStoryDTO.setRecentReports(String.valueOf(x.getStoryReports().size()));
+
+                long viewsLong = x.getTotalViews();
+
+                String viewsInStr = "";
+                if(viewsLong<=1000){
+                    viewsInStr = String.valueOf(viewsLong);
+                }
+                else if (viewsLong >= 1000 && viewsLong < 1000000) {
+                    double value = (double) viewsLong / 1000;
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        viewsInStr = vStr.split("\\.0")[0] + "K";
+                    } else {
+                        viewsInStr = vStr + "K";
+                    }
+                }
+                else if(viewsLong>=1000000){
+                    double value = (double) viewsLong/1000000;
+
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        viewsInStr = vStr.split("\\.0")[0] + "M";
+                    } else {
+                        viewsInStr = value+"M";
+                    }
+                }
+                adminStoryDTO.setViews(viewsInStr);
+
+                long likesLong = x.getTotalLikes();
+
+                String likesInStr = "";
+                if(likesLong<=1000){
+                    likesInStr = String.valueOf(likesLong);
+                }
+                else if (likesLong >= 1000 && likesLong < 1000000) {
+                    double value = (double) likesLong / 1000;
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        likesInStr = vStr.split("\\.0")[0] + "K";
+                    } else {
+                        likesInStr = vStr + "K";
+                    }
+                }
+                else if(likesLong>=1000000){
+                    double value = (double) likesLong/1000000;
+
+                    String vStr = String.valueOf(value);
+
+                    if (vStr.endsWith(".0")) {
+                        likesInStr = vStr.split("\\.0")[0] + "M";
+                    } else {
+                        likesInStr = value+"M";
+                    }
+                }
+                adminStoryDTO.setLikes(likesInStr);
+
+                adminStoryDTO.setParts(BigInteger.valueOf(x.getChapters().size()));
+
+                long totalComments = 0;
+                for (Chapter w : x.getChapters()){
+                    totalComments+=w.getChapterComments().size();
+                    for (Paragraph q : w.getParagraphs()){
+                        totalComments+=q.getParagraphComments().size();
+                    }
+                }
+                adminStoryDTO.setComments(String.valueOf(totalComments));
+
+                adminStoryDTOS.add(adminStoryDTO);
+            }
+
+            adminStoryResponseDTO.setAdminStoryDTOList(adminStoryDTOS);
+            return adminStoryResponseDTO;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void storyUnpublishByAdmin(long storyId) {
+
+        try{
+            Optional<Story> optionalStory = storyRepository.findById((int) storyId);
+            if(!optionalStory.isPresent()){
+                throw new NotFoundException("Story not found.");
+            }
+            Story story = optionalStory.get();
+
+            //here must send email for author telling that admin panel of wattpad unpublished there story
+            story.setPublishedOrDraft(0);
+            storyRepository.save(story);
+        }
+        catch (NotFoundException e){
             throw e;
         }
         catch (RuntimeException e) {

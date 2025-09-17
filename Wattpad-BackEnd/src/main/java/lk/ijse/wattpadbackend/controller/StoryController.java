@@ -216,6 +216,20 @@ public class StoryController {
         storyService.deleteStoryByStoryId(auth.getName(),storyId);
         return new APIResponse(202,"Successfully deleted story id: "+storyId,null);
     }
+
+    @PostMapping("/admin/loadStory/{no}")
+    public APIResponse loadStoriesForAdminBySortingCriteria(@PathVariable long no, @RequestBody AdminStoryRequestDTO adminStoryRequestDTO){
+
+        AdminStoryResponseDTO adminStoryResponseDTO = storyService.loadStoriesForAdminBySortingCriteria(no,adminStoryRequestDTO);
+        return new APIResponse(202,"Successfully load stories for admin part by sort criteria", adminStoryResponseDTO);
+    }
+
+    @PostMapping("/admin/unpublish/{storyId}")
+    public APIResponse storyUnpublishByAdmin(@PathVariable long storyId){
+
+        storyService.storyUnpublishByAdmin(storyId);
+        return new APIResponse(202,"Successfully unpublished the story id : "+storyId, null);
+    }
 }
 
 

@@ -153,6 +153,46 @@ public class UserController {
         UserFollowingResponseDTO userFollowingResponseDTO = userService.getFollowersUsersByUserId(auth.getName(),id,count);
         return new APIResponse(202,"Successfully load followers of user id: "+id,userFollowingResponseDTO);
     }
+
+    @PostMapping("/admin/loadUser/{no}")
+    public APIResponse loadUserForAdminBySortingCriteria(@PathVariable long no, @RequestBody AdminUserRequestDTO adminUserRequestDTO){
+
+        List<AdminUserDTO> adminUserDTOList = userService.loadUserForAdminBySortingCriteria(no,adminUserRequestDTO);
+        return new APIResponse(202,"Successfully load user to admin by sorting criteria",adminUserDTOList);
+    }
+
+    @PostMapping("admin/searchUsers")
+    public APIResponse searchUsers(@RequestBody SearchUserRequestDTO searchRequest) {
+
+        try {
+            List<AdminUserDTO> adminUserDTOList = userService.searchUsers(searchRequest.getSearchTerm(), searchRequest.getSort());
+            return new APIResponse(202, "Successfully Searched Users", adminUserDTOList);
+        }
+        catch (Exception e) {
+            return new APIResponse(500,"Fuck",null);
+        }
+    }
+
+    @PostMapping("/admin/deactivate/{userId}")
+    public APIResponse deactivateUserByUserId(@PathVariable long userId){
+
+        userService.deactivateUserByUserId(userId);
+        return new APIResponse(202,"Successfully deactivate user id: "+userId,null);
+    }
+
+    @PostMapping("/admin/verify/{userId}")
+    public APIResponse verifyUserByUserId(@PathVariable long userId){
+
+        userService.verifyUserByUserId(userId);
+        return new APIResponse(202,"Successfully verify user id: "+userId,null);
+    }
+
+    @GetMapping("/admin/totalUser")
+    public APIResponse getTotalUserCount(){
+
+        long totalUserCount = userService.getTotalUserCount();
+        return new APIResponse(202,"Successfully get total user count",totalUserCount);
+    }
 }
 
 

@@ -56,6 +56,8 @@ public class User {
 
     private int isActive = 1;
 
+    private int isVerifiedByWattpad = 0;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRole> userRoles;
 
@@ -86,6 +88,21 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserGenre> userGenres;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<StoryReport> storyReports;
+
+    @Transient
+    private long totalViews;
+
+    @Transient
+    private long totalLikes;
+
+    @Transient
+    private long userTotalViewsAndLikes;
+
+    @Transient
+    private long rank;
+
     public User(String username, String fullName, String email, String password, LocalDate birthday, String pronouns, int isVerify) {
         this.username = username;
         this.fullName = fullName;
@@ -112,6 +129,8 @@ public class User {
                 ", username='" + username + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +
+                ", total='" + userTotalViewsAndLikes + '\'' +
+                ", rank='" + rank + '\'' +
                 '}';
     }
 }

@@ -29,4 +29,8 @@ public interface StoryService {
     void deleteStoryByStoryId(String name, long storyId);
 
     boolean publishedStoryByStoryId(String name, long storyId);
+
+    AdminStoryResponseDTO loadStoriesForAdminBySortingCriteria(long no, AdminStoryRequestDTO adminStoryRequestDTO);
+
+    void storyUnpublishByAdmin(long storyId);
 }

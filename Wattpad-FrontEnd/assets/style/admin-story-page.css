@@ -261,12 +261,12 @@ body {
     font-weight: 600;
 }
 
-.status-published {
+.status-1 {
     color: #4caf50;
     font-weight: 600;
 }
 
-.status-draft {
+.status-0 {
     color: #ff9800;
     font-weight: 600;
 }
@@ -380,4 +380,121 @@ body {
 .pagination-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Sweet Alert Modern Wide & Short Dark Theme */
+.swal2-popup {
+    background: #1e1e1e !important;   /* deep black */
+    color: #f5f5f5 !important;
+    font-family: var(--primary-font-face),serif;
+    border-radius: 10px !important;
+    padding: 15px 25px !important;
+    width: 450px !important;   /* wider */
+    min-height: 140px !important; /* short height */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+}
+
+/* Title */
+.swal2-title {
+    color: #fff !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 6px !important;
+}
+
+/* Text */
+.swal2-html-container {
+    color: #aaa !important;
+    font-size: 0.93rem !important;
+    margin: 0 !important;
+}
+
+/* Buttons (modern black & white theme) */
+.swal2-styled {
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 8px 20px !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Confirm = clean white button */
+.swal2-confirm {
+    font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    background: #fff !important;
+    color: #111 !important;
+}
+
+.swal2-confirm:hover {
+    background: #e5e5e5 !important;
+}
+
+/* Cancel = dark gray button */
+.swal2-cancel {
+    font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    background: #2c2c2c !important;
+    color: #f5f5f5 !important;
+}
+
+.swal2-cancel:hover {
+    background: #444 !important;
+}
+
+/* Icons smaller + subtle */
+.swal2-icon {
+    margin: 0 auto 5px auto !important;
+    transform: scale(0.7);
+}
+
+
+
+
+
+
+/* Sweet Alert Modern Wide & Short Dark Theme for Success Message */
+.modern-swal-wide-short {
+    background: #1e1e1e !important;   /* deep black */
+    color: #f5f5f5 !important;
+    font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    border-radius: 10px !important;
+    padding: 15px 25px !important;
+    width: 450px !important;   /* wider */
+    min-height: 80px !important; /* short height for thin container */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+    text-align: center; /* Center text without buttons */
+}
+
+/* Title Style */
+.swal-title {
+    color: #fff !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 6px !important;
+}
+
+/* Text Style */
+.swal-text {
+    color: #aaa !important;
+    font-size: 0.93rem !important;
+    margin: 0 !important;
+}
+
+/* Ensure timer progress bar fits the design */
+.swal2-timer-progress-bar {
+    background: #fff !important;
+    height: 4px !important;
 }

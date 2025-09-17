@@ -17,13 +17,13 @@
     <nav class="sidebar">
         <img class="logo" src="assets/image/wattpad-logo.svg" alt="Wattpad Logo" onclick="navigateToDashboard()">
         <ul>
-            <li><a href="admin-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="admin-page.html"><i class="fas fa-users"></i> Manage Admins</a></li>
-            <li><a href="#"><i class="fas fa-users-cog"></i> Manage Users</a></li>
-            <li><a href="manage-stories.html"><i class="fas fa-book"></i> Manage Stories</a></li>
-            <li><a href="#"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
-            <li><a href="#"><i class="fas fa-bullhorn"></i> Announcements</a></li>
-            <li><a href="genres-page.html"><i class="fas fa-tags"></i> Genres</a></li>
+            <li><a href="admin-dashboard-page.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="admin-admin-page.html"><i class="fas fa-users"></i> Manage Admins</a></li>
+            <li><a href="admin-user-page.html"><i class="fas fa-users-cog"></i> Manage Users</a></li>
+            <li><a href="admin-story-page.html"><i class="fas fa-book"></i> Manage Stories</a></li>
+            <li><a href="admin-transaction-page.html"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
+            <li><a href="admin-announcement-page.html"><i class="fas fa-bullhorn"></i> Announcements</a></li>
+            <li><a href="admin-genre-page.html"><i class="fas fa-tags"></i> Genres</a></li>
             <li><a href="#"><i class="fas fa-flag"></i> Reports</a></li>
             <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
         </ul>
@@ -80,404 +80,428 @@
 </div>
 
 <script>
-    let currentPage = 0;
-    let users = [];
-    let filteredUsers = [];
+    let currentPage = 1;
+    let totalPages = 0;
+    let sort = {
+        'status': 'all',
+        'type': 'all',
+        'rank': 'all'
+    };
 
-    // Sample users data
-    const allUsers = [
-        {
-            id: 'U001',
-            fullname: 'Emma Johnson',
-            username: '@emmajohnson',
-            email: 'emma.johnson@email.com',
-            joinedDate: '2023-05-15',
-            status: 'active',
-            verified: true,
-            avatar: 'https://i.pravatar.cc/150?img=1',
-            cover: 'https://picsum.photos/320/80?random=1',
-            stories: 12,
-            views: 45000,
-            likes: 3200,
-            reports: 1,
-            recentReports: 0,
-            engagement: 'high',
-            rank: 1
-        },
-        {
-            id: 'U002',
-            fullname: 'Marcus Chen',
-            username: '@marcuswrites',
-            email: 'marcus.chen@email.com',
-            joinedDate: '2023-03-22',
-            status: 'active',
-            verified: false,
-            avatar: 'https://i.pravatar.cc/150?img=2',
-            cover: 'https://picsum.photos/320/80?random=2',
-            stories: 8,
-            views: 28000,
-            likes: 1900,
-            reports: 0,
-            recentReports: 0,
-            engagement: 'medium',
-            rank: 15
-        },
-        {
-            id: 'U003',
-            fullname: 'Sophia Williams',
-            username: '@sophiawrites',
-            email: 'sophia.williams@email.com',
-            joinedDate: '2023-07-10',
-            status: 'inactive',
-            verified: true,
-            avatar: 'https://i.pravatar.cc/150?img=3',
-            cover: 'https://picsum.photos/320/80?random=3',
-            stories: 25,
-            views: 67000,
-            likes: 5400,
-            reports: 2,
-            recentReports: 1,
-            engagement: 'high',
-            rank: 3
-        },
-        {
-            id: 'U004',
-            fullname: 'Alex Rodriguez',
-            username: '@alexreads',
-            email: 'alex.rodriguez@email.com',
-            joinedDate: '2023-01-18',
-            status: 'active',
-            verified: false,
-            avatar: 'https://i.pravatar.cc/150?img=4',
-            cover: 'https://picsum.photos/320/80?random=4',
-            stories: 5,
-            views: 12000,
-            likes: 800,
-            reports: 0,
-            recentReports: 0,
-            engagement: 'low',
-            rank: 89
-        },
-        {
-            id: 'U005',
-            fullname: 'Isabella Martinez',
-            username: '@bellabooks',
-            email: 'isabella.martinez@email.com',
-            joinedDate: '2023-06-30',
-            status: 'active',
-            verified: true,
-            avatar: 'https://i.pravatar.cc/150?img=5',
-            cover: 'https://picsum.photos/320/80?random=5',
-            stories: 18,
-            views: 52000,
-            likes: 4100,
-            reports: 1,
-            recentReports: 0,
-            engagement: 'high',
-            rank: 7
-        },
-        {
-            id: 'U006',
-            fullname: 'James Thompson',
-            username: '@jamestales',
-            email: 'james.thompson@email.com',
-            joinedDate: '2023-04-12',
-            status: 'active',
-            verified: false,
-            avatar: 'https://i.pravatar.cc/150?img=6',
-            cover: 'https://picsum.photos/320/80?random=6',
-            stories: 10,
-            views: 22000,
-            likes: 1500,
-            reports: 0,
-            recentReports: 0,
-            engagement: 'medium',
-            rank: 34
-        },
-        {
-            id: 'U007',
-            fullname: 'Ava Davis',
-            username: '@avastories',
-            email: 'ava.davis@email.com',
-            joinedDate: '2023-08-05',
-            status: 'inactive',
-            verified: false,
-            avatar: 'https://i.pravatar.cc/150?img=7',
-            cover: 'https://picsum.photos/320/80?random=7',
-            stories: 3,
-            views: 8500,
-            likes: 450,
-            reports: 0,
-            recentReports: 0,
-            engagement: 'low',
-            rank: 156
-        },
-        {
-            id: 'U008',
-            fullname: 'Ryan Miller',
-            username: '@ryanwrites',
-            email: 'ryan.miller@email.com',
-            joinedDate: '2023-02-28',
-            status: 'active',
-            verified: true,
-            avatar: 'https://i.pravatar.cc/150?img=8',
-            cover: 'https://picsum.photos/320/80?random=8',
-            stories: 20,
-            views: 58000,
-            likes: 4800,
-            reports: 3,
-            recentReports: 1,
-            engagement: 'high',
-            rank: 5
-        },
-        {
-            id: 'U009',
-            fullname: 'Mia Wilson',
-            username: '@miabooks',
-            email: 'mia.wilson@email.com',
-            joinedDate: '2023-09-12',
-            status: 'active',
-            verified: false,
-            avatar: 'https://i.pravatar.cc/150?img=9',
-            cover: 'https://picsum.photos/320/80?random=9',
-            stories: 6,
-            views: 15000,
-            likes: 950,
-            reports: 0,
-            recentReports: 0,
-            engagement: 'low',
-            rank: 67
-        },
-        {
-            id: 'U010',
-            fullname: 'Noah Brown',
-            username: '@noahnovels',
-            email: 'noah.brown@email.com',
-            joinedDate: '2023-05-03',
-            status: 'active',
-            verified: true,
-            avatar: 'https://i.pravatar.cc/150?img=10',
-            cover: 'https://picsum.photos/320/80?random=10',
-            stories: 15,
-            views: 40000,
-            likes: 3000,
-            reports: 1,
-            recentReports: 0,
-            engagement: 'medium',
-            rank: 12
-        },
-        {
-            id: 'U011',
-            fullname: 'Charlotte Garcia',
-            username: '@charlottewrites',
-            email: 'charlotte.garcia@email.com',
-            joinedDate: '2023-07-20',
-            status: 'inactive',
-            verified: false,
-            avatar: 'https://i.pravatar.cc/150?img=11',
-            cover: 'https://picsum.photos/320/80?random=11',
-            stories: 4,
-            views: 9000,
-            likes: 600,
-            reports: 0,
-            recentReports: 0,
-            engagement: 'low',
-            rank: 134
-        },
-        {
-            id: 'U012',
-            fullname: 'Liam Anderson',
-            username: '@liamstories',
-            email: 'liam.anderson@email.com',
-            joinedDate: '2023-03-15',
-            status: 'active',
-            verified: true,
-            avatar: 'https://i.pravatar.cc/150?img=12',
-            cover: 'https://picsum.photos/320/80?random=12',
-            stories: 22,
-            views: 61000,
-            likes: 5200,
-            reports: 2,
-            recentReports: 0,
-            engagement: 'high',
-            rank: 2
-        }
-    ];
-
-    users = [...allUsers];
-    filteredUsers = [...users];
-
-    function getEngagementStatus(engagement) {
-        const engagementMap = {
-            'high': 'Elite Creator',
-            'medium': 'Rising Writer',
-            'low': 'New Explorer'
-        };
-        return engagementMap[engagement];
-    }
-
-    function displayUsers() {
+    function displayUsers(users) {
         const userContainer = document.getElementById('userContainer');
         userContainer.innerHTML = '';
 
-        const startIndex = currentPage * 12;
-        const endIndex = startIndex + 12;
-        const pageUsers = filteredUsers.slice(startIndex, endIndex);
-
-        if (pageUsers.length === 0) {
+        if (!users || users.length === 0) {
             userContainer.innerHTML = '<div class="loading"><div style="font-size: 48px; margin-bottom: 15px;">👥</div>No users found</div>';
+            document.getElementById('nextBtn').disabled = true;
         } else {
-            pageUsers.forEach(user => {
+            users.forEach(user => {
                 const userCard = document.createElement('div');
                 userCard.classList.add('user-card');
                 userCard.innerHTML = `
-                <div class="user-header">
-                    <img src="${user.cover}" alt="Cover" class="user-cover">
-                    <img src="${user.avatar}" alt="${user.fullname}" class="user-avatar">
-                </div>
-                <div class="user-info">
-                    <div class="user-name-row">
-                        <span class="user-fullname">${user.fullname}</span>
-                        ${user.verified ? '<i class="fas fa-check-circle verified-icon"></i>' : ''}
+                    <div class="user-header">
+                        <img src="${user.coverPicPath}" onerror="this.onerror=null; this.src='https://www.solidbackgrounds.com/images/1920x1080/1920x1080-gray-solid-color-background.jpg';" alt="Cover" class="user-cover">
+                        <img src="${user.profilePicPath}" onerror="this.onerror=null; this.src='https://static.vecteezy.com/system/resources/previews/005/005/788/non_2x/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg';" alt="${user.fullName}" class="user-avatar">
                     </div>
-                    <div class="username">${user.username}</div>
-                    <div class="user-details">
-                        <div><strong>ID:</strong> ${user.id}</div>
-                        <div><strong>Email:</strong> ${user.email}</div>
-                        <div><strong>Joined:</strong> ${new Date(user.joinedDate).toLocaleDateString()}</div>
-                        <div><strong>Status:</strong> <span class="status-${user.status}">${user.status.charAt(0).toUpperCase() + user.status.slice(1)}</span></div>
+                    <div class="user-info">
+                        <div class="user-name-row">
+                            <span class="user-fullname">${user.fullName}</span>
+                            ${user.isVerify === 1 ? '<i class="fas fa-check-circle verified-icon"></i>' : ''}
+                        </div>
+                        <div class="username">@${user.username}</div>
+                        <div class="user-details">
+                            <div><strong>ID:</strong> ${user.id}</div>
+                            <div><strong>Email:</strong> ${user.email}</div>
+                            <div><strong>Joined:</strong> ${new Date(user.joinedDate).toLocaleDateString()}</div>
+                            ${user.isActive===1 ? `<div><strong>Status:</strong> <span class="status-${user.isActive}">Active</span></div>` : `<div><strong>Status:</strong> <span class="status-${user.isActive}">Deactive</span></div>`}
+                        </div>
+                        <div class="divider"></div>
+                        <div class="user-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Stories:</span>
+                                <span class="stat-value">${user.work}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Views:</span>
+                                <span class="stat-value">${user.views}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Likes:</span>
+                                <span class="stat-value">${user.likes}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Reports:</span>
+                                <span class="stat-value">${user.totalReports}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Recent Reports:</span>
+                                <span class="stat-value">${user.recentReports}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Status:</span>
+                                <span class="stat-value engagement-status engagement-${user.engagement}">${user.engagement}</span>
+                            </div>
+                        </div>
+                        <div class="user-rank">Rank: #${user.rank}</div>
+                        <div class="user-actions">
+                            ${user.isVerify === 0 ? '<button class="action-btn verify-btn" onclick="verifyUser(\'' + user.id + '\')"><i style="color: goldenrod; font-size: 16px;" class="fas fa-check-circle"></i></button>' : ''}
+                            ${user.isActive === 1 ? `<button class="action-btn deactivate-btn" onclick="toggleUserStatus('${user.id}')">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>` : ''}
+                        </div>
                     </div>
-                    <div class="divider"></div>
-                    <div class="user-stats">
-                        <div class="stat-item">
-                            <span class="stat-label">Stories:</span>
-                            <span class="stat-value">${user.stories}</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Views:</span>
-                            <span class="stat-value">${user.views.toLocaleString()}</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Likes:</span>
-                            <span class="stat-value">${user.likes.toLocaleString()}</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Reports:</span>
-                            <span class="stat-value">${user.reports}</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Recent Reports:</span>
-                            <span class="stat-value">${user.recentReports}</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Status:</span>
-                            <span class="stat-value engagement-status engagement-${user.engagement}">${getEngagementStatus(user.engagement)}</span>
-                        </div>
-                    </div>
-                    <div class="user-rank">Rank: #${user.rank}</div>
-                    <div class="user-actions">
-                        ${!user.verified ? '<button class="action-btn verify-btn" onclick="verifyUser(\'' + user.id + '\')"><i style="color: goldenrod; font-size: 16px;" class="fas fa-check-circle"></i></button>' : ''}
-                        <button class="action-btn deactivate-btn" onclick="toggleUserStatus('${user.id}')">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
+                `;
                 userContainer.appendChild(userCard);
             });
         }
     }
 
-    function filterUsers() {
-        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-        const statusFilter = document.getElementById('statusFilter').value;
-        const verifiedFilter = document.getElementById('verifiedFilter').value;
-        const rankFilter = document.getElementById('rankFilter').value;
 
-        filteredUsers = users.filter(user => {
-            const matchesSearch = user.fullname.toLowerCase().includes(searchTerm) ||
-                user.username.toLowerCase().includes(searchTerm) ||
-                user.email.toLowerCase().includes(searchTerm);
-
-            const matchesStatus = statusFilter === 'all' || user.status === statusFilter;
-
-            const matchesVerified = verifiedFilter === 'all' ||
-                (verifiedFilter === 'verified' && user.verified) ||
-                (verifiedFilter === 'normal' && !user.verified);
-
-            const matchesRank = rankFilter === 'all' ||
-                (rankFilter === 'top' && user.rank <= 20) ||
-                (rankFilter === 'bottom' && user.rank > 50);
-
-            return matchesSearch && matchesStatus && matchesVerified && matchesRank;
-        });
-
-        currentPage = 0;
-        displayUsers();
-        updatePagination();
+    function filterUsers(event) {
+        if (event.key === 'Enter') {
+            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+            if (searchTerm) {
+                fetch('http://localhost:8080/user/admin/searchUsers', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ searchTerm: searchTerm, sort: sort })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(errData => {
+                                throw new Error(JSON.stringify(errData));
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Search Success:', data);
+                        displayUsers(data.data);
+                    })
+                    .catch(error => {
+                        console.error('Search Error:', error);
+                        displayUsers([]); // Show no users on error
+                    });
+            } else {
+                displayUsersWithSort();
+            }
+        }
     }
 
-    function updatePagination() {
-        const totalPages = Math.ceil(filteredUsers.length / 12);
-        const startIndex = currentPage * 12 + 1;
-        const endIndex = Math.min((currentPage + 1) * 12, filteredUsers.length);
 
-        document.getElementById('paginationInfo').textContent =
-            `Showing ${startIndex}-${endIndex} of ${filteredUsers.length} users`;
-
-        document.getElementById('prevBtn').disabled = currentPage === 0;
-        document.getElementById('nextBtn').disabled = currentPage >= totalPages - 1;
+    function displayUsersWithSort() {
+        fetch('http://localhost:8080/user/admin/loadUser/' + currentPage, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(sort)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Load Success:', data);
+                const users = data.data || [];
+                displayUsers(users);
+                updatePaginationInfo(users.length);  // Update showing X-Y of Z (needs total from backend or estimate)
+                updatePaginationButtons();
+            })
+            .catch(error => {
+                console.error('Load Error:', error);
+                displayUsers([]);
+                updatePaginationInfo(0);
+                updatePaginationButtons();
+            });
     }
+
 
     function previousPage() {
-        if (currentPage > 0) {
+        if (currentPage > 1) {
             currentPage--;
-            displayUsers();
-            updatePagination();
+            displayUsersWithSort();
         }
     }
+
 
     function nextPage() {
-        const totalPages = Math.ceil(filteredUsers.length / 12);
-        if (currentPage < totalPages - 1) {
-            currentPage++;
-            displayUsers();
-            updatePagination();
-        }
+        currentPage++;
+        displayUsersWithSort();
     }
 
+
+    function updatePaginationInfo(usersLength) {
+        const pageSize = 12;
+
+        fetch('http://localhost:8080/user/admin/totalUser', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+
+                const totalUsers = data.data;
+                const start = (currentPage - 1) * pageSize + 1;
+                const end = Math.min(start + usersLength - 1, totalUsers);
+
+                document.getElementById('paginationInfo').textContent =
+                    `Showing ${start}-${end} of ${totalUsers} users`;
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+            });
+    }
+
+
+    function updatePaginationButtons() {
+        document.getElementById('prevBtn').disabled = currentPage === 1;
+        document.getElementById('nextBtn').disabled = false;  // Disable only if backend returns empty (handled in response)
+
+        // Generate dynamic page numbers (e.g., show 1 2 3 ... 10)
+        const pageNumbers = document.getElementById('pageNumbers');
+        pageNumbers.innerHTML = '';
+        const maxVisiblePages = 5;  // Show up to 5 page buttons
+        const startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+        const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);  // Note: totalPages needs backend total
+
+        for (let i = startPage; i <= endPage; i++) {
+            const btn = document.createElement('button');
+            btn.classList.add('pagination-btn');
+            btn.textContent = i;
+            if (i === currentPage) {
+                btn.classList.add('active');  // Add active class for styling
+            }
+            btn.onclick = () => {
+                currentPage = i;
+                displayUsersWithSort();
+            };
+            pageNumbers.appendChild(btn);
+        }
+
+        // If backend returns empty on next, disable next button (add check in then block)
+        // For now, assume you add a flag or check users.length === 0 to set totalPages
+    }
+
+
+    const statusFilter = document.getElementById('statusFilter');
+    statusFilter.addEventListener('change', function () {
+        sort.status = this.value;
+        displayUsersWithSort();
+    });
+
+
+    const verifiedFilter = document.getElementById('verifiedFilter');
+    verifiedFilter.addEventListener('change', function () {
+        sort.type = this.value;
+        displayUsersWithSort();
+    });
+
+
+    const rankFilter = document.getElementById('rankFilter');
+    rankFilter.addEventListener('change', function () {
+        sort.rank = this.value;
+        displayUsersWithSort();
+    });
+
+
+    //verify user
     function verifyUser(userId) {
-        const user = users.find(u => u.id === userId);
-        if (user) {
-            user.verified = true;
-            filteredUsers = users.filter(u => filteredUsers.includes(u));
-            displayUsers();
-            alert(`${user.fullname} has been verified!`);
-        }
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to verify this user?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, verify',
+            cancelButtonText: 'Cancel',
+            customClass: {
+                popup: 'modern-swal',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                fetch('http://localhost:8080/user/admin/verify/'+userId, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(errData => {
+                                throw new Error(JSON.stringify(errData));
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Success:', data);
+
+                        displayUsersWithSort();
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'User has been verified!',
+                            customClass: {
+                                popup: 'modern-swal-wide-short',
+                                title: 'swal-title',
+                                htmlContainer: 'swal-text'
+                            },
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+
+                    })
+                    .catch(error => {
+                        let response = JSON.parse(error.message);
+                        console.log(response);
+
+                        Swal.fire({
+                            title: 'Fail',
+                            text: 'Failed to verify the user. Please try again later!',
+                            customClass: {
+                                popup: 'modern-swal-wide-short',
+                                title: 'swal-title',
+                                htmlContainer: 'swal-text'
+                            },
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                    });
+            }
+            else {
+                console.log('still unverified');
+            }
+        });
+
     }
 
+
+    //deactivate user
     function toggleUserStatus(userId) {
-        const user = users.find(u => u.id === userId);
-        if (user) {
-            user.status = user.status === 'active' ? 'inactive' : 'active';
-            filteredUsers = users.filter(u => filteredUsers.includes(u));
-            displayUsers();
-            alert(`${user.fullname} has been ${user.status === 'active' ? 'activated' : 'deactivated'}!`);
-        }
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to deactivate this user?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, deactivate',
+            cancelButtonText: 'Cancel',
+            customClass: {
+                popup: 'modern-swal',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                fetch('http://localhost:8080/user/admin/deactivate/'+userId, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(errData => {
+                                throw new Error(JSON.stringify(errData));
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Success:', data);
+
+                        displayUsersWithSort();
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'User has been deactivated!',
+                            customClass: {
+                                popup: 'modern-swal-wide-short',
+                                title: 'swal-title',
+                                htmlContainer: 'swal-text'
+                            },
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+
+                    })
+                    .catch(error => {
+                        let response = JSON.parse(error.message);
+                        console.log(response);
+
+                        Swal.fire({
+                            title: 'Fail',
+                            text: 'Failed to deactivate the user. Please try again later!',
+                            customClass: {
+                                popup: 'modern-swal-wide-short',
+                                title: 'swal-title',
+                                htmlContainer: 'swal-text'
+                            },
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                    });
+            }
+            else {
+                console.log('still activate');
+            }
+        });
     }
 
-    function editUser(userId) {
-        alert(`Edit user ${userId} - Feature coming soon!`);
-    }
 
     function navigateToDashboard() {
-        window.location.href = 'admin-dashboard.html';
+        window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-dashboard-page.html';
     }
 
-    // Initial display
+
     document.addEventListener('DOMContentLoaded', () => {
-        displayUsers();
-        updatePagination();
+        displayUsersWithSort();
+        document.getElementById('searchInput').addEventListener('keyup', filterUsers);
     });
+
+
+    document.getElementById('searchInput').addEventListener('keyup', function (event) {
+        if (this.value.trim() === '') {
+            displayUsersWithSort();
+        }
+    });
+
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="assets/js/admin-user-page-script.js"></script>
 </body>

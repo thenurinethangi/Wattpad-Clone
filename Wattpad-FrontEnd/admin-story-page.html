@@ -17,13 +17,13 @@
     <nav class="sidebar">
         <img class="logo" src="assets/image/wattpad-logo.svg" alt="Wattpad Logo" onclick="navigateToDashboard()">
         <ul>
-            <li><a href="admin-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="admin-page.html"><i class="fas fa-users"></i> Manage Admins</a></li>
+            <li><a href="admin-dashboard-page.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="admin-admin-page.html"><i class="fas fa-users"></i> Manage Admins</a></li>
             <li><a href="admin-user-page.html"><i class="fas fa-users-cog"></i> Manage Users</a></li>
-            <li><a href="#"><i class="fas fa-book"></i> Manage Stories</a></li>
-            <li><a href="#"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
-            <li><a href="#"><i class="fas fa-bullhorn"></i> Announcements</a></li>
-            <li><a href="genres-page.html"><i class="fas fa-tags"></i> Genres</a></li>
+            <li><a href="admin-story-page.html"><i class="fas fa-book"></i> Manage Stories</a></li>
+            <li><a href="admin-transaction-page.html"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
+            <li><a href="admin-announcement-page.html"><i class="fas fa-bullhorn"></i> Announcements</a></li>
+            <li><a href="admin-genre-page.html"><i class="fas fa-tags"></i> Genres</a></li>
             <li><a href="#"><i class="fas fa-flag"></i> Reports</a></li>
             <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
         </ul>
@@ -85,215 +85,59 @@
 </div>
 
 <script>
-    let currentPage = 0;
-    let stories = [];
-    let filteredStories = [];
-
-    // Sample stories data
-    const allStories = [
-        {
-            id: 'S001',
-            title: 'The Midnight Chronicles: Shadows of Tomorrow',
-            author: 'Emma Johnson',
-            authorId: 'U001',
-            cover: 'https://picsum.photos/140/200?random=1',
-            reads: 125000,
-            likes: 8400,
-            comments: 2100,
-            parts: 45,
-            genre: 'Fantasy',
-            status: 'published',
-            publishedDate: '2023-08-15',
-            totalReports: 3,
-            recentReports: 1,
-            rank: 5,
-            isOriginal: true
-        },
-        {
-            id: 'S002',
-            title: 'Hearts in Digital Space',
-            author: 'Marcus Chen',
-            authorId: 'U002',
-            cover: 'https://picsum.photos/140/200?random=2',
-            reads: 89000,
-            likes: 6200,
-            comments: 1800,
-            parts: 32,
-            genre: 'Romance',
-            status: 'published',
-            publishedDate: '2023-07-22',
-            totalReports: 1,
-            recentReports: 0,
-            rank: 12,
-            isOriginal: false
-        },
-        {
-            id: 'S003',
-            title: 'The Last Kingdom of Elara',
-            author: 'Sophia Williams',
-            authorId: 'U003',
-            cover: 'https://picsum.photos/140/200?random=3',
-            reads: 234000,
-            likes: 15600,
-            comments: 4200,
-            parts: 67,
-            genre: 'Adventure',
-            status: 'published',
-            publishedDate: '2023-05-10',
-            totalReports: 8,
-            recentReports: 2,
-            rank: 2,
-            isOriginal: true
-        },
-        {
-            id: 'S004',
-            title: 'Untold Secrets',
-            author: 'Alex Rodriguez',
-            authorId: 'U004',
-            cover: 'https://picsum.photos/140/200?random=4',
-            reads: 0,
-            likes: 0,
-            comments: 0,
-            parts: 12,
-            genre: 'Mystery',
-            status: 'draft',
-            publishedDate: null,
-            totalReports: 0,
-            recentReports: 0,
-            rank: 0,
-            isOriginal: false
-        },
-        {
-            id: 'S005',
-            title: 'Stellar Voyager: Beyond the Cosmos',
-            author: 'Isabella Martinez',
-            authorId: 'U005',
-            cover: 'https://picsum.photos/140/200?random=5',
-            reads: 178000,
-            likes: 11200,
-            comments: 3100,
-            parts: 52,
-            genre: 'Sci-Fi',
-            status: 'published',
-            publishedDate: '2023-06-18',
-            totalReports: 4,
-            recentReports: 1,
-            rank: 7,
-            isOriginal: true
-        },
-        {
-            id: 'S006',
-            title: 'Coffee Shop Dreams',
-            author: 'James Thompson',
-            authorId: 'U006',
-            cover: 'https://picsum.photos/140/200?random=6',
-            reads: 56000,
-            likes: 3800,
-            comments: 950,
-            parts: 28,
-            genre: 'Romance',
-            status: 'published',
-            publishedDate: '2023-09-02',
-            totalReports: 0,
-            recentReports: 0,
-            rank: 34,
-            isOriginal: false
-        },
-        {
-            id: 'S007',
-            title: 'The Broken Mirror',
-            author: 'Ava Davis',
-            authorId: 'U007',
-            cover: 'https://picsum.photos/140/200?random=7',
-            reads: 0,
-            likes: 0,
-            comments: 0,
-            parts: 8,
-            genre: 'Drama',
-            status: 'draft',
-            publishedDate: null,
-            totalReports: 0,
-            recentReports: 0,
-            rank: 0,
-            isOriginal: false
-        },
-        {
-            id: 'S008',
-            title: 'Warriors of the Ancient Realm',
-            author: 'Ryan Miller',
-            authorId: 'U008',
-            cover: 'https://picsum.photos/140/200?random=8',
-            reads: 298000,
-            likes: 19800,
-            comments: 5600,
-            parts: 78,
-            genre: 'Fantasy',
-            status: 'published',
-            publishedDate: '2023-04-25',
-            totalReports: 12,
-            recentReports: 3,
-            rank: 1,
-            isOriginal: true
-        },
-        {
-            id: 'S009',
-            title: 'High School Diaries',
-            author: 'Mia Wilson',
-            authorId: 'U009',
-            cover: 'https://picsum.photos/140/200?random=9',
-            reads: 42000,
-            likes: 2900,
-            comments: 720,
-            parts: 24,
-            genre: 'Teen Fiction',
-            status: 'published',
-            publishedDate: '2023-08-30',
-            totalReports: 2,
-            recentReports: 0,
-            rank: 45,
-            isOriginal: false
-        },
-        {
-            id: 'S010',
-            title: 'The Phoenix Rising',
-            author: 'Noah Brown',
-            authorId: 'U010',
-            cover: 'https://picsum.photos/140/200?random=10',
-            reads: 156000,
-            likes: 10200,
-            comments: 2800,
-            parts: 48,
-            genre: 'Fantasy',
-            status: 'published',
-            publishedDate: '2023-07-08',
-            totalReports: 5,
-            recentReports: 1,
-            rank: 9,
-            isOriginal: true
-        }
-    ];
-
-    stories = [...allStories];
-    filteredStories = [...stories];
+    let currentPage = 1;
+    let sort = {
+        'status': 'all',
+        'type': 'all',
+        'rank': 'all',
+        'report': 'all'
+    };
+    
+    let start = 0;
+    let end = 0;
+    let total = 0;
 
     function displayStories() {
+
         const storyContainer = document.getElementById('storyContainer');
         storyContainer.innerHTML = '';
 
-        const startIndex = currentPage * 10;
-        const endIndex = startIndex + 10;
-        const pageStories = filteredStories.slice(startIndex, endIndex);
+        fetch('http://localhost:8080/api/v1/story/admin/loadStory/' + currentPage, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(sort)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Load Success:', data);
 
-        if (pageStories.length === 0) {
-            storyContainer.innerHTML = '<div class="loading"><div style="font-size: 48px; margin-bottom: 15px;">📚</div>No stories found</div>';
-        } else {
-            pageStories.forEach(story => {
-                const storyCard = document.createElement('div');
-                storyCard.classList.add('story-card');
-                storyCard.innerHTML = `
+                if (data.data.adminStoryDTOList.length === 0) {
+                    storyContainer.innerHTML = '<div class="loading"><div style="font-size: 48px; margin-bottom: 15px;">📚</div>No stories found</div>';
+                }
+                else {
+                    total = data.data.totalStories;
+                    start = data.data.start;
+                    end = data.data.end;
+
+                    paginationTextSet();
+                    
+                    data.data.adminStoryDTOList.forEach(story => {
+                        const storyCard = document.createElement('div');
+                        storyCard.classList.add('story-card');
+                        storyCard.innerHTML = `
                     <div class="story-cover-container">
-                        <img src="${story.cover}" alt="${story.title}" class="story-cover">
-                        ${story.isOriginal ? `
+                        <img src="${story.coverImagePath}" alt="${story.title}" class="story-cover">
+                        ${story.isOriginal === 1 ? `
                             <div class="wattpad-original-badge">
                                 <img src="assets/image/wattpad-logo.svg" alt="Wattpad Original" class="wattpad-logo">
                             </div>
@@ -305,11 +149,11 @@
                             <div class="story-stats">
                                 <div class="stat-item">
                                     <span class="stat-label">Reads:</span>
-                                    <span class="stat-value">${story.reads.toLocaleString()}</span>
+                                    <span class="stat-value">${story.views}</span>
                                 </div>
                                 <div class="stat-item">
                                     <span class="stat-label">Likes:</span>
-                                    <span class="stat-value">${story.likes.toLocaleString()}</span>
+                                    <span class="stat-value">${story.likes}</span>
                                 </div>
                                 <div class="stat-item">
                                     <span class="stat-label">Comments:</span>
@@ -322,121 +166,182 @@
                             </div>
                             <div class="story-meta">
                                 <div><strong>Genre:</strong> <span class="genre-tag">${story.genre}</span></div>
-                                <div><strong>Author ID:</strong> ${story.authorId}</div>
-                                <div><strong>Status:</strong> <span class="status-${story.status}">${story.status.charAt(0).toUpperCase() + story.status.slice(1)}</span></div>
+                                <div><strong>Author ID:</strong> ${story.userId}</div>
+                                ${story.status===1 ? `<div><strong>Status:</strong> <span class="status-${story.status}">Published</span></div>` : `<div><strong>Status:</strong> <span class="status-${story.status}">Draft</span></div>`}
                                 <div><strong>Published:</strong> ${story.publishedDate ? new Date(story.publishedDate).toLocaleDateString() : 'Not published'}</div>
                                 <div><strong>Total Reports:</strong> ${story.totalReports}</div>
-                                <div><strong>Recent Reports:</strong> ${story.recentReports}</div>
+                                <div><strong>Recent Reports:</strong> <span style="color: red;">${story.recentReports}</span></div>
                                 <div><strong>Rank:</strong> #${story.rank || 'Unranked'}</div>
                             </div>
                         </div>
                         <div>
                             <div class="divider"></div>
                             <div class="story-actions">
-                                <button class="action-btn unpublish-btn" onclick="toggleStoryStatus('${story.id}')" title="${story.status === 'published' ? 'Unpublish Story' : 'Publish Story'}">
-                                    <i class="fas ${story.status === 'published' ? 'fa-eye-slash' : 'fa-eye'}"></i>
-                                </button>
+                                ${story.status===1 ? `<button class="action-btn unpublish-btn" onclick="toggleStoryStatus('${story.id}')">
+                                    <i class="fas fa-eye-slash"></i>
+                                </button>` : ``}
                             </div>
                         </div>
                     </div>
                 `;
-                storyContainer.appendChild(storyCard);
+                        storyContainer.appendChild(storyCard);
+                    });
+                }
+
+            })
+            .catch(error => {
+                console.error('Load Error:', error);
+
             });
-        }
     }
-
-    function filterStories() {
-        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-        const statusFilter = document.getElementById('statusFilter').value;
-        const rankFilter = document.getElementById('rankFilter').value;
-        const typeFilter = document.getElementById('typeFilter').value;
-        const reportsFilter = document.getElementById('reportsFilter').value;
-
-        filteredStories = stories.filter(story => {
-            const matchesSearch = story.title.toLowerCase().includes(searchTerm) ||
-                story.author.toLowerCase().includes(searchTerm) ||
-                story.genre.toLowerCase().includes(searchTerm);
-
-            const matchesStatus = statusFilter === 'all' || story.status === statusFilter;
-
-            const matchesRank = rankFilter === 'all' ||
-                (rankFilter === 'top' && story.rank > 0 && story.rank <= 20) ||
-                (rankFilter === 'bottom' && story.rank > 50);
-
-            const matchesType = typeFilter === 'all' ||
-                (typeFilter === 'original' && story.isOriginal) ||
-                (typeFilter === 'normal' && !story.isOriginal);
-
-            return matchesSearch && matchesStatus && matchesRank && matchesType;
-        });
-
-        // Sort by reports if needed
-        if (reportsFilter === 'most') {
-            filteredStories.sort((a, b) => b.totalReports - a.totalReports);
-        } else if (reportsFilter === 'least') {
-            filteredStories.sort((a, b) => a.totalReports - b.totalReports);
-        }
-
-        currentPage = 0;
+    
+    
+    function previousPage(){
+        currentPage--;
         displayStories();
-        updatePagination();
     }
 
-    function updatePagination() {
-        const totalPages = Math.ceil(filteredStories.length / 10);
-        const startIndex = currentPage * 10 + 1;
-        const endIndex = Math.min((currentPage + 1) * 10, filteredStories.length);
-
-        document.getElementById('paginationInfo').textContent =
-            `Showing ${startIndex}-${endIndex} of ${filteredStories.length} stories`;
-
-        document.getElementById('prevBtn').disabled = currentPage === 0;
-        document.getElementById('nextBtn').disabled = currentPage >= totalPages - 1;
+    
+    function nextPage(){
+        currentPage++;
+        displayStories();
     }
+    
+    
+    function paginationTextSet() {
+        document.getElementById('paginationInfo').textContent = `Showing ${start}-${end} of ${total} stories`;
 
-    function previousPage() {
-        if (currentPage > 0) {
-            currentPage--;
-            displayStories();
-            updatePagination();
+        if(start>1){
+            document.getElementById("prevBtn").disabled = false;
+        }
+        else{
+            document.getElementById("prevBtn").disabled = true;
+        }
+
+        if(end<total){
+            document.getElementById("nextBtn").disabled = false;
+        }
+        else{
+            document.getElementById("nextBtn").disabled = true;
         }
     }
+    
 
-    function nextPage() {
-        const totalPages = Math.ceil(filteredStories.length / 10);
-        if (currentPage < totalPages - 1) {
-            currentPage++;
-            displayStories();
-            updatePagination();
-        }
-    }
+    const statusFilter = document.getElementById('statusFilter');
+    statusFilter.addEventListener('change', function () {
+        sort.status = this.value;
+        displayStories();
+    });
 
-    function toggleStoryStatus(storyId) {
-        const story = stories.find(s => s.id === storyId);
-        if (story) {
-            story.status = story.status === 'published' ? 'draft' : 'published';
-            if (story.status === 'draft') {
-                story.reads = 0;
-                story.likes = 0;
-                story.comments = 0;
-                story.rank = 0;
-                story.publishedDate = null;
+
+    const typeFilter = document.getElementById('typeFilter');
+    typeFilter.addEventListener('change', function () {
+        sort.type = this.value;
+        displayStories();
+    });
+
+
+    const rankFilter = document.getElementById('rankFilter');
+    rankFilter.addEventListener('change', function () {
+        sort.rank = this.value;
+        displayStories();
+    });
+
+    const reportFilter = document.getElementById('reportsFilter');
+    reportFilter.addEventListener('change', function () {
+        sort.report = this.value;
+        displayStories();
+    });
+
+
+    function toggleStoryStatus(storyId){
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Would you like to unpublish this story?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, unpublish',
+            cancelButtonText: 'Cancel',
+            customClass: {
+                popup: 'modern-swal',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel'
             }
-            filteredStories = stories.filter(s => filteredStories.includes(s));
-            displayStories();
-            alert(`${story.title} has been ${story.status === 'published' ? 'published' : 'unpublished'}!`);
-        }
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                fetch('http://localhost:8080/api/v1/story/admin/unpublish/'+storyId, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(errData => {
+                                throw new Error(JSON.stringify(errData));
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Success:', data);
+
+                        displayStories();
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Story has been unpublished!',
+                            customClass: {
+                                popup: 'modern-swal-wide-short',
+                                title: 'swal-title',
+                                htmlContainer: 'swal-text'
+                            },
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+
+                    })
+                    .catch(error => {
+                        let response = JSON.parse(error.message);
+                        console.log(response);
+
+                        Swal.fire({
+                            title: 'Fail',
+                            text: 'Failed to unpublish the story. Please try again later!',
+                            customClass: {
+                                popup: 'modern-swal-wide-short',
+                                title: 'swal-title',
+                                htmlContainer: 'swal-text'
+                            },
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                    });
+            }
+            else {
+                // console.log('still activate');
+            }
+        });
     }
+
 
     function navigateToDashboard() {
-        window.location.href = 'admin-dashboard.html';
+        window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-dashboard-page.html';
     }
 
-    // Initial display
+
     document.addEventListener('DOMContentLoaded', () => {
         displayStories();
-        updatePagination();
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="assets/js/admin-story-page-script.js"></script>
 </body>
 </html>
