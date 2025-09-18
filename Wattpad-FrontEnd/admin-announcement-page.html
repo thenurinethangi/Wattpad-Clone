@@ -61,7 +61,7 @@
                 <option value="verified">Verified Users</option>
                 <option value="specific">Specific User</option>
             </select>
-            <input style="width: 250px;" type="text" class="user-id-input" id="userIdInput" placeholder="Enter User ID" onkeyup="filterAnnouncements()" disabled>
+            <input style="width: 250px;" type="text" class="user-id-input" id="userIdInput" placeholder="Enter User ID">
             <button id="createAnnouncementBtn" class="create-btn"><i  style="font-size: 13px; color: #222222; margin-right: 5px;" class="fa-solid fa-plus"></i>New</button>
         </div>
 
@@ -90,172 +90,404 @@
 </div>
 
 <script>
-    let currentPage = 0;
-    let announcements = []; // Will store all announcements
-    let filteredAnnouncements = []; // Will store filtered announcements
+    let currentPage = 1;
+    let sort = {
+        'date': null,
+        'type': 'all',
+    };
 
-    // Sample announcements data
-    const allAnnouncements = [
-        { id: 'A001', title: 'Explore our Coin Shop!', description: 'Earn bonus Coins by completing offers or watching videos!', date: '2025-09-13 03:30', sentTo: 'all' },
-        { id: 'A002', title: 'Looking for your first read?', description: 'Check out our curated fan favorites!', date: '2025-09-09 04:32', sentTo: 'all' },
-        { id: 'A003', title: 'Complete our Checklist!', description: 'Finish your first month tasks on Wattpad!', date: '2025-09-07 04:33', sentTo: 'all' },
-        { id: 'A004', title: "Don't know where to start?", description: 'Explore community happenings and Editor\'s picks!', date: '2025-09-06 05:15', sentTo: 'all' },
-        { id: 'A005', title: 'New Feature Alert!', description: 'Try our enhanced reading mode!', date: '2025-09-05 14:20', sentTo: 'verified' },
-        { id: 'A006', title: 'Weekly Highlights', description: 'Top stories this week you should read!', date: '2025-09-04 09:10', sentTo: 'all' },
-        { id: 'A007', title: 'User Feedback Needed', description: 'Share your thoughts on new updates!', date: '2025-09-03 16:45', sentTo: 'verified' },
-        { id: 'A008', title: 'Special Event Invite', description: 'Join our live author Q&A!', date: '2025-09-02 11:30', sentTo: 'specific', userId: 'U123' },
-        { id: 'A009', title: 'Story Contest Open!', description: 'Submit your best work for a chance to win!', date: '2025-09-01 08:00', sentTo: 'all' },
-        { id: 'A010', title: 'Maintenance Notice', description: 'Scheduled downtime this weekend.', date: '2025-08-31 19:00', sentTo: 'all' },
-        { id: 'A011', title: 'New Genre Added', description: 'Check out the new Adventure category!', date: '2025-08-30 13:25', sentTo: 'verified' },
-        { id: 'A012', title: 'Premium Offer', description: 'Get 50% off your first month!', date: '2025-08-29 10:15', sentTo: 'specific', userId: 'U456' }
-    ];
-
-    announcements = [...allAnnouncements];
-    filteredAnnouncements = [...announcements];
+    let start = 0;
+    let end = 0;
+    let total = 0;
 
     function displayAnnouncements() {
+
         const announcementContainer = document.getElementById('announcementContainer');
-        announcementContainer.innerHTML = ''; // Clear existing content
+        announcementContainer.innerHTML = '';
 
-        const startIndex = currentPage * 10;
-        const endIndex = startIndex + 10;
-        const pageAnnouncements = filteredAnnouncements.slice(startIndex, endIndex);
+        fetch('http://localhost:8080/api/v1/announcement/admin/loadAnnouncement/' + currentPage, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(sort)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Load Success:', data);
 
-        if (pageAnnouncements.length === 0) {
-            announcementContainer.innerHTML = '<div class="loading"><div style="font-size: 48px; margin-bottom: 15px;">📭</div>No announcements found</div>';
-        } else {
-            pageAnnouncements.forEach(announcement => {
-                const div = document.createElement('div');
-                div.classList.add('announcement');
-                div.innerHTML = `
+                total = data.data.totalAnnouncements;
+                start = data.data.start;
+                end = data.data.end;
+
+                paginationTextSet();
+
+                if (data.data.adminAnnouncementDTOList.length === 0) {
+                    announcementContainer.innerHTML = '<div class="loading"><div style="font-size: 48px; margin-bottom: 15px;">📭</div>No announcements found</div>';
+                }
+                else {
+                    data.data.adminAnnouncementDTOList.forEach(announcement => {
+                        const div = document.createElement('div');
+                        div.classList.add('announcement');
+                        div.innerHTML = `
                         <div class="content">
                             <h3>${announcement.title}</h3>
                             <p>${announcement.description}</p>
-                            <p style="font-size: 13.5px; color: #6f6f6f; margin-bottom: 0; padding-bottom: 0;" class="date-send">${new Date(announcement.date).toLocaleString()}</p>
-                            <p style="font-size: 13.5px; color: #ff6122;" class="sent-to">Sent to: ${announcement.sentTo === 'specific' ? `${announcement.sentTo} (ID: ${announcement.userId})` : announcement.sentTo}</p>
+                            <p style="font-size: 13.5px; color: #6f6f6f; margin-bottom: 0; padding-bottom: 0;" class="date-send">${new Date(announcement.dateTime).toLocaleString()}</p>
+                            <p style="font-size: 13.5px; color: #ff6122;" class="sent-to">Sent to: ${announcement.sentTo === 'specific' ? `${announcement.sentTo} (User ID: ${announcement.userId})` : announcement.sentTo}</p>
                         </div>
-                        <div class="details">
+                        <div class="details delete-btn" data-announcement-id="${announcement.id}">
                             <svg class="trash-can" width="23" height="23" viewBox="0 0 24 24" fill="#222" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M6 7V20C6 21.1 6.9 22 8 22H16C17.1 22 18 21.1 18 20V7H6ZM8 9H16V20H8V9ZM15.5 4L14.5 3H9.5L8.5 4H5V6H19V4H15.5Z"/>
                             </svg>
                         </div>
                     `;
-                announcementContainer.appendChild(div);
+                        announcementContainer.appendChild(div);
+                    });
+                }
+
+            })
+            .catch(error => {
+                console.error('Load Error:', error);
+
             });
+    }
+
+
+    function paginationTextSet() {
+        document.getElementById('paginationInfo').textContent = `Showing ${start}-${end} of ${total} announcements`;
+
+        if(start>1){
+            document.getElementById("prevBtn").disabled = false;
+        }
+        else{
+            document.getElementById("prevBtn").disabled = true;
+        }
+
+        if(end<total){
+            document.getElementById("nextBtn").disabled = false;
+        }
+        else{
+            document.getElementById("nextBtn").disabled = true;
         }
     }
 
-    function filterAnnouncements() {
-        const date = document.getElementById('dateFilter').value;
-        const userType = document.getElementById('userTypeFilter').value;
-        const userId = document.getElementById('userIdInput').value.trim();
-        document.getElementById('userIdInput').disabled = userType !== 'specific';
-
-        filteredAnnouncements = announcements.filter(announcement => {
-            const matchesDate = !date || announcement.date.startsWith(date);
-            const matchesUserType = userType === 'all' ||
-                (userType === 'verified' && announcement.sentTo === 'verified') ||
-                (userType === 'specific' && announcement.sentTo === 'specific' && announcement.userId === userId);
-            return matchesDate && matchesUserType;
-        });
-
-        currentPage = 0;
-        displayAnnouncements();
-        updatePagination();
-    }
-
-    function updatePagination() {
-        const totalPages = Math.ceil(filteredAnnouncements.length / 10);
-        document.getElementById('prevBtn').classList.toggle('disabled', currentPage === 0);
-        document.getElementById('nextBtn').classList.toggle('disabled', currentPage * 10 >= filteredAnnouncements.length);
-    }
 
     function previousPage() {
-        if (currentPage > 0) {
-            currentPage--;
-            displayAnnouncements();
-            updatePagination();
-        }
+        currentPage--;
+        displayAnnouncements();
+
     }
+
 
     function nextPage() {
-        if (currentPage * 10 < filteredAnnouncements.length) {
-            currentPage++;
-            displayAnnouncements();
-            updatePagination();
-        }
-    }
-
-    function navigateToDashboard() {
-        window.location.href = 'admin-dashboard.html';
-    }
-
-    // Initial display
-    document.addEventListener('DOMContentLoaded', () => {
+        currentPage++;
         displayAnnouncements();
-        updatePagination();
 
-        document.getElementById('userTypeFilter').addEventListener('change', filterAnnouncements);
-        document.getElementById('dateFilter').addEventListener('change', filterAnnouncements);
-        document.getElementById('userIdInput').addEventListener('input', filterAnnouncements);
+    }
+
+
+    const userTypeFilter = document.getElementById('userTypeFilter');
+    userTypeFilter.addEventListener('change', function () {
+        sort.type = this.value;
+        displayAnnouncements();
     });
 
 
+    const dateInput = document.getElementById('dateFilter');
+    dateInput.addEventListener('input', function(event) {
+        const selectedDate = event.target.value;
+        if (selectedDate) {
+            console.log('User selected date:', selectedDate);
+            sort.date = selectedDate;
+        } else {
+            console.log('Date cleared / no date selected');
+            sort.date = null;
+        }
+        displayAnnouncements();
+    });
 
+
+    const userIdInput = document.getElementById('userIdInput');
+    userIdInput.addEventListener('keyup', function(event) {
+
+        if(event.target.value.trim()===''){
+            displayAnnouncements();
+        }
+
+        if (event.key === 'Enter') {
+            const userId = event.target.value.trim();
+
+            const isValid = /^[0-9]+$/.test(userId);
+
+            if (!isValid) {
+                // alert('Invalid User ID! Only numbers are allowed.');
+                return;
+            }
+
+            fetch('http://localhost:8080/api/v1/announcement/admin/searchByUserId/'+userId, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errData => {
+                            throw new Error(JSON.stringify(errData));
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+
+                    if (data.data.length === 0) {
+                        announcementContainer.innerHTML = `<div class="loading"><div style="font-size: 48px; margin-bottom: 15px;">📭</div>No announcements found for user id: ${userId}</div>`;
+                    }
+                    else {
+                        const announcementContainer = document.getElementById('announcementContainer');
+                        announcementContainer.innerHTML = '';
+
+                        data.data.forEach(announcement => {
+                            const div = document.createElement('div');
+                            div.classList.add('announcement');
+                            div.innerHTML = `
+                        <div class="content">
+                            <h3>${announcement.title}</h3>
+                            <p>${announcement.description}</p>
+                            <p style="font-size: 13.5px; color: #6f6f6f; margin-bottom: 0; padding-bottom: 0;" class="date-send">${new Date(announcement.dateTime).toLocaleString()}</p>
+                            <p style="font-size: 13.5px; color: #ff6122;" class="sent-to">Sent to: ${announcement.sentTo === 'specific' ? `${announcement.sentTo} (User ID: ${announcement.userId})` : announcement.sentTo}</p>
+                        </div>
+                        <div class="details delete-btn" data-announcement-id="${announcement.id}">
+                            <svg class="trash-can" width="23" height="23" viewBox="0 0 24 24" fill="#222" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 7V20C6 21.1 6.9 22 8 22H16C17.1 22 18 21.1 18 20V7H6ZM8 9H16V20H8V9ZM15.5 4L14.5 3H9.5L8.5 4H5V6H19V4H15.5Z"/>
+                            </svg>
+                        </div>
+                    `;
+                            announcementContainer.appendChild(div);
+                        });
+                    }
+                })
+                .catch(error => {
+                    let response = JSON.parse(error.message);
+                    console.log(response);
+                });
+        }
+    });
+
+
+    document.addEventListener('click', function(event) {
+
+        const btn = event.target.closest('.delete-btn');
+        if (!btn) return;
+
+        const announcementId = btn.getAttribute('data-announcement-id');
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Delete this announcement? Once deleted, users will no longer see it.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete',
+            cancelButtonText: 'Cancel',
+            customClass: {
+                popup: 'modern-swal',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                fetch('http://localhost:8080/api/v1/announcement/admin/delete/'+announcementId, {
+                    method: 'DELETE',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(errData => {
+                                throw new Error(JSON.stringify(errData));
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Success:', data);
+
+                        displayAnnouncements();
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Announcement has been deleted!',
+                            customClass: {
+                                popup: 'modern-swal-wide-short',
+                                title: 'swal-title',
+                                htmlContainer: 'swal-text'
+                            },
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+
+                    })
+                    .catch(error => {
+                        let response = JSON.parse(error.message);
+                        console.log(response);
+
+                        Swal.fire({
+                            title: 'Fail',
+                            text: 'Failed to delete the announcement. Please try again later!',
+                            customClass: {
+                                popup: 'modern-swal-wide-short',
+                                title: 'swal-title',
+                                htmlContainer: 'swal-text'
+                            },
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                    });
+            }
+            else {
+                // console.log('still activate');
+            }
+        });
+    });
+
+
+    function navigateToDashboard() {
+        window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-dashboard-page.html';
+    }
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        displayAnnouncements();
+
+    });
 
 
     document.getElementById('createAnnouncementBtn').addEventListener('click', function() {
         document.getElementById('announcementModal').style.display = 'flex';
     });
 
+
     document.querySelector('.close-btn').addEventListener('click', function() {
         document.getElementById('announcementModal').style.display = 'none';
     });
 
+
     function toggleUserId() {
-        const userType = document.getElementById('modalUserType').value;
-        document.getElementById('modalUserId').disabled = userType !== 'specific';
-        if (userType !== 'specific') {
-            document.getElementById('modalUserId').value = '';
+        const selectEl = document.getElementById('modalUserType');
+        const userIdInput = document.getElementById('modalUserId');
+
+        const value = selectEl.value;
+
+        if (value === 'specific') {
+            userIdInput.disabled = false;
+        } else {
+            userIdInput.disabled = true;
+            userIdInput.value = '';
         }
     }
 
+
     function sendAnnouncement() {
+
         const title = document.getElementById('modalTitle').value.trim();
         const description = document.getElementById('modalDescription').value.trim();
         const userType = document.getElementById('modalUserType').value;
-        const userId = document.getElementById('modalUserId').value.trim();
+        let userId = document.getElementById('modalUserId').value.trim();
 
-        if (title && description) {
-            const newAnnouncement = {
-                id: `A${String(announcements.length + 1).padStart(3, '0')}`,
-                title: title,
-                description: description,
-                date: new Date().toISOString().slice(0, 16),
-                sentTo: userType,
-                userId: userType === 'specific' ? userId : undefined
-            };
-            announcements.push(newAnnouncement);
-            filteredAnnouncements = [...announcements];
-            displayAnnouncements();
-            updatePagination();
-            document.getElementById('announcementModal').style.display = 'none';
-            document.getElementById('modalTitle').value = '';
-            document.getElementById('modalDescription').value = '';
-            document.getElementById('modalUserId').value = '';
-            alert('Announcement sent!');
-        } else {
-            alert('Please fill in all required fields.');
+        if(userId===''){
+            userId = null;
         }
+
+        let data = {
+            'title': title,
+            'description': description,
+            'sentTo': userType,
+            'userId': userId
+        }
+
+        fetch('http://localhost:8080/api/v1/announcement/admin/add', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+
+                displayAnnouncements();
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Announcement has been added!',
+                    customClass: {
+                        popup: 'modern-swal-wide-short',
+                        title: 'swal-title',
+                        htmlContainer: 'swal-text'
+                    },
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+
+                Swal.fire({
+                    title: 'Fail',
+                    text: 'Failed to add the announcement. Please try again later!',
+                    customClass: {
+                        popup: 'modern-swal-wide-short',
+                        title: 'swal-title',
+                        htmlContainer: 'swal-text'
+                    },
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+            });
+
     }
 
-    // Ensure modal closes on outside click
+
     window.addEventListener('click', function(event) {
         const modal = document.getElementById('announcementModal');
         if (event.target === modal) {
             modal.style.display = 'none';
         }
     });
+
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="assets/js/admin-announcement-page-script.js"></script>
 </body>
 </html>
