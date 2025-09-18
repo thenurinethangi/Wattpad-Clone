@@ -362,13 +362,14 @@ body {
 }
 
 .pagination-btn {
-    padding: 8px 12px;
+    padding: 7.5px 12px;
     border: 1px solid #e9ecef;
     background: white;
-    border-radius: 6px;
+    border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 14px;
+    color: #ff6122;
 }
 
 .pagination-btn:hover:not(:disabled) {

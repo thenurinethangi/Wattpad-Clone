@@ -58,6 +58,8 @@ public class User {
 
     private int isVerifiedByWattpad = 0;
 
+    private int coins = 0;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRole> userRoles;
 

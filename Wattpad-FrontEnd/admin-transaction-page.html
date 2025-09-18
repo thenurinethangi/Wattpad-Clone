@@ -44,8 +44,8 @@
       <div class="sort-combo">
         <select id="statusSort">
           <option value="all">All</option>
-          <option value="premium">Premium Buy</option>
-          <option value="coins">Coins Buy</option>
+          <option value="premium buy">Premium Buy</option>
+          <option value="coins buy">Coins Buy</option>
         </select>
       </div>
     </div>
@@ -86,55 +86,54 @@
 </div>
 
 <script>
-  let currentPage = 0;
-  let transactions = []; // Will store all transactions from the array
-  let filteredTransactions = []; // Will store filtered transactions
-
-  // Initialize with the sample transactions array
-  const allTransactions = [
-    { id: 'T001', dateTime: '2025-09-15 14:30', userId: 'U001', amount: 9.99, reason: 'Premium Buy' },
-    { id: 'T002', dateTime: '2025-09-15 14:45', userId: 'U002', amount: 5.00, reason: 'Coins Buy' },
-    { id: 'T003', dateTime: '2025-09-16 09:15', userId: 'U003', amount: 9.99, reason: 'Premium Buy' },
-    { id: 'T004', dateTime: '2025-09-16 10:00', userId: 'U004', amount: 3.50, reason: 'Coins Buy' },
-    { id: 'T005', dateTime: '2025-09-16 11:30', userId: 'U005', amount: 9.99, reason: 'Premium Buy' },
-    { id: 'T006', dateTime: '2025-09-16 12:15', userId: 'U006', amount: 2.00, reason: 'Coins Buy' },
-    { id: 'T007', dateTime: '2025-09-16 13:00', userId: 'U007', amount: 9.99, reason: 'Premium Buy' },
-    { id: 'T008', dateTime: '2025-09-16 13:45', userId: 'U008', amount: 5.50, reason: 'Coins Buy' },
-    { id: 'T009', dateTime: '2025-09-16 14:00', userId: 'U009', amount: 9.99, reason: 'Premium Buy' },
-    { id: 'T010', dateTime: '2025-09-16 14:20', userId: 'U010', amount: 4.00, reason: 'Coins Buy' },
-  ];
-
-  // Extend sample data to simulate more records
-  for (let i = 10; i < 156; i++) {
-    const baseTransaction = allTransactions[i % 10];
-    allTransactions.push({
-      id: `T${String(i + 1).padStart(3, '0')}`,
-      dateTime: new Date(Date.now() - (155 - i) * 3600000).toISOString().slice(0, 16).replace('T', ' '),
-      userId: `U${String(i + 1).padStart(3, '0')}`,
-      amount: (i % 2 === 0 ? 9.99 : Math.random() * 5 + 1).toFixed(2),
-      reason: i % 2 === 0 ? 'Premium Buy' : 'Coins Buy'
-    });
+  let currentPage = 1;
+  let sort = {
+    'reason': 'all'
   }
 
-  transactions = [...allTransactions]; // Initialize with all transactions
-  filteredTransactions = [...transactions];
+  let total = 0;
+  let start = 0;
+  let end = 0;
 
   function displayTransactions() {
+
     const transactionList = document.querySelector('.transaction-list');
-    transactionList.innerHTML = ''; // Clear existing content
+    transactionList.innerHTML = '';
     transactionList.appendChild(createColumns());
 
-    const startIndex = currentPage * 10;
-    const endIndex = startIndex + 10;
-    const pageTransactions = filteredTransactions.slice(startIndex, endIndex);
+    fetch('http://localhost:8080/api/v1/transaction/admin/loadTransaction/' + currentPage, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(sort)
+    })
+            .then(response => {
+              if (!response.ok) {
+                return response.json().then(errData => {
+                  throw new Error(JSON.stringify(errData));
+                });
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log('Load Success:', data);
 
-    if (pageTransactions.length === 0) {
-      transactionList.innerHTML = '<div class="loading"><div style="font-size: 48px; margin-bottom: 15px;">📭</div>No transactions found</div>';
-    } else {
-      pageTransactions.forEach(transaction => {
-        const row = document.createElement('div');
-        row.classList.add('transaction-row');
-        row.innerHTML = `
+              total = data.data.totalTransactions;
+              start = data.data.start;
+              end = data.data.end
+
+              paginationTextSet();
+
+              if (data.data.transactionDTOList.length === 0) {
+                transactionList.innerHTML = '<div class="loading"><div style="font-size: 48px; margin-bottom: 15px;">📭</div>No transactions found</div>';
+              }
+              else {
+                data.data.transactionDTOList.forEach(transaction => {
+                  const row = document.createElement('div');
+                  row.classList.add('transaction-row');
+                  row.innerHTML = `
                     <div>${transaction.id || 'N/A'}</div>
                     <div>${transaction.dateTime || 'N/A'}</div>
                     <div>${transaction.userId || 'N/A'}</div>
@@ -142,10 +141,24 @@
                     <div>${transaction.reason || 'N/A'}</div>
                     <div class="action-icons"><a href="#" onclick="printInvoice('${transaction.id}')" title="Print Invoice"><i class="fas fa-print"></i></a></div>
                 `;
-        transactionList.appendChild(row);
-      });
-    }
+                  transactionList.appendChild(row);
+                });
+              }
+
+            })
+            .catch(error => {
+              console.error('Load Error:', error);
+
+            });
   }
+
+
+  const statusSort = document.getElementById('statusSort');
+  statusSort.addEventListener('change', function () {
+    sort.reason = this.value;
+    displayTransactions();
+  });
+
 
   function createColumns() {
     const columns = document.createElement('div');
@@ -161,13 +174,35 @@
     return columns;
   }
 
-  function updatePagination() {
-    const totalPages = Math.ceil(filteredTransactions.length / 10);
-    document.getElementById('prevBtn').classList.toggle('disabled', currentPage === 0);
-    document.getElementById('nextBtn').classList.toggle('disabled', currentPage * 10 >= filteredTransactions.length);
+
+  // function updatePagination() {
+  //   const totalPages = Math.ceil(filteredTransactions.length / 10);
+  //   document.getElementById('prevBtn').classList.toggle('disabled', currentPage === 0);
+  //   document.getElementById('nextBtn').classList.toggle('disabled', currentPage * 10 >= filteredTransactions.length);
+  // }
+
+
+  function paginationTextSet() {
+    document.getElementById('paginationInfo').textContent = `Showing ${start}-${end} of ${total} transactions`;
+
+    if(start>1){
+      document.getElementById("prevBtn").disabled = false;
+    }
+    else{
+      document.getElementById("prevBtn").disabled = true;
+    }
+
+    if(end<total){
+      document.getElementById("nextBtn").disabled = false;
+    }
+    else{
+      document.getElementById("nextBtn").disabled = true;
+    }
   }
 
+
   function searchTransactions() {
+
     const query = document.getElementById('searchInput').value.toLowerCase();
     filteredTransactions = transactions.filter(transaction =>
             (transaction.id && transaction.id.toString().toLowerCase().includes(query)) ||
@@ -181,25 +216,19 @@
     updatePagination();
   }
 
-  function sortTransactions() {
-    const reason = document.getElementById('statusSort').value;
-    filteredTransactions = transactions.filter(transaction => reason === 'all' || (transaction.reason && transaction.reason === (reason === 'premium' ? 'Premium Buy' : 'Coins Buy')));
-    currentPage = 0;
-    displayTransactions();
-    updatePagination();
-  }
 
   function navigateToDashboard() {
-    window.location.href = 'admin-dashboard.html';
+    window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-dashboard-page.html';
   }
+
 
   function printInvoice(transactionId) {
-    alert(`Printing invoice for transaction ID: ${transactionId}`); // Replace with actual print logic
+    alert(`Printing invoice for transaction ID: ${transactionId}`);
   }
 
-  // Load first page of transactions
+
   document.addEventListener('DOMContentLoaded', () => {
-    displayTransactions(); // Initial display with all transactions
+    displayTransactions();
 
     document.getElementById('nextBtn').addEventListener('click', () => {
       if (!document.getElementById('nextBtn').classList.contains('disabled')) {
@@ -214,10 +243,11 @@
         displayTransactions();
       }
     });
-
-    document.getElementById('searchInput').addEventListener('input', searchTransactions);
-    document.getElementById('statusSort').addEventListener('change', sortTransactions);
   });
+
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="assets/js/admin-transaction-page-script.js"></script>
 </body>
 </html>
