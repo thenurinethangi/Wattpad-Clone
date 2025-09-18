@@ -4,6 +4,7 @@ import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.service.AnnouncementService;
 import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,12 +17,21 @@ public class AnnouncementController {
     private final AnnouncementService announcementService;
 
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     public APIResponse welcomeMessage(){
 
-        return new APIResponse(202,"WELCOME TO STORY PAGE",null);
+        return new APIResponse(202,"WELCOME TO ANNOUNCEMENT PAGE",null);
+    }
+
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public APIResponse welcomeMessage2(){
+
+        return new APIResponse(202,"WELCOME TO ANNOUNCEMENT PAGE(ADMIN)",null);
     }
 
     @PostMapping("/admin/loadAnnouncement/{no}")
+    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse loadAnnouncementForAdminBySortingCriteria(@PathVariable long no, @RequestBody AdminAnnouncementRequestDTO adminAnnouncementRequestDTO){
 
         AdminAnnouncementResponseDTO adminAnnouncementResponseDTO = announcementService.loadAnnouncementForAdminBySortingCriteria(no,adminAnnouncementRequestDTO);
@@ -29,6 +39,7 @@ public class AnnouncementController {
     }
 
     @DeleteMapping("/admin/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse deleteAnnouncement(@PathVariable long id){
 
         announcementService.deleteAnnouncement(id);
@@ -36,6 +47,7 @@ public class AnnouncementController {
     }
 
     @GetMapping("/admin/searchByUserId/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse searchAnnouncementByUserId(@PathVariable long userId){
 
         List<AdminAnnouncementDTO> adminAnnouncementDTOList = announcementService.searchAnnouncementByUserId(userId);
@@ -43,6 +55,7 @@ public class AnnouncementController {
     }
 
     @PostMapping("/admin/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse addNewAnnouncement(@RequestBody AdminAnnouncementDTO adminAnnouncementDTO){
 
         announcementService.addNewAnnouncement(adminAnnouncementDTO);

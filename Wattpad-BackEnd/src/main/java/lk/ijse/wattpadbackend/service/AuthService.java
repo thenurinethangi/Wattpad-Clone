@@ -25,4 +25,6 @@ public interface AuthService {
     int forgotPassword(@Valid String emailOrUsername);
 
     void changePassword(@Valid ChangePasswordDTO changePasswordDTO);
+
+    User adminLoginWithUsername(@Valid UserLoginDTO userLoginDTO);
 }

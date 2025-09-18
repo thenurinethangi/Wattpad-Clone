@@ -5,6 +5,7 @@ import lk.ijse.wattpadbackend.service.StoryService;
 import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +20,21 @@ public class StoryController {
     private final StoryService storyService;
 
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     public APIResponse welcomeMessage(){
 
         return new APIResponse(202,"WELCOME TO STORY PAGE",null);
     }
 
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public APIResponse welcomeMessage2(){
+
+        return new APIResponse(202,"WELCOME TO STORY PAGE(ADMIN)",null);
+    }
+
     @GetMapping("/isCurrentUser/{storyId}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse checkIfStoryIsOwnedByCurrentUser(@PathVariable long storyId){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -34,6 +44,7 @@ public class StoryController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse getAStoryById(@PathVariable long id){
 
         StoryDTO storyDTO = storyService.getAStoryById(id);
@@ -42,6 +53,7 @@ public class StoryController {
     }
 
     @GetMapping("/get/{id}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse getAStoryByIdTwo(@PathVariable long id){
 
         StoryDTO storyDTO = storyService.getAStoryByIdTwo(id);
@@ -50,6 +62,7 @@ public class StoryController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasRole('USER')")
     public APIResponse createANewStory(@RequestParam("title") String title,
                                        @RequestParam("description") String description,
                                        @RequestParam("mainCharacters") List<String> mainCharacters,
@@ -123,6 +136,7 @@ public class StoryController {
     }
 
     @GetMapping("/published/user")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse loadPublishedStoriesOfCurrentUser(){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -132,6 +146,7 @@ public class StoryController {
     }
 
     @GetMapping("/all/user")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse loadAllStoriesOfCurrentUser(){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -141,6 +156,7 @@ public class StoryController {
     }
 
     @GetMapping("/chapters/{storyId}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse loadAllChaptersOfAStoryByStoryId(@PathVariable long storyId){
 
         List<EditStoryChapterDTO> editStoryChapterDTOList = storyService.loadAllChaptersOfAStoryByStoryId(storyId);
@@ -148,6 +164,7 @@ public class StoryController {
     }
 
     @GetMapping("/data/{storyId}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse loadStoryDetailsByStoryId(@PathVariable long storyId){
 
         StoryCreateDTO storyCreateDTO = storyService.loadStoryDetailsByStoryId(storyId);
@@ -155,6 +172,7 @@ public class StoryController {
     }
 
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasRole('USER')")
     public APIResponse updateAStory(@RequestParam("storyId") long id,
                                     @RequestParam("title") String title,
                                     @RequestParam("status") int status,
@@ -191,6 +209,7 @@ public class StoryController {
     }
 
     @PostMapping("/unpublish/{storyId}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse unpublishedStoryByStoryId(@PathVariable long storyId){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -200,6 +219,7 @@ public class StoryController {
     }
 
     @PostMapping("/publish/{storyId}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse publishedStoryByStoryId(@PathVariable long storyId){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -209,6 +229,7 @@ public class StoryController {
     }
 
     @DeleteMapping("/delete/{storyId}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse deleteStoryByStoryId(@PathVariable long storyId){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -218,6 +239,7 @@ public class StoryController {
     }
 
     @PostMapping("/admin/loadStory/{no}")
+    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse loadStoriesForAdminBySortingCriteria(@PathVariable long no, @RequestBody AdminStoryRequestDTO adminStoryRequestDTO){
 
         AdminStoryResponseDTO adminStoryResponseDTO = storyService.loadStoriesForAdminBySortingCriteria(no,adminStoryRequestDTO);
@@ -225,6 +247,7 @@ public class StoryController {
     }
 
     @PostMapping("/admin/unpublish/{storyId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse storyUnpublishByAdmin(@PathVariable long storyId){
 
         storyService.storyUnpublishByAdmin(storyId);

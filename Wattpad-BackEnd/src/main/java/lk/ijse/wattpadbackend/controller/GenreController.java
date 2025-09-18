@@ -5,6 +5,7 @@ import lk.ijse.wattpadbackend.service.AuthService;
 import lk.ijse.wattpadbackend.service.GenreService;
 import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +20,19 @@ public class GenreController {
     private final GenreService genreService;
 
     @GetMapping()
+    @PreAuthorize("hasRole('USER')")
     public APIResponse welcomeMessage(){
         return new APIResponse(202,"WELCOME TO GENRE STORIES PAGE",null);
     }
 
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public APIResponse welcomeMessage2(){
+        return new APIResponse(202,"WELCOME TO GENRE STORIES PAGE(ADMIN)",null);
+    }
+
     @GetMapping("/all")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse allGenre(){
 
         List<GenreDTO> genreDTOList = genreService.AllGenre();
@@ -31,6 +40,7 @@ public class GenreController {
     }
 
     @PostMapping("/select")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse selectGenre(@RequestBody SelectedGenreDTO selectedGenreDTO){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -40,6 +50,7 @@ public class GenreController {
     }
 
     @PostMapping("/{genre}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse getAllStoriesOfSelectedGenre(@PathVariable String genre, @RequestBody GenreSearchCriteriaDTO genreSearchCriteriaDTO){
 
         GenreSearchResponseDTO genreSearchResponseDTO = genreService.getAllStoriesOfSelectedGenre(genre,genreSearchCriteriaDTO);
@@ -47,6 +58,7 @@ public class GenreController {
     }
 
     @GetMapping("/admin/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse getAllGenreForAdmin(){
 
         List<AdminGenreDTO> adminGenreDTOList = genreService.getAllGenreForAdmin();
@@ -54,6 +66,7 @@ public class GenreController {
     }
 
     @PostMapping("/admin/add/{genre}")
+    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse addNewGenre(@PathVariable String genre){
 
         genreService.addNewGenre(genre);
@@ -61,6 +74,7 @@ public class GenreController {
     }
 
     @DeleteMapping("/admin/remove/{genreId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse removeAGenre(@PathVariable String genreId){
 
         genreService.removeAGenre(genreId);
@@ -68,6 +82,7 @@ public class GenreController {
     }
 
     @PutMapping("/admin/edit")
+    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse editAGenre(@RequestBody EditGenreDTO editGenreDTO){
 
         genreService.editAGenre(editGenreDTO);

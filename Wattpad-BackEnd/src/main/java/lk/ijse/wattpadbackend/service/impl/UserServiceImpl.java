@@ -8,6 +8,7 @@ import lk.ijse.wattpadbackend.repository.FollowingRepository;
 import lk.ijse.wattpadbackend.repository.StoryRepository;
 import lk.ijse.wattpadbackend.repository.UserRepository;
 import lk.ijse.wattpadbackend.service.UserService;
+import lk.ijse.wattpadbackend.util.Roles;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -1076,8 +1077,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<AdminUserDTO> loadUserForAdminBySortingCriteria(long no, AdminUserRequestDTO adminUserRequestDTO) {
+
         try {
-            List<User> userList = userRepository.findAll();
+            List<User> userList1 = userRepository.findAll();
+
+            List<User> userList = new ArrayList<>();
+            for (User x : userList1){
+                List<UserRole> userRoleList = x.getUserRoles();
+                for (UserRole y : userRoleList){
+                    if(y.getRole().getRole()== Roles.USER){
+                        userList.add(x);
+                    }
+                }
+            }
 
             for (User x : userList){
                 long totalViews = 0;
@@ -1308,7 +1320,18 @@ public class UserServiceImpl implements UserService {
     public long getTotalUserCount() {
 
         try{
-            return userRepository.findAll().size();
+            List<User> userList1 = userRepository.findAll();
+
+            List<User> userList = new ArrayList<>();
+            for (User x : userList1){
+                List<UserRole> userRoleList = x.getUserRoles();
+                for (UserRole y : userRoleList){
+                    if(y.getRole().getRole()== Roles.USER){
+                        userList.add(x);
+                    }
+                }
+            }
+            return userList.size();
 
         }
         catch (RuntimeException e) {

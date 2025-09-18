@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="assets/style/admin-admin-page-style.css">
 </head>
-<body>
+<body style="display: none; visibility: hidden; opacity: 0;">
 <div class="dashboard-container">
   <!-- Sidebar -->
   <nav class="sidebar">
@@ -25,7 +25,7 @@
       <li><a href="admin-announcement-page.html"><i class="fas fa-bullhorn"></i> Announcements</a></li>
       <li><a href="admin-genre-page.html"><i class="fas fa-tags"></i> Genres</a></li>
       <li><a href="#"><i class="fas fa-flag"></i> Reports</a></li>
-      <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+      <li id="logout"><a href="#"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
     </ul>
   </nav>
 
@@ -90,70 +90,217 @@
 </div>
 
 <script>
-  let currentPage = 0;
-  let admins = []; // Will store all admins from the array
-  let filteredAdmins = []; // Will store filtered admins
 
-  // Initialize with the sample admins array
-  const allAdmins = [
-    { id: 'A001', profilePic: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&h=100&fit=crop&crop=face', fullName: 'Sarah Johnson', username: 'sarah_admin', email: 'sarah.johnson@wattpad.com', pronouns: 'she/her', status: 'active' },
-    { id: 'A002', profilePic: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face', fullName: 'Michael Chen', username: 'mike_admin', email: 'michael.chen@wattpad.com', pronouns: 'he/him', status: 'active' },
-    { id: 'A003', profilePic: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face', fullName: 'Emily Rodriguez', username: 'emily_admin', email: 'emily.rodriguez@wattpad.com', pronouns: 'she/her', status: 'inactive' },
-    { id: 'A004', profilePic: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face', fullName: 'David Wilson', username: 'david_admin', email: 'david.wilson@wattpad.com', pronouns: 'he/him', status: 'active' },
-    { id: 'A005', profilePic: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face', fullName: 'Lisa Thompson', username: 'lisa_admin', email: 'lisa.thompson@wattpad.com', pronouns: 'she/her', status: 'active' },
-    { id: 'A006', profilePic: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face', fullName: 'James Anderson', username: 'james_admin', email: 'james.anderson@wattpad.com', pronouns: 'he/him', status: 'inactive' },
-    { id: 'A007', profilePic: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=100&h=100&fit=crop&crop=face', fullName: 'Maria Garcia', username: 'maria_admin', email: 'maria.garcia@wattpad.com', pronouns: 'she/her', status: 'active' },
-    { id: 'A008', profilePic: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=100&h=100&fit=crop&crop=face', fullName: 'Robert Brown', username: 'robert_admin', email: 'robert.brown@wattpad.com', pronouns: 'he/him', status: 'active' },
-    { id: 'A009', profilePic: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&h=100&fit=crop&crop=face', fullName: 'Jennifer Lee', username: 'jennifer_admin', email: 'jennifer.lee@wattpad.com', pronouns: 'she/her', status: 'active' },
-    { id: 'A010', profilePic: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=100&h=100&fit=crop&crop=face', fullName: 'Christopher Davis', username: 'chris_admin', email: 'christopher.davis@wattpad.com', pronouns: 'he/him', status: 'inactive' },
-    // ... (extend as needed, but using the first 10 for initial load)
-  ];
+  //check user register or not
+  window.onload = function () {
 
-  // Extend sample data to simulate more records (optional, based on your earlier code)
-  for (let i = 10; i < 156; i++) {
-    const baseAdmin = allAdmins[i % 10];
-    allAdmins.push({
-      id: `A${String(i + 1).padStart(3, '0')}`,
-      profilePic: baseAdmin.profilePic,
-      fullName: `${baseAdmin.fullName} ${i > 9 ? Math.floor(i / 10) : ''}`,
-      username: `${baseAdmin.username}_${i + 1}`,
-      email: `admin${i + 1}@wattpad.com`,
-      pronouns: baseAdmin.pronouns,
-      status: i % 2 === 0 ? 'active' : 'inactive'
-    });
+    fetch('http://localhost:8080/api/v1/admin', {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+            .then(response => {
+              if (!response.ok) {
+                return response.json().then(errData => {
+                  throw new Error(JSON.stringify(errData));
+                });
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log('Success:', data);
+
+              document.body.style.display = 'block';
+              document.body.style.visibility = 'visible';
+              document.body.style.opacity = 1;
+
+            })
+            .catch(error => {
+              let response = JSON.parse(error.message);
+              console.log(response);
+
+              window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-login-page.html';
+            });
   }
 
-  admins = [...allAdmins]; // Initialize with all admins
-  filteredAdmins = [...admins];
+
+  let currentPage = 1;
+  let sort = {
+    'status': 'all',
+  };
+
+  let start = 0;
+  let end = 0;
+  let total = 0;
 
   function displayAdmins() {
+
     const adminList = document.querySelector('.admin-list');
-    adminList.innerHTML = ''; // Clear existing content
+    adminList.innerHTML = '';
     adminList.appendChild(createColumns());
 
-    const startIndex = currentPage * 10;
-    const endIndex = startIndex + 10;
-    const pageAdmins = filteredAdmins.slice(startIndex, endIndex);
+    fetch('http://localhost:8080/api/v1/admin/admin/loadAdmin/' + currentPage, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(sort)
+    })
+            .then(response => {
+              if (!response.ok) {
+                return response.json().then(errData => {
+                  throw new Error(JSON.stringify(errData));
+                });
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log('Load Success:', data);
 
-    if (pageAdmins.length === 0) {
-      adminList.innerHTML = '<div class="loading"><div style="font-size: 48px; margin-bottom: 15px;">📭</div>No administrators found</div>';
-    } else {
-      pageAdmins.forEach(admin => {
-        const row = document.createElement('div');
-        row.classList.add('admin-row');
-        row.innerHTML = `
+              total = data.data.totalAdmins;
+              start = data.data.start;
+              end = data.data.end;
+
+              paginationTextSet();
+
+              if (data.data.adminDTOList.length === 0) {
+                adminList.innerHTML = '<div class="loading"><div style="font-size: 48px; margin-bottom: 15px;">📭</div>No administrators found</div>';
+              }
+              else {
+                data.data.adminDTOList.forEach(admin => {
+
+                  const row = document.createElement('div');
+                  row.classList.add('admin-row');
+                  row.innerHTML = `
+
                 <div>${admin.id || 'N/A'}</div>
-                <div class="admin-profile"><img src="${admin.profilePic || 'default-profile.jpg'}" alt="${admin.fullName || 'Admin'}"></div>
+                <div class="admin-profile"><img src="${admin.profilePicPath || 'https://static.vecteezy.com/system/resources/previews/005/005/788/non_2x/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg'}" alt="${admin.fullName || 'Admin'}"></div>
                 <div>${admin.fullName || 'N/A'}</div>
                 <div>${admin.username || 'N/A'}</div>
                 <div>${admin.email || 'N/A'}</div>
                 <div>${admin.pronouns || 'N/A'}</div>
-                <div class="${admin.status === 'active' ? 'status-active' : 'status-deactive'}">${admin.status || 'N/A'}</div>
+                <div class="${admin.isActive === 1 ? 'status-active' : 'status-deactive'}">${admin.isActive === 1 ? 'Active' : 'Deactive' }</div>
+                <div class="action-icons">
+                        <a href="#" onclick="editAdmin('${admin.id}')" title="Edit"><i class="fas fa-pen" style="color: rgba(255,97,34,0.93); margin-right: 10px; font-size: 14.5px;"></i></a>
+                        ${admin.isActive === 1 ? `<a href="#" onclick="deleteAdmin('${admin.id}')" title="Delete"><i class="fas fa-trash" style="color: rgba(255,97,34,0.93); font-size: 14.5px;"></i></a>` : ``}
+                </div>
             `;
-        adminList.appendChild(row);
-      });
-    }
+                  adminList.appendChild(row);
+                });
+              }
+
+            })
+            .catch(error => {
+              console.error('Load Error:', error);
+
+            });
   }
+
+
+  function editAdmin(adminId){
+
+    window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-new-admin-page.html?userId='+adminId;
+  }
+
+
+  function deleteAdmin(adminId){
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Would you like to deactivate this admin?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, unpublish',
+      cancelButtonText: 'Cancel',
+      customClass: {
+        popup: 'modern-swal',
+        confirmButton: 'swal2-confirm',
+        cancelButton: 'swal2-cancel'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        fetch('http://localhost:8080/api/v1/admin/admin/deactivate/'+adminId, {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        })
+                .then(response => {
+                  if (!response.ok) {
+                    return response.json().then(errData => {
+                      throw new Error(JSON.stringify(errData));
+                    });
+                  }
+                  return response.json();
+                })
+                .then(data => {
+                  console.log('Success:', data);
+
+                  if(data.data===true){
+
+                    displayAdmins();
+
+                    Swal.fire({
+                      title: 'Success',
+                      text: 'Admin has been deactivated!',
+                      customClass: {
+                        popup: 'modern-swal-wide-short',
+                        title: 'swal-title',
+                        htmlContainer: 'swal-text'
+                      },
+                      timer: 3000,
+                      timerProgressBar: true,
+                      showConfirmButton: false
+                    });
+                  }
+                  else {
+                    Swal.fire({
+                      title: 'Fail',
+                      text: 'Fail to deactivate admin!',
+                      customClass: {
+                        popup: 'modern-swal-wide-short',
+                        title: 'swal-title',
+                        htmlContainer: 'swal-text'
+                      },
+                      timer: 3000,
+                      timerProgressBar: true,
+                      showConfirmButton: false
+                    });
+                  }
+
+                })
+                .catch(error => {
+                  let response = JSON.parse(error.message);
+                  console.log(response);
+
+                  Swal.fire({
+                    title: 'Fail',
+                    text: 'Failed to deactivate admin. Please try again later!',
+                    customClass: {
+                      popup: 'modern-swal-wide-short',
+                      title: 'swal-title',
+                      htmlContainer: 'swal-text'
+                    },
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                  });
+                });
+      }
+      else {
+        // console.log('still activate');
+      }
+    });
+
+  }
+
 
   function createColumns() {
     const columns = document.createElement('div');
@@ -166,68 +313,97 @@
         <div>Email</div>
         <div>Pronounce</div>
         <div>Status</div>
+        <div>Action</div>
     `;
     return columns;
   }
 
-  function updatePagination() {
-    const totalPages = Math.ceil(filteredAdmins.length / 10);
-    document.getElementById('prevBtn').classList.toggle('disabled', currentPage === 0);
-    document.getElementById('nextBtn').classList.toggle('disabled', currentPage * 10 >= filteredAdmins.length);
+
+  function paginationTextSet() {
+    document.getElementById('paginationInfo').textContent = `Showing ${start}-${end} of ${total} administrators`;
+
+    if(start>1){
+      document.getElementById("prevBtn").disabled = false;
+    }
+    else{
+      document.getElementById("prevBtn").disabled = true;
+    }
+
+    if(end<total){
+      document.getElementById("nextBtn").disabled = false;
+    }
+    else{
+      document.getElementById("nextBtn").disabled = true;
+    }
   }
 
-  function searchAdmins() {
-    const query = document.getElementById('searchInput').value.toLowerCase();
-    filteredAdmins = admins.filter(admin =>
-            (admin.id && admin.id.toString().toLowerCase().includes(query)) ||
-            (admin.fullName && admin.fullName.toLowerCase().includes(query)) ||
-            (admin.username && admin.username.toLowerCase().includes(query)) ||
-            (admin.email && admin.email.toLowerCase().includes(query)) ||
-            (admin.pronouns && admin.pronouns.toLowerCase().includes(query)) ||
-            (admin.status && admin.status.toLowerCase().includes(query))
-    );
-    currentPage = 0;
-    displayAdmins();
-    updatePagination();
-  }
 
-  function sortAdmins() {
-    const status = document.getElementById('statusSort').value;
-    filteredAdmins = admins.filter(admin => status === 'all' || (admin.status && admin.status === status));
-    currentPage = 0;
+  const statusFilter = document.getElementById('statusSort');
+  statusFilter.addEventListener('change', function () {
+    sort.status = this.value;
     displayAdmins();
-    updatePagination();
-  }
+  });
+
 
   function navigateToCreateAdmin() {
-    window.location.href = 'create-admin.html';
+    window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-new-admin-page.html';
   }
+
 
   function navigateToDashboard() {
-    window.location.href = 'admin-dashboard.html';
+    window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-dashboard-page.html';
   }
 
-  // Load first page of admins
+
   document.addEventListener('DOMContentLoaded', () => {
-    displayAdmins(); // Initial display with all admins
+    displayAdmins();
 
     document.getElementById('nextBtn').addEventListener('click', () => {
-      if (!document.getElementById('nextBtn').classList.contains('disabled')) {
         currentPage++;
         displayAdmins();
-      }
     });
 
     document.getElementById('prevBtn').addEventListener('click', () => {
-      if (!document.getElementById('prevBtn').classList.contains('disabled') && currentPage > 0) {
         currentPage--;
         displayAdmins();
-      }
     });
-
-    document.getElementById('searchInput').addEventListener('input', searchAdmins);
-    document.getElementById('statusSort').addEventListener('change', sortAdmins);
   });
+
+
+  document.getElementById('logout').addEventListener('click', function (event) {
+    event.preventDefault();
+
+    fetch('http://localhost:8080/auth/admin/logout', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+            .then(response => {
+              if (!response.ok) {
+                return response.json().then(errData => {
+                  throw new Error(JSON.stringify(errData));
+                });
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log('Success:', data);
+
+              window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-login-page.html`;
+
+            })
+            .catch(error => {
+              let response = JSON.parse(error.message);
+              console.log(response);
+
+            });
+  });
+
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="assets/js/admin-admin-page-script.js"></script>
 </body>
 </html>

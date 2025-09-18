@@ -4,6 +4,7 @@ import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.service.ReadingListService;
 import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +19,13 @@ public class ReadingListController {
     private final ReadingListService readingListService;
 
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     public APIResponse welcomeMessage(){
         return new APIResponse(202,"WELCOME TO READING LIST PAGE",null);
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse getAllReadingLists(){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -32,6 +35,7 @@ public class ReadingListController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse deleteReadingListById(@PathVariable long id){
 
         readingListService.deleteReadingListById(id);
@@ -39,6 +43,7 @@ public class ReadingListController {
     }
 
     @GetMapping("/single/{id}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse getAllStoriesOfReadingListById(@PathVariable long id){
 
         ReadingListEditResponseDTO readingListEditResponseDTO = readingListService.getAllStoriesOfReadingListById(id);
@@ -46,6 +51,7 @@ public class ReadingListController {
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse updateAReadingList(@RequestBody ReadingListEditRequestDTO readingListEditRequestDTO){
 
         readingListService.updateAReadingList(readingListEditRequestDTO);
@@ -53,6 +59,7 @@ public class ReadingListController {
     }
 
     @GetMapping("/single/all/{id}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse getAllStoriesInAReadingListById(@PathVariable long id){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -62,6 +69,7 @@ public class ReadingListController {
     }
 
     @GetMapping("/owner/{id}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse checkIfReadingListOwnedByCurrentUser(@PathVariable("id") long readingListId){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -71,6 +79,7 @@ public class ReadingListController {
     }
 
     @PostMapping("/like/{id}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse addOrRemoveLikeFromTheReadingList(@PathVariable("id") long readingListId){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -80,6 +89,7 @@ public class ReadingListController {
     }
 
     @GetMapping("/liked/all")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse getAllLikedReadingLists(){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -89,6 +99,7 @@ public class ReadingListController {
     }
 
     @GetMapping("/all/check/story/{chapterId}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse getAllReadingListsAndCheckTheSpecificStoryExit(@PathVariable long chapterId){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -98,6 +109,7 @@ public class ReadingListController {
     }
 
     @GetMapping("/all/check/story/byStoryId/{storyId}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse getAllReadingListsAndCheckTheSpecificStoryExitByStoryId(@PathVariable long storyId){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -107,6 +119,7 @@ public class ReadingListController {
     }
 
     @PostMapping("/create/new")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse addNewReadingList(@RequestBody CreateNewListRequestDTO createNewListRequestDTO){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -116,6 +129,7 @@ public class ReadingListController {
     }
 
     @PostMapping("/add/remove/story/byChapter/{listId}/{chapterId}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse addOrRemoveStoryToReadingListByChapterId(@PathVariable long listId, @PathVariable long chapterId){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -125,6 +139,7 @@ public class ReadingListController {
     }
 
     @PostMapping("/add/remove/story/byStory/{listId}/{storyId}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse addOrRemoveStoryToReadingListByStoryId(@PathVariable long listId, @PathVariable long storyId){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

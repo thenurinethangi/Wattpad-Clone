@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="assets/style/admin-genre-page-style.css">
 </head>
-<body>
+<body style="display: none; visibility: hidden; opacity: 0;">
 <div class="dashboard-container">
 
     <!-- Sidebar -->
@@ -26,7 +26,7 @@
             <li><a href="admin-announcement-page.html"><i class="fas fa-bullhorn"></i> Announcements</a></li>
             <li><a href="admin-genre-page.html"><i class="fas fa-tags"></i> Genres</a></li>
             <li><a href="#"><i class="fas fa-flag"></i> Reports</a></li>
-            <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            <li id="logout"><a href="#"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
         </ul>
     </nav>
 
@@ -90,6 +90,41 @@
 </div>
 
 <script>
+
+    //check user register or not
+    window.onload = function () {
+
+        fetch('http://localhost:8080/genre/admin', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+
+                document.body.style.display = 'block';
+                document.body.style.visibility = 'visible';
+                document.body.style.opacity = 1;
+
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+
+                window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-login-page.html';
+            });
+    }
+
     let genres = []; // Store all genres from backend
     let filteredGenres = []; // Store filtered/sorted genres for display
 
@@ -387,6 +422,38 @@
         loadGenres();
         document.getElementById('searchInput').addEventListener('keyup', searchGenres);
         document.getElementById('statusSort').addEventListener('change', sortGenres);
+    });
+
+
+    document.getElementById('logout').addEventListener('click', function (event) {
+        event.preventDefault();
+
+        fetch('http://localhost:8080/auth/admin/logout', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+
+                window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-login-page.html`;
+
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+
+            });
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -68,6 +68,7 @@ public class GlobalExceptionHandler {
     public APIResponse handlerNotFoundException(UserNotFoundException e){
         return new APIResponse(404,e.getMessage(),null);
     }
+
 }
 
 

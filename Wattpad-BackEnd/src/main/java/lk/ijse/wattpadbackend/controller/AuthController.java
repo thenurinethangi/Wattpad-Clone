@@ -14,6 +14,7 @@ import lk.ijse.wattpadbackend.util.APIResponse;
 import lk.ijse.wattpadbackend.util.GoogleTokenVerifier;
 import lk.ijse.wattpadbackend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Random;
@@ -184,7 +185,39 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse logout(HttpServletResponse response){
+
+        Cookie cookie = new Cookie("jwtToken", null);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+
+        return new APIResponse(202,"Logout Successful.",null);
+    }
+
+    @PostMapping("/admin/email/login")
+    @PreAuthorize("hasRole('ADMIN')")
+    public APIResponse adminLoginWithEmail(@Valid @RequestBody UserLoginDTO userLoginDTO, HttpServletResponse response){
+
+        User user = authService.adminLoginWithUsername(userLoginDTO);
+
+        String jwtToken = jwtUtil.generateToken(user.getUsername());
+        Cookie cookie = new Cookie("jwtToken", jwtToken);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24 * 365);
+        response.addCookie(cookie);
+
+        return new APIResponse(202,"Login Successful.",null);
+    }
+
+    @PostMapping("/admin/logout")
+    @PreAuthorize("hasRole('ADMIN')")
+    public APIResponse adminLogout(HttpServletResponse response){
 
         Cookie cookie = new Cookie("jwtToken", null);
         cookie.setHttpOnly(true);

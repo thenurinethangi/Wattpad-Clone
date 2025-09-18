@@ -82,6 +82,11 @@
       return;
     }
 
+    let data = {
+      'username': username,
+      'password': password
+    }
+
     // Show loading state
     loading.style.display = 'inline-block';
     btnText.textContent = 'Signing In...';
@@ -89,19 +94,60 @@
 
     // Simulate authentication (replace with actual authentication logic)
     setTimeout(() => {
-      // Example credentials (replace with your actual authentication)
-      if (username === 'admin' && password === 'admin123') {
-        showMessage('Login successful! Redirecting...', 'success');
-        setTimeout(() => {
-          // Redirect to admin dashboard
-          window.location.href = 'admin-dashboard.html';
-        }, 1500);
-      } else {
-        showMessage('Invalid username or password', 'error');
-        resetForm();
-      }
+
+      fetch('http://localhost:8080/auth/admin/email/login', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+
+      })
+              .then(response => {
+                if (!response.ok) {
+                  return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                  });
+                }
+                return response.json();
+              })
+              .then(data => {
+                console.log('Success:', data);
+
+                showMessage('Login successful! Redirecting...', 'success');
+                setTimeout(() => {
+                  window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-dashboard-page.html';
+                }, 1500);
+
+              })
+              .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+
+                loading.style.display = 'none';
+                btnText.textContent = 'Sign In';
+                submitBtn.disabled = false;
+
+                if(response.status===404){
+                  showMessage('User not found!', 'fail');
+                }
+                else if(response.status===417){
+                  showMessage('Password incorrect!', 'fail');
+                }
+                else {
+                  if(response.message==='This User has been deactivated. can\'t login'){
+                    showMessage('User deactivated. Cannot log in!', 'fail');
+                  }
+                  else {
+                    showMessage('Login filed!', 'fail');
+                  }
+                }
+
+              });
     }, 2000);
   });
+
 
   function resetForm() {
     const loading = document.getElementById('loading');
@@ -113,12 +159,14 @@
     submitBtn.disabled = false;
   }
 
+
   function showMessage(message, type) {
     // Remove existing message
     const existingMessage = document.querySelector('.message');
     if (existingMessage) {
       existingMessage.remove();
     }
+
 
     // Create new message
     const messageDiv = document.createElement('div');
@@ -138,6 +186,7 @@
             `;
     messageDiv.textContent = message;
 
+
     // Add CSS animation
     const style = document.createElement('style');
     style.textContent = `
@@ -148,8 +197,10 @@
             `;
     document.head.appendChild(style);
 
+
     // Insert message
     document.getElementById('loginForm').appendChild(messageDiv);
+
 
     // Remove message after 5 seconds
     setTimeout(() => {
@@ -159,11 +210,13 @@
     }, 5000);
   }
 
+
   // Handle forgot password click
   document.querySelector('.forgot-password').addEventListener('click', function(e) {
     e.preventDefault();
     showMessage('Please contact the system administrator to reset your password.', 'info');
   });
+
 
   // Add input validation feedback
   document.querySelectorAll('.form-input').forEach(input => {
@@ -174,6 +227,7 @@
         this.style.borderColor = '#e1e5e9';
       }
     });
+
 
     input.addEventListener('input', function() {
       this.style.borderColor = '#e1e5e9';

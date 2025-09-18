@@ -38,7 +38,7 @@
             Powerful tools to oversee users, stories, reports, and community interactions.
             Keep Wattpad safe and thriving with comprehensive administrative controls.
         </p>
-        <button class="hero-login-btn" onclick="handleLogin()">Access Admin Panel</button>
+        <button class="hero-login-btn" onclick="handleLogin2()">Access Admin Panel</button>
     </div>
     <div class="hero-visual">
         <svg class="hero-svg" viewBox="0 0 500 500" style="transform: translateY(-50px);">
@@ -260,32 +260,15 @@
 
 <script>
     function handleLogin() {
-        const btn = event.target;
-        const originalText = btn.textContent;
 
-        btn.innerHTML = 'Logging in...';
-        btn.style.opacity = '0.7';
-        btn.disabled = true;
-
-        setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.style.opacity = '1';
-            btn.disabled = false;
-            alert('Redirecting to admin dashboard...');
-        }, 2000);
+        window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-login-page.html';
     }
 
-    // Pause slider on hover
-    const sliderWrapper = document.querySelector('.slider-wrapper');
-    const sliderContainer = document.querySelector('.slider-container');
+    function handleLogin2() {
 
-    sliderContainer.addEventListener('mouseenter', () => {
-        sliderWrapper.style.animationPlayState = 'paused';
-    });
+        window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-login-page.html';
+    }
 
-    sliderContainer.addEventListener('mouseleave', () => {
-        sliderWrapper.style.animationPlayState = 'running';
-    });
 </script>
 </body>
 </html>

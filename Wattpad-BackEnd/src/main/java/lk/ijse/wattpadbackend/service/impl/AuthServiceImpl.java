@@ -5,10 +5,7 @@ import lk.ijse.wattpadbackend.dto.ChangePasswordDTO;
 import lk.ijse.wattpadbackend.dto.UserLoginDTO;
 import lk.ijse.wattpadbackend.dto.UserSignupDTO;
 import lk.ijse.wattpadbackend.entity.*;
-import lk.ijse.wattpadbackend.exception.EmailNotVerifiedException;
-import lk.ijse.wattpadbackend.exception.InvalidCredentialException;
-import lk.ijse.wattpadbackend.exception.UserExistException;
-import lk.ijse.wattpadbackend.exception.UserNotFoundException;
+import lk.ijse.wattpadbackend.exception.*;
 import lk.ijse.wattpadbackend.repository.*;
 import lk.ijse.wattpadbackend.service.AuthService;
 import lk.ijse.wattpadbackend.util.GoogleTokenVerifier;
@@ -245,6 +242,25 @@ public class AuthServiceImpl implements AuthService {
 
         user.setPassword(changePasswordDTO.getNewPassword());
         userRepository.save(user);
+    }
+
+    @Override
+    public User adminLoginWithUsername(UserLoginDTO userLoginDTO) {
+
+        User user = userRepository.findByUsername(userLoginDTO.getUsername());
+        if (user==null) {
+            throw new UserNotFoundException("User not found.");
+        }
+
+        if(!user.getPassword().equals(userLoginDTO.getPassword())){
+            throw new InvalidCredentialException("Password is incorrect.");
+        }
+
+        if(user.getIsActive()==0){
+            throw new RuntimeException("This User has been deactivated. can't login");
+        }
+
+        return user;
     }
 }
 

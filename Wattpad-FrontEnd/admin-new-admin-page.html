@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="assets/style/admin-new-admin-page-style.css">
 </head>
-<body>
+<body style="display: none; visibility: hidden; opacity: 0;">
 <div class="dashboard-container">
     <!-- Sidebar -->
     <nav class="sidebar">
@@ -25,7 +25,7 @@
             <li><a href="admin-announcement-page.html"><i class="fas fa-bullhorn"></i> Announcements</a></li>
             <li><a href="admin-genre-page.html"><i class="fas fa-tags"></i> Genres</a></li>
             <li><a href="#"><i class="fas fa-flag"></i> Reports</a></li>
-            <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            <li id="logout"><a href="#"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
         </ul>
     </nav>
 
@@ -66,21 +66,138 @@
             </div>
             <div class="button-group">
                 <button class="cancel-btn" onclick="navigateToAdminPage()"><i class="fas fa-times"></i> Cancel</button>
-                <button class="save-btn" onclick="saveAdmin()"><i class="fas fa-save"></i> Save</button>
+                <button id="save-btn" class="save-btn" onclick="saveAdmin()"><i class="fas fa-save"></i> Save</button>
+                <button id="edit-btn" style="display: none;" class="save-btn" onclick="editAdmin()"><i class="fas fa-save"></i> Edit</button>
             </div>
         </div>
     </main>
 </div>
 <script>
+
+    window.onload = function () {
+
+        fetch('http://localhost:8080/api/v1/admin', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+
+                document.body.style.display = 'block';
+                document.body.style.visibility = 'visible';
+                document.body.style.opacity = 1;
+
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+
+                window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-login-page.html';
+            });
+
+
+        const params = new URLSearchParams(window.location.search);
+
+        if (params.has("userId")) {
+
+            document.getElementById('save-btn').style.display = 'none';
+            document.getElementById('edit-btn').style.display = 'inline-block';
+
+            let userId = params.get('userId');
+
+            fetch('http://localhost:8080/api/v1/admin/admin/get/'+userId, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errData => {
+                            throw new Error(JSON.stringify(errData));
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+
+                    if(data.data!=null){
+
+                        document.getElementById('fullName').value = data.data.fullName;
+                        document.getElementById('username').value = data.data.username;
+                        document.getElementById('email').value = data.data.email;
+                        document.getElementById('pronounce').value = data.data.pronouns;
+                    }
+                    else{
+                        Swal.fire({
+                            title: 'Fail',
+                            text: 'Failed to add administrative details!',
+                            customClass: {
+                                popup: 'modern-swal-wide-short',
+                                title: 'swal-title',
+                                htmlContainer: 'swal-text'
+                            },
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                    }
+
+                })
+                .catch(error => {
+                    // let response = JSON.parse(error.message);
+                    console.log(error);
+
+                    Swal.fire({
+                        title: 'Fail',
+                        text: 'Failed to add administrative details. Please try again later!',
+                        customClass: {
+                            popup: 'modern-swal-wide-short',
+                            title: 'swal-title',
+                            htmlContainer: 'swal-text'
+                        },
+                        timer: 3000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    });
+                });
+        }
+        else {
+
+        }
+
+    }
+
+
+    function editAdmin(){
+        //edit logic
+    }
+
+
     function navigateToDashboard() {
-        window.location.href = 'admin-dashboard.html';
+        window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-dashboard-page.html';
     }
 
     function navigateToAdminPage() {
-        window.location.href = 'admin-page.html';
+        window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-admin-page.html';
     }
 
     function saveAdmin() {
+
         const fullName = document.getElementById('fullName').value;
         const username = document.getElementById('username').value;
         const email = document.getElementById('email').value;
@@ -91,20 +208,131 @@
                 fullName: fullName,
                 username: username,
                 email: email,
-                pronounce: pronounce,
-                status: 'active'
+                pronouns: pronounce,
             };
-            console.log('New Admin Created:', newAdmin); // For now, log to console; replace with API call
-            alert('Admin created successfully!'); // Temporary feedback
-            // Clear fields
+
+            fetch('http://localhost:8080/api/v1/admin/admin/new', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newAdmin)
+
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errData => {
+                            throw new Error(JSON.stringify(errData));
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+
+                    if(data.data===true){
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Successfully Added a new administrative!',
+                            customClass: {
+                                popup: 'modern-swal-wide-short',
+                                title: 'swal-title',
+                                htmlContainer: 'swal-text'
+                            },
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                    }
+                    else{
+                        Swal.fire({
+                            title: 'Fail',
+                            text: 'Username already used, use another username!',
+                            customClass: {
+                                popup: 'modern-swal-wide-short',
+                                title: 'swal-title',
+                                htmlContainer: 'swal-text'
+                            },
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                    }
+
+                })
+                .catch(error => {
+                    let response = JSON.parse(error.message);
+                    console.log(response);
+
+                    Swal.fire({
+                        title: 'Fail',
+                        text: 'Failed to add new administrative. Please try again later!',
+                        customClass: {
+                            popup: 'modern-swal-wide-short',
+                            title: 'swal-title',
+                            htmlContainer: 'swal-text'
+                        },
+                        timer: 3000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    });
+                });
+
             document.getElementById('fullName').value = '';
             document.getElementById('username').value = '';
             document.getElementById('email').value = '';
             document.getElementById('pronounce').value = '';
-        } else {
-            alert('Please fill in all fields.');
+        }
+        else {
+            Swal.fire({
+                text: 'Please fill in all fields!',
+                customClass: {
+                    popup: 'modern-swal-wide-short',
+                    title: 'swal-title',
+                    htmlContainer: 'swal-text'
+                },
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
         }
     }
+
+
+    document.getElementById('logout').addEventListener('click', function (event) {
+        event.preventDefault();
+
+        fetch('http://localhost:8080/auth/admin/logout', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+
+                window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/admin-login-page.html`;
+
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+
+            });
+    });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="assets/js/admin-new-admin-page-script.js"></script>
 </body>
 </html>

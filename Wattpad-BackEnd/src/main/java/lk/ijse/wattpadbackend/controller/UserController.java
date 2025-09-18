@@ -6,6 +6,7 @@ import lk.ijse.wattpadbackend.service.UserService;
 import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.sql.Update;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +21,21 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping()
+    @PreAuthorize("hasRole('USER')")
     public APIResponse welcomeMessage(){
 
         return new APIResponse(202,"WELCOME TO USER",null);
     }
 
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public APIResponse welcomeMessage2(){
+
+        return new APIResponse(202,"WELCOME TO USER(ADMIN)",null);
+    }
+
     @GetMapping("/profilePic")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse getUserProfilePic(){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -35,6 +45,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse getUserDataByUserId(@PathVariable long id){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -44,6 +55,7 @@ public class UserController {
     }
 
     @GetMapping("/current")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse getCurrentUserData(){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -53,6 +65,7 @@ public class UserController {
     }
 
     @GetMapping("/following/{id}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse getFollowingUsersByUserId(@PathVariable long id){
 
         List<UserDTO> userDTOList = userService.getFollowingUsersByUserId(id);
@@ -60,6 +73,7 @@ public class UserController {
     }
 
     @GetMapping("/story/{id}/{storyCount}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse getStoriesByUserId(@PathVariable long id, @PathVariable long storyCount){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -69,6 +83,7 @@ public class UserController {
     }
 
     @GetMapping("/readingList/{id}/{readingListCount}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse getReadingListByUserId(@PathVariable long id, @PathVariable long readingListCount){
 
         List<UserProfileReadingListResponseDTO> userProfileReadingListResponseDTO = userService.getReadingListByUserId(id,readingListCount);
@@ -76,6 +91,7 @@ public class UserController {
     }
 
     @PutMapping()
+    @PreAuthorize("hasRole('USER')")
     public APIResponse updateUser(@RequestBody UserDTO userDTO){
 
         userService.updateUser(userDTO);
@@ -83,6 +99,7 @@ public class UserController {
     }
 
     @PostMapping("/follow/{id}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse followAOtherUser(@PathVariable long id){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -92,6 +109,7 @@ public class UserController {
     }
 
     @PostMapping("/unfollow/{id}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse unfollowAOtherUser(@PathVariable long id){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -101,6 +119,7 @@ public class UserController {
     }
 
     @PostMapping("/change/username")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse changeUserUsername(@RequestBody UserDTO userDTO){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -110,6 +129,7 @@ public class UserController {
     }
 
     @PostMapping("/change/password")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse changeUserPassword(@Valid @RequestBody UpdatePasswordDTO updatePasswordDTO){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -119,6 +139,7 @@ public class UserController {
     }
 
     @PostMapping("/change/email")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse changeUserEmail(@Valid @RequestBody ChangeEmailDTO changeEmailDTO){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -128,6 +149,7 @@ public class UserController {
     }
 
     @PostMapping("/change/setting/userData")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse changeUserDataInSetting(@Valid @RequestBody UserDataSettingDTO userDataSettingDTO){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -137,6 +159,7 @@ public class UserController {
     }
 
     @PostMapping("/deactivate")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse deactivateCurrentUser(){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -146,6 +169,7 @@ public class UserController {
     }
 
     @GetMapping("/followers/{id}/{count}")
+    @PreAuthorize("hasRole('USER')")
     public APIResponse getFollowersUsersByUserId(@PathVariable long id, @PathVariable long count){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -155,6 +179,7 @@ public class UserController {
     }
 
     @PostMapping("/admin/loadUser/{no}")
+    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse loadUserForAdminBySortingCriteria(@PathVariable long no, @RequestBody AdminUserRequestDTO adminUserRequestDTO){
 
         List<AdminUserDTO> adminUserDTOList = userService.loadUserForAdminBySortingCriteria(no,adminUserRequestDTO);
@@ -162,6 +187,7 @@ public class UserController {
     }
 
     @PostMapping("admin/searchUsers")
+    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse searchUsers(@RequestBody SearchUserRequestDTO searchRequest) {
 
         try {
@@ -174,6 +200,7 @@ public class UserController {
     }
 
     @PostMapping("/admin/deactivate/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse deactivateUserByUserId(@PathVariable long userId){
 
         userService.deactivateUserByUserId(userId);
@@ -181,6 +208,7 @@ public class UserController {
     }
 
     @PostMapping("/admin/verify/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse verifyUserByUserId(@PathVariable long userId){
 
         userService.verifyUserByUserId(userId);
@@ -188,6 +216,7 @@ public class UserController {
     }
 
     @GetMapping("/admin/totalUser")
+    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse getTotalUserCount(){
 
         long totalUserCount = userService.getTotalUserCount();
