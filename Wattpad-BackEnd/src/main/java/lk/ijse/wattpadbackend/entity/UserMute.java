@@ -13,25 +13,27 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-public class UserReport {
+public class UserMute {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User reportedUser;
+    @JoinColumn(name = "muted_user_id", nullable = false)
+    private User mutedUser;
 
     @ManyToOne
-    @JoinColumn(name = "reported_by_user_id", nullable = false)
-    private User reportedByUser;
+    @JoinColumn(name = "muted_by_user_id", nullable = false)
+    private User mutedByUser;
 
-    private String category;
-
-    private String reason;
-
-    private String description;
-
-    private LocalDateTime reportedAt = LocalDateTime.now();
+    private LocalDateTime blockedAt = LocalDateTime.now();
 }
+
+
+
+
+
+
+
+

@@ -99,6 +99,24 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transaction> transactions;
 
+    @OneToMany(mappedBy = "blockedUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserBlock> blocksByOtherUser;
+
+    @OneToMany(mappedBy = "blockedByUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserBlock> blockedUsers;
+
+    @OneToMany(mappedBy = "reportedUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserReport> reportsByOtherUser;
+
+    @OneToMany(mappedBy = "reportedByUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserReport> reportedUsers;
+
+    @OneToMany(mappedBy = "mutedUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserMute> mutesByOtherUser;
+
+    @OneToMany(mappedBy = "mutedByUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserMute> mutedUsers;
+
     @Transient
     private long totalViews;
 

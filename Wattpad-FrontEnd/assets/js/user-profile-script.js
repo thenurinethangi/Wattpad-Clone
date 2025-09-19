@@ -1076,6 +1076,14 @@ search.addEventListener('click',function (event) {
 
 //block,report,mute
 document.addEventListener("DOMContentLoaded", () => {
+
+    let userId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("userId")) {
+        userId = params.get("userId");
+    }
+
     const menuBtn = document.querySelector(".profile-more-options");
     const dropdown = document.querySelector(".dropdown-menu.align-right");
 
@@ -1127,18 +1135,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }).then((result) => {
                 if (result.isConfirmed) {
 
-                    fetch('http://localhost:8080/api/v1/story/report', {
+                    fetch('http://localhost:8080/api/v1/user/block/'+userId, {
                         method: 'POST',
                         credentials: 'include',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({
-                            storyId: storyId,
-                            category: selectedCategory,
-                            reason: selectedSubReason,
-                            description: description
-                        })
 
                     })
                         .then(response => {
@@ -1152,18 +1154,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         .then(data => {
                             console.log('Success:', data);
 
-                            closeReport();
-
                             Swal.fire({
                                 title: 'Success',
-                                text: 'Report submitted successfully!',
-                                customClass: {
-                                    popup: 'modern-swal-wide-short',
-                                    title: 'swal-title',
-                                    htmlContainer: 'swal-text'
-                                },
+                                text: 'Blocked user successfully!',
+                                icon: 'success',
                                 timer: 3000,
-                                timerProgressBar: true,
                                 showConfirmButton: false
                             });
 
@@ -1173,15 +1168,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             console.log(response);
 
                             Swal.fire({
-                                title: 'Fail',
-                                text: 'Fail to submit the report!, try later',
-                                customClass: {
-                                    popup: 'modern-swal-wide-short',
-                                    title: 'swal-title',
-                                    htmlContainer: 'swal-text'
-                                },
+                                title: 'Success',
+                                text: 'Fail to block the user!, try later',
+                                icon: 'success',
                                 timer: 3000,
-                                timerProgressBar: true,
                                 showConfirmButton: false
                             });
 
@@ -1195,6 +1185,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (muteBtn) {
         muteBtn.addEventListener("click", (e) => {
             e.preventDefault();
+
             Swal.fire({
                 title: "Mute this user?",
                 text: "You will not see notifications from them",
@@ -1203,8 +1194,48 @@ document.addEventListener("DOMContentLoaded", () => {
                 confirmButtonText: "Yes, Mute"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    fetch("/api/mute-user", { method: "POST" }) // replace endpoint
-                        .then(() => Swal.fire("Muted!", "User has been muted.", "success"));
+
+                    fetch('http://localhost:8080/api/v1/user/mute/'+userId, {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.json().then(errData => {
+                                    throw new Error(JSON.stringify(errData));
+                                });
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Success:', data);
+
+                            Swal.fire({
+                                title: 'Success',
+                                text: 'Muted user successfully!',
+                                icon: 'success',
+                                timer: 3000,
+                                showConfirmButton: false
+                            });
+
+                        })
+                        .catch(error => {
+                            let response = JSON.parse(error.message);
+                            console.log(response);
+
+                            Swal.fire({
+                                title: 'Success',
+                                text: 'Fail to mute the user!, try later',
+                                icon: 'success',
+                                timer: 3000,
+                                showConfirmButton: false
+                            });
+
+                        });
                 }
             });
         });

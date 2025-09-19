@@ -1,13 +1,13 @@
 package lk.ijse.wattpadbackend.service.impl;
 
-import lk.ijse.wattpadbackend.dto.UserReportRequestDTO;
 import lk.ijse.wattpadbackend.entity.User;
+import lk.ijse.wattpadbackend.entity.UserBlock;
 import lk.ijse.wattpadbackend.entity.UserReport;
 import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
-import lk.ijse.wattpadbackend.repository.UserReportRepository;
+import lk.ijse.wattpadbackend.repository.UserBlockRepository;
 import lk.ijse.wattpadbackend.repository.UserRepository;
-import lk.ijse.wattpadbackend.service.UserReportService;
+import lk.ijse.wattpadbackend.service.UserBlockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +15,13 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserReportServiceImpl implements UserReportService {
+public class UserBlockServiceImpl implements UserBlockService {
 
-    private final UserReportRepository userReportRepository;
+    private final UserBlockRepository userBlockRepository;
     private final UserRepository userRepository;
 
     @Override
-    public void addReport(String name, UserReportRequestDTO userReportRequestDTO) {
+    public void addABlock(String name, long userId) {
 
         try{
             User currentUser = userRepository.findByUsername(name);
@@ -29,20 +29,17 @@ public class UserReportServiceImpl implements UserReportService {
                 throw new UserNotFoundException("Current User not found.");
             }
 
-            Optional<User> optionalUser = userRepository.findById((int) userReportRequestDTO.getUserId());
+            Optional<User> optionalUser = userRepository.findById((int) userId);
             if(!optionalUser.isPresent()){
                 throw new NotFoundException("User not found.");
             }
             User user = optionalUser.get();
 
-            UserReport userReport = new UserReport();
-            userReport.setReportedUser(user);
-            userReport.setReportedByUser(currentUser);
-            userReport.setCategory(userReportRequestDTO.getCategory());
-            userReport.setReason(userReportRequestDTO.getReason());
-            userReport.setDescription(userReportRequestDTO.getDescription());
+            UserBlock userBlock = new UserBlock();
+            userBlock.setBlockedByUser(currentUser);
+            userBlock.setBlockedUser(user);
 
-            userReportRepository.save(userReport);
+            userBlockRepository.save(userBlock);
 
         }
         catch (UserNotFoundException | NotFoundException e){
@@ -53,20 +50,3 @@ public class UserReportServiceImpl implements UserReportService {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
