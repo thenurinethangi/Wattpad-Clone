@@ -24,4 +24,13 @@ public class UserBlockController {
         userBlockService.addABlock(auth.getName(),userId);
         return new APIResponse(202,"Your blocked to user id: "+userId,null);
     }
+
+    @PostMapping("/remove/{userId}")
+    public APIResponse removeABlock(@PathVariable long userId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean result = userBlockService.removeABlock(auth.getName(),userId);
+        return new APIResponse(202,"Successfully un block user id: "+userId,result);
+    }
 }

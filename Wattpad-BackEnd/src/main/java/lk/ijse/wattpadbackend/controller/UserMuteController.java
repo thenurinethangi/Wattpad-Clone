@@ -23,7 +23,16 @@ public class UserMuteController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        userMuteService.addAMute(auth.getName(),userId);
-        return new APIResponse(202,"Successfully muted user id: "+userId,null);
+        boolean result = userMuteService.addAMute(auth.getName(),userId);
+        return new APIResponse(202,"Successfully muted user id: "+userId,result);
+    }
+
+    @PostMapping("/remove/{userId}")
+    public APIResponse removeAMute(@PathVariable long userId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean result = userMuteService.removeAMute(auth.getName(),userId);
+        return new APIResponse(202,"Successfully un muted user id: "+userId,result);
     }
 }

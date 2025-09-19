@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="icon" type="image/ico" href="assets/image/wattpad-icon-2-removebg-preview.ico">
+    <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
+    <link rel="stylesheet" href="assets/style/premium-page-style.css">
+    <meta name="generator" content="Gatsby 2.32.13"/>
+    <title data-react-helmet="true">Wattpad Premium | Supercharge Your Wattpad Experience</title>
+    <meta data-react-helmet="true" name="description" content="Go Premium and get more from the platform you already love. Enjoy ad-free reading, access to bonus Coins, and customizable colors. Try Premium free for 7 days."/>
+    <meta data-react-helmet="true" name="image" content="https://www.wattpad.com/premium/images/Premium_OG.png"/>
+    <meta data-react-helmet="true" property="og:url" content="https://www.wattpad.com/premium/"/>
+    <meta data-react-helmet="true" property="og:title" content="Wattpad Premium | Supercharge Your Wattpad Experience"/>
+    <meta data-react-helmet="true" property="og:description" content="Go Premium and get more from the platform you already love. Enjoy ad-free reading, access to bonus Coins, and customizable colors. Try Premium free for 7 days."/>
+    <meta data-react-helmet="true" property="og:image" content="https://www.wattpad.com/premium/images/Premium_OG.png"/>
+    <meta data-react-helmet="true" name="twitter:card" content="summary_large_image"/>
+    <meta data-react-helmet="true" name="twitter:creator" content="@wattpad"/>
+    <meta data-react-helmet="true" name="twitter:title" content="Wattpad Premium | Supercharge Your Wattpad Experience"/>
+    <meta data-react-helmet="true" name="twitter:description" content="Go Premium and get more from the platform you already love. Enjoy ad-free reading, access to bonus Coins, and customizable colors. Try Premium free for 7 days."/>
+    <meta data-react-helmet="true" name="twitter:image" content="https://www.wattpad.com/premium/images/Premium_OG.png"/>
+    <meta name="theme-color" content="#663399"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton+SC&family=Cinzel+Decorative:wght@400;700;900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Roboto:ital,wght@1,800&family=Rubik:ital@0;1&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
+</head>
+<body>
+<div id="___gatsby">
+    <div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper">
+        <div class="container">
+            <div class="nav-container">
+                <div class="nav-outer-wrapper">
+                    <div class="nav-wrapper-inner">
+                        <a aria-current="page" class="logo-link" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/home-page.html">
+                            <img class="premium-logo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQ0IiBoZWlnaHQ9IjMyIiB2aWV3Qm94PSIwIDAgMTQ0IDMyIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPiA8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTEyNS4yNDYgMjMuMDk1MkMxMjUuMjQ2IDIzLjg3NjggMTI1LjczNyAyNC4zNTE4IDEyNi4zOTQgMjQuMzUxOEMxMjcuMDUgMjQuMzUxOCAxMjcuNTQzIDIzLjg3NjggMTI3LjU0MyAyMy4wOTUyVjE1Ljk3QzEyNy41NDMgMTMuOTg1OCAxMjguNzcyIDEyLjcwMTggMTMwLjU0OSAxMi43MDE4QzEzMi41MTggMTIuNzAxOCAxMzMuNDc0IDEzLjk1ODUgMTMzLjQ3NCAxNi4xMDk2VjIzLjA5NTJDMTMzLjQ3NCAyMy44NzY4IDEzMy45NjcgMjQuMzUxOCAxMzQuNjIyIDI0LjM1MThDMTM1LjI3OSAyNC4zNTE4IDEzNS43NzEgMjMuODc2OCAxMzUuNzcxIDIzLjA5NTJWMTUuOTdDMTM1Ljc3MSAxMy45ODU4IDEzNy4wMDEgMTIuNzAxOCAxMzguNzc5IDEyLjcwMThDMTQwLjc0NiAxMi43MDE4IDE0MS43MDQgMTMuOTU4NSAxNDEuNzA0IDE2LjEwOTZWMjMuMDk1MkMxNDEuNzA0IDIzLjg3NjggMTQyLjE5NSAyNC4zNTE4IDE0Mi44NTIgMjQuMzUxOEMxNDMuNTA4IDI0LjM1MTggMTQ0IDIzLjg3NjggMTQ0IDIzLjA5NTJWMTUuNTUxMUMxNDQgMTIuNDIyNiAxNDIuMjc4IDEwLjUyMTkgMTM5LjMyNSAxMC41MjE5QzEzNy4yNzQgMTAuNTIxOSAxMzUuOTYyIDExLjM1OTcgMTM1LjA4NyAxMi42MTY4SDEzNS4wNkMxMzQuMzQ5IDExLjMwMzUgMTMzLjAzNyAxMC41MjE5IDEzMS4yMzMgMTAuNTIxOUMxMjkuNDU2IDEwLjUyMTkgMTI4LjI4IDExLjI0OTQgMTI3LjU2OSAxMi4zMzcxSDEyNy41NDNWMTEuOTQ3NUMxMjcuNTQzIDExLjE2MzkgMTI3LjA1IDEwLjY4ODggMTI2LjM5NCAxMC42ODg4QzEyNS43MzcgMTAuNjg4OCAxMjUuMjQ2IDExLjE2MzkgMTI1LjI0NiAxMS45NDc1VjIzLjA5NTJaTTEyMi4yNjcgMTEuOTQ3NkMxMjIuMjY3IDExLjE2MzkgMTIxLjc3NSAxMC42ODg4IDEyMS4xMTggMTAuNjg4OEMxMjAuNDYzIDEwLjY4ODggMTE5Ljk3IDExLjE2MzkgMTE5Ljk3IDExLjk0NzZWMTkuMDcwN0MxMTkuOTcgMjEuMDU1NCAxMTguNzk1IDIyLjM0MDkgMTE3LjAxNyAyMi4zNDA5QzExNS4wNDkgMjIuMzQwOSAxMTQuMTIgMjEuMDgyNyAxMTQuMTIgMTguOTMxNlYxMS45NDc2QzExNC4xMiAxMS4xNjM5IDExMy42MjggMTAuNjg4OCAxMTIuOTcyIDEwLjY4ODhDMTEyLjMxNiAxMC42ODg4IDExMS44MjQgMTEuMTYzOSAxMTEuODI0IDExLjk0NzZWMTkuNDkwMUMxMTEuODI0IDIyLjUzNjcgMTEzLjQ5IDI0LjUxODggMTE2LjMzNCAyNC41MTg4QzExOC4xMTEgMjQuNTE4OCAxMTkuMzE0IDIzLjczNzIgMTE5Ljk0MyAyMi43MDM2SDExOS45N1YyMy4wOTUyQzExOS45NyAyMy44NzY4IDEyMC40NjMgMjQuMzUxOCAxMjEuMTE4IDI0LjM1MThDMTIxLjc3NSAyNC4zNTE4IDEyMi4yNjcgMjMuODc2OCAxMjIuMjY3IDIzLjA5NTJWMTEuOTQ3NlpNMTA2LjU0OCAyMy4wOTUyQzEwNi41NDggMjMuODc2OCAxMDcuMDQgMjQuMzUxOCAxMDcuNjk2IDI0LjM1MThDMTA4LjM1MiAyNC4zNTE4IDEwOC44NDQgMjMuODc2OCAxMDguODQ0IDIzLjA5NTJWMTEuOTQ3NkMxMDguODQ0IDExLjE2MzkgMTA4LjM1MiAxMC42ODg4IDEwNy42OTYgMTAuNjg4OEMxMDcuMDQgMTAuNjg4OCAxMDYuNTQ4IDExLjE2MzkgMTA2LjU0OCAxMS45NDc2VjIzLjA5NTJaTTEwNy42OTYgOC4xNDYxN0MxMDguNTE1IDguMTQ2MTcgMTA5LjE5OSA3LjQ0ODAzIDEwOS4xOTkgNi42MTAyNUMxMDkuMTk5IDUuNzQzNjMgMTA4LjUxNSA1LjA3MzgyIDEwNy42OTYgNS4wNzM4MkMxMDYuODc1IDUuMDczODIgMTA2LjE5MiA1Ljc0MzYzIDEwNi4xOTIgNi42MTAyNUMxMDYuMTkyIDcuNDQ4MDMgMTA2Ljg3NSA4LjE0NjE3IDEwNy42OTYgOC4xNDYxN1pNODQuODEzOSAyMy4wOTUyQzg0LjgxMzkgMjMuODc2OCA4NS4zMDQ5IDI0LjM1MTggODUuOTYxOCAyNC4zNTE4Qzg2LjYxNzcgMjQuMzUxOCA4Ny4xMDk4IDIzLjg3NjggODcuMTA5OCAyMy4wOTUyVjE1Ljk3Qzg3LjEwOTggMTMuOTg1OCA4OC4zMzk5IDEyLjcwMTggOTAuMTE2NSAxMi43MDE4QzkyLjA4NTIgMTIuNzAxOCA5My4wNDIxIDEzLjk1ODUgOTMuMDQyMSAxNi4xMDk2VjIzLjA5NTJDOTMuMDQyMSAyMy44NzY4IDkzLjUzNDIgMjQuMzUxOCA5NC4xOTAxIDI0LjM1MThDOTQuODQ3IDI0LjM1MTggOTUuMzM4NSAyMy44NzY4IDk1LjMzODUgMjMuMDk1MlYxNS45N0M5NS4zMzg1IDEzLjk4NTggOTYuNTY5MSAxMi43MDE4IDk4LjM0NTggMTIuNzAxOEMxMDAuMzE0IDEyLjcwMTggMTAxLjI3MSAxMy45NTg1IDEwMS4yNzEgMTYuMTA5NlYyMy4wOTUyQzEwMS4yNzEgMjMuODc2OCAxMDEuNzYzIDI0LjM1MTggMTAyLjQyIDI0LjM1MThDMTAzLjA3NSAyNC4zNTE4IDEwMy41NjggMjMuODc2OCAxMDMuNTY4IDIzLjA5NTJWMTUuNTUxMUMxMDMuNTY4IDEyLjQyMjYgMTAxLjg0NiAxMC41MjE5IDk4Ljg5MjggMTAuNTIxOUM5Ni44NDI0IDEwLjUyMTkgOTUuNTMwMSAxMS4zNTk3IDk0LjY1NDkgMTIuNjE2OEg5NC42Mjc3QzkzLjkxNjggMTEuMzAzNSA5Mi42MDUgMTAuNTIxOSA5MC44MDEyIDEwLjUyMTlDODkuMDIzNSAxMC41MjE5IDg3Ljg0NzkgMTEuMjQ5NCA4Ny4xMzc1IDEyLjMzNzFIODcuMTA5OFYxMS45NDc1Qzg3LjEwOTggMTEuMTYzOSA4Ni42MTc3IDEwLjY4ODggODUuOTYxOCAxMC42ODg4Qzg1LjMwNDkgMTAuNjg4OCA4NC44MTM5IDExLjE2MzkgODQuODEzOSAxMS45NDc1VjIzLjA5NTJaTTczLjYzMzQgMTYuMzYxNUM3My41MjQgMTYuMzYxNSA3My40Njk1IDE2LjMwNTQgNzMuNDY5NSAxNi4xOTMxQzczLjQ2OTUgMTUuNTc3OSA3My41MjQgMTUuMTA0OSA3My42NjExIDE0LjY4MzlDNzQuMDk4MiAxMy4zNDM4IDc1LjE5MTcgMTIuNTg5NSA3Ni42NjczIDEyLjU4OTVDNzguMTQ0IDEyLjU4OTUgNzkuMjM3NSAxMy4zNDM4IDc5LjY3NDYgMTQuNjgzOUM3OS44MTE3IDE1LjEwNDkgNzkuODY2MiAxNS41Nzc5IDc5Ljg2NjIgMTYuMTkzMUM3OS44NjYyIDE2LjMwNTQgNzkuODExNyAxNi4zNjE1IDc5LjcwMjMgMTYuMzYxNUg3My42MzM0Wk03Ni44MzIzIDI0LjUxODhDNzguODU0OSAyNC41MTg4IDgwLjQxMjcgMjMuNzM3MSA4MS41MzQ1IDIyLjY3NjNDODEuNzUyNyAyMi40NTE2IDgxLjg4OTQgMjIuMTcyNCA4MS44ODk0IDIxLjgzNjRDODEuODg5NCAyMS4yNzc5IDgxLjQ3OTUgMjAuODU5IDgwLjkzMjUgMjAuODU5QzgwLjY1OTIgMjAuODU5IDgwLjQxMjcgMjAuOTcxOSA4MC4xMzk1IDIxLjE5NDVDNzkuMTU1OSAyMS45NDg4IDc4LjI4MTIgMjIuMzQwOSA3Ni45OTYxIDIyLjM0MDlDNzUuMzgzMyAyMi4zNDA5IDc0LjE3OTkgMjEuNTU3MiA3My42ODc0IDIwLjAyMTNDNzMuNTI0IDE5LjQ5MDEgNzMuNDY5NiAxOS4wNDM5IDczLjQ2OTYgMTguNDAxNEM3My40Njk2IDE4LjI4OTYgNzMuNTI0IDE4LjIzMjkgNzMuNjMzNCAxOC4yMzI5SDgxLjMxNTFDODEuODYxNiAxOC4yMzI5IDgyLjIxNzYgMTcuODcwMiA4Mi4yMTc2IDE3LjMzOUM4Mi4yMTc2IDE2LjAyNjEgODIuMDgwOSAxNC45OTI2IDgxLjc4IDE0LjA5ODFDODEuMDY5NiAxMS44MDc5IDc5LjIxMDMgMTAuNTIxOSA3Ni42NDA3IDEwLjUyMTlDNzQuMTUyMiAxMC41MjE5IDcyLjI2NjIgMTEuODA3OSA3MS41MjgxIDE0LjEyNTRDNzEuMjU0OSAxNC45NjUzIDcxLjExODIgMTUuOTEzOCA3MS4xMTgyIDE3LjUwNTlDNzEuMTE4MiAxOS4xIDcxLjI4MjEgMjAuMDQ4NiA3MS41NTUzIDIwLjg4ODRDNzIuMjkzOSAyMy4yMzQ4IDc0LjEyNSAyNC41MTg4IDc2LjgzMjMgMjQuNTE4OFpNNjIuOTU4MSAyNC4zNTE4QzYzLjYxMzUgMjQuMzUxOCA2NC4xMDYgMjMuODc2OCA2NC4xMDYgMjMuMDk1MlYxNi42MTM1QzY0LjEwNiAxNC4zNzc0IDY0Ljg5ODUgMTIuNzAxOCA2Ni44NjcyIDEyLjcwMThDNjcuNDEzNyAxMi43MDE4IDY3Ljg3ODYgMTIuODQxNSA2OC4zNzExIDEzLjAzNzNDNjguNTYxNyAxMy4xMjA3IDY4Ljc4MSAxMy4xNzY5IDY4Ljk0NTQgMTMuMTc2OUM2OS42Mjg1IDEzLjE3NjkgNzAuMDkzMyAxMi42NzMgNzAuMDkzMyAxMi4wMDIyQzcwLjA5MzMgMTEuNjExNiA2OS45MDE3IDExLjI0OTQgNjkuNDM2OSAxMC45OTY5QzY4Ljk5OTMgMTAuNzQ1IDY4LjM5NzggMTAuNTIxOSA2Ny40OTY0IDEwLjUyMTlDNjUuODgzMSAxMC41MjE5IDY0LjY4MDMgMTEuMzU5NyA2NC4xMzM4IDEyLjU2MjJINjQuMTA2VjExLjk0NzVDNjQuMTA2IDExLjE2MzkgNjMuNjEzNSAxMC42ODg4IDYyLjk1ODEgMTAuNjg4OEM2Mi4zMDEyIDEwLjY4ODggNjEuODA5NiAxMS4xNjM5IDYxLjgwOTYgMTEuOTQ3NVYyMy4wOTUyQzYxLjgwOTYgMjMuODc2OCA2Mi4zMDEyIDI0LjM1MTggNjIuOTU4MSAyNC4zNTE4Wk01My44ODAzIDIyLjMwNjlDNTIuNDA0MSAyMi4zMDY5IDUxLjQyIDIxLjU1MjYgNTAuOTgyNCAyMC4yMTA0QzUwLjczNTkgMTkuNDg0OSA1MC42ODE1IDE4LjY0NzIgNTAuNjgxNSAxNy41MDEzQzUwLjY4MTUgMTYuMzI3NiA1MC43MzU5IDE1LjQ4OTggNTAuOTgyNCAxNC43NjIzQzUxLjQyIDEzLjQyMjIgNTIuNDA0MSAxMi42Njc4IDUzLjg4MDMgMTIuNjY3OEM1NS4zMjkyIDEyLjY2NzggNTYuMzEzMyAxMy40MjIyIDU2Ljc1MDkgMTQuNzYyM0M1Ni45OTY5IDE1LjQ4OTggNTcuMDUxNCAxNi4zMjc2IDU3LjA1MTQgMTcuNTAxM0M1Ny4wNTE0IDE4LjY0NzIgNTYuOTk2OSAxOS40ODQ5IDU2Ljc1MDkgMjAuMjEwNEM1Ni4zMTMzIDIxLjU1MjYgNTUuMzI5MiAyMi4zMDY5IDUzLjg4MDMgMjIuMzA2OVpNNDkuNTMzNiAyOS4zNDc2QzUwLjE4OTUgMjkuMzQ3NiA1MC42ODE2IDI4Ljg3MiA1MC42ODE2IDI4LjA5MDRWMjIuNjk2OUg1MC43MDkzQzUxLjMxMDggMjMuNzMyIDUyLjQ1ODcgMjQuNDg0OCA1NC40MjY5IDI0LjQ4NDhDNTYuNjQxNiAyNC40ODQ4IDU4LjI1NDQgMjMuMjI4NiA1OC45Mzc1IDIxLjEzMzJDNTkuMjY2MiAyMC4wNzA4IDU5LjQwMjkgMTkuMDA5OSA1OS40MDI5IDE3LjUwMTNDNTkuNDAyOSAxNS45NjQ5IDU5LjI2NjIgMTQuOTAxOSA1OC45Mzc1IDEzLjg0MTFDNTguMjU0NCAxMS43NDUxIDU2LjY0MTYgMTAuNDg3OSA1NC40MjY5IDEwLjQ4NzlDNTIuNDg1OSAxMC40ODc5IDUxLjMzNzUgMTEuMjE1NCA1MC43MDkzIDEyLjI3NjNINTAuNjgxNlYxMS45MTM2QzUwLjY4MTYgMTEuMTI5OSA1MC4xODk1IDEwLjY1NDkgNDkuNTMzNiAxMC42NTQ5QzQ4Ljg3NzIgMTAuNjU0OSA0OC4zODU3IDExLjEyOTkgNDguMzg1NyAxMS45MTM2VjI4LjA5MDRDNDguMzg1NyAyOC44NzIgNDguODc3MiAyOS4zNDc2IDQ5LjUzMzYgMjkuMzQ3NlpNMC4wNDE3MzAyIDE2Ljc3NDhDLTAuMTU4NDE3IDExLjE3ODggMC4zMjA1MjUgNS44NjIxMiAyLjM3MjkyIDMuMTM3MDRDNC40MTI3IDAuNDI3NDIyIDcuODE4NzMgMC45MTUzNDkgOS4yNjMxMiAyLjE3NTYxQzExLjM3MyA0LjAxNzA3IDExLjE5NzUgNy41MzE0OCAxMC43NjYgMTIuNDc5M0MxNi4wMzQ5IDMuNjUyNzkgMTkuOTAzMiAwLjIxOTI2NyAyMi44Nzk3IDAuMDE1NzQ5QzI4LjUxODYgLTAuMzY5MTMyIDI4LjcwNTYgNi4zOTA3NSAyOC4wMjU1IDEwLjM4OUMzMS44OTU0IDUuMTMwNDkgMzQuOTk5OSAyLjY1MzI0IDM2LjkxMzcgMS42NTk4NkM0MC42Mzg4IC0wLjI3MjI2NyA0My44NTUzIDIuNDEzMTQgNDEuMDgxIDYuNTY0MzlDMzYuODc3NCAxMi44NTMzIDM1LjY4IDE0LjkwOTEgMzEuNTEyNyAyMy42NDQ0QzI4LjU1NzkgMjkuODM3NiAyMi4wNTI0IDI5LjM2NTEgMjAuMTYwMyAyMy4yNjc4QzE5LjY3ODggMjEuNzE4IDE5LjUzNjIgMTkuNDY5NSAxOS42OTM1IDE2LjkzMDRDMTUuMzUyNyAyNC4wMzU1IDE0LjQ1OTQgMzIgOC4xMDAwNSAzMkM0LjUwODQ5IDMyIDAuNDU5NjcgMjguNDY4NiAwLjA0MTczMDIgMTYuNzc0OFoiIGZpbGw9IiNGRjUwMEEiLz4gPC9zdmc+Cg==" alt="Wattpad Premium logo"/>
+                        </a>
+                    </div>
+                    <div class="nav-wrapper-inner">
+                        <button class="hamburger-icon hide-desktop">
+                            <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0 2V0H18V2H0ZM0 7H18V5H0V7ZM0 12H18V10H0V12Z" fill="#222222"></path>
+                            </svg>
+                        </button>
+                        <div class="topnav" id="main-nav">
+                            <a aria-current="page" class="black-txt page-link page-active" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/premium-page.html">
+                                <div class="border-container">
+                                    <span>Home</span>
+                                </div>
+                            </a>
+                            <a class="black-txt page-link" href="/premium/access-premium/">
+                                <div class="border-container">
+                                    <span>Access Premium</span>
+                                </div>
+                            </a>
+                            <a class="black-txt page-link" href="/premium/faqs/">
+                                <div class="border-container">
+                                    <span>FAQs</span>
+                                </div>
+                            </a>
+                            <div class="dropdown">
+                                <div class="border-container">
+                                    <button class="dropbtn black-txt">
+                                        English<i class="fa fa-caret-down"></i>
+                                    </button>
+                                </div>
+                                <div class="dropdown-content">
+                                    <a aria-current="page" class="black-txt" href="/premium/">English</a>
+                                    <a class="black-txt" href="/premium/fr/">Français</a>
+                                    <a class="black-txt" href="/premium/es/">Español</a>
+                                    <a class="black-txt" href="/premium/pt/">Português</a>
+                                    <a class="black-txt" href="/premium/id/">Bahasa Indonesia</a>
+                                </div>
+                            </div>
+                            <div class="start-free-trial-wrapper page-link">
+                                <div class="border-container">
+<!--                                    <a href="https://my.w.tt/nTgQCWKxC6" class="btn-primary start-free-trial">-->
+<!--                                        <span>Start your free week</span>-->
+<!--                                    </a>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-inner">
+                <div class="header-padding-offset">
+                    <div class="section purple-bg" id="header-section">
+                        <img src="assets/image/HeroBanner-320-3e55f43d78259c565208ef7a33331224.png" alt="Wattpad Premium" class="" style="width: 700px; position: absolute; right: 0; top: 80px;"/>
+                        <div class="hide-small-tablet-phones main-cta">
+                            <p class="page-header white-txt">
+                                <span>Supercharge your Wattpad experience.</span>
+                            </p>
+                            <p class="light-txt font-truemed pad-stsb pad-t white-txt">
+                                <span>Try Wattpad Premium and get more from the platform you already love.</span>
+                            </p>
+                            <div class="flex pad-ts" style="margin-bottom: 35px;">
+<!--                                <a class="btn-secondary" href="https://my.w.tt/nTgQCWKxC6">-->
+<!--                                    <span>Start your free week</span>-->
+<!--                                </a>-->
+                            </div>
+                        </div>
+                        <div class="section pad-tbl hide-large-tablet-desktop" id="go-premium">
+                            <div class="section-inner">
+                                <p class="font-small white-txt page-header">
+                                    <span>Supercharge your Wattpad experience.</span>
+                                </p>
+                                <p class="light-txt font-smaller pad-stsb white-txt">
+                                    <span>Try Wattpad Premium and get more from the platform you already love.</span>
+                                </p>
+                                <div class="download-wrapper">
+<!--                                    <a class="btn-secondary" href="https://my.w.tt/nTgQCWKxC6">-->
+<!--                                        <span>Start your free week</span>-->
+<!--                                    </a>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section pad-tl white-bg" id="enjoy-section">
+                    <div class="section-inner">
+                        <p class="regular-txt section-text-header">
+                            <span>What you’ll enjoy with Wattpad Premium</span>
+                        </p>
+                        <div class="panel-wrapper pad-t">
+                            <div class="panel-inner-wrapper padding-all">
+                                <div class="panel text-center">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTkiIHZpZXdCb3g9IjAgMCA5NiA5OSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggb3BhY2l0eT0iMC40IiBkPSJNMjUuOTk5MyAxOC42NjQ2QzMxLjc1NDEgMTguNDA4NCAzNy42MDIxIDE4Ljk3OTIgNDMuMjk4NyAxOS43NzEzQzQ1LjY5ODUgMjAuMTA5MiA0OC4wOTgzIDIwLjUxNjkgNTAuNDc0OCAyMC45OTQ1QzUxLjU4MTUgMjEuMjE1OSA1Mi42NzY1IDIxLjQzNzIgNTMuNzcxNiAyMS43MTY4QzU1Ljg4IDIyLjI1MzUgNTUuMzA0MiAyMC40ODI2IDU1LjU4NiAxOC4zMjUzQzU1LjY4OTggMTcuNTMxNCA1NS43OTMzIDE2LjczNzQgNTUuODk2OSAxNS45NDMzQzU2LjYxMjcgMTAuNDUyMyA1MS44MjIxIDUuODU4NzUgNDYuNTE0OCA3LjQzODk3QzQxLjA3MDcgOS4wNTk5NiAzNS43NTA2IDExLjE0MjEgMzAuNjAwOCAxMy40NDU3QzIxLjkzMzcgMTcuMzI1IDEyLjg5MzcgMjIuNjQ4OCA3Ljk4OTI4IDMxLjA5NDZDNC4yNjE0NyAzNy41MjUxIDEwLjYzMzcgNDcuOTYzIDE4LjUwODcgNDQuNzgyN0MzNC4zOTc1IDM4LjM4NzIgNTEuNDk0OSAzNi4zMjkyIDY3LjczNDcgMzEuMTY3MkM3Mi4xODM3IDI5Ljc1MzEgNzQuMjQ2NyAyNC43ODU5IDcyLjQzMzQgMjAuNDg0MkM3MC40MTEyIDE1LjY4NyA2NC41MzQ0IDEzLjg3MzIgNjAuMDI2MyAxNi40NzY5QzUwLjg3MjcgMjEuNzYzNiA0MS40MTIzIDI2LjQ5NzQgMzIuMzgzMiAzMi4wMjY1QzIwLjEyOCAzOS41NDA0IDkuOTgxMzQgNDguOTQxNSAxLjY3NTI5IDYwLjY3MjVDLTQuMjU0MjcgNjkuMDI1MiA2Ljg4MjU5IDc2Ljk1ODQgMTQuNDMxNCA3My40Mjg2QzM2Ljc0MiA2Mi45NjU0IDYwLjA0MTcgNTQuNzkxNyA4Mi41ODQ3IDQ0LjgzOTNDODcuMjMwMiA0Mi43ODg0IDg4Ljk4NjEgMzcuMTUwMSA4Ni40MjI5IDMyLjc2NjNDODMuOTA3MSAyOC40NjM4IDc4LjI3NTcgMjcuMTY4NyA3NC4xMjUgMjkuOTI3OEM1OC41MDg2IDQwLjMwODMgNDIuNjUzMyA1MS4wMjg0IDMwLjkxNTQgNjUuNzI4NEMyNS4wMjA3IDczLjExNDEgMzAuNDYxIDgyLjk4MTIgMzkuOTc4NiA4MS4zMDM3QzQ4LjAxNjcgNzkuODk0MSA1NS41NzcyIDc1LjEwNjIgNjIuODM0OCA3MS41NDE0QzY3LjU3NTkgNjkuMjEwNSA3Mi4zMTI1IDY2Ljg3OTUgNzcuMDUwMSA2NC41NDg2QzgxLjYwMDQgNjIuMzA5OCA4Mi45NTg0IDU2LjQ2MDkgNzkuODYwOSA1Mi40NDU1Qzc3LjAwNTIgNDguNzQzNiA3MS41ODU5IDQ4LjI1MzcgNjguMzgzNCA1MS42NjAxQzU5LjQxNTYgNjEuMTk5MiA1Mi4zMTIxIDcyLjAzNjIgNDUuMjc5MSA4My4yMjU4QzM4Ljg3MTkgOTMuNDA3NCA1NC45OTQ4IDEwMi43NzQgNjEuMzc4NyA5Mi42Mzg2QzY5LjE2MDUgODAuMjU1MiA3Ni44Mzc0IDY4LjY1MjQgODcuNzUzIDU4Ljc3MzZDOTUuOTg5MSA1MS4zMTggODUuNTE2MyAzOS42ODAyIDc2LjQ2NDcgNDQuMTQyQzY5LjQ2MzMgNDcuNTkwMiA2Mi40NTA0IDUxLjAyNjggNTUuNDQ5MSA1NC40NzVDNTEuNTYwNiA1Ni4zODQ0IDQ3LjU5NyA1OC43MzE1IDQzLjUwMTEgNjAuNTgxMkMzOS41NTU5IDYyLjM2MjkgMzcuMzU2MyA2Ny4zMTc2IDM5LjUzNTIgNzEuMDU4MUM0MS43NDAxIDc0Ljg0MzUgNDcuMDg3MyA3NS4yNDg4IDUwLjEzMzggNzIuMTAwOUM2Mi4xMDAxIDU5LjczNjMgNzYuOTYyNCA1MC41MTAxIDkxLjIwMTIgNDAuOTM4NEMxMDEuMjQzIDM0LjE4MTcgOTIuNjIyNCAxOS43NzEzIDgxLjc4ODUgMjQuODM4OEM1OS41OTc5IDM1LjI0NTggMzYuNDI4OSA0My4zODc4IDEzLjk5OTIgNTMuMjY3NkM5LjYxMzE5IDU1LjE5OTYgOC42MDY4NiA2MC45MTczIDExLjk5NTggNjQuMzA2MkMxNS4wMjM2IDY3LjMzNCAyMC4wNDIyIDY2Ljg5MDIgMjIuOTI4MSA2My43MjY4QzM3LjkwNDMgNDcuMzEwNyA1OS40MzM1IDM5LjQyMjYgNzcuOTc5MSAyNy40MDE3Qzg2LjMyMDEgMjEuOTk2NCA4MS4wODk1IDYuMjIzMDUgNzAuODAzMSAxMC4zNzAyQzU0Ljc4OTUgMTYuODE1OSAzNy41NDgzIDE4Ljg1NTggMjEuMTk0NiAyNC4xMDc5QzE3LjMyNDUgMjUuMzUwOCAxNi4wMzQgMzAuMDM1OSAxOC41MTE1IDMzLjI1ODRDMjEuMTc2MSAzNi43MjQxIDI3LjAxNzYgMzYuNjM3NiAzMC43MDE4IDM0LjI4NDRDMzMuOTkyIDMyLjE4MjkgMzcuNzkwNCAzMC40ODUzIDQwLjk5MjIgMjkuMTQ5MUM0Ny43ODM4IDI2LjMxODMgNTUuMDQxNCAyNC4xMTY2IDYyLjMxMDYgMjIuOTE2N0M3MC4wMTA5IDIxLjY0NjkgNzEuNTYwMyA5LjE0NzA1IDY0LjUzNTcgNS44ODUyMUM1OS4xMTg3IDMuMzY4OTMgNTMuMTQyNSAyLjUxODUzIDQ3LjI3MTIgMS42OTE0MkM0MC4yNTgyIDAuNzEyODY1IDMzLjEwNTUgLTAuMjU0MDQgMjYuMDIyNiAwLjA2MDQ5NDZDMTQuMDQ3IDAuNTYxNDIgMTMuOTc3MSAxOS4yMTIyIDI1Ljk5OTMgMTguNjY0NloiIGZpbGw9IiNEN0NBRkYiLz4KPHBhdGggZD0iTTY1Ljc3MDYgODAuNTgxM0gzMS4yOTk5QzI5LjEyMTQgODAuNTgxMyAyNy4zNTA3IDc4LjgxMDYgMjcuMzUwNyA3Ni42MzIyVjE1LjM1NjFDMjcuMzUwNyAxMy4xNzc3IDI5LjEyMTQgMTEuNDA3IDMxLjI5OTkgMTEuNDA3SDY1Ljc3MDZDNjcuOTQ5IDExLjQwNyA2OS43MTk3IDEzLjE3NzcgNjkuNzE5NyAxNS4zNTYxVjc2LjYzMjJDNjkuNzE5NyA3OC44MTA2IDY3Ljk0OSA4MC41ODEzIDY1Ljc3MDYgODAuNTgxM1oiIGZpbGw9IiNFQkVCRUIiLz4KPHBhdGggZD0iTTY1Ljc3MDYgODAuNTgxM0gzMS4yOTk5QzI5LjEyMTQgODAuNTgxMyAyNy4zNTA3IDc4LjgxMDYgMjcuMzUwNyA3Ni42MzIyVjE1LjM1NjFDMjcuMzUwNyAxMy4xNzc3IDI5LjEyMTQgMTEuNDA3IDMxLjI5OTkgMTEuNDA3SDY1Ljc3MDZDNjcuOTQ5IDExLjQwNyA2OS43MTk3IDEzLjE3NzcgNjkuNzE5NyAxNS4zNTYxVjc2LjYzMjJDNjkuNzE5NyA3OC44MTA2IDY3Ljk0OSA4MC41ODEzIDY1Ljc3MDYgODAuNTgxM1oiIHN0cm9rZT0iIzMyMjg2NCIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0zNC4zODcgMjAuMTMyNEg2Mi42NzE4IiBzdHJva2U9IiMzMjI4NjQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0zNC4zODcgMjQuNDY2MUg2Mi42NzE4IiBzdHJva2U9IiMzMjI4NjQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0zNC4zODcgMjguODExM0g2Mi42NzE4IiBzdHJva2U9IiMzMjI4NjQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0zNC4zODcgMzMuMTU2Nkg2Mi42NzE4IiBzdHJva2U9IiMzMjI4NjQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0zNC4zODcgMzcuNDkwMUg2Mi42NzE4IiBzdHJva2U9IiMzMjI4NjQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0zNC4zODcgNDEuODM1NEg2Mi42NzE4IiBzdHJva2U9IiMzMjI4NjQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0zNC4zODcgNDYuMTgwNkg2Mi42NzE4IiBzdHJva2U9IiMzMjI4NjQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0zNC4zODcgNTAuNTE0Mkg1Ny45NDIxIiBzdHJva2U9IiMzMjI4NjQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0zNC4zODcgNTQuODU5NEg2Mi42NzE4IiBzdHJva2U9IiMzMjI4NjQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0zNC4zODcgNTkuMjA0N0g2Mi42NzE4IiBzdHJva2U9IiMzMjI4NjQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0zNC4zODcgNjMuNTM4M0g2Mi42NzE4IiBzdHJva2U9IiMzMjI4NjQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0zNC4zODcgNjcuODgzNUg2Mi42NzE4IiBzdHJva2U9IiMzMjI4NjQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0zNC4zODcgNzIuMjI4OEg2Mi42NzE4IiBzdHJva2U9IiMzMjI4NjQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0yNC44NDU5IDkwLjA3NTdDMzEuOTUyMSA5MC4wNzU3IDMzLjUxMzEgODQuOTM4MyAzMy44Mjc3IDgyLjA5NTlDMzMuOTQ0MSA4MS4wNTkxIDM0LjgwNjIgODAuMjc4NSAzNS44NTQ3IDgwLjIyMDNDNDIuODMyNyA3OS44MzU5IDQ0LjgyNDcgNzcuMzc3OCA0NS4yNjc0IDc1LjM4NThDNDUuNTcwMyA3NC4wMzQ0IDQ0LjUyMTkgNzIuNzUzIDQzLjEzNTYgNzIuNzUzSDI5LjU1MjNDMjguMzUyNCA3Mi43NTMgMjcuMzg1NSA3MS43ODYxIDI3LjM4NTUgNzAuNTg2MlY2MS43OTA5QzE5LjEyNjEgNjQuNzE0OSAxOS4xMDI4IDc2LjA2MTUgMTkuMTAyOCA3Ni4wNjE1Vjk2Ljk2MDVMMzUuMjEzOSA5Ni43MzkyQzM1LjA1MDggOTYuNzM5MiA0Mi4yMDM2IDkxLjQwMzggNDIuMjAzNiA4MC44Mzc3SDM0Ljk0NiIgZmlsbD0iI0ZGQUYwQSIvPgo8cGF0aCBkPSJNMjQuODQ1OSA5MC4wNzU3QzMxLjk1MjEgOTAuMDc1NyAzMy41MTMxIDg0LjkzODMgMzMuODI3NyA4Mi4wOTU5QzMzLjk0NDEgODEuMDU5MSAzNC44MDYyIDgwLjI3ODUgMzUuODU0NyA4MC4yMjAzQzQyLjgzMjcgNzkuODM1OSA0NC44MjQ3IDc3LjM3NzggNDUuMjY3NCA3NS4zODU4QzQ1LjU3MDMgNzQuMDM0NCA0NC41MjE5IDcyLjc1MyA0My4xMzU2IDcyLjc1M0gyOS41NTIzQzI4LjM1MjQgNzIuNzUzIDI3LjM4NTUgNzEuNzg2MSAyNy4zODU1IDcwLjU4NjJWNjEuNzkwOUMxOS4xMjYxIDY0LjcxNDkgMTkuMTAyOCA3Ni4wNjE1IDE5LjEwMjggNzYuMDYxNVY5Ni45NjA1TDM1LjIxMzkgOTYuNzM5MkMzNS4wNTA4IDk2LjczOTIgNDIuMjAzNiA5MS40MDM4IDQyLjIwMzYgODAuODM3N0gzNC45NDYiIHN0cm9rZT0iIzMyMjg2NCIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=" alt="Hand holding sheet"/>
+                                    <div class="panel-copy-container">
+                                        <p class="bold-txt black-txt font-small pad-stsb">
+                                                    <span>
+                                                        No ads. <br/>Period.
+                                                    </span>
+                                        </p>
+                                        <p class="light-txt black-txt font-16px">
+                                            <span>Never wait for an ad to finish to get to the next chapter again.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-inner-wrapper padding-all">
+                                <div class="panel text-center">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAzIiBoZWlnaHQ9IjEwMiIgdmlld0JveD0iMCAwIDEwMyAxMDIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIG9wYWNpdHk9IjAuNCIgZD0iTTM1LjE5NzYgMzQuMzcxNkM0MC45NDE1IDM1LjIxNDQgNDYuNTgzOCAzNi45MDAxIDUyLjA2MjMgMzguNzczMUM1NC45MjY1IDM5Ljc1NjQgNTcuNzgyOCA0MC43ODY2IDYwLjU4NDUgNDEuOTQ5NEM2MS43MDA1IDQyLjQwOTggNjIuNzg1MiA0Mi45NTYxIDYzLjkwMTIgNDMuNDA4N0M2NC40MDA3IDQzLjY0MjkgNjQuODg0NSA0My44OTI2IDY1LjM3NjIgNDQuMTU3OUM2NC43NzIzIDQzLjc0MTggNjUuMjAxNyA0My4xODM5IDY1LjQxNiA0Mi40ODI1QzY2LjA5MTMgNDAuMjcxOSA2Ni43Njc4IDM4LjA2MTIgNjcuNDQ0MyAzNS44NDk3QzY4LjYwMTUgMzIuMDY2NyA2NS44MzggMjguMjI4NyA2MS44ODkgMjguNDY1OUM1NC45Mjk4IDI4Ljg4NCA0Ny45OTMyIDMwLjA2OTcgNDEuMjM4IDMxLjY2MzVDMzEuNDUxNiAzMy45NjU3IDIxLjE3MzYgMzcuNDU0MiAxNC4zOTE4IDQ1LjI4MTdDOS42OTM3MSA1MC42OTc4IDE0LjM5MTggNjEuMTQ3NSAyMi4wMzk5IDU5LjY1NjlDMzkuODcyOCA1Ni4xODY2IDU4LjEwNjEgNTcuNTk2NCA3Ni4wNDQzIDU1LjQwOTRDODAuNTAyNCA1NC44NjU5IDgzLjMxNyA1MC41MDQ2IDgyLjI5MDkgNDYuMTMyNEM4MS4xODExIDQxLjQwMzQgNzYuMTExMyAzOC43NzE0IDcxLjUyNiA0MC4zNzQzQzYwLjcyOTkgNDQuMTQ4MyA0OS42OTI1IDQ3LjE4OTggMzguOTc0OCA1MS4yMDUxQzI0Ljk1ODYgNTYuNDQ5NCAxMi44MDc2IDY0LjEwNTMgMS45OTg4NCA3NC40MzhDLTAuNzc5NDM2IDc3LjA5MTQgLTAuNDM2MDU1IDgyLjMwNDYgMS42NDc2NSA4NS4xOTk5QzQuMTEzNzUgODguNjEwMyA4LjEwMTY3IDg5LjI1MDIgMTEuOTQxMyA4OC4yNzQ3QzM3LjIwOTMgODEuODk4MyA2My4wNDYgNzguMTQwNyA4OC40MzkyIDcyLjMyMDRDOTMuMTk5OCA3MS4yMjkyIDk1LjgzMDIgNjYuMTY2NCA5NC4wODc5IDYxLjYwMzZDOTIuNDQwNCA1Ny4yODkgODcuNTM5OSA1NS4xOTEgODMuMjc3NSA1Ni45NjkyQzY0Ljg2NTIgNjQuNjUwNyA0Ni4wNjI0IDcyLjU3NTQgMzAuODI3MyA4NS41ODIzQzIzLjgyNyA5MS41NjAyIDI4LjA4ODEgMTAxLjI2MSAzNi44Mjg3IDEwMS41MDNDNDEuMjY5MiAxMDEuNjI4IDQ1LjQ0NDQgMTAwLjUxMiA0OS43MDU1IDk5LjM3MjJDNTQuMzA5OSA5OC4xMzkxIDU2LjM2MjQgOTIuMTA2NSA1NC43OTM4IDg3Ljk5MzhDNTIuOTUyIDgzLjE2MyA0OC4wMjc2IDgxLjY3MjQgNDMuNDE1NCA4Mi45MDU1QzM5LjU1NDMgODMuOTM1OCAzNi42ODQ4IDg4LjA1MTYgMzguMDk1MiA5MS43OTA2QzM4LjEzMyA5MS44OTA5IDM4LjE3MDggOTEuOTkxMiAzOC4yMDg3IDkyLjA5MTVDMzkuNjM3OCA5NS44ODAxIDQ0LjQwOTQgOTcuMTE0OCA0Ny43MDE2IDk0Ljc1NzRDNjIuNzQ0MyA4My45ODY0IDgwLjQxMzEgNzcuMzUzNCA5Ny4zNzMxIDcwLjE3NjlDMTA4LjA2NSA2NS42NTA1IDEwMS44NjEgNTAuOTg2NiA5MS4wODMgNTMuNzAyNEM2NS45Mzg5IDYwLjA0NzUgNDAuMjMxNiA2My43OTk1IDE0Ljk1ODYgNjkuNTcxM0MxMC40ODQ4IDcwLjU5MyA4LjU2MTkyIDc1LjgzNjQgMTEuMjQwMiA3OS41NjI4QzEzLjU0NzMgODIuNzcyNyAxOC4xNTY0IDgzLjE4MzggMjEuMjkxMSA4MC43NzU0QzQwLjE5NjYgNjYuMjUwNyA2NC42MDQxIDYyLjQ0MTUgODYuNDg2NCA1My42MDA5Qzk1LjMxMjkgNTAuMDM0NSA5Mi42MTI2IDM0LjYyMTMgODIuNDk4NSAzNi41OTU3QzY0LjUzODQgNDAuMDkwOCA0Ni4xNzIzIDM4LjYzNTkgMjguMTEwNCA0MC44OTA2QzI0LjI0MzQgNDEuMzczMyAyMi4yMjE2IDQ1LjU5MjEgMjQuMDUxMyA0OS4wMzI5QzI1Ljk2MTkgNTIuNjI2IDMxLjI0NDYgNTMuNDQ1NiAzNC45Nzg4IDUxLjgyODJDMzkuMDQ0NiA1MC4wNjcxIDQzLjc2ODYgNDguOTUgNDcuNTk4NCA0OC4xNjkzQzU1LjM5NDcgNDYuNTg1IDYzLjQ4NzYgNDUuNjQwNyA3MS40NTU2IDQ1Ljg4MjdDNzkuMTE5MyA0Ni4xMDkgODIuMDE0NiAzNC41NTExIDc2LjIxNjEgMzAuMzA1NkM3MS4yOTE3IDI2LjcwNzkgNjUuMjA0NSAyNC43MSA1OS40OTE5IDIyLjc1OUM1Mi42MDA4IDIwLjQwMjIgNDUuNDk5MSAxOC4wNTMxIDM4LjI2NDYgMTYuOTkxOEMyNy4wMTExIDE1LjM2MDcgMjMuOTU5NyAzMi43MjQ5IDM1LjE5NzYgMzQuMzcxNloiIGZpbGw9IiNEN0NBRkYiLz4KPHBhdGggZD0iTTQxLjUxOSAzNy43MjczVjcuMDMzNjZDNDEuNTE5IDQuMjU1MzkgNDMuNjAyNyAyIDQ2LjE3ODEgMkg4Ni44Mjk4Qzg5LjQwNTEgMiA5MS40ODg4IDQuMjU1MzkgOTEuNDg4OCA3LjAzMzY2VjYwLjQ2ODZDOTEuNDg4OCA2MC40Njg2IDc0LjIyNjEgNjAuMjE4OCA2Ny41NTM2IDYwLjIxODhDNjMuNzk5OCA0NC41MTY5IDUxLjg3NTEgNDcuMDg0NSA0OS4zNjIxIDQ2LjcwOTlDNDUuMjgwNiA0MS40NzMzIDQxLjUxOSAzNy43MjczIDQxLjUxOSAzNy43MjczWiIgZmlsbD0iI0VCRUJFQiIvPgo8cGF0aCBkPSJNNDEuNTE5IDMyLjI3MjJWNi42NTkwN0M0MS41MTkgNC4wODM3IDQzLjYwMjcgMiA0Ni4xNzgxIDJIODYuODI5OEM4OS40MDUxIDIgOTEuNDg4OCA0LjA4MzcgOTEuNDg4OCA2LjY1OTA3VjYxLjU2MTEiIHN0cm9rZT0iIzMyMjg2NCIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik00OS44MzA0IDEyLjI4NThIODMuMTg1Mk00OS44MzA0IDM3Ljg4MzRIODMuMTg1Mkg0OS44MzA0Wk00OS44MzA0IDMyLjc2MzlIODMuMTg1Mkg0OS44MzA0Wk00OS44MzA0IDI3LjY0NDRIODMuMTg1Mkg0OS44MzA0Wk00OS44MzA0IDIyLjUyNDlIODMuMTg1Mkg0OS44MzA0Wk00OS44MzA0IDE3LjQwNTNIODMuMTg1Mkg0OS44MzA0WiIgc3Ryb2tlPSIjMzAyODY0IiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNNDEuMzMxNyAzNS43NDVDMzMuNzkyOSAzNS4yMzc4IDMyLjU4MzMgMzcuNDMwNyAzMi41ODMzIDM3LjQzMDdMMjcuMTk4NCA0Mi4xNDQ0TDIyLjgyMDMgNDcuODY0OUwxOS40NTY3IDUxLjg5OTZMMTIuNzI5NSA1NC4yNTY0TDcuNjgwMjcgNjAuMzEyNEw1Ljk5NDU4IDY1LjM2MTdMNS41NDk3NCA2OS43Mzk4TDcuNjcyNDcgNzQuNzg5MUwxMS4wMzYgNzkuNTAyOEwxNS43NDk3IDgyLjE5NTJMMjEuNDcwMiA4NC4yMTY1TDczLjk2MDggODMuNjMxMkw4MC4zNTIzIDgzLjg4MDlMODYuMDcyOCA4MS4xODg1TDg4Ljc2NTIgNzcuODI0OUw4OS43NzE5IDc0LjQ2MTNMOTAuMjE2OCA3MC40MjY2TDg3Ljc1MDcgNjYuNzI3NEw4My4wMzcgNjMuMzYzOUw3OS4wMDIyIDYyLjY5MjdMNzguNjY2NyA2MC4wMDgxTDc2Ljk4MSA1NS45NjU1TDcyLjYwMjkgNTIuMjY2NEw2OS4wNjc2IDUwLjI0NTFMNjUuODY3OSA0OS41NzRMNjIuODM5OSA0OS4yMzg0TDYwLjgxODYgNDkuOTA5NUw1OS4xMzI5IDQ3LjIxNzFMNTcuNDQ3MiA0My41MThMNTUuNDI2IDQxLjE2MTFMNTEuMzkxMiAzOC40Njg3QzUxLjQzMDIgMzguNDM3NSA0OC44NzA1IDM2LjI1MjMgNDEuMzMxNyAzNS43NDVaIiBmaWxsPSIjRkZBRjBBIi8+CjxwYXRoIGQ9Ik04OS4wODUxIDcyLjQ0MDFDODkuMDg1MSA3Ny41NTk2IDg0Ljk0OSA4MS43MTE0IDc5LjgzNzMgODEuNzExNEg3Ni43MzlWODEuNjg4SDIxLjI1MTZDMTMuNDQ3NSA4MS40MzgzIDcuMTk2MzggNzUuMDMxMSA3LjE5NjM4IDY3LjE0ODlDNy4xOTYzOCA1OS4zMjkyIDEzLjM1MzggNTIuOTE0MiAyMS4xMTg5IDUyLjU5NDJDMjEuNzA0MyA1Mi41NzA4IDIyLjE5NTkgNTIuMTY1IDIyLjM0NDIgNTEuNjAzMUMyNC41NzYyIDQyLjg5MzYgMzIuNDM0OSAzNi42OTcyIDQxLjUzNDYgMzYuNjk3MkM0OS44NzcyIDM2LjY5NzIgNTcuMjM2NSA0MS45MTgxIDYwLjEwODQgNDkuNjI4NkM2MC4zNTAzIDUwLjI3NjQgNjEuMDQ0OSA1MC42Mjc1IDYxLjcwODIgNTAuNDQwMkM2Mi44NzExIDUwLjExMjUgNjQuMDgwNyA0OS45NDA4IDY1LjMxMzggNDkuOTQwOEM3Mi4xNTggNDkuOTQwOCA3Ny44NjI4IDU1LjE4NTIgNzguNTI2MiA2MS45OTA0Qzc4LjU4ODYgNjIuNjY5MyA3OS4xNTgzIDYzLjE4NDQgNzkuODM3MyA2My4xODQ0Qzg0Ljk0MTIgNjMuMTc2NiA4OS4wODUxIDY3LjMyMDYgODkuMDg1MSA3Mi40NDAxWk05MS43MjI5IDcyLjQ0MDFDOTEuNzIyOSA2Ni4yNTE0IDg3LjAxNzEgNjEuMTYzMSA4MS4wMDAxIDYwLjU3NzhDNzkuNzA0NiA1Mi45ODQ0IDczLjEyNTcgNDcuMjc5NiA2NS4zMDYgNDcuMjc5NkM2NC4yMjkgNDcuMjc5NiA2My4xNzU0IDQ3LjM4ODggNjIuMTM3NSA0Ny41OTk1QzU4LjYxNzggMzkuNDY3NiA1MC41ODc0IDM0LjA0MzggNDEuNTI2OCAzNC4wNDM4QzMxLjU0NTMgMzQuMDQzOCAyMi44NjcxIDQwLjYzMDQgMjAuMDM0MiA1MC4wMTFDMTEuMzE3IDUwLjg2MTcgNC41NDI5NyA1OC4yMjg4IDQuNTQyOTcgNjcuMTQxMUM0LjU0Mjk3IDc2LjQ2NyAxMS45NDkxIDg0LjA0NDggMjEuMTgxNCA4NC4zMjU4Vjg0LjM0OTJINzQuNTQ2SDc2LjczMTJINzkuODI5NEM4Ni40MDA1IDg0LjM1NyA5MS43MjI5IDc5LjAyNjggOTEuNzIyOSA3Mi40NDAxWiIgZmlsbD0iIzMyMjg2NCIvPgo8cGF0aCBkPSJNODAuMDcxNCA4MS41MjQxQzgwLjA3MTQgODcuMjIxMSA3NS40Mjc5IDkxLjg0MTIgNjkuNjkxOSA5MS44NDEyQzYzLjk2MzYgOTEuODQxMiA1OS4zMTI0IDg3LjIyMTEgNTkuMzEyNCA4MS41MjQxQzU5LjMxMjQgNzUuODI3MSA2My45NTU4IDcxLjIwNyA2OS42OTE5IDcxLjIwN0M3NS40Mjc5IDcxLjIwNyA4MC4wNzE0IDc1LjgyNzEgODAuMDcxNCA4MS41MjQxWiIgZmlsbD0iIzMyMjg2NCIvPgo8cGF0aCBkPSJNODAuMDcxNCA4MS41MjQxQzgwLjA3MTQgODcuMjIxMSA3NS40Mjc5IDkxLjg0MTIgNjkuNjkxOSA5MS44NDEyQzYzLjk2MzYgOTEuODQxMiA1OS4zMTI0IDg3LjIyMTEgNTkuMzEyNCA4MS41MjQxQzU5LjMxMjQgNzUuODI3MSA2My45NTU4IDcxLjIwNyA2OS42OTE5IDcxLjIwN0M3NS40Mjc5IDcxLjIwNyA4MC4wNzE0IDc1LjgyNzEgODAuMDcxNCA4MS41MjQxWiIgc3Ryb2tlPSIjMzIyODY0IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIvPgo8cGF0aCBkPSJNNzAuNDQxMSA4Ny42NTgyTDc0LjY3ODcgODMuNDIwNkM3NS4wOTI0IDgzLjAyMjYgNzUuMTA3OSA4Mi4zNjcgNzQuNzE3NyA4MS45NTM0Qzc0LjMxOTcgODEuNTM5OCA3My42NjQyIDgxLjUyNDIgNzMuMjUwNiA4MS45MTQ0QzczLjIzNSA4MS45MyA3My4yMjcyIDgxLjkzNzggNzMuMjExNSA4MS45NTM0TDcwLjcwNjQgODQuNDU4NVY3Ni4xMjM3QzcwLjcwNjQgNzUuNTU0IDcwLjIzODIgNzUuMDg1OCA2OS42Njg1IDc1LjA4NThDNjkuMDk4OCA3NS4wODU4IDY4LjYzMDUgNzUuNTU0IDY4LjYzMDUgNzYuMTIzN1Y4NC40MzUxTDY2LjE0MSA4MS45NTM0QzY1LjcyNzQgODEuNTU1NCA2NS4wNzE4IDgxLjU3ODggNjQuNjczOCA4MS45OTI0QzY0LjI5MTQgODIuMzkwNCA2NC4yOTE0IDgzLjAyMjYgNjQuNjczOCA4My40MjA2TDY4LjkxMTUgODcuNjU4MkM2OS4xMDY2IDg3Ljg1MzMgNjkuMzcxOSA4Ny45NjI2IDY5LjY0NTEgODcuOTYyNkM2OS42NTI5IDg3Ljk2MjYgNjkuNjYwNyA4Ny45NjI2IDY5LjY2ODUgODcuOTYyNkM2OS42NzYzIDg3Ljk2MjYgNjkuNjg0MSA4Ny45NjI2IDY5LjY5MTkgODcuOTYyNkM2OS45ODA2IDg3Ljk2MjYgNzAuMjQ2IDg3Ljg1MzMgNzAuNDQxMSA4Ny42NTgyWiIgZmlsbD0iI0VCRUJFQSIvPgo8L3N2Zz4K" alt=""/>
+                                    <div class="panel-copy-container">
+                                        <p class="bold-txt black-txt font-small pad-stsb">
+                                            <span>Unlimited offline stories.</span>
+                                        </p>
+                                        <p class="light-txt black-txt font-16px">
+                                            <span>Take your favourite reads on the go, with or without an internet connection.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-inner-wrapper padding-all">
+                                <div class="panel text-center">
+                                    <img src="assets/image/coins-cf975f4378b9a99b9a58c0ca1354b9be.svg" alt="Premium Themes"/>
+                                    <div class="panel-copy-container">
+                                        <p class="bold-txt black-txt font-small pad-stsb">
+                                            <span>Your Wattpad Coins go further.</span>
+                                        </p>
+                                        <p class="light-txt black-txt font-16px">
+                                                    <span>
+                                                        Access bonus Coins with every purchase of any Wattpad Coin package that can be used to unlock Wattpad Originals. <br/>
+<!--                                                        <a href='https://support.wattpad.com/hc/en-us/articles/18999845281556' target='_blank' class='learn-more-link'>-->
+<!--                                                            <span class='link-blue'>Learn about Wattpad Originals</span>-->
+<!--                                                        </a>-->
+                                                        .
+                                                    </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+<!--                            <div class="panel-inner-wrapper padding-all">-->
+<!--                                <div class="panel text-center">-->
+<!--                                    <img src="/premium/static/premium-picks-f9434d2bea2ec4cbd25220f08d116cd4.png" alt="Premium Go Further"/>-->
+<!--                                    <div class="panel-copy-container">-->
+<!--                                        <p class="bold-txt black-txt font-small pad-stsb">-->
+<!--                                                    <span>-->
+<!--                                                        Premium Picks. <br/>-->
+<!--                                                        <br/>-->
+<!--                                                    </span>-->
+<!--                                        </p>-->
+<!--                                        <p class="light-txt black-txt font-16px">-->
+<!--                                            <span>Get a free monthly bundle of 5 Wattpad Originals—quality reads curated by editors.</span>-->
+<!--                                        </p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="section pad-tb base-1-bg" id="premium-plus">
+                    <div id="premium-plus-portal">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9Ijc3MCIgdmlld0JveD0iMCAwIDMyMCA3NzAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+IDxwYXRoIGQ9Ik0tMTA3LjEwMSA0OTIuMTE4Qy04OC40NDEyIDUxMC44MTMgLTU5LjQzNDcgNTE3LjcxNiAtMzUuMDU3OSA1MDUuMTI3Qy0xMi44MjU1IDQ5My42MjMgOC40MTE3NiA0ODAuNDU1IDI4Ljg5ODEgNDY2LjIwNEMxNC45ODMzIDQ4Ny4wMTMgMi42Mjk0MiA1MDguODk3IC0zLjQ4NDAzIDUzMy4xNzFDLTkuNTU3NDEgNTU3LjIyMiAtNC41NzYxMiA1ODAuOTIzIDE0Ljk5MTIgNTk3LjM5NEMyMS45MDU3IDYwMy4yMjMgMzAuMzU2MyA2MDcuNDY5IDM5LjMzMDEgNjA5LjgzNkMyOC4yNjQgNjI3LjAzNCAxOC41MzU1IDY0NC45NjggMTEuMDk3OSA2NjQuNjE3QzIuNTMxNTEgNjg3LjE1NiAxMS45NTI0IDcxNC4wMDYgMjkuNTczMiA3MjguODRDNDYuMDM4MSA3NDIuNjk1IDc2LjAzNzQgNzQ5Ljk1MyA5NS42NTUgNzM2Ljc5N0MyNDUuMTk0IDYzNi42MSAzODQuNjQ2IDUyMi45MiA1MTAuODExIDM5NC41MjRDNTMyLjk2MyAzNzIuMDE3IDUzOS4wNTIgMzMzLjQzNSA1MTUuMTc5IDMwOS40NjFDNDkzLjI5NCAyODcuNTA3IDQ1My40OTcgMjgxLjQ3NiA0MjkuNzQ4IDMwNS42NDhDNDI1Ljk4OSAzMDkuNDY3IDQyMi4yMDkgMzEzLjI0NiA0MTguNDI5IDMxNy4wMjRDNDIxLjMyNyAzMDYuODg0IDQyMS44OTQgMjk1LjE1IDQxOS45MTYgMjg3LjAyNEM0MTYuNTkzIDI3My42MjggNDEwLjExNCAyNjIuNDM0IDM5OS41MyAyNTMuNDdDMzc1LjQ0IDIzMy4xODYgMzQ0LjQ0NiAyMzYuMTE0IDMyMC4wNiAyNTQuNzA4QzMxMS4wMDEgMjYxLjYxMyAzMDIuMTI0IDI2OC42NzcgMjkzLjM2OSAyNzUuODgxQzMwMC4xMjYgMjYwLjkxMyAzMDYuMjk2IDI0NS42ODkgMzExLjc3NyAyMzAuMjA3QzMxOS44NzcgMjA3LjM0OSAzMTEuMzQ4IDE4MS4xNTcgMjkzLjMwMSAxNjUuOTg0QzI3Ni4wNDYgMTUxLjQ3IDI0Ny44NTEgMTQ1Ljg3MSAyMjcuMjIgMTU4LjAyN0MyMDMuOTk5IDE3MS42OTUgMTgxLjg5NCAxODYuODY1IDE2MC41IDIwMi45MzdDMTYxLjczOSAxODEuNTg0IDE1Mi4wMjIgMTU5LjI3MSAxMzMuMzE1IDE0OC40MTdDMTA0LjUzNCAxMzEuNzE3IDY4Ljc2ODYgMTM4LjY3MyA0OS42MjE5IDE2Ni42MThDLTcuMDEwMzggMjQ5LjEzNSAtNjEuMTg5OSAzMzMuMjg1IC0xMTIuODE2IDQxOC45NjZDLTEyNi4yNjIgNDQxLjEwMSAtMTI2LjIwOCA0NzIuOTQzIC0xMDcuMTAxIDQ5Mi4xMThaIiBmaWxsPSIjRkZGNkYyIi8+IDwvc3ZnPgo=" alt="Background of beige curves" class="hide-small-tablet-phones"/>
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9Ijc3MCIgdmlld0JveD0iMCAwIDMyMCA3NzAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+IDxwYXRoIGQ9Ik0tMTA3LjEwMSA0OTIuMTE4Qy04OC40NDEyIDUxMC44MTMgLTU5LjQzNDcgNTE3LjcxNiAtMzUuMDU3OSA1MDUuMTI3Qy0xMi44MjU1IDQ5My42MjMgOC40MTE3NiA0ODAuNDU1IDI4Ljg5ODEgNDY2LjIwNEMxNC45ODMzIDQ4Ny4wMTMgMi42Mjk0MiA1MDguODk3IC0zLjQ4NDAzIDUzMy4xNzFDLTkuNTU3NDEgNTU3LjIyMiAtNC41NzYxMiA1ODAuOTIzIDE0Ljk5MTIgNTk3LjM5NEMyMS45MDU3IDYwMy4yMjMgMzAuMzU2MyA2MDcuNDY5IDM5LjMzMDEgNjA5LjgzNkMyOC4yNjQgNjI3LjAzNCAxOC41MzU1IDY0NC45NjggMTEuMDk3OSA2NjQuNjE3QzIuNTMxNTEgNjg3LjE1NiAxMS45NTI0IDcxNC4wMDYgMjkuNTczMiA3MjguODRDNDYuMDM4MSA3NDIuNjk1IDc2LjAzNzQgNzQ5Ljk1MyA5NS42NTUgNzM2Ljc5N0MyNDUuMTk0IDYzNi42MSAzODQuNjQ2IDUyMi45MiA1MTAuODExIDM5NC41MjRDNTMyLjk2MyAzNzIuMDE3IDUzOS4wNTIgMzMzLjQzNSA1MTUuMTc5IDMwOS40NjFDNDkzLjI5NCAyODcuNTA3IDQ1My40OTcgMjgxLjQ3NiA0MjkuNzQ4IDMwNS42NDhDNDI1Ljk4OSAzMDkuNDY3IDQyMi4yMDkgMzEzLjI0NiA0MTguNDI5IDMxNy4wMjRDNDIxLjMyNyAzMDYuODg0IDQyMS44OTQgMjk1LjE1IDQxOS45MTYgMjg3LjAyNEM0MTYuNTkzIDI3My42MjggNDEwLjExNCAyNjIuNDM0IDM5OS41MyAyNTMuNDdDMzc1LjQ0IDIzMy4xODYgMzQ0LjQ0NiAyMzYuMTE0IDMyMC4wNiAyNTQuNzA4QzMxMS4wMDEgMjYxLjYxMyAzMDIuMTI0IDI2OC42NzcgMjkzLjM2OSAyNzUuODgxQzMwMC4xMjYgMjYwLjkxMyAzMDYuMjk2IDI0NS42ODkgMzExLjc3NyAyMzAuMjA3QzMxOS44NzcgMjA3LjM0OSAzMTEuMzQ4IDE4MS4xNTcgMjkzLjMwMSAxNjUuOTg0QzI3Ni4wNDYgMTUxLjQ3IDI0Ny44NTEgMTQ1Ljg3MSAyMjcuMjIgMTU4LjAyN0MyMDMuOTk5IDE3MS42OTUgMTgxLjg5NCAxODYuODY1IDE2MC41IDIwMi45MzdDMTYxLjczOSAxODEuNTg0IDE1Mi4wMjIgMTU5LjI3MSAxMzMuMzE1IDE0OC40MTdDMTA0LjUzNCAxMzEuNzE3IDY4Ljc2ODYgMTM4LjY3MyA0OS42MjE5IDE2Ni42MThDLTcuMDEwMzggMjQ5LjEzNSAtNjEuMTg5OSAzMzMuMjg1IC0xMTIuODE2IDQxOC45NjZDLTEyNi4yNjIgNDQxLjEwMSAtMTI2LjIwOCA0NzIuOTQzIC0xMDcuMTAxIDQ5Mi4xMThaIiBmaWxsPSIjRkZGNkYyIi8+IDwvc3ZnPgo=" alt="Background of beige curves" class="hide-large-tablet-desktop"/>
+                    </div>
+                    <div class="section-inner">
+                        <p class="regular-txt section-text-header">
+                            <span>Want even more? Go Wattpad Premium+</span>
+                        </p>
+                        <div class="premium-plus-benefits">
+                            <div class="premium-plus-benefit padding-all">
+                                <div class="benefit-image">
+                                    <img src="assets/image/premium-plus-coin-435071e58e9b9eb398af15d2caaf12a7.svg" alt="Premium Plus Paid Story"/>
+                                </div>
+                                <div class="benefit-copy">
+                                    <p class="bold-txt black-txt font-small pad-stsb premium-plus-benefit-header">
+                                        <span>200 Bonus Coins/month </span>
+                                    </p>
+                                    <p class="premium-plus-benefit-body light-txt">
+                                        <span>Unlock Wattpad Originals of your choice from hundreds of stories in every genre, only on Wattpad.</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="plus-icon-container">
+                                <img class="plus-icon" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMyIDE1LjI0QzMyLjkxMiAxNS4yNCAzMy42NTYgMTUuNTUyIDM0LjIzMiAxNi4xNzZDMzQuODU2IDE2Ljc1MiAzNS4xNjggMTcuNDk2IDM1LjE2OCAxOC40MDhDMzUuMTY4IDE5LjMyIDM0Ljg1NiAyMC4wODggMzQuMjMyIDIwLjcxMkMzMy42NTYgMjEuMjg4IDMyLjkxMiAyMS41NzYgMzIgMjEuNTc2SDIwLjc2OFYzMi43MzZDMjAuNzY4IDMzLjY0OCAyMC40NTYgMzQuNDE2IDE5LjgzMiAzNS4wNEMxOS4yNTYgMzUuNjY0IDE4LjUxMiAzNS45NzYgMTcuNiAzNS45NzZDMTYuNjg4IDM1Ljk3NiAxNS45MiAzNS42NjQgMTUuMjk2IDM1LjA0QzE0LjcyIDM0LjQxNiAxNC40MzIgMzMuNjQ4IDE0LjQzMiAzMi43MzZWMjEuNTc2SDMuMkMyLjI4OCAyMS41NzYgMS41MiAyMS4yODggMC44OTYgMjAuNzEyQzAuMzIgMjAuMDg4IDAuMDMyMDAwMSAxOS4zMiAwLjAzMjAwMDEgMTguNDA4QzAuMDMyMDAwMSAxNy40OTYgMC4zMiAxNi43NTIgMC44OTYgMTYuMTc2QzEuNTIgMTUuNTUyIDIuMjg4IDE1LjI0IDMuMiAxNS4yNEgxNC40MzJWNC4wMDhDMTQuNDMyIDMuMDk2IDE0LjcyIDIuMzUyIDE1LjI5NiAxLjc3NkMxNS45MiAxLjE1MiAxNi42ODggMC44Mzk5OTggMTcuNiAwLjgzOTk5OEMxOC41MTIgMC44Mzk5OTggMTkuMjU2IDEuMTUyIDE5LjgzMiAxLjc3NkMyMC40NTYgMi4zNTIgMjAuNzY4IDMuMDk2IDIwLjc2OCA0LjAwOFYxNS4yNEgzMloiIGZpbGw9IiNFODEyNDkiLz4KPC9zdmc+Cg==" alt="Plus icon"/>
+                            </div>
+                            <div class="premium-plus-benefit padding-all">
+                                <div class="benefit-image">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUzIiBoZWlnaHQ9IjEzNiIgdmlld0JveD0iMCAwIDE1MyAxMzYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xNDMuNzIgNjMuOTExOEMxNDEuMDYyIDU5LjA2MjUgMTM1LjYzNSA1NS45Nzg1IDEyOS45OTkgNTcuMDgzNkMxMjQuODU3IDU4LjA5NTkgMTE5LjgxNyA1OS41MDExIDExNC44NjYgNjEuMTY3N0MxMTguODggNTcuNzk4NSAxMjIuNjQzIDU0LjEyMTcgMTI1LjI5MSA0OS41OTk3QzEyNy45MTkgNDUuMTIwMSAxMjguMzA0IDQwLjA2NDMgMTI1LjMzMyAzNS42MDkxQzEyNC4yODQgMzQuMDMyOCAxMjIuODM0IDMyLjY4NTIgMTIxLjE2OCAzMS42ODQ2QzEyNC4zOTkgMjguODc0NCAxMjcuNDAzIDI1LjgzODMgMTMwLjA0NyAyMi4zMjM1QzEzMy4wODcgMTguMjkzNSAxMzIuNzY0IDEyLjM0NTEgMTMwLjA4OSA4LjMzMjc4QzEyNy41ODkgNC41ODQ3MSAxMjEuOTgzIDEuMzcxMzYgMTE3LjI3IDIuODY4NjZDODEuMzUxIDE0LjI2MzQgNDYuNjY5NCAyOC45NjIzIDEzLjc5ODggNDcuMzk0N0M4LjAyOTQ0IDUwLjYyMzYgNC41NDkxNSA1OC4wMjM0IDcuOTQ2MTIgNjQuMjM4N0MxMS4wNjE2IDY5LjkzMTggMTguNzA5IDczLjQ3MTUgMjQuODk2NyA3MC4wMDEyQzI1Ljg3NTggNjkuNDUzNCAyNi44NTY2IDY4LjkxNDkgMjcuODM3NCA2OC4zNzYzQzI2LjY2MTggNzAuMjQ1MiAyNS44NjE2IDcyLjU3MDggMjUuNzg0IDc0LjMyQzI1LjY2ODcgNzcuMjA3MiAyNi4zMTY0IDc5LjgzNjMgMjcuOTE5OSA4Mi4yNTc0QzMxLjU3NjEgODcuNzQzNiAzNy45Nzc5IDg4Ljk2NzYgNDMuOTY3NSA4Ni42NTU4QzQ2LjE5MjQgODUuNzk3NyA0OC4zODk5IDg0Ljg5NjggNTAuNTcxMSA4My45NjA2QzQ4LjMzNzQgODYuNTc0MiA0Ni4yMDY5IDg5LjI3MzkgNDQuMTk5OCA5Mi4wNjU1QzQxLjIzNDcgOTYuMTg2OCA0MS40MTc1IDEwMS45NTEgNDQuMTU3OSAxMDYuMDU2QzQ2Ljc3NzkgMTA5Ljk4MyA1Mi4xMTgyIDExMi43NTcgNTYuOTc2NSAxMTEuNTJDNjIuNDQzNiAxMTAuMTMxIDY3Ljc3NDMgMTA4LjM3NCA3My4wMTQ5IDEwNi4zOTRDNzEuNTE3MiAxMTAuNjE0IDcyLjE2NTYgMTE1LjY2OCA3NS4yOTE0IDExOC45NDRDODAuMTAwNCAxMjMuOTg0IDg3LjY5NjggMTI0LjY3NyA5My4xNzk5IDEyMC4xNzlDMTA5LjM5IDEwNi45MDMgMTI1LjIwMiA5My4xNTU4IDE0MC41OTEgNzguOTUxMUMxNDQuNTg4IDc1LjI4NzggMTQ2LjQzOSA2OC44ODM3IDE0My43MiA2My45MTE4WiIgZmlsbD0iI0ZGRDlDQSIvPgo8Y2lyY2xlIGN4PSI3NC44NjI3IiBjeT0iNjMuNTY4MSIgcj0iMzQuNDQxOCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iIzJBMUM2MCIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxwYXRoIGQ9Ik03My44Mjg0IDY2Ljk5NDhMNzIuNzUwMiA3OC44NDI4QzcyLjYwNTMgODAuNDM1IDc0LjQ3NDIgODEuMTg0MyA3NS4yNzk1IDc5Ljg1N0w4Ny42MDI5IDU5LjU0NDdDODguMjIzIDU4LjUyMjYgODcuNTYzMiA1Ny4xNDY0IDg2LjQ1MyA1Ny4xNDY0SDc2Ljg5NTRMNzcuOTczNiA0NS4yOTg0Qzc4LjExODUgNDMuNzA2MiA3Ni4yNDk2IDQyLjk1NjggNzUuNDQ0MyA0NC4yODQyTDYzLjEyMDkgNjQuNTk2NEM2Mi41MDA3IDY1LjYxODYgNjMuMTYwNiA2Ni45OTQ4IDY0LjI3MDggNjYuOTk0OEg3My44Mjg0WiIgZmlsbD0iI0U4MTI0OSIgc3Ryb2tlPSIjMkExQzYwIiBzdHJva2Utd2lkdGg9IjIiLz4KPGNpcmNsZSBjeD0iNzcuMzU4NiIgY3k9IjI4LjEyNTUiIHI9IjQuOTg5NSIgZmlsbD0iI0ZDQUYxNyIgc3Ryb2tlPSIjMkExQzYwIiBzdHJva2Utd2lkdGg9IjMiLz4KPGNpcmNsZSBjeD0iMTEwLjMwNSIgY3k9IjYyLjA3MDYiIHI9IjQuOTg5NSIgZmlsbD0iI0ZDQUYxNyIgc3Ryb2tlPSIjMkExQzYwIiBzdHJva2Utd2lkdGg9IjMiLz4KPGNpcmNsZSBjeD0iNzcuMzU4NiIgY3k9IjEwMC4wMDkiIHI9IjQuOTg5NSIgZmlsbD0iI0ZDQUYxNyIgc3Ryb2tlPSIjMkExQzYwIiBzdHJva2Utd2lkdGg9IjMiLz4KPGNpcmNsZSBjeD0iNDAuNDE4NSIgY3k9IjYyLjA3MDYiIHI9IjQuOTg5NSIgZmlsbD0iI0ZDQUYxNyIgc3Ryb2tlPSIjMkExQzYwIiBzdHJva2Utd2lkdGg9IjMiLz4KPC9zdmc+Cg==" alt="Premium Plus Perk"/>
+                                </div>
+                                <div class="benefit-copy">
+                                    <p class="bold-txt black-txt font-small pad-stsb premium-plus-benefit-header">
+                                        <span>Get all the perks of Premium</span>
+                                    </p>
+                                    <p class="premium-plus-benefit-body light-txt">
+                                        <span>Ad-free reading, unlimited offline stories, bonus Coins on purchase, and Premium Picks.</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section" id="get-premium">
+                    <div id="get-premium-img-top">
+                        <img src="assets/image/paper-boats-09f9e65a2244777af2380a516957477d.png" alt="Paper Boats"/>
+                    </div>
+                    <div class="">
+                        <div class="panel-wrapper hide-tablet-plus-desktop">
+                            <div class="carousel-wrapper"></div>
+                        </div>
+                        <div class="panel-wrapper hide-tablet-minus-phone">
+
+                            <!--1 month premium-->
+                            <div class="panel-inner-wrapper" style="background-color:white">
+                                <div class="panel">
+                                    <img class="premium-logo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUxIiBoZWlnaHQ9IjI5IiB2aWV3Qm94PSIwIDAgMTUxIDI5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDApIj4KPHBhdGggZD0iTTcuNDQzMDQgMjguOTk4NkMxMy4yOTQ0IDI4Ljk5ODYgMTQuMDg5OCAyMS43NzcyIDE4LjA2NjQgMTUuMzU4MkMxNy44OTYgMTcuNjUwNyAxOC4wNjY0IDE5LjcxNCAxOC41MjA5IDIxLjA4OTVDMjAuMjgyIDI2LjY0ODggMjYuMjQ3IDI3LjA0OTkgMjguOTczOSAyMS40MzMzQzMyLjc4MDEgMTMuNTI0MyAzMy45MTYzIDExLjYzMjkgMzcuNzc5NCA1Ljk1OTAzQzQwLjMzNTggMi4xNzY0MiAzNy4zODE3IC0wLjIzMDY5NCAzMy45NzMxIDEuNDg4NjdDMzIuMjEyIDIuNDA1NjcgMjkuMzcxNiA0LjY0MDg1IDI1Ljc5MjUgOS4zOTc3N0MyNi40MTc1IDUuNzg3MDkgMjYuMjQ3IC0wLjM0NTMxOCAyMS4wNzczIC0wLjAwMTQ0NDlDMTguMzUwNSAwLjE3MDQ5MiAxNC43NzE1IDMuMzIyNjcgOS45NDI2NiAxMS4yODkxQzEwLjM0MDMgNi44MTg3MiAxMC41MTA4IDMuNjA5MjMgOC41NzkyMyAxLjk0NzE3QzcuMTU4OTkgMC44MDA5MjcgNC4wMzQ0NiAwLjM5OTc0MSAyLjE1OTc0IDIuODY0MTdDMC4yODUwMjEgNS4zMjg2IC0wLjE2OTQ1NiAxMC4xNDI4IDAuMDU3NzgyMSAxNS4xODYzQzAuMzk4NjQgMjUuNzg5MSA0LjE0ODA4IDI4Ljk5ODYgNy40NDMwNCAyOC45OTg2WiIgZmlsbD0iIzIyMjIyMiIvPgo8cGF0aCBkPSJNNDQuNzA5NCAyNS40NDY4VjEwLjc3NDlDNDQuNzA5NCAxMC4wODcxIDQ1LjE2MzkgOS42Mjg2NSA0NS43ODg4IDkuNjI4NjVDNDYuNDEzNyA5LjYyODY1IDQ2Ljg2ODIgMTAuMDg3MSA0Ni44NjgyIDEwLjc3NDlWMTEuMTE4OEM0Ny40MzYzIDEwLjE0NDUgNDguNTE1NyA5LjUxNDAyIDUwLjI3NjggOS41MTQwMkM1Mi4zMjE5IDkuNTE0MDIgNTMuNzk5IDEwLjY2MDMgNTQuNDIzOSAxMi41NTE2QzU0LjcwNzkgMTMuNTI1OSA1NC44Nzg0IDE0LjUwMDIgNTQuODc4NCAxNS44NzU3QzU0Ljg3ODQgMTcuMjUxMiA1NC43NjQ3IDE4LjIyNTUgNTQuNDIzOSAxOS4xNDI1QzUzLjc5OSAyMS4wMzM4IDUyLjMyMTkgMjIuMTggNTAuMjc2OCAyMi4xOEM0OC40NTg5IDIyLjE4IDQ3LjQzNjMgMjEuNDkyMyA0Ni44NjgyIDIwLjU3NTNWMjUuNDQ2OEM0Ni44NjgyIDI2LjEzNDYgNDYuNDEzNyAyNi41OTMxIDQ1Ljc4ODggMjYuNTkzMUM0NS4xNjM5IDI2LjU5MzEgNDQuNzA5NCAyNi4xMzQ2IDQ0LjcwOTQgMjUuNDQ2OFpNNTIuMzc4NyAxOC4yODI4QzUyLjYwNiAxNy42NTI0IDUyLjY2MjggMTYuODUgNTIuNjYyOCAxNS44MTg0QzUyLjY2MjggMTQuNzI5NCA1Mi42MDYgMTMuOTg0NCA1Mi4zNzg3IDEzLjM1MzlDNTEuOTgxMSAxMi4xNTA0IDUxLjA3MjEgMTEuNDYyNiA0OS43NjU1IDExLjQ2MjZDNDguNDAyMSAxMS40NjI2IDQ3LjQ5MzEgMTIuMTUwNCA0Ny4wOTU0IDEzLjM1MzlDNDYuODY4MiAxMy45ODQ0IDQ2LjgxMTQgMTQuNzg2OCA0Ni44MTE0IDE1LjgxODRDNDYuODExNCAxNi44NSA0Ni44NjgyIDE3LjU5NTEgNDcuMDk1NCAxOC4yODI4QzQ3LjQ5MzEgMTkuNDg2NCA0OC40MDIxIDIwLjE3NDEgNDkuNzY1NSAyMC4xNzQxQzUxLjA3MjEgMjAuMTc0MSA1MS45ODExIDE5LjQ4NjQgNTIuMzc4NyAxOC4yODI4WiIgZmlsbD0iIzIyMjIyMiIvPgo8cGF0aCBkPSJNNTcuMDM3NCAyMC45MTkyVjEwLjc3NDlDNTcuMDM3NCAxMC4wODcxIDU3LjQ5MTkgOS42Mjg2NSA1OC4xMTY4IDkuNjI4NjVDNTguNzQxNyA5LjYyODY1IDU5LjE5NjEgMTAuMDg3MSA1OS4xOTYxIDEwLjc3NDlWMTEuMzQ4QzU5LjcwNzQgMTAuMjU5MSA2MC43ODY4IDkuNTE0MDIgNjIuMjYzOSA5LjUxNDAyQzYzLjExNiA5LjUxNDAyIDYzLjYyNzMgOS43NDMyNyA2NC4wMjUgOS45NzI1MkM2NC40Nzk0IDEwLjIwMTggNjQuNjQ5OSAxMC41NDU2IDY0LjY0OTkgMTAuODg5NUM2NC42NDk5IDExLjUyIDY0LjE5NTQgMTEuOTc4NCA2My41NzA1IDExLjk3ODRDNjMuNDAwMSAxMS45Nzg0IDYzLjIyOTYgMTEuOTIxMSA2My4wNTkyIDExLjg2MzhDNjIuNjA0NyAxMS42OTE5IDYyLjIwNzEgMTEuNTc3MyA2MS42OTU4IDExLjU3NzNDNTkuODc3OSAxMS41NzczIDU5LjEzOTMgMTMuMTI0NyA1OS4xMzkzIDE1LjEzMDZWMjEuMDMzOEM1OS4xMzkzIDIxLjcyMTUgNTguNjg0OSAyMi4xOCA1OC4wNiAyMi4xOEM1Ny40OTE5IDIyLjA2NTQgNTcuMDM3NCAyMS42MDY5IDU3LjAzNzQgMjAuOTE5MloiIGZpbGw9IiMyMjIyMjIiLz4KPHBhdGggZD0iTTY2LjAxMjcgMTguOTEzMkM2NS43ODU1IDE4LjE2ODIgNjUuNjE1MSAxNy4zMDg1IDY1LjYxNTEgMTUuODE4NEM2NS42MTUxIDE0LjM4NTYgNjUuNzI4NyAxMy41MjU5IDY2LjAxMjcgMTIuNzgwOEM2Ni42OTQ0IDEwLjY2MDMgNjguMzk4NyA5LjUxNDAyIDcwLjcyNzkgOS41MTQwMkM3My4xMTM5IDkuNTE0MDIgNzQuODE4MiAxMC42NjAzIDc1LjQ0MzEgMTIuNzgwOEM3NS43MjcyIDEzLjU4MzIgNzUuODQwOCAxNC41NTc1IDc1Ljg0MDggMTUuNzAzN0M3NS44NDA4IDE2LjE2MjIgNzUuNDk5OSAxNi41MDYxIDc0Ljk4ODcgMTYuNTA2MUg2Ny45NDQzQzY3LjgzMDYgMTYuNTA2MSA2Ny43NzM4IDE2LjU2MzQgNjcuNzczOCAxNi42NzgxQzY3Ljc3MzggMTcuMjUxMiA2Ny44MzA2IDE3LjY1MjQgNjguMDAxMSAxOC4xNjgyQzY4LjQ1NTUgMTkuNTQzNyA2OS41MzQ5IDIwLjI4ODcgNzEuMDY4OCAyMC4yODg3QzcyLjI2MTggMjAuMjg4NyA3My4wNTcxIDE5Ljk0NDkgNzMuOTY2MSAxOS4yNTcxQzc0LjE5MzMgMTkuMDI3OSA3NC40MjA2IDE4Ljk3MDUgNzQuNzA0NiAxOC45NzA1Qzc1LjIxNTkgMTguOTcwNSA3NS41NTY4IDE5LjM3MTcgNzUuNTU2OCAxOS44MzAyQzc1LjU1NjggMjAuMTE2OCA3NS40NDMxIDIwLjQwMzQgNzUuMjE1OSAyMC41NzUzQzc0LjE5MzMgMjEuNTQ5NiA3Mi43NzMxIDIyLjIzNzMgNzAuODk4NCAyMi4yMzczQzY4LjM0MTkgMjIuMTggNjYuNjk0NCAyMS4wMzM4IDY2LjAxMjcgMTguOTEzMlpNNzMuNTExNiAxNC43ODY4QzczLjYyNTIgMTQuNzg2OCA3My42ODIgMTQuNzI5NCA3My42ODIgMTQuNjE0OEM3My42ODIgMTQuMDQxNyA3My42MjUyIDEzLjY0MDUgNzMuNTExNiAxMy4yMzkzQzczLjExMzkgMTIuMDM1OCA3Mi4wOTE0IDExLjM0OCA3MC43Mjc5IDExLjM0OEM2OS4zNjQ1IDExLjM0OCA2OC4zNDE5IDEyLjAzNTggNjcuOTQ0MyAxMy4yMzkzQzY3LjgzMDYgMTMuNjQwNSA2Ny43NzM4IDE0LjA0MTcgNjcuNzczOCAxNC42MTQ4QzY3Ljc3MzggMTQuNzI5NCA2Ny44MzA2IDE0Ljc4NjggNjcuOTQ0MyAxNC43ODY4SDczLjUxMTZaIiBmaWxsPSIjMjIyMjIyIi8+CjxwYXRoIGQ9Ik03OC4xNzA1IDEwLjc3NDdDNzguMTcwNSAxMC4wODcgNzguNjI1IDkuNjI4NDYgNzkuMjQ5OSA5LjYyODQ2Qzc5Ljg3NDggOS42Mjg0NiA4MC4zMjkzIDEwLjA4NyA4MC4zMjkzIDEwLjc3NDdWMTEuMTE4NkM4MC45NTQyIDEwLjE0NDMgODIuMDkwNCA5LjQ1NjUzIDgzLjY4MTEgOS40NTY1M0M4NS4zMjg1IDkuNDU2NTMgODYuNTIxNSAxMC4xNDQzIDg3LjIwMzMgMTEuMzQ3OEM4Ny45OTg2IDEwLjIwMTYgODkuMTkxNiA5LjQ1NjUzIDkxLjEyMzEgOS40NTY1M0M5My44NSA5LjQ1NjUzIDk1LjQ0MDcgMTEuMTc1OSA5NS40NDA3IDE0LjA0MTVWMjAuODYxN0M5NS40NDA3IDIxLjU0OTQgOTQuOTg2MiAyMi4wMDc5IDk0LjM2MTMgMjIuMDA3OUM5My43MzY0IDIyLjAwNzkgOTMuMjgxOSAyMS41NDk0IDkzLjI4MTkgMjAuODYxN1YxNC41NTczQzkzLjI4MTkgMTIuNjA4NyA5Mi40Mjk3IDExLjQ2MjUgOTAuNjExOCAxMS40NjI1Qzg4Ljk2NDQgMTEuNDYyNSA4Ny44MjgyIDEyLjYwODcgODcuODI4MiAxNC40NDI3VjIwLjkxOUM4Ny44MjgyIDIxLjYwNjcgODcuMzczNyAyMi4wNjUyIDg2Ljc0ODggMjIuMDY1MkM4Ni4xMjM5IDIyLjA2NTIgODUuNjY5NCAyMS42MDY3IDg1LjY2OTQgMjAuOTE5VjE0LjU1NzNDODUuNjY5NCAxMi42MDg3IDg0LjgxNzMgMTEuNDYyNSA4Mi45OTkzIDExLjQ2MjVDODEuMzUxOSAxMS40NjI1IDgwLjIxNTcgMTIuNjA4NyA4MC4yMTU3IDE0LjQ0MjdWMjAuOTE5QzgwLjIxNTcgMjEuNjA2NyA3OS43NjEyIDIyLjA2NTIgNzkuMTM2MyAyMi4wNjUyQzc4LjUxMTQgMjIuMDY1MiA3OC4wNTY5IDIxLjYwNjcgNzguMDU2OSAyMC45MTlWMTAuNzc0N0g3OC4xNzA1WiIgZmlsbD0iIzIyMjIyMiIvPgo8cGF0aCBkPSJNOTcuODI2NiA1Ljk2MDQ4Qzk3LjgyNjYgNS4xNTgxMSA5OC40NTE1IDQuNTg0OTggOTkuMTkgNC41ODQ5OEM5OS45Mjg1IDQuNTg0OTggMTAwLjU1MyA1LjIxNTQyIDEwMC41NTMgNS45NjA0OEMxMDAuNTUzIDYuNzA1NTQgOTkuOTI4NSA3LjMzNTk3IDk5LjE5IDcuMzM1OTdDOTguNDUxNSA3LjMzNTk3IDk3LjgyNjYgNi43MDU1NCA5Ny44MjY2IDUuOTYwNDhaTTk4LjE2NzQgMTAuNzc0N0M5OC4xNjc0IDEwLjA4NyA5OC42MjE5IDkuNjI4NDYgOTkuMjQ2OCA5LjYyODQ2Qzk5Ljg3MTcgOS42Mjg0NiAxMDAuMzI2IDEwLjA4NyAxMDAuMzI2IDEwLjc3NDdWMjAuODYxN0MxMDAuMzI2IDIxLjU0OTQgOTkuODcxNyAyMi4wMDc5IDk5LjI0NjggMjIuMDA3OUM5OC42MjE5IDIyLjAwNzkgOTguMTY3NCAyMS41NDk0IDk4LjE2NzQgMjAuODYxN1YxMC43NzQ3WiIgZmlsbD0iIzIyMjIyMiIvPgo8cGF0aCBkPSJNMTEyLjU5NyAyMC45MTlDMTEyLjU5NyAyMS42MDY4IDExMi4xNDIgMjIuMDY1MyAxMTEuNTE3IDIyLjA2NTNDMTEwLjg5MiAyMi4wNjUzIDExMC40MzggMjEuNjA2OCAxMTAuNDM4IDIwLjkxOVYyMC41NzUxQzEwOS44NyAyMS40OTIxIDEwOC43MzQgMjIuMjM3MiAxMDcuMTQzIDIyLjIzNzJDMTA0LjUzIDIyLjIzNzIgMTAyLjk5NiAyMC40NjA1IDEwMi45OTYgMTcuNjUyMlYxMC43NzQ3QzEwMi45OTYgMTAuMDg3IDEwMy40NSA5LjYyODQ5IDEwNC4wNzUgOS42Mjg0OUMxMDQuNyA5LjYyODQ5IDEwNS4xNTUgMTAuMDg3IDEwNS4xNTUgMTAuNzc0N1YxNy4xMzY0QzEwNS4xNTUgMTkuMDg1IDEwNi4wMDcgMjAuMjMxMyAxMDcuODI1IDIwLjIzMTNDMTA5LjQ3MiAyMC4yMzEzIDExMC41NTEgMTkuMDg1IDExMC41NTEgMTcuMjUxVjEwLjc3NDdDMTEwLjU1MSAxMC4wODcgMTExLjAwNiA5LjYyODQ5IDExMS42MzEgOS42Mjg0OUMxMTIuMjU2IDkuNjI4NDkgMTEyLjcxIDEwLjA4NyAxMTIuNzEgMTAuNzc0N1YyMC45MTlIMTEyLjU5N1oiIGZpbGw9IiMyMjIyMjIiLz4KPHBhdGggZD0iTTExNS4zMjMgMTAuNzc0N0MxMTUuMzIzIDEwLjA4NyAxMTUuNzc4IDkuNjI4NDYgMTE2LjQwMyA5LjYyODQ2QzExNy4wMjcgOS42Mjg0NiAxMTcuNDgyIDEwLjA4NyAxMTcuNDgyIDEwLjc3NDdWMTEuMTE4NkMxMTguMTA3IDEwLjE0NDMgMTE5LjI0MyA5LjQ1NjUzIDEyMC44MzQgOS40NTY1M0MxMjIuNDgxIDkuNDU2NTMgMTIzLjY3NCAxMC4xNDQzIDEyNC4zNTYgMTEuMzQ3OEMxMjUuMTUxIDEwLjIwMTYgMTI2LjM0NCA5LjQ1NjUzIDEyOC4yNzYgOS40NTY1M0MxMzEuMDAzIDkuNDU2NTMgMTMyLjU5MyAxMS4xNzU5IDEzMi41OTMgMTQuMDQxNVYyMC44NjE3QzEzMi41OTMgMjEuNTQ5NCAxMzIuMTM5IDIyLjAwNzkgMTMxLjUxNCAyMi4wMDc5QzEzMC44ODkgMjIuMDA3OSAxMzAuNDM1IDIxLjU0OTQgMTMwLjQzNSAyMC44NjE3VjE0LjU1NzNDMTMwLjQzNSAxMi42MDg3IDEyOS41ODIgMTEuNDYyNSAxMjcuNzY0IDExLjQ2MjVDMTI2LjExNyAxMS40NjI1IDEyNC45ODEgMTIuNjA4NyAxMjQuOTgxIDE0LjQ0MjdWMjAuOTE5QzEyNC45ODEgMjEuNjA2NyAxMjQuNTI2IDIyLjA2NTIgMTIzLjkwMSAyMi4wNjUyQzEyMy4yNzcgMjIuMDY1MiAxMjIuODIyIDIxLjYwNjcgMTIyLjgyMiAyMC45MTlWMTQuNTU3M0MxMjIuODIyIDEyLjYwODcgMTIxLjk3IDExLjQ2MjUgMTIwLjE1MiAxMS40NjI1QzExOC41MDQgMTEuNDYyNSAxMTcuMzY4IDEyLjYwODcgMTE3LjM2OCAxNC40NDI3VjIwLjkxOUMxMTcuMzY4IDIxLjYwNjcgMTE2LjkxNCAyMi4wNjUyIDExNi4yODkgMjIuMDY1MkMxMTUuNjY0IDIyLjA2NTIgMTE1LjIxIDIxLjYwNjcgMTE1LjIxIDIwLjkxOVYxMC43NzQ3SDExNS4zMjNaIiBmaWxsPSIjMjIyMjIyIi8+CjxwYXRoIGQ9Ik0xNTEgMTUuNzYxMUMxNTEgMTYuNzM1NCAxNTAuMjYxIDE3LjQ4MDQgMTQ5LjIzOCAxNy40ODA0SDE0Ni41NjhWMjAuMTc0MUMxNDYuNTY4IDIxLjI2MyAxNDUuODg3IDIyLjAwODEgMTQ0Ljg2NCAyMi4wMDgxQzE0My44NDIgMjIuMDA4MSAxNDMuMTYgMjEuMjYzIDE0My4xNiAyMC4xNzQxVjE3LjQ4MDRIMTQwLjU0N0MxMzkuNTI0IDE3LjQ4MDQgMTM4Ljc4NiAxNi43OTI3IDEzOC43ODYgMTUuNzYxMUMxMzguNzg2IDE0Ljc4NjcgMTM5LjUyNCAxNC4wNDE3IDE0MC41NDcgMTQuMDQxN0gxNDMuMTZWMTEuMzQ4QzE0My4xNiAxMC4yNTkxIDE0My44NDIgOS41MTQwMiAxNDQuODY0IDkuNTE0MDJDMTQ1Ljg4NyA5LjUxNDAyIDE0Ni41NjggMTAuMjU5MSAxNDYuNTY4IDExLjM0OFYxNC4wNDE3SDE0OS4xODJDMTUwLjI2MSAxNC4wOTkgMTUxIDE0Ljc4NjcgMTUxIDE1Ljc2MTFaIiBmaWxsPSIjMjIyMjIyIi8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDAiPgo8cmVjdCB3aWR0aD0iMTUxIiBoZWlnaHQ9IjI5IiBmaWxsPSJ3aGl0ZSIvPgo8L2NsaXBQYXRoPgo8L2RlZnM+Cjwvc3ZnPgo=" alt="Premium Plus logo"/>
+                                    <div class="panel-inner">
+                                        <div class="panel-copy-container text-center">
+                                            <p class="regular-txt font-small price" style="color:#E81249">
+                                                <span>From $7.98/month USD</span>
+                                            </p>
+                                            <p class="neutral-2-txt font-xsmall pricing-details light-txt">
+                                                <span>Billed in local currency</span>
+                                            </p>
+                                        </div>
+                                        <div class="regular-txt plan-label m-t" style="background-color:#E81249">
+                                            <span>1 Month Plan</span>
+                                        </div>
+                                        <div class="panel-copy-container list-indent pad-tbm">
+                                            <div class="pricing-point">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNyAxNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgNy4wNjI1TDUuOTU2NTIgMTFMMTUgMiIgc3Ryb2tlPSIjRTgxMjQ5IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Checkmark"/>
+                                                <p class="regular-txt black-txt font-16px">
+                                                            <span>
+                                                                <b>200 Bonus Coins/month to unlock Wattpad Originals of your choice</b>
+                                                            </span>
+                                                </p>
+                                            </div>
+<!--                                            <div class="pricing-point">-->
+<!--                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNyAxNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgNy4wNjI1TDUuOTU2NTIgMTFMMTUgMiIgc3Ryb2tlPSIjRTgxMjQ5IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Checkmark"/>-->
+<!--                                                <p class="regular-txt black-txt font-16px">-->
+<!--                                                    <span>Premium Picks: A free monthly bundle of 5 Wattpad Originals</span>-->
+<!--                                                </p>-->
+<!--                                            </div>-->
+                                            <div class="pricing-point">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNyAxNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgNy4wNjI1TDUuOTU2NTIgMTFMMTUgMiIgc3Ryb2tlPSIjRTgxMjQ5IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Checkmark"/>
+                                                <p class="regular-txt black-txt font-16px">
+                                                    <span>No ad interruptions</span>
+                                                </p>
+                                            </div>
+                                            <div class="pricing-point">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNyAxNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgNy4wNjI1TDUuOTU2NTIgMTFMMTUgMiIgc3Ryb2tlPSIjRTgxMjQ5IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Checkmark"/>
+                                                <p class="regular-txt black-txt font-16px">
+                                                    <span>Unlimited offline stories</span>
+                                                </p>
+                                            </div>
+                                            <div class="pricing-point">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNyAxNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgNy4wNjI1TDUuOTU2NTIgMTFMMTUgMiIgc3Ryb2tlPSIjRTgxMjQ5IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Checkmark"/>
+                                                <p class="regular-txt black-txt font-16px">
+                                                    <span>Bonus Coins on purchase</span>
+                                                </p>
+                                            </div>
+                                            <div class="pricing-point">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNyAxNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgNy4wNjI1TDUuOTU2NTIgMTFMMTUgMiIgc3Ryb2tlPSIjRTgxMjQ5IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Checkmark"/>
+                                                <p class="regular-txt black-txt font-16px">
+                                                    <span>Theme colors</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a id="pay-premium-plus" class="btn-primary plus-premium-btn" href="https://my.w.tt/3SDAkN1xC6">
+                                        <span>Go Premium+</span>
+                                    </a>
+                                    <p class="neutral-2-txt regular-txt font-xxsmall cta-details">
+                                        <span>Cancel anytime.</span>
+                                        <span class="invisible-content"></span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!--1 week premium-->
+                            <div class="panel-inner-wrapper" style="background-color:#F6F2FF">
+                                <div class="panel">
+                                    <img class="premium-logo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTU2IiBoZWlnaHQ9IjI5IiB2aWV3Qm94PSIwIDAgMTU2IDI5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDApIj4KPHBhdGggZD0iTTcuNjg5NyAyOC45OTc1QzEzLjczNDggMjguOTk3NSAxNC41NTY1IDIxLjc3NjEgMTguNjY0OSAxNS4zNTcyQzE4LjQ4ODggMTcuNjQ5NyAxOC42NjQ5IDE5LjcxMjkgMTkuMTM0NCAyMS4wODg0QzIwLjk1MzggMjYuNjQ3NyAyNy4xMTYzIDI3LjA0ODkgMjkuOTMzNSAyMS40MzIzQzMzLjg2NTggMTMuNTIzMiAzNS4wMzk2IDExLjYzMTkgMzkuMDMwNiA1Ljk1Nzk3QzQxLjY3MTYgMi4xNzUzNiAzOC42MTk3IC0wLjIzMTc1NCAzNS4wOTgzIDEuNDg3NjFDMzMuMjc4OSAyLjQwNDYxIDMwLjM0NDMgNC42Mzk3OSAyNi42NDY4IDkuMzk2N0MyNy4yOTI0IDUuNzg2MDMgMjcuMTE2MyAtMC4zNDYzNzkgMjEuNzc1NSAtMC4wMDI1MDUzOUMxOC45NTgzIDAuMTY5NDMxIDE1LjI2MDggMy4zMjE2MSAxMC4yNzIxIDExLjI4OEMxMC42ODI5IDYuODE3NjUgMTAuODU5IDMuNjA4MTcgOC44NjM1MSAxLjk0NjExQzcuMzk2MjQgMC43OTk4NjYgNC4xNjgyNSAwLjM5ODY4IDIuMjMxNDYgMi44NjMxMUMwLjI5NDY2MiA1LjMyNzUzIC0wLjE3NDg2NCAxMC4xNDE4IDAuMDU5ODk4NyAxNS4xODUyQzAuNDEyMDQzIDI1Ljc4OCA0LjI4NTYzIDI4Ljk5NzUgNy42ODk3IDI4Ljk5NzVaIiBmaWxsPSIjMjIyMjIyIi8+CjxwYXRoIGQ9Ik00Ni4xODk5IDI1LjQ0NjhWMTAuNzc0OUM0Ni4xODk5IDEwLjA4NzEgNDYuNjU5NCA5LjYyODY1IDQ3LjMwNSA5LjYyODY1QzQ3Ljk1MDYgOS42Mjg2NSA0OC40MjAxIDEwLjA4NzEgNDguNDIwMSAxMC43NzQ5VjExLjExODhDNDkuMDA3IDEwLjE0NDUgNTAuMTIyMiA5LjUxNDAyIDUxLjk0MTYgOS41MTQwMkM1NC4wNTQ0IDkuNTE0MDIgNTUuNTgwNCAxMC42NjAzIDU2LjIyNiAxMi41NTE2QzU2LjUxOTUgMTMuNTI1OSA1Ni42OTU1IDE0LjUwMDIgNTYuNjk1NSAxNS44NzU3QzU2LjY5NTUgMTcuMjUxMiA1Ni41NzgxIDE4LjIyNTUgNTYuMjI2IDE5LjE0MjVDNTUuNTgwNCAyMS4wMzM4IDU0LjA1NDQgMjIuMTggNTEuOTQxNiAyMi4xOEM1MC4wNjM1IDIyLjE4IDQ5LjAwNyAyMS40OTIzIDQ4LjQyMDEgMjAuNTc1M1YyNS40NDY4QzQ4LjQyMDEgMjYuMTM0NiA0Ny45NTA2IDI2LjU5MzEgNDcuMzA1IDI2LjU5MzFDNDYuNjU5NCAyNi41OTMxIDQ2LjE4OTkgMjYuMTM0NiA0Ni4xODk5IDI1LjQ0NjhaTTU0LjExMzEgMTguMjgyOEM1NC4zNDc5IDE3LjY1MjQgNTQuNDA2NiAxNi44NSA1NC40MDY2IDE1LjgxODRDNTQuNDA2NiAxNC43Mjk0IDU0LjM0NzkgMTMuOTg0NCA1NC4xMTMxIDEzLjM1MzlDNTMuNzAyMyAxMi4xNTA0IDUyLjc2MzIgMTEuNDYyNiA1MS40MTM0IDExLjQ2MjZDNTAuMDA0OCAxMS40NjI2IDQ5LjA2NTcgMTIuMTUwNCA0OC42NTQ5IDEzLjM1MzlDNDguNDIwMSAxMy45ODQ0IDQ4LjM2MTQgMTQuNzg2OCA0OC4zNjE0IDE1LjgxODRDNDguMzYxNCAxNi44NSA0OC40MjAxIDE3LjU5NTEgNDguNjU0OSAxOC4yODI4QzQ5LjA2NTcgMTkuNDg2NCA1MC4wMDQ4IDIwLjE3NDEgNTEuNDEzNCAyMC4xNzQxQzUyLjc2MzIgMjAuMTc0MSA1My43MDIzIDE5LjQ4NjQgNTQuMTEzMSAxOC4yODI4WiIgZmlsbD0iIzIyMjIyMiIvPgo8cGF0aCBkPSJNNTguOTI2IDIwLjkxOTJWMTAuNzc0OUM1OC45MjYgMTAuMDg3MSA1OS4zOTU2IDkuNjI4NjUgNjAuMDQxMiA5LjYyODY1QzYwLjY4NjggOS42Mjg2NSA2MS4xNTYzIDEwLjA4NzEgNjEuMTU2MyAxMC43NzQ5VjExLjM0OEM2MS42ODQ1IDEwLjI1OTEgNjIuNzk5NiA5LjUxNDAyIDY0LjMyNTYgOS41MTQwMkM2NS4yMDU5IDkuNTE0MDIgNjUuNzM0MiA5Ljc0MzI3IDY2LjE0NSA5Ljk3MjUyQzY2LjYxNDUgMTAuMjAxOCA2Ni43OTA2IDEwLjU0NTYgNjYuNzkwNiAxMC44ODk1QzY2Ljc5MDYgMTEuNTIgNjYuMzIxMSAxMS45Nzg0IDY1LjY3NTUgMTEuOTc4NEM2NS40OTk0IDExLjk3ODQgNjUuMzIzMyAxMS45MjExIDY1LjE0NzIgMTEuODYzOEM2NC42Nzc3IDExLjY5MTkgNjQuMjY2OSAxMS41NzczIDYzLjczODcgMTEuNTc3M0M2MS44NjA2IDExLjU3NzMgNjEuMDk3NiAxMy4xMjQ3IDYxLjA5NzYgMTUuMTMwNlYyMS4wMzM4QzYxLjA5NzYgMjEuNzIxNSA2MC42MjgxIDIyLjE4IDU5Ljk4MjUgMjIuMThDNTkuMzk1NSAyMi4wNjU0IDU4LjkyNiAyMS42MDY5IDU4LjkyNiAyMC45MTkyWiIgZmlsbD0iIzIyMjIyMiIvPgo8cGF0aCBkPSJNNjguMTk4NiAxOC45MTMyQzY3Ljk2MzggMTguMTY4MiA2Ny43ODc3IDE3LjMwODUgNjcuNzg3NyAxNS44MTg0QzY3Ljc4NzcgMTQuMzg1NiA2Ny45MDUxIDEzLjUyNTkgNjguMTk4NiAxMi43ODA4QzY4LjkwMjggMTAuNjYwMyA3MC42NjM2IDkuNTE0MDIgNzMuMDY5OSA5LjUxNDAyQzc1LjUzNDkgOS41MTQwMiA3Ny4yOTU2IDEwLjY2MDMgNzcuOTQxMiAxMi43ODA4Qzc4LjIzNDcgMTMuNTgzMiA3OC4zNTIxIDE0LjU1NzUgNzguMzUyMSAxNS43MDM3Qzc4LjM1MjEgMTYuMTYyMiA3Ny45OTk5IDE2LjUwNjEgNzcuNDcxNyAxNi41MDYxSDcwLjE5NEM3MC4wNzY3IDE2LjUwNjEgNzAuMDE4IDE2LjU2MzQgNzAuMDE4IDE2LjY3ODFDNzAuMDE4IDE3LjI1MTIgNzAuMDc2NyAxNy42NTI0IDcwLjI1MjcgMTguMTY4MkM3MC43MjIzIDE5LjU0MzcgNzEuODM3NCAyMC4yODg3IDczLjQyMiAyMC4yODg3Qzc0LjY1NDUgMjAuMjg4NyA3NS40NzYyIDE5Ljk0NDkgNzYuNDE1MyAxOS4yNTcxQzc2LjY1IDE5LjAyNzkgNzYuODg0OCAxOC45NzA1IDc3LjE3ODIgMTguOTcwNUM3Ny43MDY1IDE4Ljk3MDUgNzguMDU4NiAxOS4zNzE3IDc4LjA1ODYgMTkuODMwMkM3OC4wNTg2IDIwLjExNjggNzcuOTQxMiAyMC40MDM0IDc3LjcwNjQgMjAuNTc1M0M3Ni42NSAyMS41NDk2IDc1LjE4MjggMjIuMjM3MyA3My4yNDYgMjIuMjM3M0M3MC42MDQ5IDIyLjE4IDY4LjkwMjggMjEuMDMzOCA2OC4xOTg2IDE4LjkxMzJaTTc1Ljk0NTcgMTQuNzg2OEM3Ni4wNjMxIDE0Ljc4NjggNzYuMTIxOCAxNC43Mjk0IDc2LjEyMTggMTQuNjE0OEM3Ni4xMjE4IDE0LjA0MTcgNzYuMDYzMSAxMy42NDA1IDc1Ljk0NTcgMTMuMjM5M0M3NS41MzQ5IDEyLjAzNTggNzQuNDc4NSAxMS4zNDggNzMuMDY5OSAxMS4zNDhDNzEuNjYxMyAxMS4zNDggNzAuNjA0OSAxMi4wMzU4IDcwLjE5NCAxMy4yMzkzQzcwLjA3NjcgMTMuNjQwNSA3MC4wMTggMTQuMDQxNyA3MC4wMTggMTQuNjE0OEM3MC4wMTggMTQuNzI5NCA3MC4wNzY3IDE0Ljc4NjggNzAuMTk0IDE0Ljc4NjhINzUuOTQ1N1oiIGZpbGw9IiMyMjIyMjIiLz4KPHBhdGggZD0iTTgwLjc1OSAxMC43NzQ3QzgwLjc1OSAxMC4wODcgODEuMjI4NSA5LjYyODQ3IDgxLjg3NDEgOS42Mjg0N0M4Mi41MTk3IDkuNjI4NDcgODIuOTg5MiAxMC4wODcgODIuOTg5MiAxMC43NzQ3VjExLjExODZDODMuNjM0OCAxMC4xNDQzIDg0LjgwODcgOS40NTY1NCA4Ni40NTIgOS40NTY1NEM4OC4xNTQgOS40NTY1NCA4OS4zODY1IDEwLjE0NDMgOTAuMDkwOCAxMS4zNDc4QzkwLjkxMjUgMTAuMjAxNiA5Mi4xNDUgOS40NTY1NCA5NC4xNDA1IDkuNDU2NTRDOTYuOTU3NiA5LjQ1NjU0IDk4LjYwMSAxMS4xNzU5IDk4LjYwMSAxNC4wNDE1VjIwLjg2MTdDOTguNjAxIDIxLjU0OTQgOTguMTMxNSAyMi4wMDc5IDk3LjQ4NTkgMjIuMDA3OUM5Ni44NDAzIDIyLjAwNzkgOTYuMzcwNyAyMS41NDk0IDk2LjM3MDcgMjAuODYxN1YxNC41NTczQzk2LjM3MDcgMTIuNjA4NyA5NS40OTA0IDExLjQ2MjUgOTMuNjEyMyAxMS40NjI1QzkxLjkxMDIgMTEuNDYyNSA5MC43MzY0IDEyLjYwODcgOTAuNzM2NCAxNC40NDI3VjIwLjkxOUM5MC43MzY0IDIxLjYwNjcgOTAuMjY2OSAyMi4wNjUyIDg5LjYyMTMgMjIuMDY1MkM4OC45NzU3IDIyLjA2NTIgODguNTA2MiAyMS42MDY3IDg4LjUwNjIgMjAuOTE5VjE0LjU1NzNDODguNTA2MiAxMi42MDg3IDg3LjYyNTggMTEuNDYyNSA4NS43NDc3IDExLjQ2MjVDODQuMDQ1NyAxMS40NjI1IDgyLjg3MTkgMTIuNjA4NyA4Mi44NzE5IDE0LjQ0MjdWMjAuOTE5QzgyLjg3MTkgMjEuNjA2NyA4Mi40MDIzIDIyLjA2NTIgODEuNzU2NyAyMi4wNjUyQzgxLjExMTEgMjIuMDY1MiA4MC42NDE2IDIxLjYwNjcgODAuNjQxNiAyMC45MTlWMTAuNzc0N0g4MC43NTlaIiBmaWxsPSIjMjIyMjIyIi8+CjxwYXRoIGQ9Ik0xMDEuMDY2IDUuOTYwNDdDMTAxLjA2NiA1LjE1ODEgMTAxLjcxMSA0LjU4NDk4IDEwMi40NzQgNC41ODQ5OEMxMDMuMjM3IDQuNTg0OTggMTAzLjg4MyA1LjIxNTQxIDEwMy44ODMgNS45NjA0N0MxMDMuODgzIDYuNzA1NTMgMTAzLjIzNyA3LjMzNTk2IDEwMi40NzQgNy4zMzU5NkMxMDEuNzExIDcuMzM1OTYgMTAxLjA2NiA2LjcwNTUzIDEwMS4wNjYgNS45NjA0N1pNMTAxLjQxOCAxMC43NzQ3QzEwMS40MTggMTAuMDg3IDEwMS44ODggOS42Mjg0NSAxMDIuNTMzIDkuNjI4NDVDMTAzLjE3OSA5LjYyODQ1IDEwMy42NDggMTAuMDg3IDEwMy42NDggMTAuNzc0N1YyMC44NjE3QzEwMy42NDggMjEuNTQ5NCAxMDMuMTc5IDIyLjAwNzkgMTAyLjUzMyAyMi4wMDc5QzEwMS44ODggMjIuMDA3OSAxMDEuNDE4IDIxLjU0OTQgMTAxLjQxOCAyMC44NjE3VjEwLjc3NDdaIiBmaWxsPSIjMjIyMjIyIi8+CjxwYXRoIGQ9Ik0xMTYuMzI1IDIwLjkxOUMxMTYuMzI1IDIxLjYwNjggMTE1Ljg1NSAyMi4wNjUzIDExNS4yMSAyMi4wNjUzQzExNC41NjQgMjIuMDY1MyAxMTQuMDk1IDIxLjYwNjggMTE0LjA5NSAyMC45MTlWMjAuNTc1MUMxMTMuNTA4IDIxLjQ5MjEgMTEyLjMzNCAyMi4yMzcyIDExMC42OTEgMjIuMjM3MkMxMDcuOTkxIDIyLjIzNzIgMTA2LjQwNiAyMC40NjA1IDEwNi40MDYgMTcuNjUyMlYxMC43NzQ3QzEwNi40MDYgMTAuMDg3IDEwNi44NzYgOS42Mjg0OSAxMDcuNTIxIDkuNjI4NDlDMTA4LjE2NyA5LjYyODQ5IDEwOC42MzYgMTAuMDg3IDEwOC42MzYgMTAuNzc0N1YxNy4xMzY0QzEwOC42MzYgMTkuMDg1IDEwOS41MTcgMjAuMjMxMyAxMTEuMzk1IDIwLjIzMTNDMTEzLjA5NyAyMC4yMzEzIDExNC4yMTIgMTkuMDg1IDExNC4yMTIgMTcuMjUxVjEwLjc3NDdDMTE0LjIxMiAxMC4wODcgMTE0LjY4MiA5LjYyODQ5IDExNS4zMjcgOS42Mjg0OUMxMTUuOTczIDkuNjI4NDkgMTE2LjQ0MiAxMC4wODcgMTE2LjQ0MiAxMC43NzQ3VjIwLjkxOUgxMTYuMzI1WiIgZmlsbD0iIzIyMjIyMiIvPgo8cGF0aCBkPSJNMTE5LjE0MiAxMC43NzQ3QzExOS4xNDIgMTAuMDg3IDExOS42MTEgOS42Mjg0NyAxMjAuMjU3IDkuNjI4NDdDMTIwLjkwMyA5LjYyODQ3IDEyMS4zNzIgMTAuMDg3IDEyMS4zNzIgMTAuNzc0N1YxMS4xMTg2QzEyMi4wMTggMTAuMTQ0MyAxMjMuMTkxIDkuNDU2NTQgMTI0LjgzNSA5LjQ1NjU0QzEyNi41MzcgOS40NTY1NCAxMjcuNzY5IDEwLjE0NDMgMTI4LjQ3NCAxMS4zNDc4QzEyOS4yOTUgMTAuMjAxNiAxMzAuNTI4IDkuNDU2NTQgMTMyLjUyMyA5LjQ1NjU0QzEzNS4zNCA5LjQ1NjU0IDEzNi45ODQgMTEuMTc1OSAxMzYuOTg0IDE0LjA0MTVWMjAuODYxN0MxMzYuOTg0IDIxLjU0OTQgMTM2LjUxNCAyMi4wMDc5IDEzNS44NjkgMjIuMDA3OUMxMzUuMjIzIDIyLjAwNzkgMTM0Ljc1NCAyMS41NDk0IDEzNC43NTQgMjAuODYxN1YxNC41NTczQzEzNC43NTQgMTIuNjA4NyAxMzMuODczIDExLjQ2MjUgMTMxLjk5NSAxMS40NjI1QzEzMC4yOTMgMTEuNDYyNSAxMjkuMTE5IDEyLjYwODcgMTI5LjExOSAxNC40NDI3VjIwLjkxOUMxMjkuMTE5IDIxLjYwNjcgMTI4LjY1IDIyLjA2NTIgMTI4LjAwNCAyMi4wNjUyQzEyNy4zNTggMjIuMDY1MiAxMjYuODg5IDIxLjYwNjcgMTI2Ljg4OSAyMC45MTlWMTQuNTU3M0MxMjYuODg5IDEyLjYwODcgMTI2LjAwOSAxMS40NjI1IDEyNC4xMzEgMTEuNDYyNUMxMjIuNDI4IDExLjQ2MjUgMTIxLjI1NSAxMi42MDg3IDEyMS4yNTUgMTQuNDQyN1YyMC45MTlDMTIxLjI1NSAyMS42MDY3IDEyMC43ODUgMjIuMDY1MiAxMjAuMTQgMjIuMDY1MkMxMTkuNDk0IDIyLjA2NTIgMTE5LjAyNCAyMS42MDY3IDExOS4wMjQgMjAuOTE5VjEwLjc3NDdIMTE5LjE0MloiIGZpbGw9IiMyMjIyMjIiLz4KPC9nPgo8ZGVmcz4KPGNsaXBQYXRoIGlkPSJjbGlwMCI+CjxyZWN0IHdpZHRoPSIxNTYiIGhlaWdodD0iMjkiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==" alt="Premium Plus logo"/>
+                                    <div class="panel-inner">
+                                        <div class="panel-copy-container text-center">
+                                            <p class="regular-txt font-small price" style="color:#2A1C60">
+                                                <span>From $3.49/month USD</span>
+                                            </p>
+                                            <p class="neutral-2-txt font-xsmall pricing-details light-txt">
+                                                <span>Billed in local currency</span>
+                                            </p>
+                                        </div>
+                                        <div class="regular-txt plan-label m-t" style="background-color:#2A1C60">
+                                            <span>1 Week Plan</span>
+                                        </div>
+                                        <div class="panel-copy-container list-indent pad-tbm">
+                                            <div class="pricing-point">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNyAxNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgNy4wNjI1TDUuOTU2NTIgMTFMMTUgMiIgc3Ryb2tlPSIjM0IxOUE5IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Checkmark"/>
+                                                <p class="regular-txt black-txt font-16px">
+                                                            <span>
+                                                                <b>50 Bonus Coins/month to unlock Wattpad Originals of your choice</b>
+                                                            </span>
+                                                </p>
+                                            </div>
+                                            <div class="pricing-point">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNyAxNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgNy4wNjI1TDUuOTU2NTIgMTFMMTUgMiIgc3Ryb2tlPSIjM0IxOUE5IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Checkmark"/>
+                                                <p class="regular-txt black-txt font-16px">
+                                                    <span>No ad interruptions</span>
+                                                </p>
+                                            </div>
+                                            <div class="pricing-point">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNyAxNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgNy4wNjI1TDUuOTU2NTIgMTFMMTUgMiIgc3Ryb2tlPSIjM0IxOUE5IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Checkmark"/>
+                                                <p class="regular-txt black-txt font-16px">
+                                                    <span>Unlimited offline stories</span>
+                                                </p>
+                                            </div>
+                                            <div class="pricing-point">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNyAxNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgNy4wNjI1TDUuOTU2NTIgMTFMMTUgMiIgc3Ryb2tlPSIjM0IxOUE5IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Checkmark"/>
+                                                <p class="regular-txt black-txt font-16px">
+                                                    <span>Bonus Coins on purchase</span>
+                                                </p>
+                                            </div>
+                                            <div class="pricing-point">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNyAxNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgNy4wNjI1TDUuOTU2NTIgMTFMMTUgMiIgc3Ryb2tlPSIjM0IxOUE5IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Checkmark"/>
+                                                <p class="regular-txt black-txt font-16px">
+                                                    <span>Theme colors</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a id="pay-premium" class="btn-primary normal-premium-btn" href="#">
+                                        <span>Go Premium</span>
+                                    </a>
+                                    <p class="neutral-2-txt regular-txt font-xxsmall cta-details">
+                                                <span class="top-content">
+                                                    <span>Cancel anytime.</span>
+                                                </span>
+                                        <span class="invisible-content">
+                                                    <span>Cancel anytime.</span>
+                                                </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-wrapper">
+            <div class="inner-content">
+                <div class="row pad-lr">
+                    <div id="wp-logo-bottom">
+                        <img src="assets/image/wp-logo-bottom-10d78443356f5bf534397d862506dc5b.png" alt="Logo"/>
+                    </div>
+                </div>
+                <div class="row pad-lr">
+                    <div class="flex" id="bottom-links-left">
+                        <p class="white-font regular-txt pad-xstxsb uppercase">
+                            <span>COMPANY</span>
+                        </p>
+                        <div class="bottom-nav">
+                            <ul>
+                                <li class="white-font pad-xstxsb">
+                                    <a href="https://company.wattpad.com/">
+                                        <span>About</span>
+                                    </a>
+                                </li>
+                                <li class="white-font pad-xstxsb">
+                                    <a href="https://support.wattpad.com/hc/en-us/articles/200774224-Privacy-Policy">
+                                        <span>Privacy</span>
+                                    </a>
+                                </li>
+                                <li class="white-font pad-xstxsb">
+                                    <a href="https://support.wattpad.com/hc/en-us/articles/200774344-Terms-of-Service">
+                                        <span>Terms</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="white-font pad-xstxsb">
+                                    <a href="https://company.wattpad.com/press/">
+                                        <span>Press</span>
+                                    </a>
+                                </li>
+                                <li class="white-font pad-xstxsb">
+                                    <a href="https://support.wattpad.com/hc/en-us/requests/new">
+                                        <span>Contact</span>
+                                    </a>
+                                </li>
+                                <li class="white-font pad-xstxsb">
+                                    <a href="https://company.wattpad.com/blog">
+                                        <span>Blog</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="white-font pad-xstxsb">
+                                    <a href="https://company.wattpad.com/work-at-wattpad/">
+                                        <span>Work at Wattpad</span>
+                                    </a>
+                                </li>
+                                <li class="white-font pad-xstxsb">
+                                    <a href="https://support.wattpad.com/hc/en-us/articles/200774334">
+                                        <span>Copyright</span>
+                                    </a>
+                                </li>
+                                <li class="white-font pad-xstxsb">
+                                    <a href="http://business.wattpad.com/brand-partnerships/">
+                                        <span>Brand Partnerships</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="flex" id="bottom-links-middle">
+                        <p class="white-font regular-txt pad-xstxsb uppercase">
+                            <span>COMMUNITY</span>
+                        </p>
+                        <div class="bottom-nav">
+                            <ul>
+                                <li class="white-font pad-xstxsb">
+                                    <a href="https://www.wattpad.com/user/wattpad">Wattpad</a>
+                                </li>
+                                <li class="white-font pad-xstxsb">
+                                    <a href="https://www.youtube.com/user/wattpad">YouTube</a>
+                                </li>
+                                <li class="white-font pad-xstxsb">
+                                    <a href="https://www.instagram.com/wattpad/">Instagram</a>
+                                </li>
+                                <li class="white-font pad-xstxsb">
+                                    <a href="https://www.facebook.com/wattpad/">Facebook</a>
+                                </li>
+                                <li class="white-font pad-xstxsb">
+                                    <a href="https://twitter.com/wattpad/">Twitter</a>
+                                </li>
+                                <li class="white-font pad-xstxsb">
+                                    <a href="https://www.tiktok.com/@wattpad">TikTok</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div>
+</div>
+
+<script>
+    let amount = 750000;
+    let plan = null;
+    const currency = "LKR";
+    const orderId = Date.now().toString();
+
+    async function payNow() {
+        try {
+            const res = await fetch(`http://localhost:8080/api/v1/payhere/generate-hash?orderId=${orderId}&amount=${amount}&currency=${currency}`, {
+                method: "GET",
+                credentials: "include"
+            });
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            const data = await res.json();
+
+            const payment = {
+                sandbox: true,
+                merchant_id: data.merchant_id,
+                return_url: "http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/home-page.html",
+                cancel_url: "http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/home-page.html",
+                notify_url: "http://localhost:8080/api/v1/payhere/notify",
+                order_id: orderId,
+                items: "Premium Subscription",
+                amount: (amount / 100).toFixed(2),
+                currency: currency,
+                hash: data.hash,
+                first_name: "Thenuri",
+                last_name: "Nethangi",
+                email: "thenurinathangi@gmail.com",
+                phone: "+94714124926",
+                address: "Dewinuwara",
+                city: "Matara",
+                country: "Sri Lanka"
+            };
+
+            payhere.startPayment(payment);
+        } catch (error) {
+            console.error("Error initiating payment:", error);
+            Swal.fire({
+                title: 'Fail',
+                text: 'Failed to initiate payment! Please try again.',
+                icon: 'error',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        }
+    }
+
+    // PayHere event handlers
+    payhere.onCompleted = function (orderId) {
+
+        fetch('http://localhost:8080/api/v1/transaction/premium', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'amount': amount,
+                'plan': plan
+            })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Congratulation, You now have a premium subscription',
+                    icon: 'success',
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+                window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/home-page.html';
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+
+                Swal.fire({
+                    title: 'Fail',
+                    text: 'An error occur while purchasing the premium subscription',
+                    icon: 'error',
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+            });
+    };
+
+    payhere.onDismissed = function () {
+        // alert("Payment dismissed by user");
+    };
+
+    payhere.onError = function (error) {
+
+        Swal.fire({
+            title: 'Fail',
+            text: 'An error occur while purchasing the premium subscription',
+            icon: 'error',
+            timer: 3000,
+            showConfirmButton: false
+        });
+    };
+
+    //click pay premium btn
+    document.getElementById("pay-premium").addEventListener("click", (event) => {
+        event.preventDefault();
+
+        fetch('http://localhost:8080/api/v1/transaction/check/premium', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+
+                if(data.data===true){
+                    amount = 104700;
+                    plan = 'premium';
+                    payNow();
+                }
+                else{
+                    Swal.fire({
+                        title: 'Warn',
+                        text: 'You are already in a premium plan!',
+                        icon: 'warning',
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                }
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+
+                Swal.fire({
+                    title: 'Fail',
+                    text: 'Server error, try later!',
+                    icon: 'error',
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+            });
+
+    });
+
+    //click pay premium plus btn
+    document.getElementById("pay-premium-plus").addEventListener("click", (event) => {
+        event.preventDefault();
+
+        fetch('http://localhost:8080/api/v1/transaction/check/premium', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+
+                if(data.data===true){
+                    amount = 239400;
+                    plan = 'premium plus';
+                    payNow();
+                }
+                else{
+                    Swal.fire({
+                        title: 'Warn',
+                        text: 'You are already in a premium plan!',
+                        icon: 'warning',
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                }
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+
+                Swal.fire({
+                    title: 'Fail',
+                    text: 'Server error, try later!',
+                    icon: 'error',
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+            });
+
+    });
+
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
+<!--<script src="assets/js/user-profile-following-script.js"></script>-->
+</body>
+</html>

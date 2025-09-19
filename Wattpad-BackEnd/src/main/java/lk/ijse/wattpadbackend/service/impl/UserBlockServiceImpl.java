@@ -2,7 +2,6 @@ package lk.ijse.wattpadbackend.service.impl;
 
 import lk.ijse.wattpadbackend.entity.User;
 import lk.ijse.wattpadbackend.entity.UserBlock;
-import lk.ijse.wattpadbackend.entity.UserReport;
 import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
 import lk.ijse.wattpadbackend.repository.UserBlockRepository;
@@ -21,7 +20,7 @@ public class UserBlockServiceImpl implements UserBlockService {
     private final UserRepository userRepository;
 
     @Override
-    public void addABlock(String name, long userId) {
+    public boolean addABlock(String name, long userId) {
 
         try{
             User currentUser = userRepository.findByUsername(name);
@@ -35,11 +34,49 @@ public class UserBlockServiceImpl implements UserBlockService {
             }
             User user = optionalUser.get();
 
+            UserBlock userBlock1 = userBlockRepository.findByBlockedByUserAndBlockedUser(currentUser,user);
+            if(userBlock1!=null){
+                return false;
+            }
+
             UserBlock userBlock = new UserBlock();
             userBlock.setBlockedByUser(currentUser);
             userBlock.setBlockedUser(user);
 
             userBlockRepository.save(userBlock);
+            return true;
+
+        }
+        catch (UserNotFoundException | NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean removeABlock(String name, long userId) {
+
+        try{
+            User currentUser = userRepository.findByUsername(name);
+            if(currentUser==null){
+                throw new UserNotFoundException("Current User not found.");
+            }
+
+            Optional<User> optionalUser = userRepository.findById((int) userId);
+            if(!optionalUser.isPresent()){
+                throw new NotFoundException("User not found.");
+            }
+            User user = optionalUser.get();
+
+            UserBlock userBlock = userBlockRepository.findByBlockedByUserAndBlockedUser(currentUser,user);
+            if(userBlock==null){
+                return false;
+            }
+
+            userBlockRepository.delete(userBlock);
+            return true;
 
         }
         catch (UserNotFoundException | NotFoundException e){

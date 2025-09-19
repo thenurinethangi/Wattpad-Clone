@@ -1154,13 +1154,24 @@ document.addEventListener("DOMContentLoaded", () => {
                         .then(data => {
                             console.log('Success:', data);
 
-                            Swal.fire({
-                                title: 'Success',
-                                text: 'Blocked user successfully!',
-                                icon: 'success',
-                                timer: 3000,
-                                showConfirmButton: false
-                            });
+                            if(data.data === true) {
+                                Swal.fire({
+                                    title: 'Success',
+                                    text: 'Blocked user successfully!',
+                                    icon: 'success',
+                                    timer: 3000,
+                                    showConfirmButton: false
+                                });
+                            }
+                            else{
+                                Swal.fire({
+                                    title: 'Warn',
+                                    text: 'You have already blocked the user!',
+                                    icon: 'warning',
+                                    timer: 3000,
+                                    showConfirmButton: false
+                                });
+                            }
 
                         })
                         .catch(error => {
@@ -1214,13 +1225,24 @@ document.addEventListener("DOMContentLoaded", () => {
                         .then(data => {
                             console.log('Success:', data);
 
-                            Swal.fire({
-                                title: 'Success',
-                                text: 'Muted user successfully!',
-                                icon: 'success',
-                                timer: 3000,
-                                showConfirmButton: false
-                            });
+                            if(data.data===true){
+                                Swal.fire({
+                                    title: 'Success',
+                                    text: 'Muted user successfully!',
+                                    icon: 'success',
+                                    timer: 3000,
+                                    showConfirmButton: false
+                                });
+                            }
+                            else {
+                                Swal.fire({
+                                    title: 'Warn',
+                                    text: 'You have already muted the user!',
+                                    icon: 'warning',
+                                    timer: 3000,
+                                    showConfirmButton: false
+                                });
+                            }
 
                         })
                         .catch(error => {
