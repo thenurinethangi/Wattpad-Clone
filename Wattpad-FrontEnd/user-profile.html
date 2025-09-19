@@ -19,6 +19,161 @@
     <link rel="stylesheet" href="assets/style/react-tooltip-HIHMAPNF.css"/>
     <link rel="stylesheet" href="assets/style/splide.min-AQNS3YPQ.css"/>
     <link rel="stylesheet" href="assets/style/footer-style.css">
+    <style>
+        .report-modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .report-modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            max-width: 90%;
+            position: relative;
+        }
+
+        .report-modal-content .close {
+            position: absolute;
+            top: 10px; right: 15px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+
+
+        /* Sweet Alert Modern Wide & Short Dark Theme */
+        .swal2-popup {
+            background: #1e1e1e !important;   /* deep black */
+            color: #f5f5f5 !important;
+            font-family: var(--primary-font-face),serif;
+            border-radius: 10px !important;
+            padding: 15px 25px !important;
+            width: 450px !important;   /* wider */
+            min-height: 140px !important; /* short height */
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+        }
+
+        /* Title */
+        .swal2-title {
+            color: #fff !important;
+            font-size: 1.2rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 6px !important;
+        }
+
+        /* Text */
+        .swal2-html-container {
+            color: #aaa !important;
+            font-size: 0.93rem !important;
+            margin: 0 !important;
+        }
+
+        /* Buttons (modern black & white theme) */
+        .swal2-styled {
+            border: none !important;
+            border-radius: 6px !important;
+            padding: 8px 20px !important;
+            font-size: 0.9rem !important;
+            font-weight: 500 !important;
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* Confirm = clean white button */
+        .swal2-confirm {
+            font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 13px;
+            background: #fff !important;
+            color: #111 !important;
+        }
+
+        .swal2-confirm:hover {
+            background: #e5e5e5 !important;
+        }
+
+        /* Cancel = dark gray button */
+        .swal2-cancel {
+            font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 13px;
+            background: #2c2c2c !important;
+            color: #f5f5f5 !important;
+        }
+
+        .swal2-cancel:hover {
+            background: #444 !important;
+        }
+
+        /* Icons smaller + subtle */
+        .swal2-icon {
+            margin: 0 auto 5px auto !important;
+            transform: scale(0.7);
+        }
+
+
+
+
+
+
+        /* Sweet Alert Modern Wide & Short Dark Theme for Success Message */
+        .modern-swal-wide-short {
+            background: #1e1e1e !important;   /* deep black */
+            color: #f5f5f5 !important;
+            font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            border-radius: 10px !important;
+            padding: 15px 25px !important;
+            width: 450px !important;   /* wider */
+            min-height: 80px !important; /* short height for thin container */
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+            text-align: center; /* Center text without buttons */
+        }
+
+        /* Title Style */
+        .swal-title {
+            color: #fff !important;
+            font-size: 1.2rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 6px !important;
+        }
+
+        /* Text Style */
+        .swal-text {
+            color: #aaa !important;
+            font-size: 0.93rem !important;
+            margin: 0 !important;
+        }
+
+        /* Ensure timer progress bar fits the design */
+        .swal2-timer-progress-bar {
+            background: #fff !important;
+            height: 4px !important;
+        }
+
+        /* Title */
+        .swal2-title,
+        .swal-title {
+            color: #fff !important;
+            font-size: 1.4rem !important;   /* was 1.2rem */
+            font-weight: 600 !important;
+            margin-bottom: 8px !important;
+        }
+
+        /* Text */
+        .swal2-html-container,
+        .swal-text {
+            color: #aaa !important;
+            font-size: 1.05rem !important;  /* was 0.93rem */
+            line-height: 1.5 !important;    /* improves readability */
+            margin: 0 !important;
+        }
+
+    </style>
 </head>
 <body style="display: none; visibility: hidden; opacity: 0;">
 
@@ -244,6 +399,47 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- Report User Modal -->
+        <div id="userReportModal" style="position: fixed; top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center;
+  z-index:100000; overflow-y: scroll; display: none;">
+
+            <div style="background:#fff; width:450px; max-width:90%; border-radius:10px; padding:20px; position:relative;">
+                <!-- Header -->
+                <header style="display:flex; justify-content:space-between; align-items:center;">
+                    <h3 style="margin:0; font-size: 21px; font-weight: 600;">Report User</h3>
+                    <button onclick="closeUserReport()" style="background:none; border:none; cursor:pointer;">✖</button>
+                </header>
+
+                <!-- Content Area (dynamic) -->
+                <div id="userReportContent" style="margin-top:15px;">
+                    <h6>Why are you reporting this user?</h6>
+                    <div onclick="loadUserSubOptions('harassment')" style="border:1px solid #ddd; padding:10px; margin-bottom:10px; border-radius:6px; cursor:pointer;">
+                        Harassment or Hate Speech
+                    </div>
+                    <div onclick="loadUserSubOptions('spam')" style="border:1px solid #ddd; padding:10px; margin-bottom:10px; border-radius:6px; cursor:pointer;">
+                        Spam or Fake Account
+                    </div>
+                    <div onclick="loadUserSubOptions('impersonation')" style="border:1px solid #ddd; padding:10px; border-radius:6px; cursor:pointer;">
+                        Impersonation
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div id="userReportFooter" style="margin-top:15px; display:none;">
+      <textarea id="userExtraReason" placeholder="Please describe in detail..."
+                style="width:100%; height:80px; padding:8px; margin-bottom:10px;"></textarea>
+                    <button onclick="submitUserReport()"
+                            style="width:100%; padding:10px; background:black; color:#fff; border:none; border-radius:6px; cursor:pointer;">
+                        Submit Report
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
         <div class="component-wrapper" id="component-buycoinsreactmodal-buy-coins-modal-%2fuser%2fyukee07"></div>
         <!--profile edit-->
         <!--top bar-->
@@ -338,6 +534,7 @@
                                 <i class="fa-solid fa-user-plus" style="font-size:16px;"></i>
                                 <span class="hidden-xs truncate">Follow</span>
                             </button>
+                            <!--three dots btn-->
                             <div class="button-group inline-block relative three-dots-btn">
                                 <div class="component-wrapper" id="component-profilemoreoptionsbutton-options-%2fuser%2fmoonflower_9597">
                                     <div>
@@ -345,33 +542,20 @@
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class="more-icon"><g><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></g></svg>
                                         </button>
                                         <div class="triangle"></div>
-                                        <div class="dropdown-menu align-right">
+                                        <!--model-->
+                                        <div class="dropdown-menu align-right" style="display: none; visibility: hidden; opacity: 0;">
                                             <div class="user-safety-operations">
-                                                <button class="user-safety-operation btn-no-background btn-left-icon mute">
-                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></g></svg>
-                                                    Mute moonflower_9597
-                                                </button>
-                                                <button class="user-safety-operation btn-no-background btn-left-icon block">
-                                                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#222222" stroke-width="0" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><path d="M7.00001 0.333252C3.31668 0.333252 0.333344 3.31659 0.333344 6.99992C0.333344 10.6833 3.31668 13.6666 7.00001 13.6666C10.6833 13.6666 13.6667 10.6833 13.6667 6.99992C13.6667 3.31659 10.6833 0.333252 7.00001 0.333252ZM1.66668 6.99992C1.66668 4.05325 4.05334 1.66659 7.00001 1.66659C8.23334 1.66659 9.36334 2.08992 10.2667 2.78992L2.79001 10.2666C2.09001 9.36325 1.66668 8.23325 1.66668 6.99992ZM7.00001 12.3333C5.76668 12.3333 4.63668 11.9099 3.73334 11.2099L11.21 3.73325C11.91 4.63659 12.3333 5.76659 12.3333 6.99992C12.3333 9.94659 9.94668 12.3333 7.00001 12.3333Z" fill="#111111"></path></g></svg>
-                                                    Block moonflower_9597
-                                                </button>
-                                                <button class="on-report user-safety-operation btn-no-background btn-left-icon" data-username="moonflower_9597">
-                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></g></svg>
-                                                    Report
-                                                </button>
                                                 <a class="conduct-link user-safety-operation btn-no-background btn-left-icon option" href="https://support.wattpad.com/hc/en-us/articles/200774234-Code-of-Conduct" target="_blank" rel="noreferrer noopener" tabindex="0">
-                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></g></svg>
-                                                    <span class="conduct-link">Code of Conduct</span>
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></g></svg>
+                                                    <span class="conduct-link">Mute moonflower_9597</span>
                                                 </a>
                                                 <a class="safety-portal user-safety-operation btn-no-background btn-left-icon option" href="https://safetyportal.wattpad.com/" target="_blank" rel="noreferrer noopener" tabindex="0">
-                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></g></svg>
-                                                    <span>Wattpad Safety Portal</span>
+                                                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#222222" stroke-width="0" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><path d="M7.00001 0.333252C3.31668 0.333252 0.333344 3.31659 0.333344 6.99992C0.333344 10.6833 3.31668 13.6666 7.00001 13.6666C10.6833 13.6666 13.6667 10.6833 13.6667 6.99992C13.6667 3.31659 10.6833 0.333252 7.00001 0.333252ZM1.66668 6.99992C1.66668 4.05325 4.05334 1.66659 7.00001 1.66659C8.23334 1.66659 9.36334 2.08992 10.2667 2.78992L2.79001 10.2666C2.09001 9.36325 1.66668 8.23325 1.66668 6.99992ZM7.00001 12.3333C5.76668 12.3333 4.63668 11.9099 3.73334 11.2099L11.21 3.73325C11.91 4.63659 12.3333 5.76659 12.3333 6.99992C12.3333 9.94659 9.94668 12.3333 7.00001 12.3333Z" fill="#111111"></path></g></svg>
+                                                    <span>Block moonflower_9597</span>
                                                 </a>
-                                            </div>
-                                            <div class="user-safety-operations moderation-options">
-                                                <a class="user-safety-operation btn-no-background btn-left-icon" href="https://policies.wattpad.com/" target="_blank" rel="noopener noreferrer" tabindex="0">
-                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></g></svg>
-                                                    <span class="option">Wattpad Policies</span>
+                                                <a class="safety-portal user-safety-operation btn-no-background btn-left-icon option" href="https://safetyportal.wattpad.com/" target="_blank" rel="noreferrer noopener" tabindex="0">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></g></svg>
+                                                    <span>Report</span>
                                                 </a>
                                             </div>
                                         </div>

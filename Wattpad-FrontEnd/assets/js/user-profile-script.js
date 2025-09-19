@@ -1074,6 +1074,296 @@ search.addEventListener('click',function (event) {
 
 
 
+//block,report,mute
+document.addEventListener("DOMContentLoaded", () => {
+    const menuBtn = document.querySelector(".profile-more-options");
+    const dropdown = document.querySelector(".dropdown-menu.align-right");
+
+    // find options by their text content
+    const optionSpans = dropdown.querySelectorAll("span");
+    let muteBtn, blockBtn, reportBtn;
+
+    optionSpans.forEach(span => {
+        if (span.textContent.trim().startsWith("Mute")) muteBtn = span;
+        if (span.textContent.trim().startsWith("Block")) blockBtn = span;
+        if (span.textContent.trim() === "Report") reportBtn = span;
+    });
+
+    // Toggle dropdown menu
+    menuBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdown.style.display = "block";
+        dropdown.style.visibility = "visible";
+        dropdown.style.opacity = "1";
+    });
+
+    // Close when clicking outside
+    document.addEventListener("click", (e) => {
+        if (!dropdown.contains(e.target) && !menuBtn.contains(e.target)) {
+            dropdown.style.display = "none";
+            dropdown.style.visibility = "hidden";
+            dropdown.style.opacity = "0";
+        }
+    });
+
+    // Block user
+    if (blockBtn) {
+        blockBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Block this user?',
+                text: 'They will no longer interact with you',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, Block',
+                cancelButtonText: 'Cancel',
+                customClass: {
+                    popup: 'modern-swal',
+                    confirmButton: 'swal2-confirm',
+                    cancelButton: 'swal2-cancel'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    fetch('http://localhost:8080/api/v1/story/report', {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            storyId: storyId,
+                            category: selectedCategory,
+                            reason: selectedSubReason,
+                            description: description
+                        })
+
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.json().then(errData => {
+                                    throw new Error(JSON.stringify(errData));
+                                });
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Success:', data);
+
+                            closeReport();
+
+                            Swal.fire({
+                                title: 'Success',
+                                text: 'Report submitted successfully!',
+                                customClass: {
+                                    popup: 'modern-swal-wide-short',
+                                    title: 'swal-title',
+                                    htmlContainer: 'swal-text'
+                                },
+                                timer: 3000,
+                                timerProgressBar: true,
+                                showConfirmButton: false
+                            });
+
+                        })
+                        .catch(error => {
+                            let response = JSON.parse(error.message);
+                            console.log(response);
+
+                            Swal.fire({
+                                title: 'Fail',
+                                text: 'Fail to submit the report!, try later',
+                                customClass: {
+                                    popup: 'modern-swal-wide-short',
+                                    title: 'swal-title',
+                                    htmlContainer: 'swal-text'
+                                },
+                                timer: 3000,
+                                timerProgressBar: true,
+                                showConfirmButton: false
+                            });
+
+                        });
+                }
+            });
+        });
+    }
+
+    // Mute user
+    if (muteBtn) {
+        muteBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            Swal.fire({
+                title: "Mute this user?",
+                text: "You will not see notifications from them",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, Mute"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch("/api/mute-user", { method: "POST" }) // replace endpoint
+                        .then(() => Swal.fire("Muted!", "User has been muted.", "success"));
+                }
+            });
+        });
+    }
+
+    // Report user
+    if (reportBtn) {
+        reportBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            let userId = null;
+            const params = new URLSearchParams(window.location.search);
+
+            if (params.has("userId")) {
+                userId = params.get("userId");
+            }
+
+            if(userId==null){
+                //load chapter not found page
+                return;
+            }
+
+            openUserReport(userId);
+        });
+    }
+});
+
+
+
+
+
+
+
+let reportedUserId = null;
+let userSelectedCategory = null;
+let userSelectedSubReason = null;
+
+// Step 2: Load sub-options
+function loadUserSubOptions(type) {
+    userSelectedCategory = type;
+    const content = document.getElementById("userReportContent");
+    let html = "";
+
+    if (type === "harassment") {
+        html = `
+      <h6>What type of harassment?</h6>
+      ${buildUserOption("Bullying", "This includes direct harassment, insults, or threats.")}
+      ${buildUserOption("Hate Speech", "Targeting people based on race, gender, orientation, etc.")}
+    `;
+    } else if (type === "spam") {
+        html = `
+      <h6>What kind of spam?</h6>
+      ${buildUserOption("Unwanted Ads", "Promotions unrelated to Wattpad.")}
+      ${buildUserOption("Mass Messaging", "Sending repetitive or irrelevant messages.")}
+    `;
+    } else if (type === "impersonation") {
+        html = `
+      <h6>What kind of impersonation?</h6>
+      ${buildUserOption("Pretending to be me", "This user is impersonating my account.")}
+      ${buildUserOption("Pretending to be someone else", "This user is impersonating another person or entity.")}
+    `;
+    }
+
+    content.innerHTML = html;
+}
+
+// Helper to build sub-option
+function buildUserOption(title, desc) {
+    return `
+    <div onclick="selectUserSubReason('${title}')" 
+      style="border:1px solid #ddd; padding:10px; margin-bottom:10px; border-radius:6px; cursor:pointer;">
+      <strong>${title}</strong>
+      <p style="margin:5px 0 0; font-size:13px; color:#555;">${desc}</p>
+    </div>
+  `;
+}
+
+// Step 3: Select sub-reason
+function selectUserSubReason(reason) {
+    userSelectedSubReason = reason;
+    document.getElementById("userReportFooter").style.display = "block";
+}
+
+// Step 4: Submit report
+function submitUserReport() {
+    const description = document.getElementById("userExtraReason").value.trim();
+    if (!userSelectedSubReason) {
+        alert("Please select a reason.");
+        return;
+    }
+    if (!description) {
+        alert("Please add details.");
+        return;
+    }
+
+    fetch('http://localhost:8080/api/v1/user/report', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            userId: reportedUserId,
+            category: userSelectedCategory,
+            reason: userSelectedSubReason,
+            description: description
+        })
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => { throw new Error(JSON.stringify(errData)); });
+            }
+            return response.json();
+        })
+        .then(data => {
+            closeUserReport();
+            Swal.fire({
+                title: 'Success',
+                text: 'Reported user successfully!',
+                icon: 'success',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        })
+        .catch(() => {
+            Swal.fire({
+                title: 'Failed',
+                text: 'Could not submit report. Try later.',
+                icon: 'error',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        });
+}
+
+// Close modal
+function closeUserReport() {
+    document.getElementById("userReportModal").style.display = "none";
+}
+
+// Open modal (when clicking "Report" in dropdown)
+function openUserReport(userId) {
+    reportedUserId = userId;
+    document.getElementById("userReportModal").style.display = "flex";
+}
+
+// Close when clicking outside modal
+window.addEventListener("click", (event) => {
+    const modal = document.getElementById("userReportModal");
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
+
+
+
+
+
+
+
 
 
 

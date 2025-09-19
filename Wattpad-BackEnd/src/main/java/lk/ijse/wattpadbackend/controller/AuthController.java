@@ -185,7 +185,6 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    @PreAuthorize("hasRole('USER')")
     public APIResponse logout(HttpServletResponse response){
 
         Cookie cookie = new Cookie("jwtToken", null);
@@ -199,7 +198,6 @@ public class AuthController {
     }
 
     @PostMapping("/admin/email/login")
-    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse adminLoginWithEmail(@Valid @RequestBody UserLoginDTO userLoginDTO, HttpServletResponse response){
 
         User user = authService.adminLoginWithUsername(userLoginDTO);
@@ -216,7 +214,6 @@ public class AuthController {
     }
 
     @PostMapping("/admin/logout")
-    @PreAuthorize("hasRole('ADMIN')")
     public APIResponse adminLogout(HttpServletResponse response){
 
         Cookie cookie = new Cookie("jwtToken", null);

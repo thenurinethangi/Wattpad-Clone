@@ -6,14 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-public class StoryReport {
+public class UserReport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,33 +24,14 @@ public class StoryReport {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "story_id", nullable = false)
-    private Story story;
+    @JoinColumn(name = "reported_by_user_id", nullable = false)
+    private User RepotedByUser;
 
     private String category;
 
     private String reason;
 
-    //reason
     private String description;
 
-    private LocalDate reportedAt;
+    private LocalDateTime reportedAt = LocalDateTime.now();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

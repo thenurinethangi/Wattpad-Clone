@@ -492,6 +492,167 @@ $(document).on('click', '.on-create-list', function (e) {
 
 
 
+let storyId = null;
+const params = new URLSearchParams(window.location.search);
+
+if (params.has("storyId")) {
+    storyId = params.get("storyId");
+}
+
+let selectedCategory = null;
+let selectedSubReason = null;
+
+
+// Step 2: Load sub-options
+function loadSubOptions(type) {
+    selectedCategory = type;
+    const content = document.getElementById("reportContent");
+    let html = "";
+
+    if (type === "inappropriate") {
+        html = `
+      <h6>Why is this story inappropriate?</h6>
+      ${buildOption("Explicit Content", "This can include pornographic text, media and more.")}
+      ${buildOption("Hate & Harassment", "This can include bullying, hate speech and more.")}
+      ${buildOption("Violence", "This can include the glorification of violence, media and more.")}
+      ${buildOption("Release of Personal Information", "This includes sharing identifying information such as your address, your image or contact info.")}
+      ${buildOption("Self-Harm", "This can include texts, media and threats of self-harm or encouraging others.")}
+      ${buildOption("Spam", "This can include spam messages, unauthorized ads unrelated to Wattpad.")}
+    `;
+    } else if (type === "copyright") {
+        html = `
+      <h6>Are you the original copyright owner of this work?</h6>
+      ${buildOption("I am not the original copyright owner", "I did not write this work & do not have authorization from the copyright holder.")}
+      ${buildOption("I am the original copyright owner", "I am the owner or legally authorized on behalf of the owner.")}
+    `;
+    }
+
+    content.innerHTML = html;
+}
+
+// Build sub-option item
+function buildOption(title, desc) {
+    return `
+    <div onclick="selectSubReason('${title}')" 
+      style="border:1px solid #ddd; padding:10px; margin-bottom:10px; border-radius:6px; cursor:pointer;">
+      <strong>${title}</strong>
+      <p style="margin:5px 0 0; font-size:13px; color:#555;">${desc}</p>
+    </div>
+  `;
+}
+
+// Step 3: Select sub-option
+function selectSubReason(reason) {
+    selectedSubReason = reason;
+    document.getElementById("reportFooter").style.display = "block";
+}
+
+// Step 4: Submit report
+function submitReport() {
+
+    const description = document.getElementById("extraReason").value.trim();
+    if (!selectedSubReason) {
+        alert("Please select a reason.");
+        return;
+    }
+    if (!description) {
+        alert("Please add details.");
+        return;
+    }
+
+    fetch('http://localhost:8080/api/v1/story/report', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            storyId: storyId,
+            category: selectedCategory,
+            reason: selectedSubReason,
+            description: description
+        })
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            closeReport();
+
+            Swal.fire({
+                title: 'Success',
+                text: 'Report submitted successfully!',
+                customClass: {
+                    popup: 'modern-swal-wide-short',
+                    title: 'swal-title',
+                    htmlContainer: 'swal-text'
+                },
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+
+            Swal.fire({
+                title: 'Fail',
+                text: 'Fail to submit the report!, try later',
+                customClass: {
+                    popup: 'modern-swal-wide-short',
+                    title: 'swal-title',
+                    htmlContainer: 'swal-text'
+                },
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
+
+        });
+}
+
+function closeReport() {
+    document.getElementById("reportModal").style.display = "none";
+}
+
+
+const modal = document.getElementById("reportModal");
+const reportBtn = document.getElementById("report-story");
+
+// Show modal when clicking report button
+reportBtn.addEventListener("click", () => {
+    modal.style.display = "flex";
+});
+
+// Hide modal when clicking outside of it
+window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
