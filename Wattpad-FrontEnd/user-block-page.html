@@ -29,6 +29,112 @@
             font-size: 0.9em;
         }
 
+        /* Sweet Alert Modern Wide & Short Dark Theme */
+        .swal2-popup {
+            background: #1e1e1e !important;   /* deep black */
+            color: #f5f5f5 !important;
+            font-family: var(--primary-font-face),serif;
+            border-radius: 10px !important;
+            padding: 15px 25px !important;
+            width: 450px !important;   /* wider */
+            min-height: 140px !important; /* short height */
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+        }
+
+        /* Title */
+        .swal2-title {
+            color: #fff !important;
+            font-size: 1.2rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 6px !important;
+        }
+
+        /* Text */
+        .swal2-html-container {
+            color: #aaa !important;
+            font-size: 0.93rem !important;
+            margin: 0 !important;
+        }
+
+        /* Buttons (modern black & white theme) */
+        .swal2-styled {
+            border: none !important;
+            border-radius: 6px !important;
+            padding: 8px 20px !important;
+            font-size: 0.9rem !important;
+            font-weight: 500 !important;
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* Confirm = clean white button */
+        .swal2-confirm {
+            font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 13px;
+            background: #fff !important;
+            color: #111 !important;
+        }
+
+        .swal2-confirm:hover {
+            background: #e5e5e5 !important;
+        }
+
+        /* Cancel = dark gray button */
+        .swal2-cancel {
+            font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 13px;
+            background: #2c2c2c !important;
+            color: #f5f5f5 !important;
+        }
+
+        .swal2-cancel:hover {
+            background: #444 !important;
+        }
+
+        /* Icons smaller + subtle */
+        .swal2-icon {
+            margin: 0 auto 5px auto !important;
+            transform: scale(0.7);
+        }
+
+
+
+
+
+
+        /* Sweet Alert Modern Wide & Short Dark Theme for Success Message */
+        .modern-swal-wide-short {
+            background: #1e1e1e !important;   /* deep black */
+            color: #f5f5f5 !important;
+            font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            border-radius: 10px !important;
+            padding: 15px 25px !important;
+            width: 450px !important;   /* wider */
+            min-height: 80px !important; /* short height for thin container */
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+            text-align: center; /* Center text without buttons */
+        }
+
+        /* Title Style */
+        .swal-title {
+            color: #fff !important;
+            font-size: 1.2rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 6px !important;
+        }
+
+        /* Text Style */
+        .swal-text {
+            color: #aaa !important;
+            font-size: 0.93rem !important;
+            margin: 0 !important;
+        }
+
+        /* Ensure timer progress bar fits the design */
+        .swal2-timer-progress-bar {
+            background: #fff !important;
+            height: 4px !important;
+        }
+
     </style>
 </head>
 <body class="theme-6" style="display: none; visibility: hidden; opacity: 0;">
@@ -81,7 +187,7 @@
                             </div>
                         </div>
                     </div>
-            </div></div>
+                </div></div>
         </div>
     </div>
 </div>
@@ -159,7 +265,7 @@
                             </div>
                         </div>
                     </div>
-            </div></div>
+                </div></div>
         </div>
     </div>
 </div>
@@ -184,7 +290,7 @@
                                     <div class="form-group has-feedback">
                                         <label class="control-label" for="new_email">New Email</label>
                                         <input id="new_email" class="form-control input-bg enable change-email-input" name="email" type="email" value=""></div>
-                                        <p style="display: none;" class="user-error-message new-email-error-message">The email address is invalid.</p>
+                                    <p style="display: none;" class="user-error-message new-email-error-message">The email address is invalid.</p>
                                     <div class="form-group">
                                         <label class="control-label" for="confirm_email">Confirm New Email</label>
                                         <input id="confirm_email" class="form-control input-bg enable change-email-input" name="confirm_email" type="text" value="">
@@ -381,275 +487,58 @@
                 <div class="container">
                     <!--tag list-->
                     <ol role="tablist">
-                        <li id="select_account" class="info-tabs selected account-tab" role="tab" tabindex="0">
+                        <li id="select_account" class="info-tabs account-tab" role="tab" tabindex="0">
                             <span>Account</span>
                         </li>
-<!--                        <li id="select_notifications" class="info-tabs">-->
-<!--                            <span><a href="/settings/notifications">Notifications</a></span>-->
-<!--                        </li>-->
-<!--                        <li id="select_content" class="info-tabs" role="tab" tabindex="0">-->
-<!--                            <span>Content Preferences</span>-->
-<!--                        </li>-->
+                        <!--                        <li id="select_notifications" class="info-tabs">-->
+                        <!--                            <span><a href="/settings/notifications">Notifications</a></span>-->
+                        <!--                        </li>-->
+                        <!--                        <li id="select_content" class="info-tabs" role="tab" tabindex="0">-->
+                        <!--                            <span>Content Preferences</span>-->
+                        <!--                        </li>-->
                         <li id="select_ignore_list" class="info-tabs mute-account-tab" role="tab" tabindex="0">
                             <span>Muted Accounts</span>
                         </li>
-                        <li id="select_block_list" class="info-tabs block-account-tab" role="tab" tabindex="0">
+                        <li id="select_block_list" class="info-tabs block-account-tab selected" role="tab" tabindex="0">
                             <span>Blocked Accounts</span>
                         </li>
                     </ol>
 
-                    <!--change account info setting container-->
-                    <div class="">
-                        <div id="account">
-                            <!--title-->
-                            <h2 class="subheading">Change your account information and privacy settings</h2>
-                            <!--form-->
-                            <form id="account_form" name="account_form">
-                                <div class="row account-wrapper">
-                                    <br>
-                                    <div>
-                                        <div class="col-xs-6 account-label">
-                                            <label class="profile-label">Username</label>
-                                        </div>
-                                        <div class="col-xs-6 account-value username">yukee07
-                                            <button type="button" class="info" id="changeUsername">change</button>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="col-xs-6 account-label">
-                                            <label class="profile-label">Password</label>
-                                        </div>
-                                        <div class="col-xs-6 account-value">
-                                            <span class="password">********
-                                                <button class="info" id="changePassword">change</button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="col-xs-6 account-label">
-                                            <label class="profile-label">Email</label>
-                                        </div>
-                                        <div class="col-xs-6 account-value email">nanayakkarayukee@gmail.com
-                                            <button class="info" id="changeEmail">change</button>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="col-xs-6 account-label">
-                                            <label for="birthdate" class="profile-label">Date of Birth</label>
-                                        </div>
-                                        <div class="col-xs-6 account-value">
-                                            <div class="birthdate-wrapper">
-                                                <input id="birthdate" type="date" name="birthdate" max="2025-07-27" value="2002-05-02">
-                                                <span id="dob-tooltip" class="help">
-                                                    <i class="fa-solid fa-circle-info"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="col-xs-6 account-label">
-                                            <label for="betaEnabled" class="profile-label">Join Beta Program</label>
-                                        </div>
-                                        <div class="col-xs-6 account-value">
-                                            <input type="checkbox" name="betaEnabled" id="betaEnabled" value="false">
-                                            <a class="info" href="https://support.wattpad.com/hc/en-us/articles/201708720-Becoming-a-Beta-tester" target="_blank" rel="noopener noreferrer">Learn more</a>
-                                            <span id="beta-tooltip" class="help">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="col-xs-6 account-label">
-                                            <label class="profile-label">Download your Personal Information</label>
-                                        </div>
-                                        <div class="col-xs-6 account-value">
-                                            <a href="/settings/your-wattpad-data">HTML</a>
-                                            <a href="/settings/your-wattpad-data?json=1" style="padding-left: 5px;">JSON</a>
-                                            <span id="info-tooltip" class="help">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="submit">
-                                        <button id="submit" class="button__Y70Pw primary-variant__NO4pv default-accent__Pc0Pm medium-size__CLqD3 with-padding__cVt72">
-                                            <span class="background-overlay__mCEaX"></span>
-                                            Submit
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                            <!--close account-->
-                            <div class="close-account">
-                                <a href="" class="close-account-link">Close Account</a>
-                            </div>
-                        </div>
-                    </div>
 
+                    <!-- Report User Modal -->
+                    <div id="userReportModal" style="position: fixed; top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center;
+  z-index:100000; overflow-y: scroll; display: none;">
 
-                    <!--some notification setting-->
-                    <!--class=hide-->
-                    <div class="hide">
-                        <div id="notification">
-                            <h2 class="subheading">Receive email notifications for these events</h2>
-                            <form id="notifications_form" name="notifications_form" class="row">
-                                <input type="hidden" name="id" value="520620392">
-                                <div>
-                                    <div class="col-xs-2">
-                                        <input type="checkbox" name="alerts" value="true" checked="">
-                                    </div>
-                                    <div class="col-xs-10">
-                                        <h4>Messages</h4>
-                                        <ul>
-                                            <li>Someone writes on your message board</li>
-                                            <li>Someone starts following you</li>
-                                            <li>Someone comments on your story</li>
-                                            <li>Someone mentions you in a comment</li>
-                                            <li>You receive a message</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="col-xs-2">
-                                        <input type="checkbox" name="alertssub" value="true" checked="">
-                                    </div>
-                                    <div class="col-xs-10">
-                                        <h4>Users you follow upload a story</h4>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="col-xs-2">
-                                        <input type="checkbox" name="subscribe" value="false">
-                                    </div>
-                                    <div class="col-xs-10">
-                                        <h4>Updates</h4>
-                                        <ul>
-                                            <li>Important announcements from Wattpad</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 submit">
-                                    <input type="submit" class="btn btn-md btn-orange" value="Save">
-                                </div>
-                                <input type="hidden" name="alertssubmask" value="0">
-                            </form>
-                        </div>
-                    </div>
+                        <div style="background:#fff; width:450px; max-width:90%; border-radius:10px; padding:20px; position:relative;">
+                            <!-- Header -->
+                            <header style="display:flex; justify-content:space-between; align-items:center;">
+                                <h3 style="margin:0; font-size: 21px; font-weight: 600;">Report User</h3>
+                                <button onclick="closeUserReport()" style="background:none; border:none; cursor:pointer;">✖</button>
+                            </header>
 
+                            <!-- Content Area (dynamic) -->
+                            <div id="userReportContent" style="margin-top:15px;">
+                                <h6>Why are you reporting this user?</h6>
+                                <div onclick="loadUserSubOptions('harassment')" style="border:1px solid #ddd; padding:10px; margin-bottom:10px; border-radius:6px; cursor:pointer;">
+                                    Harassment or Hate Speech
+                                </div>
+                                <div onclick="loadUserSubOptions('spam')" style="border:1px solid #ddd; padding:10px; margin-bottom:10px; border-radius:6px; cursor:pointer;">
+                                    Spam or Fake Account
+                                </div>
+                                <div onclick="loadUserSubOptions('impersonation')" style="border:1px solid #ddd; padding:10px; border-radius:6px; cursor:pointer;">
+                                    Impersonation
+                                </div>
+                            </div>
 
-                    <!--mature content setting-->
-                    <!--class=hide-->
-                    <div class="hide">
-                        <div class="content-settings active is-settings-page">
-                            <div class="content-settings-heading">
-                                <h2>Content Preferences</h2>
-                                <hr>
-                            </div>
-                            <div class="section mature">
-                                <div class="instruction">
-                                    <h3>Mature Content</h3>
-                                    <p>Mature stories may contain explicit content and adult themes. When this is enabled, mature stories may be shown on Home and Search.</p>
-                                </div>
-                                <div class="toggle on" role="switch" aria-checked="true" tabindex="0">
-                                    <div class="switch"></div>
-                                    <div class="block-on">
-                                        <span class="label-on">ON</span>
-                                    </div>
-                                    <div class="block-off">
-                                        <span class="label-off">OFF</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="section blocked-tags">
-                                <div class="left-section">
-                                    <div class="instruction">
-                                        <h3>Blocked Tags</h3>
-                                        <p>We will remove all stories that have the following tags from your Home recommendations.</p>
-                                    </div>
-                                    <div class="blocked-tags-list">
-                                        <div class="tags"></div>
-                                    </div>
-                                </div>
-                                <div class="right-section">
-                                    <button class="edit-tags-button right-icon">
-                                        <p>Edit Tags</p>
-                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></g></svg>
-                                    </button>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="footer">
-                                <button class="btn-primary">Apply Changes</button>
-                            </div>
-                        </div>
-                        <div class="content-settings edit-blocked-tags hidden is-settings-page">
-                            <div class="heading">
-                                <button class="back">
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></g></svg>
+                            <!-- Footer -->
+                            <div id="userReportFooter" style="margin-top:15px; display:none;">
+      <textarea id="userExtraReason" placeholder="Please describe in detail..."
+                style="width:100%; height:80px; padding:8px; margin-bottom:10px;"></textarea>
+                                <button onclick="submitUserReport()"
+                                        style="width:100%; padding:10px; background:black; color:#fff; border:none; border-radius:6px; cursor:pointer;">
+                                    Submit Report
                                 </button>
-                                <h2>Blocked Tags</h2>
-                            </div>
-                            <hr>
-                            <div class="instruction">
-                                <h3>Blocked Tags</h3>
-                                <p>We will remove all stories that have the following tags from your Home recommendations.</p>
-                            </div>
-                            <div class="blocked-tags-list">
-                                <div class="tags"></div>
-                            </div>
-                            <input class="input-field" type="text" placeholder="Separate tags with a space" value="">
-                        </div>
-                    </div>
-
-
-                    <!--mute setting-->
-                    <!--class=hide-->
-                    <div class="hide">
-                        <div id="mute-list">
-                            <h5 class="subheading">These are the users you have muted</h5>
-                            <div id="muted-users">
-                                <ul class="user-list">
-                                    <!--single muted user-->
-                                    <li class="muted-user">
-                                        <!--user image-->
-                                        <img src="//img.wattpad.com/useravatar/Sillybuttercup.jpg" alt="Sillybuttercup" align="top" width="64" height="64">
-                                        <!--user name-->
-                                        <div class="username-wrapper">
-                                            <a href="/user/Sillybuttercup" class="user-profile on-navigate" title="Sillybuttercup">Sillybuttercup</a>
-                                        </div>
-                                        <!--3 dots btn-->
-                                        <div class="button-group inline-block relative ">
-                                            <button class="btn btn-white dropdown-toggle more-options unmute-button" data-toggle="dropdown" aria-controls="more-options" aria-expanded="false" aria-label="more options">
-                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></g></svg>
-                                            </button>
-                                            <div class="triangle"></div>
-                                            <!--when 3 dot click this must show-->
-                                            <!--style="display: flex; opacity: 1; visibility: visible;"-->
-                                            <div class="dropdown-menu align-right">
-                                                <div class="user-safety-operations">
-                                                    <button class="user-safety-operation btn-no-background btn-left-icon unmute">
-                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></g></svg>
-                                                        Unmute Sillybuttercup
-                                                    </button>
-                                                    <button class="on-report user-safety-operation btn-no-background btn-left-icon" data-username="Sillybuttercup">
-                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></g></svg>
-                                                        Report
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <!--left right controllers-->
-                                <div class="controls">
-                                    <div role="button" tabindex="0">
-                                        <span class="fa fa-left fa-wp-neutral-2" aria-hidden="true" style="font-size: 18px;"></span>
-                                    </div>
-                                    <span class="current-page">1</span>
-                                    <div role="button" tabindex="0">
-                                        <span class="fa fa-right fa-wp-neutral-2" aria-hidden="true" style="font-size: 18px;"></span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -657,7 +546,7 @@
 
                     <!--block setting-->
                     <!--class=hide-->
-                    <div class="hide">
+                    <div class="">
                         <div id="block-list">
                             <!--title-->
                             <h5 class="block-subheading">When you block someone, that person won’t be able to follow you, send you messages, post on your profile or read and comment on your stories.
@@ -681,7 +570,7 @@
                                             <div class="triangle"></div>
                                             <!--when 3 dot click this must show-->
                                             <!--style="display: flex; opacity: 1; visibility: visible;"-->
-                                            <div class="dropdown-menu align-right" style="display: flex; opacity: 1; visibility: visible;">
+                                            <div class="dropdown-menu align-right">
                                                 <div class="user-safety-operations">
                                                     <button class="user-safety-operation btn-no-background btn-left-icon unblock">
                                                         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#222222" stroke-width="0" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><path d="M7.00001 0.333252C3.31668 0.333252 0.333344 3.31659 0.333344 6.99992C0.333344 10.6833 3.31668 13.6666 7.00001 13.6666C10.6833 13.6666 13.6667 10.6833 13.6667 6.99992C13.6667 3.31659 10.6833 0.333252 7.00001 0.333252ZM1.66668 6.99992C1.66668 4.05325 4.05334 1.66659 7.00001 1.66659C8.23334 1.66659 9.36334 2.08992 10.2667 2.78992L2.79001 10.2666C2.09001 9.36325 1.66668 8.23325 1.66668 6.99992ZM7.00001 12.3333C5.76668 12.3333 4.63668 11.9099 3.73334 11.2099L11.21 3.73325C11.91 4.63659 12.3333 5.76659 12.3333 6.99992C12.3333 9.94659 9.94668 12.3333 7.00001 12.3333Z" fill="#111111"></path></g></svg>
@@ -697,15 +586,15 @@
                                     </li>
                                 </ul>
                                 <!--left right controllers-->
-                                <div class="controls">
-                                    <button class="back-btn" disabled="">
-                                        <span class="fa fa-left fa-wp-neutral-2" aria-hidden="true" style="font-size: 18px;"></span>
-                                    </button>
-                                    <span class="current-page">1</span>
-                                    <button class="forward-btn" disabled="">
-                                        <span class="fa fa-right fa-wp-neutral-2" aria-hidden="true" style="font-size: 18px;"></span>
-                                    </button>
-                                </div>
+<!--                                <div class="controls">-->
+<!--                                    <button class="back-btn" disabled="">-->
+<!--                                        <span class="fa fa-left fa-wp-neutral-2" aria-hidden="true" style="font-size: 18px;"></span>-->
+<!--                                    </button>-->
+<!--                                    <span class="current-page">1</span>-->
+<!--                                    <button class="forward-btn" disabled="">-->
+<!--                                        <span class="fa fa-right fa-wp-neutral-2" aria-hidden="true" style="font-size: 18px;"></span>-->
+<!--                                    </button>-->
+<!--                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -744,6 +633,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="lib/jquery-3.7.1.min.js"></script>
 <script src="assets/js/new-header-script.js"></script>
-<script src="assets/js/setting-page-script.js"></script>
+<script src="assets/js/user-block-page-script.js"></script>
 </body>
 </html>

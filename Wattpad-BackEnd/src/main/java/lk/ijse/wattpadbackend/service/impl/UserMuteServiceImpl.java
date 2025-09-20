@@ -1,5 +1,6 @@
 package lk.ijse.wattpadbackend.service.impl;
 
+import lk.ijse.wattpadbackend.dto.UserDTO;
 import lk.ijse.wattpadbackend.entity.User;
 import lk.ijse.wattpadbackend.entity.UserMute;
 import lk.ijse.wattpadbackend.exception.NotFoundException;
@@ -10,6 +11,8 @@ import lk.ijse.wattpadbackend.service.UserMuteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -77,6 +80,38 @@ public class UserMuteServiceImpl implements UserMuteService {
 
             userMuteRepository.delete(userMute);
             return true;
+
+        }
+        catch (UserNotFoundException | NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<UserDTO> getAllMutedUsersOfCurrentUser(String name) {
+
+        try {
+            User currentUser = userRepository.findByUsername(name);
+            if (currentUser == null) {
+                throw new UserNotFoundException("Current User not found.");
+            }
+
+            List<UserMute> userMuteList = userMuteRepository.findAllByMutedByUser(currentUser);
+
+            List<UserDTO> userDTOList = new ArrayList<>();
+            for (UserMute x : userMuteList){
+                UserDTO userDTO = new UserDTO();
+                userDTO.setId(x.getMutedUser().getId());
+                userDTO.setProfilePicPath(x.getMutedUser().getProfilePicPath());
+                userDTO.setUsername(x.getMutedUser().getUsername());
+
+                userDTOList.add(userDTO);
+            }
+
+            return userDTOList;
 
         }
         catch (UserNotFoundException | NotFoundException e){

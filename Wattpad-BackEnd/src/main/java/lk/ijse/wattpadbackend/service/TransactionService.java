@@ -11,4 +11,6 @@ public interface TransactionService {
     void addPaymentForPremiumBuy(String name, TransactionRequestDTO transactionRequestDTO);
 
     boolean checkIfUserAlreadyHavePremium(String name);
+
+    void addPaymentForCoinsBuy(String name, TransactionRequestDTO transactionRequestDTO);
 }

@@ -160,3 +160,11 @@ search.addEventListener('click',function (event) {
 
     window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/search.html';
 });
+
+
+
+let tryPremiumBtn = $('#try-premium-btn')[0];
+tryPremiumBtn.addEventListener('click',function (event) {
+
+    window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/premium-page.html';
+});

@@ -89,6 +89,28 @@ run();
 
 
 
+
+let accountTab = $('.account-tab')[0];
+accountTab.addEventListener('click',function (event) {
+
+    window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/setting-page.html';
+});
+
+let muteAccountTab = $('.mute-account-tab')[0];
+muteAccountTab.addEventListener('click',function (event) {
+
+    window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-mute-page.html';
+});
+
+let blockAccountTab = $('.block-account-tab')[0];
+blockAccountTab.addEventListener('click',function (event) {
+
+    window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-block-page.html';
+});
+
+
+
+
 //click on change username - change username model appear
 $(document).on('click','#changeUsername',function (event) {
 

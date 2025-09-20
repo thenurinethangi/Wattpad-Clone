@@ -1,0 +1,249 @@
+/* General styles to match Wattpad's dark mode UI */
+body {
+    background-color: #ffffff; /* Dark background */
+    color: #222222; /* White text */
+    font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background-color: #121212;
+    border-bottom: 1px solid #333;
+}
+
+.header .back-arrow {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.header .title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.header .help-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    padding: 16px 0;
+    border-bottom: 2px solid #ff4500; /* Orange accent */
+}
+
+.tabs .tab {
+    font-size: 18px;
+    cursor: pointer;
+    position: relative;
+}
+
+.tabs .tab.active {
+    font-weight: bold;
+    color: #ff4500;
+}
+
+.tabs .tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -18px; /* Align with border */
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ff4500;
+}
+
+/* Balance section */
+.balance {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background-color: #1e1e1e; /* Slightly lighter dark */
+    border-radius: 8px;
+    margin: 16px;
+}
+
+.balance .coin-icon {
+    font-size: 32px;
+    color: #ffd700; /* Gold */
+    margin-right: 8px;
+}
+
+.balance .coin-amount {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.balance .last-updated {
+    font-size: 14px;
+    color: #aaaaaa;
+}
+
+.balance .refresh-icon {
+    font-size: 16px;
+    cursor: pointer;
+    color: #aaaaaa;
+}
+
+/* Purchased/Bonus */
+.purchased-bonus {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 16px;
+    font-size: 14px;
+    color: #aaaaaa;
+}
+
+.purchased-bonus .arrow {
+    color: #aaaaaa;
+}
+
+/* Premium promo */
+.premium-promo {
+    background-color: #2a2a3a; /* Purple-ish dark */
+    border-radius: 8px;
+    margin: 16px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.premium-promo .text {
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.premium-promo .button {
+    background-color: #6a5acd; /* Slate blue */
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Coin packages */
+.coin-package {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 8px;
+    margin: 16px;
+    padding: 16px;
+    text-align: center;
+    gap: 13px;
+}
+
+.coin-package .icon {
+    font-size: 48px;
+    margin-right: 16px;
+}
+
+.coin-package .details {
+    flex: 1;
+}
+
+.coin-package .amount {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.coin-package .bonus {
+    font-size: 14px;
+    color: #6a5acd; /* Blue for premium */
+}
+
+.coin-package .price {
+    background-color: #333333;
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Sweet Alert Modern Wide & Short Dark Theme */
+.swal2-popup {
+    background: #1e1e1e !important;   /* deep black */
+    color: #f5f5f5 !important;
+    font-family: var(--primary-font-face),serif;
+    border-radius: 10px !important;
+    padding: 15px 25px !important;
+    width: 450px !important;   /* wider */
+    min-height: 140px !important; /* short height */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+}
+
+/* Title */
+.swal2-title {
+    color: #fff !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 6px !important;
+}
+
+/* Text */
+.swal2-html-container {
+    color: #aaa !important;
+    font-size: 0.93rem !important;
+    margin: 0 !important;
+}
+
+/* Buttons (modern black & white theme) */
+.swal2-styled {
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 8px 20px !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Confirm = clean white button */
+.swal2-confirm {
+    background: #fff !important;
+    color: #111 !important;
+}
+
+.swal2-confirm:hover {
+    background: #e5e5e5 !important;
+}
+
+/* Cancel = dark gray button */
+.swal2-cancel {
+    background: #2c2c2c !important;
+    color: #f5f5f5 !important;
+}
+
+.swal2-cancel:hover {
+    background: #444 !important;
+}
+
+/* Icons smaller + subtle */
+.swal2-icon {
+    margin: 0 auto 5px auto !important;
+    transform: scale(0.7);
+}

@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr">
+<html lang="en">
 <head>
-    <meta charSet="utf-8"/>
-    <link rel="icon" type="image/ico" href="assets/image/wattpad-icon-2-removebg-preview.ico">
-    <title>Notifications - Wattpad</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rewards Center</title>
+    <link rel="icon" type="image/ico" href="assets/image/wattpad-icon-2-removebg-preview.ico">
     <meta name="author" content="Thenuri Nethangi">
     <meta name="keywords" content="online stories, read stories, write stories, wattpad alternative, fiction platform, storytelling, novels, short stories, creative writing, user-generated stories">
     <meta name="description" content="Discover and share captivating stories on our platform. Read novels, write your own tales, and connect with a community of passionate readers and writers.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/style/desktop-web.d4472ed8-remove-min.css">
+    <!--for header-->
     <link rel="stylesheet" href="assets/style/css-bundle-TDTK4GB6.css"/>
     <link rel="preload" as="font" href="assets/fonts/SourceSansPro-Regular.ttf" crossorigin="anonymous"/>
     <link rel="preload" as="font" href="assets/fonts/SourceSansPro-SemiBold.ttf" crossorigin="anonymous"/>
@@ -16,9 +19,13 @@
     <link rel="stylesheet" href="assets/style/main-UJKFODQT.css"/>
     <link rel="stylesheet" href="assets/style/react-tooltip-HIHMAPNF.css"/>
     <link rel="stylesheet" href="assets/style/splide.min-AQNS3YPQ.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/style/footer-style.css">
+    <link rel="stylesheet" href="assets/style/coins-page-style.css">
 </head>
-<body class="theme-6">
+<body>
 
 <!-- --------------------header---------------------- -->
 <header class="_07XRA">
@@ -180,103 +187,43 @@
 </header>
 
 
-
-<!-- ------------------------main content-------------------------- -->
-<div class="_0Nf0J">
-    <!--notification side-->
-    <div class="b1oAH">
-        <div class="kSA5M">
-            <!--page title-->
-            <h1 class="Cbuia" style="margin-top: 10px;">Notifications</h1>
-            <!--notification container-->
-            <div id="scroll-div">
-                <!--single notification-->
-                <div class="fLTjc transparent-button Wx2aQ vdMYU">
-                    <a aria-label="" class="AIZN6 transparent-button" href="">
-                        <img src="https://img.wattpad.com/useravatar/Wattpad.128.838617.jpg" aria-hidden="true" alt="" class="pTyGP"/>
-                    </a>
-                    <a href="" class="_1icRF">
-                        <div class="w7tm6">
-                            <div class="doBW9">
-                                <div>
-                                    <b>Limited Time</b>
-                                    <br>Earn 2x more Coins to read for free 📚
-                                </div>
-                            </div>
-                            <div class="n32iW">
-                                <div class="uBCcp">
-                                    <img src="assets/image/megaphone_grey.png" width="17" height="11"/>
-                                </div>
-                                <div>Fri, Jul 18, 2025 2:00 AM</div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <!--single notification-->
-                <div class="fLTjc transparent-button Wx2aQ vdMYU">
-                    <a aria-label="" class="AIZN6 transparent-button" href="">
-                        <img src="https://ma.wattpad.com/firebase_in-app_512x512.jpg" aria-hidden="true" alt="" class="pTyGP"/>
-                    </a>
-                    <a href="" class="_1icRF">
-                        <div class="w7tm6">
-                            <div class="doBW9" data-testid="title">
-                                <div>Looking for your first read on Wattpad?
-                                    </br>Dive into these fan favorites, curated just for you.</div></div>
-                            <div class="n32iW">
-                                <div class="uBCcp">
-                                    <img src="assets/image/megaphone_grey.png" width="17" height="11"/>
-                                </div>
-                                <div data-testid="date">Fri, Jul 4, 2025 11:01 PM</div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
+<!-- Coin Packages -->
+<div style="display: flex; justify-content: space-evenly; padding-top: 100px; padding-bottom: 100px; padding-inline: 83px;">
+    <div class="coin-package" data-amount="60000" data-items="30 Coins">
+        <span class="icon"><img src="assets/image/cartoon-drawing-stack-gold-coins-with-dollar-sign-it_761413-4292.jpg" width="100px;"></span> <!-- Replace with actual coin icon image if available -->
+        <div class="details">
+            <div class="amount">30 Coins</div>
+            <div class="bonus">+ 9 with Premium ⚡</div>
         </div>
+        <div class="price">LKR 600.00</div>
     </div>
 
-    <!--invite friends side-->
-    <div class="_9URqK">
-        <div class="hilfN">
-            <div class="Kw3tt"></div>
-            <div class="_02cfZ" style="overflow: hidden; height: 100%">
-                <div class="cshWs">
-                    <h3><strong>Who &#x27;s missing out?</strong></h3>
-                    <h6><strong>Invite them to Wattpad</strong></h6>
-                    <div class="_9fuZF">
-                        <img src="assets/image/ic_invite_wattpad@2x.png" alt="Invite your friends to Wattpad"/>
-                    </div>
-                    <form method="post" action="" style="margin-bottom: 42px;">
-                        <input type="hidden" name="_action" value="EMAIL_INVITE"/>
-                        <div>
-                            <input type="text" name="email" placeholder="Email address" class="k4xtC"/>
-                            <button class="E5iYk" type="submit">
-                                <span>Invite</span>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <ul class="-trPO">
-                <li>
-                    <button class="_2tofB transparent-button">
-                        <img src="assets/image/ic_invite_twitter@2x.png" alt="Twitter Logo" width="42" height="42"/>
-                        <strong>Twitter</strong>
-                        <svg width="26px" height="26px" viewBox="0 0 24 24" fill="none" stroke="var(--wp-neutral-2)" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class="n-ry4"><g><polyline points="9 18 15 12 9 6"></polyline></g></svg>
-                    </button>
-                </li>
-                <li>
-                    <button class="_18W0- transparent-button">
-                        <img src="assets/image/ic_invite_email@2x.png" alt="Email Logo" width="42" height="42"/>
-                        <strong>Email</strong>
-                        <svg width="26px" height="26px" viewBox="0 0 24 24" fill="none" stroke="var(--wp-neutral-2)" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class="n-ry4"><g><polyline points="9 18 15 12 9 6"></polyline></g></svg>
-                    </button>
-                </li>
-            </ul>
-            <div class="_4806q">We won &#x27;t contact anyone without your consent.</div>
+    <div class="coin-package" data-amount="150000" data-items="90 Coins">
+        <span class="icon"><img src="assets/image/cartoon-drawing-stack-gold-coins-with-dollar-sign-it_761413-4292.jpg" width="100px;"></span>
+        <div class="details">
+            <div class="amount">90 Coins</div>
+            <div class="bonus">+ 27 with Premium ⚡</div>
         </div>
+        <div class="price">LKR 1,500.00</div>
     </div>
 
+    <div class="coin-package" data-amount="387500" data-items="270 Coins">
+        <span class="icon"><img src="assets/image/cartoon-drawing-stack-gold-coins-with-dollar-sign-it_761413-4292.jpg" width="100px;"></span>
+        <div class="details">
+            <div class="amount">270 Coins</div>
+            <div class="bonus">+ 81 with Premium ⚡</div>
+        </div>
+        <div class="price">LKR 3,875.00</div>
+    </div>
+
+    <div class="coin-package" data-amount="717500" data-items="500 Coins">
+        <span class="icon"><img src="assets/image/cartoon-drawing-stack-gold-coins-with-dollar-sign-it_761413-4292.jpg" width="100px;"></span>
+        <div class="details">
+            <div class="amount">500 Coins</div>
+            <div class="bonus">+ 150 with Premium ⚡</div>
+        </div>
+        <div class="price">LKR 7,175.00</div>
+    </div>
 </div>
 
 
@@ -304,8 +251,12 @@
     </ul>
 </footer>
 
+
+<!-- PayHere SDK -->
+<script src="https://www.payhere.lk/lib/payhere.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="lib/jquery-3.7.1.min.js"></script>
 <script src="assets/js/new-header-script.js"></script>
+<script src="assets/js/coins-page-script.js"></script>
 </body>
 </html>

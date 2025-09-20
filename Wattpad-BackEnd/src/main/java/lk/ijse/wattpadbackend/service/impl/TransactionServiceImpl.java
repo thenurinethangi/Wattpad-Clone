@@ -4,10 +4,7 @@ import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.entity.*;
 import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
-import lk.ijse.wattpadbackend.repository.PremiumRepository;
-import lk.ijse.wattpadbackend.repository.TransactionRepository;
-import lk.ijse.wattpadbackend.repository.UserPremiumRepository;
-import lk.ijse.wattpadbackend.repository.UserRepository;
+import lk.ijse.wattpadbackend.repository.*;
 import lk.ijse.wattpadbackend.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +25,8 @@ public class TransactionServiceImpl implements TransactionService {
     private final UserRepository userRepository;
     private final UserPremiumRepository userPremiumRepository;
     private final PremiumRepository premiumRepository;
+    private final CoinPackageRepository coinPackageRepository;
+    private final UserCoinsRepository userCoinsRepository;
 
     @Override
     public AdminTransactionResponseDTO loadTransactionsForAdminBySortingCriteria(long no, AdminTransactionRequestDTO adminTransactionRequestDTO) {
@@ -183,6 +182,112 @@ public class TransactionServiceImpl implements TransactionService {
                 return false;
             }
             return true;
+
+        }
+        catch (UserNotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void addPaymentForCoinsBuy(String name, TransactionRequestDTO transactionRequestDTO) {
+
+        try{
+            User user = userRepository.findByUsername(name);
+            if(user==null){
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Transaction transaction = new Transaction();
+            transaction.setUser(user);
+            double actualAmount = transactionRequestDTO.getAmount()/100;
+            transaction.setAmount(String.valueOf(actualAmount));
+            transaction.setDateTime(LocalDateTime.now());
+            transaction.setReason("Coins Buy");
+
+            transactionRepository.save(transaction);
+
+            CoinPackage coinPackage = null;
+            if(transactionRequestDTO.getPlan().equalsIgnoreCase("30 Coins")){
+                Optional<CoinPackage> optionalCoinPackage = coinPackageRepository.findById(1);
+                if(!optionalCoinPackage.isPresent()){
+                    throw new NotFoundException("Coins package not found.");
+                }
+                coinPackage = optionalCoinPackage.get();
+
+                UserCoins userCoins = new UserCoins();
+                userCoins.setCoinPackage(coinPackage);
+                userCoins.setUser(user);
+                userCoins.setBuyingAt(LocalDateTime.now());
+
+                userCoinsRepository.save(userCoins);
+
+                int coins = user.getCoins();
+                coins+=30;
+                user.setCoins(coins);
+                userRepository.save(user);
+
+            }
+            else if (transactionRequestDTO.getPlan().equalsIgnoreCase("90 Coins")){
+                Optional<CoinPackage> optionalCoinPackage = coinPackageRepository.findById(2);
+                if(!optionalCoinPackage.isPresent()){
+                    throw new NotFoundException("Coins package not found.");
+                }
+                coinPackage = optionalCoinPackage.get();
+
+                UserCoins userCoins = new UserCoins();
+                userCoins.setCoinPackage(coinPackage);
+                userCoins.setUser(user);
+                userCoins.setBuyingAt(LocalDateTime.now());
+
+                userCoinsRepository.save(userCoins);
+
+                int coins = user.getCoins();
+                coins+=90;
+                user.setCoins(coins);
+                userRepository.save(user);
+            }
+            else if (transactionRequestDTO.getPlan().equalsIgnoreCase("270 Coins")){
+                Optional<CoinPackage> optionalCoinPackage = coinPackageRepository.findById(3);
+                if(!optionalCoinPackage.isPresent()){
+                    throw new NotFoundException("Coins package not found.");
+                }
+                coinPackage = optionalCoinPackage.get();
+
+                UserCoins userCoins = new UserCoins();
+                userCoins.setCoinPackage(coinPackage);
+                userCoins.setUser(user);
+                userCoins.setBuyingAt(LocalDateTime.now());
+
+                userCoinsRepository.save(userCoins);
+
+                int coins = user.getCoins();
+                coins+=270;
+                user.setCoins(coins);
+                userRepository.save(user);
+            }
+            else if (transactionRequestDTO.getPlan().equalsIgnoreCase("500 Coins")){
+                Optional<CoinPackage> optionalCoinPackage = coinPackageRepository.findById(4);
+                if(!optionalCoinPackage.isPresent()){
+                    throw new NotFoundException("Coins package not found.");
+                }
+                coinPackage = optionalCoinPackage.get();
+
+                UserCoins userCoins = new UserCoins();
+                userCoins.setCoinPackage(coinPackage);
+                userCoins.setUser(user);
+                userCoins.setBuyingAt(LocalDateTime.now());
+
+                userCoinsRepository.save(userCoins);
+
+                int coins = user.getCoins();
+                coins+=500;
+                user.setCoins(coins);
+                userRepository.save(user);
+            }
 
         }
         catch (UserNotFoundException e){

@@ -11,4 +11,6 @@ import java.util.List;
 public interface UserMuteRepository extends JpaRepository<UserMute,Integer> {
 
     UserMute findByMutedByUserAndMutedUser(User mutedByUser, User mutedUser);
+
+    List<UserMute> findAllByMutedByUser(User mutedByUser);
 }

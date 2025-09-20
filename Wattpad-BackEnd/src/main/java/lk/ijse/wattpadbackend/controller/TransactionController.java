@@ -58,6 +58,16 @@ public class TransactionController {
         return new APIResponse(202,"Checking successfully", result);
     }
 
+    @PostMapping("/coins")
+    @PreAuthorize("hasRole('USER')")
+    public APIResponse addPaymentForCoinsBuy(@RequestBody TransactionRequestDTO transactionRequestDTO){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        transactionService.addPaymentForCoinsBuy(auth.getName(),transactionRequestDTO);
+        return new APIResponse(202,"Successfully buy the coins package", null);
+    }
+
 }
 
 
