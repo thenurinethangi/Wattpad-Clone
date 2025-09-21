@@ -696,7 +696,7 @@ async function loadRecommendationStories() {
                         <div style="margin-right: 5px;" class="discover-module-stories-large on-discover-module-item">
                           <a class="send-cover-event on-story-preview cover cover-home" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.id}">
                             <div class="fixed-ratio fixed-ratio-cover">
-                              <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.coverImagePath}" alt="Story cover">
+                              <img src="${story.coverImagePath}" alt="Story cover">
                             </div>
                           </a>
                           <div class="content">
@@ -795,7 +795,7 @@ async function loadAlsoYouWillLikeStories() {
                             <div class="component-wrapper" id="component-storyitem-332542111-%2f1491714881-broken-doll-taekook-%25e2%259c%2594%25ef%25b8%258f-chapter-55">
                               <a class="clearfix on-story-preview" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.id}" data-story-id="332542111" data-author-name="thelittleblackghost">
                                 <div class="send-story-cover-event cover cover-sm">
-                                  <img src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.coverImagePath}" alt="Wednesday by thelittleblackghost">
+                                  <img src="${story.coverImagePath}" alt="Wednesday by thelittleblackghost">
                                 </div>
                                 <div class="left-container">
                                   <div class="story-item-title-and-badge">
