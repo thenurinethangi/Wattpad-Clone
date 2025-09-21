@@ -82,7 +82,7 @@ async function loadYourStories() {
                                             <a class="CJILD" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${libraryStory.lastReadChapterId}">
                                             <div class="F0IAU">
                                                 <div class="W-SYx coverWrapper__t2Ve8" data-testid="cover">
-                                                    <img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${libraryStory.coverImagePath}" alt="𝕃𝕠𝕧𝕖 𝔼𝕞𝕓𝕣𝕒𝕔𝕖 ᵒⁿʰᵒˡᵈ cover" data-testid="image">
+                                                    <img class="cover__BlyZa flexible__bq0Qp" src="${libraryStory.coverImagePath}" alt="𝕃𝕠𝕧𝕖 𝔼𝕞𝕓𝕣𝕒𝕔𝕖 ᵒⁿʰᵒˡᵈ cover" data-testid="image">
                                                 </div>
                                                 <!--a1-->
                                                 <div class="_85nDW">
@@ -178,7 +178,7 @@ async function loadTopPickupForYou() {
                                             <div class="_72Ga-" data-testid="basicStorySlide">
                                                 <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}" data-testid="coverLink">
                                                     <div class="DWhiV coverWrapper__t2Ve8" data-testid="cover">
-                                                        <img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.coverImagePath}" alt="cover image" data-testid="image">
+                                                        <img class="cover__BlyZa flexible__bq0Qp" src="${story.coverImagePath}" alt="cover image" data-testid="image">
                                                     </div>
                                                 </a>
                                                 <div class="b5x8I" data-testid="tagContainer">
@@ -276,7 +276,7 @@ async function loadHotWattpadReads() {
                                             <div class="_72Ga-" data-testid="basicStorySlide">
                                                 <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}" data-testid="coverLink">
                                                     <div class="DWhiV coverWrapper__t2Ve8" data-testid="cover">
-                                                        <img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.coverImagePath}" alt="Raven: His First Everything cover" data-testid="image">
+                                                        <img class="cover__BlyZa flexible__bq0Qp" src="${story.coverImagePath}" alt="Raven: His First Everything cover" data-testid="image">
                                                     </div>
                                                 </a>
                                                 <div class="b5x8I" data-testid="tagContainer">
@@ -366,17 +366,17 @@ async function loadReadingLists() {
                                                     <div class="IAzmt MDIEi" style="gap: 6.25px 4px;">
                                                         <div class="zv-c6">
                                                             <div class="coverWrapper__t2Ve8" data-testid="cover">
-                                                                <img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${readingList.storyHomeResponseDTOList[0].coverImagePath}" alt="" data-testid="image">
+                                                                <img class="cover__BlyZa flexible__bq0Qp" src="${readingList.storyHomeResponseDTOList[0].coverImagePath}" alt="" data-testid="image">
                                                             </div>
                                                         </div>
                                                         <div class="dyxxG">
                                                             <div class="coverWrapper__t2Ve8" data-testid="cover">
-                                                                <img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${readingList.storyHomeResponseDTOList[1].coverImagePath}" alt="" data-testid="image">
+                                                                <img class="cover__BlyZa flexible__bq0Qp" src="${readingList.storyHomeResponseDTOList[1].coverImagePath}" alt="" data-testid="image">
                                                             </div>
                                                         </div>
                                                         <div class="dyxxG">
                                                             <div class="coverWrapper__t2Ve8" data-testid="cover">
-                                                                <img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${readingList.storyHomeResponseDTOList[2].coverImagePath}" alt="" data-testid="image">
+                                                                <img class="cover__BlyZa flexible__bq0Qp" src="${readingList.storyHomeResponseDTOList[2].coverImagePath}" alt="" data-testid="image">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -474,7 +474,7 @@ async function loadStoriesFromGenreYouLike() {
                                             <div class="_72Ga-" data-testid="basicStorySlide">
                                                 <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}" data-testid="coverLink">
                                                     <div class="DWhiV coverWrapper__t2Ve8" data-testid="cover">
-                                                        <img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.coverImagePath}" alt="story cover" data-testid="image">
+                                                        <img class="cover__BlyZa flexible__bq0Qp" src="${story.coverImagePath}" alt="story cover" data-testid="image">
                                                     </div>
                                                 </a>
                                                 <div class="b5x8I" data-testid="tagContainer">
@@ -564,7 +564,7 @@ async function loadStoriesFromWritersYouLike() {
                                             <div class="_72Ga-" data-testid="basicStorySlide">
                                                 <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}" data-testid="coverLink">
                                                     <div class="DWhiV coverWrapper__t2Ve8" data-testid="cover">
-                                                        <img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.coverImagePath}" alt="story cover" data-testid="image">
+                                                        <img class="cover__BlyZa flexible__bq0Qp" src="${story.coverImagePath}" alt="story cover" data-testid="image">
                                                     </div>
                                                 </a>
                                                 <div class="b5x8I" data-testid="tagContainer">
@@ -722,7 +722,7 @@ async function loadRecommendationForYou() {
                                             <div class="_72Ga-" data-testid="basicStorySlide">
                                                 <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}" data-testid="coverLink">
                                                     <div class="DWhiV coverWrapper__t2Ve8" data-testid="cover">
-                                                        <img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.coverImagePath}" alt="story cover" data-testid="image">
+                                                        <img class="cover__BlyZa flexible__bq0Qp" src="${story.coverImagePath}" alt="story cover" data-testid="image">
                                                     </div>
                                                 </a>
                                                 <div class="b5x8I" data-testid="tagContainer">
@@ -816,7 +816,7 @@ async function loadCompletedStories() {
                                             <div class="_72Ga-" data-testid="basicStorySlide">
                                                 <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}" data-testid="coverLink">
                                                     <div class="DWhiV coverWrapper__t2Ve8" data-testid="cover">
-                                                        <img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.coverImagePath}" alt="story cover" data-testid="image">
+                                                        <img class="cover__BlyZa flexible__bq0Qp" src="${story.coverImagePath}" alt="story cover" data-testid="image">
                                                     </div>
                                                 </a>
                                                 <div class="b5x8I" data-testid="tagContainer">
@@ -910,7 +910,7 @@ async function loadTrySomethingNew() {
                                             <div class="_72Ga-" data-testid="basicStorySlide">
                                                 <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${story.storyId}" data-testid="coverLink">
                                                     <div class="DWhiV coverWrapper__t2Ve8" data-testid="cover">
-                                                        <img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.coverImagePath}" alt="story cover" data-testid="image">
+                                                        <img class="cover__BlyZa flexible__bq0Qp" src="${story.coverImagePath}" alt="story cover" data-testid="image">
                                                     </div>
                                                 </a>
                                                 <div class="b5x8I" data-testid="tagContainer">
@@ -1009,54 +1009,21 @@ async function loadBrowseGenres() {
                                         </a>
                                     </div>
                                 </li>
-                                <li class="splide__slide LH-JU is-active is-visible" role="group" aria-roledescription="slide" aria-label="1 of 23" style="margin-right: 8px; width: calc(50% - 4px);">
-                                    <div class="WS31f">
-                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="">
-                                            <img src="https://static.wattpad.com/image/romance-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt="">
-                                            <span class="typography-label-small-semi">Romance</span>
-                                        </a>
-                                    </div>
-                                </li>
-                                <li class="splide__slide LH-JU is-visible is-next" role="group" aria-roledescription="slide" aria-label="2 of 23" style="margin-right: 8px; width: calc(50% - 4px);">
-                                    <div class="WS31f">
-                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href=" ">
-                                            <img src="https://static.wattpad.com/image/fanfic-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt="">
-                                            <span class="typography-label-small-semi">Fanfiction</span>
-                                        </a>
-                                    </div>
-                                </li>
-                                <li class="splide__slide LH-JU is-visible" role="group" aria-roledescription="slide" aria-label="3 of 23" style="margin-right: 8px; width: calc(50% - 4px);">
-                                    <div class="WS31f">
-                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href=" ">
-                                            <img src="https://static.wattpad.com/image/lgbt-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt="">
-                                            <span class="typography-label-small-semi">LGBTQ+</span>
-                                        </a>
-                                    </div>
-                                </li>
-                                <li class="splide__slide LH-JU is-visible" role="group" aria-roledescription="slide" aria-label="4 of 23" style="margin-right: 8px; width: calc(50% - 4px);">
-                                    <div class="WS31f">
-                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href=" ">
-                                            <img src="https://static.wattpad.com/image/paidstories-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt="">
-                                            <span class="typography-label-small-semi">Wattpad Originals</span>
-                                        </a>
-                                    </div>
-                                </li>
-                                <li class="splide__slide LH-JU" role="group" aria-roledescription="slide" aria-label="5 of 23" style="margin-right: 8px; width: calc(50% - 4px);" aria-hidden="true">
-                                    <div class="WS31f">
-                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href=" " tabindex="-1">
-                                            <img src="https://static.wattpad.com/image/werewolf-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt="">
-                                            <span class="typography-label-small-semi">Werewolf</span>
-                                        </a>
-                                    </div>
-                                </li>
-                                <li class="splide__slide LH-JU" role="group" aria-roledescription="slide" aria-label="6 of 23" style="margin-right: 8px; width: calc(50% - 4px);" aria-hidden="true">
-                                    <div class="WS31f">
-                                        <a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href=" " tabindex="-1">
-                                            <img src="https://static.wattpad.com/image/newadult-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt="">
-                                            <span class="typography-label-small-semi">New Adult</span>
-                                        </a>
-                                    </div>
-                                </li>
+                                <li class="splide__slide LH-JU is-visible" id="splide21-slide08" role="group" aria-roledescription="slide" aria-label="8 of 23" style="margin-right: 8px; width: calc(12.5% - 7px);"><div class="WS31f"><a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Fantasy"><img src="https://static.wattpad.com/image/fantasy-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt=""><span class="typography-label-small-semi">Fantasy</span></a></div></li>
+                                <li class="splide__slide LH-JU is-visible" id="splide21-slide09" role="group" aria-roledescription="slide" aria-label="9 of 23" style="margin-right: 8px; width: calc(12.5% - 7px);"><div class="WS31f"><a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Short Story"><img src="https://static.wattpad.com/image/shortstory-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt=""><span class="typography-label-small-semi">Short Story</span></a></div></li>
+                                <li class="splide__slide LH-JU is-visible is-next" id="splide21-slide10" role="group" aria-roledescription="slide" aria-label="10 of 23" style="margin-right: 8px; width: calc(12.5% - 7px);"><div class="WS31f"><a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Teen Fiction"><img src="https://static.wattpad.com/image/teenfic-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt=""><span class="typography-label-small-semi">Teen Fiction</span></a></div></li>
+                                <li class="splide__slide LH-JU is-visible" id="splide21-slide11" role="group" aria-roledescription="slide" aria-label="11 of 23" style="margin-right: 8px; width: calc(12.5% - 7px);"><div class="WS31f"><a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Historical Fiction"><img src="https://static.wattpad.com/image/historicalfic-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt=""><span class="typography-label-small-semi">Historical Fiction</span></a></div></li>
+                                <li class="splide__slide LH-JU is-visible" id="splide21-slide12" role="group" aria-roledescription="slide" aria-label="12 of 23" style="margin-right: 8px; width: calc(12.5% - 7px);"><div class="WS31f"><a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Paranormal"><img src="https://static.wattpad.com/image/paranormal-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt=""><span class="typography-label-small-semi">Paranormal</span></a></div></li>
+                                <li class="splide__slide LH-JU is-visible" id="splide21-slide14" role="group" aria-roledescription="slide" aria-label="14 of 23" style="margin-right: 8px; width: calc(12.5% - 7px);"><div class="WS31f"><a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Humor"><img src="https://static.wattpad.com/image/humor-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt=""><span class="typography-label-small-semi">Humor</span></a></div></li>
+                                <li class="splide__slide LH-JU is-visible" id="splide21-slide15" role="group" aria-roledescription="slide" aria-label="15 of 23" style="margin-right: 8px; width: calc(12.5% - 7px);"><div class="WS31f"><a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Horror"><img src="https://static.wattpad.com/image/horror-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt=""><span class="typography-label-small-semi">Horror</span></a></div></li>
+                                <li class="splide__slide LH-JU is-visible" id="splide21-slide16" role="group" aria-roledescription="slide" aria-label="16 of 23" style="margin-right: 8px; width: calc(12.5% - 7px);"><div class="WS31f"><a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Contemporary Lit"><img src="https://static.wattpad.com/image/urban-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt=""><span class="typography-label-small-semi">Contemporary Lit</span></a></div></li>
+                                <li class="splide__slide LH-JU is-visible is-next" id="splide21-slide17" role="group" aria-roledescription="slide" aria-label="17 of 23" style="margin-right: 8px; width: calc(12.5% - 7px);"><div class="WS31f"><a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Diverse Lit"><img src="https://static.wattpad.com/image/diverselit-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt=""><span class="typography-label-small-semi">Diverse Lit</span></a></div></li>
+                                <li class="splide__slide LH-JU is-visible" id="splide21-slide18" role="group" aria-roledescription="slide" aria-label="18 of 23" style="margin-right: 8px; width: calc(12.5% - 7px);"><div class="WS31f"><a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Mystery"><img src="https://static.wattpad.com/image/mystery-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt=""><span class="typography-label-small-semi">Mystery</span></a></div></li>
+                                <li class="splide__slide LH-JU is-visible" id="splide21-slide19" role="group" aria-roledescription="slide" aria-label="19 of 23" style="margin-right: 8px; width: calc(12.5% - 7px);"><div class="WS31f"><a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Thriller"><img src="https://static.wattpad.com/image/thriller-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt=""><span class="typography-label-small-semi">Thriller</span></a></div></li>
+                                <li class="splide__slide LH-JU is-visible" id="splide21-slide20" role="group" aria-roledescription="slide" aria-label="20 of 23" style="margin-right: 8px; width: calc(12.5% - 7px);"><div class="WS31f"><a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Science Fiction"><img src="https://static.wattpad.com/image/scifi-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt=""><span class="typography-label-small-semi">Science Fiction</span></a></div></li>
+                                <li class="splide__slide LH-JU is-visible" id="splide21-slide21" role="group" aria-roledescription="slide" aria-label="21 of 23" style="margin-right: 8px; width: calc(12.5% - 7px);"><div class="WS31f"><a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Adventure"><img src="https://static.wattpad.com/image/adventure-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt=""><span class="typography-label-small-semi">Adventure</span></a></div></li>
+                                <li class="splide__slide LH-JU is-visible" id="splide21-slide22" role="group" aria-roledescription="slide" aria-label="22 of 23" style="margin-right: 8px; width: calc(12.5% - 7px);"><div class="WS31f"><a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Non-Fiction"><img src="https://static.wattpad.com/image/nonfiction-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt=""><span class="typography-label-small-semi">Non-Fiction</span></a></div></li>
+                                <li class="splide__slide LH-JU is-visible" id="splide21-slide23" role="group" aria-roledescription="slide" aria-label="23 of 23" style="margin-right: 8px; width: calc(12.5% - 7px);"><div class="WS31f"><a class="pill__pziVI light-variant__fymht large-size__ZWTBp default-accent__YcamO square-shape__V66Yy clickable__llABU large-size-padding__jHkb8 gap-for-pill-image__lE8v5" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/genre-stories-page.html?genre=Poetry"><img src="https://static.wattpad.com/image/poetry-illo@home.png" class="pillImage__YYWTB pillImage-large__xOiyd" alt=""><span class="typography-label-small-semi">Poetry</span></a></div></li>
                             </ul>
                         </div>
                     </div>
@@ -1128,27 +1095,27 @@ async function loadMoreStories() {
                                     <div class="IAzmt" style="gap: 12.5px 8px;">
                                         <a class="zv-c6" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${storyList[0].storyId}">
                                             <div class="coverWrapper__t2Ve8" data-testid="cover">
-                                                <img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${storyList[0].coverImagePath}" alt="Story cover" data-testid="image">
+                                                <img class="cover__BlyZa flexible__bq0Qp" src="${storyList[0].coverImagePath}" alt="Story cover" data-testid="image">
                                             </div>
                                         </a>
                                         <a class="dyxxG" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${storyList[1].storyId}">
                                             <div class="coverWrapper__t2Ve8" data-testid="cover">
-                                                <img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${storyList[1].coverImagePath}" alt="Story cover" data-testid="image">
+                                                <img class="cover__BlyZa flexible__bq0Qp" src="${storyList[1].coverImagePath}" alt="Story cover" data-testid="image">
                                             </div>
                                         </a>
                                         <a class="dyxxG" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${storyList[2].storyId}">
                                             <div class="coverWrapper__t2Ve8" data-testid="cover">
-                                                <img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${storyList[2].coverImagePath}" alt="Story cover" data-testid="image">
+                                                <img class="cover__BlyZa flexible__bq0Qp" src="${storyList[2].coverImagePath}" alt="Story cover" data-testid="image">
                                             </div>
                                         </a>
                                         <a class="dyxxG" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${storyList[3].storyId}">
                                             <div class="coverWrapper__t2Ve8" data-testid="cover">
-                                                <img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${storyList[3].coverImagePath}" alt="Story cover" data-testid="image">
+                                                <img class="cover__BlyZa flexible__bq0Qp" src="${storyList[3].coverImagePath}" alt="Story cover" data-testid="image">
                                             </div>
                                         </a>
                                         <a class="dyxxG" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${storyList[4].storyId}">
                                             <div class="coverWrapper__t2Ve8" data-testid="cover">
-                                                <img class="cover__BlyZa flexible__bq0Qp" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${storyList[4].coverImagePath}" alt="Story cover" data-testid="image">
+                                                <img class="cover__BlyZa flexible__bq0Qp" src="${storyList[4].coverImagePath}" alt="Story cover" data-testid="image">
                                             </div>
                                         </a>
                                     </div>

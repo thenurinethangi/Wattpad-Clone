@@ -33,8 +33,8 @@ public class UserBlockController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        userBlockService.addABlock(auth.getName(),userId);
-        return new APIResponse(202,"Your blocked to user id: "+userId,null);
+        boolean result = userBlockService.addABlock(auth.getName(),userId);
+        return new APIResponse(202,"Your blocked to user id: "+userId,result);
     }
 
     @PostMapping("/remove/{userId}")

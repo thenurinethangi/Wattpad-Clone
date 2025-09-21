@@ -30,7 +30,58 @@ window.onload = function () {
 
             window.location.href = 'login-page.html';
         });
+
+
+    fetch('http://localhost:8080/user/current', {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            if(data.data.isVerifiedByWattpad===1){
+                $('.wattpad-original-form-group').css('display','block');
+            }
+            else{
+                $('.wattpad-original-form-group').css('display','none');
+            }
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+
+
+        });
 }
+
+
+
+
+const toggle = document.getElementById('storyTypeToggle');
+let isWattpadOriginal = 0;
+
+toggle.addEventListener('change', () => {
+    if (toggle.checked) {
+        $('.coins-form-group').css('display','block');
+        isWattpadOriginal = 1;
+    }
+    else {
+        $('.coins-form-group').css('display','none');
+        isWattpadOriginal = 0;
+    }
+});
 
 
 
@@ -85,6 +136,7 @@ $(document).on('click', '.skip-btn', function () {
         return;
     }
 
+
     let cover = formEl.querySelector('input[name="coverImage"]').files[0];
     let title = formEl.querySelector('input[name="title"]').value.trim();
     let description = formEl.querySelector('textarea[name="description"]').value.trim();
@@ -94,6 +146,11 @@ $(document).on('click', '.skip-btn', function () {
     let language = formEl.querySelector('select[name="language"]').value.trim();
     let copyright = formEl.querySelector('select[name="copyright"]').value.trim();
     let isMature = formEl.querySelector('#isMatureInput').value.trim();
+    let coinsAmount = formEl.querySelector('input[name="coinsAmount"]').value.trim();
+
+    if(coinsAmount===''){
+        coinsAmount = '0';
+    }
 
     if (!title || !description || !category || !targetAudience) {
         alert("All required fields must be filled.");
@@ -132,6 +189,8 @@ $(document).on('click', '.skip-btn', function () {
                 formData.append("language", language);
                 formData.append("copyright", copyright);
                 formData.append("isMature", isMature);
+                formData.append("isWattpadOriginal", String(isWattpadOriginal));
+                formData.append("coinsAmount", coinsAmount);
 
                 characters.forEach(char => {
                     formData.append("mainCharacters", char);

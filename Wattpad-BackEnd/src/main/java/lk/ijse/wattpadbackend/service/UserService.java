@@ -2,6 +2,7 @@ package lk.ijse.wattpadbackend.service;
 
 import jakarta.validation.Valid;
 import lk.ijse.wattpadbackend.dto.*;
+import lk.ijse.wattpadbackend.entity.User;
 
 import java.util.List;
 
@@ -43,7 +44,9 @@ public interface UserService {
 
     void deactivateUserByUserId(long userId);
 
-    void verifyUserByUserId(long userId);
+    User verifyUserByUserId(long userId);
 
     long getTotalUserCount();
+
+    boolean checkThisUserProfileRestrictedToCurrentUserOrNot(String name, long userId);
 }

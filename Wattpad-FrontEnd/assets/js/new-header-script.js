@@ -108,8 +108,22 @@ function headerData() {
             console.log('POST Data:', data);
             const currentUser = data.data;
 
+            if(currentUser.profilePicPath!=null){
+                $('.user-profile-pic').attr('src',`${currentUser.profilePicPath}`);
+            }
+            else{
+                $('.user-profile-pic').attr('src',`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnFRPx77U9mERU_T1zyHcz9BOxbDQrL4Dvtg&s`);
+            }
             $('.your-profile').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${currentUser.id}`);
-            $('.user-profile-pic').attr('src',`${currentUser.profilePicPath}`);
+
+            if(currentUser.isUserPremium===1){
+                $('#premium-member').css('display','flex');
+                $('#try-premium-btn').css('display','none');
+            }
+            else{
+                $('#premium-member').css('display','none');
+                $('#try-premium-btn').css('display','flex');
+            }
 
         })
         .catch(error => {

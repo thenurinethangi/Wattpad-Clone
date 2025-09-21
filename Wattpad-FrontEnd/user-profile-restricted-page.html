@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Unavailable</title>
+    <link rel="icon" type="image/ico" href="assets/image/wattpad-icon-2-removebg-preview.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton+SC&family=Cinzel+Decorative:wght@400;700;900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Roboto:ital,wght@1,800&family=Rubik:ital@0;1&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --white-color: rgb(255, 255, 255);
+            --primary-font-face: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            --black-text-color: #222222;
+            --base-color: #ff6122;
+            --light-black: #222222;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--primary-font-face);
+            background: #f9f9f9;
+            color: var(--black-text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .unavailable-container {
+            text-align: center;
+            max-width: 420px;
+            padding: 30px;
+            border-radius: 12px;
+            background: var(--white-color);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        }
+
+        .crown-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: var(--base-color);
+        }
+
+        p {
+            font-size: 15px;
+            color: var(--light-black);
+            line-height: 1.6;
+        }
+
+        .home-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            background: var(--base-color);
+            color: var(--white-color);
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .home-btn:hover {
+            background: #e35319; /* darker shade of base color */
+        }
+    </style>
+</head>
+<body>
+<div class="unavailable-container">
+    <svg xmlns="http://www.w3.org/2000/svg" class="mood-icon" viewBox="0 0 24 24" width="60" height="60">
+        <circle cx="12" cy="12" r="10" fill="#ff6122"/>
+        <circle cx="9" cy="10" r="1.5" fill="#fff"/>
+        <circle cx="15" cy="10" r="1.5" fill="#fff"/>
+        <path d="M8 16c1.5-2 6.5-2 8 0" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </svg>
+
+    <h1>User Unavailable</h1>
+    <p>The profile you’re trying to view is not available.<br>
+        This may be because the user has blocked you or their account is restricted.</p>
+
+    <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/home-page.html" class="home-btn">Go Back Home</a>
+</div>
+</body>
+</html>

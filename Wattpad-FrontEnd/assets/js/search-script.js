@@ -289,31 +289,7 @@ let profileDropdownMobile = $('#navbar-profile-dropdown')[0];
 
 
 
-// Close all modals when clicking outside
-// $(document).on('click', { capture: true }, function (event) {
-//     let header = document.querySelector('header');
-//     let searchSuggestions = document.querySelector('#search-suggestions-container');
-//     if (!event.target.closest('header') && !event.target.closest('#search-suggestions-container')) {
-//         let dropdowns = header.querySelectorAll('.discover-categories-container, .MaVh4, .profile-dropdown');
-//         dropdowns.forEach(dropdown => {
-//             if (dropdown) dropdown.remove();
-//         });
-//         // Hide search suggestions if visible
-//         if (searchSuggestions && searchSuggestions.style.display !== 'none') {
-//             searchSuggestions.style.display = 'none';
-//         }
-//     }
-// });
-// Close all modals when clicking outside
-// $(document).on('click', function (event) {
-//     let header = document.querySelector('header');
-//     let searchSuggestions = $('#search-suggestions-container');
-//
-//     if (!$(event.target).closest('header').length && !$(event.target).closest('#search-suggestions-container').length) {
-//         $(header).find('.discover-categories-container, .MaVh4, .profile-dropdown').remove();
-//         searchSuggestions.hide();
-//     }
-// });
+
 // Close dropdowns/modals when clicking on body
 $('body').on('click', function (event) {
     let $target = $(event.target);
@@ -326,7 +302,8 @@ $('body').on('click', function (event) {
         $target.closest('#discover-dropdown').length ||
         $target.closest('#writer-opportunities-dropdown').length ||
         $target.closest('#_83DhP').length ||
-        $target.closest('#navbar-profile-dropdown').length
+        $target.closest('#navbar-profile-dropdown').length ||
+        $target.closest('#search-input').length
     ) {
         return; // do nothing
     }
@@ -341,7 +318,7 @@ $('body').on('click', function (event) {
 
 // Get user profile image path
 function setProfilePic() {
-    fetch('http://localhost:8080/user/profilePic', {
+    fetch('http://localhost:8080/user/current', {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -360,8 +337,23 @@ function setProfilePic() {
             console.log('POST Data:', data);
 
             if (data.data !== null) {
-                $('.user-profile-pic').attr('src', `${data.data}`);
+                if(data.data.profilePicPath!=null){
+                    $('.user-profile-pic').attr('src',`${data.data.profilePicPath}`);
+                }
+                else{
+                    $('.user-profile-pic').attr('src',`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnFRPx77U9mERU_T1zyHcz9BOxbDQrL4Dvtg&s`);
+                }
             }
+
+            if(data.data.isUserPremium===1){
+                $('#premium-member').css('display','flex');
+                $('#try-premium-btn').css('display','none');
+            }
+            else{
+                $('#premium-member').css('display','none');
+                $('#try-premium-btn').css('display','flex');
+            }
+
         })
         .catch(error => {
             console.error('Fetch error:', error.message);
@@ -391,6 +383,12 @@ function setProfilePic() {
 setProfilePic();
 
 
+
+let tryPremiumBtn = $('#try-premium-btn')[0];
+tryPremiumBtn.addEventListener('click',function (event) {
+
+    window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/premium-page.html';
+});
 
 
 

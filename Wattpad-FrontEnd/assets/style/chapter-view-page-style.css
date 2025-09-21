@@ -2407,6 +2407,264 @@ img {
 }
 
 
+
+/*coins buy style*/
+.paywall-container {
+    padding-top: 45px;
+}
+
+.story-part-paywall {
+    background-color: #f6f6f6;
+    text-align: center;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.story-part-paywall .lock-circle {
+    height: 33px;
+    width: 33px;
+    border-radius: 50%;
+    border: 1px solid #eee;
+    background-color: #fff;
+    margin: -16.5px auto 10px;
+}
+
+.story-part-paywall .cta {
+    position: relative;
+    max-width: 600px;
+    margin: 28px auto 10px;
+}
+
+.story-part-paywall .cta h2 {
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 24px;
+    color: #222;
+}
+
+.story-part-paywall .cta .author-info.desktop {
+    max-width: 150px;
+    position: absolute;
+    left: -225px;
+    top: 15px;
+    line-height: 1;
+}
+
+a:not([class*=button__]):not([class*=btn]):not([class*=learn-more-link]):not([class*=watty-regulation-link]):not([class*=wattys-tag]) {
+    color: #222;
+}
+
+a {
+    text-decoration: none;
+}
+
+#story-reading #parts-container-new .author-info .info {
+    padding-top: 7px;
+}
+
+.story-part-paywall .cta .author-info.desktop .description {
+    color: #6f6f6f;
+    font-size: 12px;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+.story-part-paywall .cta .become-a-supporter {
+    font-size: 18px;
+}
+
+.story-part-paywall button.unlock {
+    height: 60px;
+    border-radius: calc(60px/2);
+    min-width: 280px;
+    font-size: 16px;
+    text-align: left;
+    margin: 20px 18px 0;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    padding: 0 24px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: all .1s
+    ease-in-out;
+    position: relative;
+    border: none;
+    color: #fff;
+    background-color: #222;
+    line-height: 18px;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+}
+
+.story-part-paywall button.unlock:hover{
+    background-color: rgba(34, 34, 34, 0.90);
+}
+
+.story-part-paywall button.unlock .cost {
+    font-size: 20px;
+}
+
+.btn-primary .fa, .btn-primary img, .btn-primary svg {
+    color: #fff;
+}
+
+.story-part-paywall button.unlock .coin-icon {
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.story-part-paywall button.unlock .cost .price {
+    font-weight: 700;
+    margin-right: 5px;
+    vertical-align: middle;
+    min-width: 40px;
+    display: inline-block;
+}
+
+.story-part-paywall button.unlock .unlock-copy {
+    margin-left: 10px;
+    white-space: normal;
+}
+
+b, strong {
+    font-weight: 700;
+}
+
+.story-part-paywall .more-details {
+    margin: 20px 0 35px;
+    line-height: normal;
+    color: #6f6f6f;
+    font-size: 14px;
+}
+
+.btn-link {
+    color: #e64809;
+    font-weight: 400;
+    cursor: pointer;
+    border-radius: 0;
+}
+
+
+
+
+
+/* Sweet Alert Modern Wide & Short Dark Theme */
+.swal2-popup {
+    background: #1e1e1e !important;   /* deep black */
+    color: #f5f5f5 !important;
+    font-family: var(--primary-font-face),serif;
+    border-radius: 10px !important;
+    padding: 15px 25px !important;
+    width: 450px !important;   /* wider */
+    min-height: 140px !important; /* short height */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+}
+
+/* Title */
+.swal2-title {
+    color: #fff !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 6px !important;
+}
+
+/* Text */
+.swal2-html-container {
+    color: #aaa !important;
+    font-size: 0.93rem !important;
+    margin: 0 !important;
+}
+
+/* Buttons (modern black & white theme) */
+.swal2-styled {
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 8px 20px !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Confirm = clean white button */
+.swal2-confirm {
+    font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    background: #fff !important;
+    color: #111 !important;
+}
+
+.swal2-confirm:hover {
+    background: #e5e5e5 !important;
+}
+
+/* Cancel = dark gray button */
+.swal2-cancel {
+    font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    background: #2c2c2c !important;
+    color: #f5f5f5 !important;
+}
+
+.swal2-cancel:hover {
+    background: #444 !important;
+}
+
+/* Icons smaller + subtle */
+.swal2-icon {
+    margin: 0 auto 5px auto !important;
+    transform: scale(0.7);
+}
+
+
+
+
+
+
+/* Sweet Alert Modern Wide & Short Dark Theme for Success Message */
+.modern-swal-wide-short {
+    background: #1e1e1e !important;   /* deep black */
+    color: #f5f5f5 !important;
+    font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    border-radius: 10px !important;
+    padding: 15px 25px !important;
+    width: 450px !important;   /* wider */
+    min-height: 80px !important; /* short height for thin container */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+    text-align: center; /* Center text without buttons */
+}
+
+/* Title Style */
+.swal-title {
+    color: #fff !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 6px !important;
+}
+
+/* Text Style */
+.swal-text {
+    color: #aaa !important;
+    font-size: 0.93rem !important;
+    margin: 0 !important;
+}
+
+/* Ensure timer progress bar fits the design */
+.swal2-timer-progress-bar {
+    background: #fff !important;
+    height: 4px !important;
+}
+
+
+
+
 /*media query*/
 @media all and (max-width: 1147px) {
 

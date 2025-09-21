@@ -55,4 +55,14 @@ public class UserDTO {
     private long followers;
 
     private int isFollowedByTheCurrentUser;
+
+    private int isUserPremium;
+
+    private int isVerifiedByWattpad;
+
+    private int isBlocked;
+
+    private int isMuted;
+
+    private int coins;
 }

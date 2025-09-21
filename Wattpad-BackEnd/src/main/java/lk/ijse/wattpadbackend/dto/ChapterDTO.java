@@ -23,6 +23,7 @@ public class ChapterDTO {
     private long storyId;
     private String storyTitle;
     private String storyCoverImagePath;
+    private int isWattpadOriginal;
     private long userId;
     private String username;
     private String userProfilePicPath;
@@ -30,6 +31,9 @@ public class ChapterDTO {
     private List<ParagraphDTO> paragraphDTOList;
     private List<ChapterSimpleDTO> chapterSimpleDTOList;
     private int isFromCurrentUser;
+    private int isUnlocked;
+    private int chapterCoins;
+    private int storyCoins;
 }
 
 

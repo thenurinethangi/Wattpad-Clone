@@ -23,6 +23,7 @@ public class HomeServiceImpl implements HomeService {
     private final StoryRepository storyRepository;
     private final UserGenreRepository userGenreRepository;
     private final GenreRepository genreRepository;
+    private final UserBlockRepository userBlockRepository;
 
 
     @Override
@@ -186,7 +187,8 @@ public class HomeServiceImpl implements HomeService {
                 for (Story x : stories){
                     int res = x.getPublishedOrDraft();
                     User author = x.getUser();
-                    if(res==0 || author==user){
+                    UserBlock userBlock = userBlockRepository.findByBlockedByUserAndBlockedUser(author,user);
+                    if(res==0 || author==user || userBlock!=null){
                         listLong--;
                     }
                 }
@@ -267,9 +269,22 @@ public class HomeServiceImpl implements HomeService {
                 throw new UserNotFoundException("User not found.");
             }
 
-            List<Story> storyList = storyRepository.findAllByOrderByViewsDesc();
-            int storyCount = storyList.size();
+            List<Story> storyList1 = storyRepository.findAllByOrderByViewsDesc();
 
+            List<Story> storyList = new ArrayList<>();
+            for (Story x : storyList1){
+                int res = x.getPublishedOrDraft();
+                User author = x.getUser();
+                UserBlock userBlock = userBlockRepository.findByBlockedByUserAndBlockedUser(author,user);
+                if(res==0 || author==user || userBlock!=null){
+                    continue;
+                }
+                else{
+                    storyList.add(x);
+                }
+            }
+
+            int storyCount = storyList.size();
             int storyCountReturn = 0;
             if(storyCount<16){
                 storyCountReturn = storyCount;
@@ -443,7 +458,9 @@ public class HomeServiceImpl implements HomeService {
 
             List<Story> qualifiedStory = new ArrayList<>();
             L1:for(Story x : storyList){
-                if(x.getUser()==user || x.getPublishedOrDraft()==0){
+                User author = x.getUser();
+                UserBlock userBlock = userBlockRepository.findByBlockedByUserAndBlockedUser(author,user);
+                if(x.getUser()==user || x.getPublishedOrDraft()==0 || userBlock!=null){
                     continue;
                 }
 
@@ -592,7 +609,9 @@ public class HomeServiceImpl implements HomeService {
             List<Story> qualifiedStoryList = new ArrayList<>();
             L3:for (Story x : allStoriesOfLikedAuthors){
 
-                if(x.getPublishedOrDraft()==0 || x.getUser()==user){
+                User author = x.getUser();
+                UserBlock userBlock = userBlockRepository.findByBlockedByUserAndBlockedUser(author,user);
+                if(x.getPublishedOrDraft()==0 || x.getUser()==user || userBlock!=null){
                     continue;
                 }
 
@@ -745,7 +764,9 @@ public class HomeServiceImpl implements HomeService {
             List<Story> qualifiedStories = new ArrayList<>();
             L4:for(Story x : stories){
 
-                if(x.getPublishedOrDraft()==0 || x.getUser()==user){
+                User author = x.getUser();
+                UserBlock userBlock = userBlockRepository.findByBlockedByUserAndBlockedUser(author,user);
+                if(x.getPublishedOrDraft()==0 || x.getUser()==user || userBlock!=null){
                     continue;
                 }
 
@@ -881,7 +902,9 @@ public class HomeServiceImpl implements HomeService {
             List<Story> qualifiedStories = new ArrayList<>();
             L5:for(Story x : stories){
 
-                if(x.getPublishedOrDraft()==0 || x.getUser()==user || x.getStatus()==0){
+                User author = x.getUser();
+                UserBlock userBlock = userBlockRepository.findByBlockedByUserAndBlockedUser(author,user);
+                if(x.getPublishedOrDraft()==0 || x.getUser()==user || x.getStatus()==0 || userBlock!=null){
                     continue;
                 }
 
@@ -1058,7 +1081,9 @@ public class HomeServiceImpl implements HomeService {
                 List<Story> qualifiedStories = new ArrayList<>();
                 L6:for(Story x : stories){
 
-                    if(x.getPublishedOrDraft()==0 || x.getUser()==user){
+                    User author = x.getUser();
+                    UserBlock userBlock = userBlockRepository.findByBlockedByUserAndBlockedUser(author,user);
+                    if(x.getPublishedOrDraft()==0 || x.getUser()==user || userBlock!=null){
                         continue;
                     }
 
@@ -1173,7 +1198,9 @@ public class HomeServiceImpl implements HomeService {
                 List<Story> qualifiedStories = new ArrayList<>();
                 L7:for(Story x : stories){
 
-                    if(x.getPublishedOrDraft()==0 || x.getUser()==user){
+                    User author = x.getUser();
+                    UserBlock userBlock = userBlockRepository.findByBlockedByUserAndBlockedUser(author,user);
+                    if(x.getPublishedOrDraft()==0 || x.getUser()==user || userBlock!=null){
                         continue;
                     }
 
@@ -1314,7 +1341,9 @@ public class HomeServiceImpl implements HomeService {
             List<Story> qualifiedStories = new ArrayList<>();
             L5:for(Story x : stories){
 
-                if(x.getPublishedOrDraft()==0 || x.getUser()==user){
+                User author = x.getUser();
+                UserBlock userBlock = userBlockRepository.findByBlockedByUserAndBlockedUser(author,user);
+                if(x.getPublishedOrDraft()==0 || x.getUser()==user || userBlock!=null){
                     continue;
                 }
 

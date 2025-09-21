@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 //check user register or not
+let isWattpadOriginalStory = 0;
 window.onload = function () {
 
     fetch('http://localhost:8080/api/v1/chapter', {
@@ -109,6 +110,41 @@ window.onload = function () {
             console.log(response);
 
             window.location.href = 'login-page.html';
+        });
+
+
+    //check story is wattpad original or not
+    const params = new URLSearchParams(window.location.search);
+    let storyId = params.get('storyId');
+
+    fetch('http://localhost:8080/api/v1/story/'+storyId, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+            if(data.data.isWattpadOriginal===1){
+                isWattpadOriginalStory = 1;
+            }
+
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+
         });
 }
 
@@ -417,32 +453,32 @@ async function collectAndPrepareContentForForm() {
 
         console.log("Final payload:", data);
 
-        // fetch(`http://localhost:8080/api/v1/chapter/save/${chapterId}/${storyId}`, {
-        //     method: 'POST',
-        //     credentials: 'include',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(data)
-        // })
-        //     .then(response => {
-        //         if (!response.ok) {
-        //             return response.json().then(errData => {
-        //                 throw new Error(JSON.stringify(errData));
-        //             });
-        //         }
-        //         return response.json();
-        //     })
-        //     .then(data => {
-        //         console.log('Success:', data);
-        //         localStorage.setItem("isSaved", "true");
-        //         $('.saved-indicator').text('Saved');
-        //         $('#save-spinner').addClass('hidden');
-        //     })
-        //     .catch(error => {
-        //         let response = JSON.parse(error.message);
-        //         console.log(response);
-        //     });
+        fetch(`http://localhost:8080/api/v1/chapter/save/${chapterId}/${storyId}`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                localStorage.setItem("isSaved", "true");
+                $('.saved-indicator').text('Saved');
+                $('#save-spinner').addClass('hidden');
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+            });
     }
     else if (!params.has("chapterId") && params.has("storyId") && !localStorage.getItem('chapterId')) {
         storyId = params.get("storyId");
@@ -455,33 +491,33 @@ async function collectAndPrepareContentForForm() {
 
         console.log("Final payload:", data);
 
-        // fetch(`http://localhost:8080/api/v1/chapter/createAndSave/${storyId}`, {
-        //     method: 'POST',
-        //     credentials: 'include',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(data)
-        // })
-        //     .then(response => {
-        //         if (!response.ok) {
-        //             return response.json().then(errData => {
-        //                 throw new Error(JSON.stringify(errData));
-        //             });
-        //         }
-        //         return response.json();
-        //     })
-        //     .then(data => {
-        //         console.log('Success:', data);
-        //         localStorage.setItem("chapterId", data.data);
-        //         localStorage.setItem("isSaved", "true");
-        //         $('.saved-indicator').text('Saved');
-        //         $('#save-spinner').addClass('hidden');
-        //     })
-        //     .catch(error => {
-        //         let response = JSON.parse(error.message);
-        //         console.log(response);
-        //     });
+        fetch(`http://localhost:8080/api/v1/chapter/createAndSave/${storyId}`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                localStorage.setItem("chapterId", data.data);
+                localStorage.setItem("isSaved", "true");
+                $('.saved-indicator').text('Saved');
+                $('#save-spinner').addClass('hidden');
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+            });
     }
     else if (!params.has("chapterId") && params.has("storyId") && localStorage.getItem('chapterId')) {
         storyId = params.get("storyId");
@@ -495,32 +531,32 @@ async function collectAndPrepareContentForForm() {
 
         console.log("Final payload:", data);
 
-        // fetch(`http://localhost:8080/api/v1/chapter/save/${chapterId}/${storyId}`, {
-        //     method: 'POST',
-        //     credentials: 'include',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(data)
-        // })
-        //     .then(response => {
-        //         if (!response.ok) {
-        //             return response.json().then(errData => {
-        //                 throw new Error(JSON.stringify(errData));
-        //             });
-        //         }
-        //         return response.json();
-        //     })
-        //     .then(data => {
-        //         console.log('Success:', data);
-        //         localStorage.setItem("isSaved", "true");
-        //         $('.saved-indicator').text('Saved');
-        //         $('#save-spinner').addClass('hidden');
-        //     })
-        //     .catch(error => {
-        //         let response = JSON.parse(error.message);
-        //         console.log(response);
-        //     });
+        fetch(`http://localhost:8080/api/v1/chapter/save/${chapterId}/${storyId}`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(JSON.stringify(errData));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                localStorage.setItem("isSaved", "true");
+                $('.saved-indicator').text('Saved');
+                $('#save-spinner').addClass('hidden');
+            })
+            .catch(error => {
+                let response = JSON.parse(error.message);
+                console.log(response);
+            });
     }
 }
 
@@ -636,7 +672,10 @@ function previewChapter() {
         x = localStorage.getItem('chapterId');
     }
 
-    window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${x}`;
+    window.open(
+        `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${x}`,
+        '_blank'
+    );
 }
 
 
@@ -719,14 +758,42 @@ async function publish() {
     let storyId = null;
     const params = new URLSearchParams(window.location.search);
 
+    let coinsAmount = 0;
+    if (isWattpadOriginalStory === 1) {
+        const { value: coins } = await Swal.fire({
+            title: 'Set Unlock Coins For This Chapter',
+            input: 'number',
+            inputLabel: 'Coins required to unlock this chapter',
+            inputPlaceholder: 'Enter coin amount',
+            confirmButtonColor: '#ff6122',
+            cancelButtonColor: '#222222',
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            cancelButtonText: 'Cancel',
+            inputAttributes: {
+                min: 1,
+                step: 1
+            }
+        });
+
+        if (coins) {
+            coinsAmount = parseInt(coins, 10); // assign input to variable
+        }
+        else{
+            return;
+        }
+    }
+
     if (params.has("chapterId") && params.has("storyId")) {
+
         chapterId = params.get("chapterId");
         storyId = params.get("storyId");
 
         let data = {
             'chapterTitle': chapterTitle,
             'chapterCoverUrl': url,
-            'content': paragraphAr
+            'content': paragraphAr,
+            'coinsAmount': coinsAmount
         };
 
         console.log("Final payload:", data);
@@ -764,7 +831,8 @@ async function publish() {
         let data = {
             'chapterTitle': chapterTitle,
             'chapterCoverUrl': url,
-            'content': paragraphAr
+            'content': paragraphAr,
+            'coinsAmount': coinsAmount
         };
 
         console.log("Final payload:", data);
@@ -802,7 +870,8 @@ async function publish() {
         let data = {
             'chapterTitle': chapterTitle,
             'chapterCoverUrl': url,
-            'content': paragraphAr
+            'content': paragraphAr,
+            'coinsAmount': coinsAmount
         };
 
         console.log("Final payload:", data);

@@ -23,4 +23,6 @@ public class StoryCreateDTO {
     private String coverImagePath;
     private String tags;
     private List<String> characters;
+    private int isWattpadOriginal;
+    private int coinsAmount;
 }

@@ -10,6 +10,7 @@ import lk.ijse.wattpadbackend.dto.UserSignUpResponseDTO;
 import lk.ijse.wattpadbackend.dto.UserSignupDTO;
 import lk.ijse.wattpadbackend.entity.User;
 import lk.ijse.wattpadbackend.service.AuthService;
+import lk.ijse.wattpadbackend.service.EmailService;
 import lk.ijse.wattpadbackend.util.APIResponse;
 import lk.ijse.wattpadbackend.util.GoogleTokenVerifier;
 import lk.ijse.wattpadbackend.util.JwtUtil;
@@ -26,6 +27,7 @@ public class AuthController {
 
     private final AuthService authService;
     private final JwtUtil jwtUtil;
+    private final EmailService emailService;
 
     @GetMapping("/username/existence")
     public APIResponse CheckUserNameExistence(@RequestParam String username){
@@ -74,6 +76,8 @@ public class AuthController {
         int otp = 10000 + random.nextInt(90000);
         UserSignUpResponseDTO signUpResponseDTO = new UserSignUpResponseDTO(otp);
 
+        emailService.sendVerificationEmail(userSignupDTO.getEmail(), String.valueOf(otp));
+
         return new APIResponse(202,"SignUp Successful.",signUpResponseDTO);
     }
 
@@ -94,12 +98,14 @@ public class AuthController {
         return new APIResponse(202,"Email Verify Successful.",signUpResponseDTO);
     }
 
-    @GetMapping("/email/signup/otp")
-    public APIResponse CheckUserNameExistence(){
+    @GetMapping("/email/signup/otp/{email}")
+    public APIResponse ResendEmail(@PathVariable String email){
 
         Random random =  new Random();
         int otp = 10000 + random.nextInt(90000);
         UserSignUpResponseDTO signUpResponseDTO = new UserSignUpResponseDTO(otp);
+
+        emailService.sendVerificationEmail(email, String.valueOf(otp));
 
         return new APIResponse(202,"Resend OTP Successfully.",signUpResponseDTO);
     }
@@ -170,9 +176,12 @@ public class AuthController {
     @PostMapping("/email/login/forgotPassword")
     public APIResponse forgotPassword(@Valid @RequestBody String emailOrUsername){
 
-        int otp = authService.forgotPassword(emailOrUsername);
+        String otpAndEmail = authService.forgotPassword(emailOrUsername);
+        String[] ar = otpAndEmail.split("-");
 
-        UserSignUpResponseDTO signUpResponseDTO = new UserSignUpResponseDTO(otp);
+        emailService.sendForgotPasswordOtp(ar[1], String.valueOf(ar[0]),ar[2]);
+
+        UserSignUpResponseDTO signUpResponseDTO = new UserSignUpResponseDTO("",Integer.parseInt(ar[0]));
         return new APIResponse(202,"One Time Password.",signUpResponseDTO);
     }
 

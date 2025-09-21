@@ -1,0 +1,15 @@
+package lk.ijse.wattpadbackend.repository;
+
+import lk.ijse.wattpadbackend.entity.Story;
+import lk.ijse.wattpadbackend.entity.User;
+import lk.ijse.wattpadbackend.entity.UserWattpadOriginalStory;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface UserWattpadOriginalStoryRepository extends JpaRepository<UserWattpadOriginalStory,Integer> {
+
+    List<UserWattpadOriginalStory> findByStoryAndUser(Story story, User user);
+}

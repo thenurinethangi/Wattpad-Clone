@@ -165,6 +165,51 @@ public class ChapterController {
         chapterService.deleteCommentOrReply(auth.getName(),userCommentTypeDTO);
         return new APIResponse(202,"Successfully delete comment or reply",null);
     }
+
+    @GetMapping("/check/restricted/{chapterId}")
+    public APIResponse checkThisChapterRestrictedToCurrentUserOrNot(@PathVariable long chapterId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean result = chapterService.checkThisChapterRestrictedToCurrentUserOrNot(auth.getName(),chapterId);
+        return new APIResponse(202,"Successfully checked restriction",result);
+    }
+
+    @PostMapping("/unlock/story/{chapterId}")
+    public APIResponse unlockStory(@PathVariable long chapterId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean result = chapterService.unlockStory(auth.getName(),chapterId);
+        return new APIResponse(202,"Successfully unlocked the story",result);
+    }
+
+    @PostMapping("/unlock/chapter/{chapterId}")
+    public APIResponse unlockChapter(@PathVariable long chapterId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean result = chapterService.unlockChapter(auth.getName(),chapterId);
+        return new APIResponse(202,"Successfully unlocked the chapter",result);
+    }
+
+    @PostMapping("/increase/views/{chapterId}")
+    public APIResponse increaseViews(@PathVariable long chapterId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        chapterService.increaseViews(auth.getName(),chapterId);
+        return new APIResponse(202,"Successfully increase views",null);
+    }
+
+    @PostMapping("/update/lastReadChapter/{chapterId}")
+    public APIResponse updateLastReadChapter(@PathVariable long chapterId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        chapterService.updateLastReadChapter(auth.getName(),chapterId);
+        return new APIResponse(202,"Successfully update last read chapter",null);
+    }
 }
 
 

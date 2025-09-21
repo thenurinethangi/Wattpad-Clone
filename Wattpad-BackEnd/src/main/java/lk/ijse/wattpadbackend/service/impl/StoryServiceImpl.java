@@ -27,11 +27,20 @@ public class StoryServiceImpl implements StoryService {
     private final ChapterRepository chapterRepository;
     private final ParagraphCommentRepository paragraphCommentRepository;
     private final ChapterCommentRepository chapterCommentRepository;
+    private final UserBlockRepository userBlockRepository;
+    private final UserWattpadOriginalStoryRepository userWattpadOriginalStoryRepository;
+    private final UserWattpadOriginalChapterRepository userWattpadOriginalChapterRepository;
+    private final ChapterLikeRepository chapterLikeRepository;
 
     @Override
-    public StoryDTO getAStoryById(long id) {
+    public StoryDTO getAStoryById(String username, long id) {
 
         try{
+            User currentUser = userRepository.findByUsername(username);
+            if(currentUser==null){
+                throw new UserNotFoundException("User not found.");
+            }
+
             Optional<Story> storyOptional = storyRepository.findById((int) id);
 
             if(!storyOptional.isPresent()){
@@ -40,18 +49,23 @@ public class StoryServiceImpl implements StoryService {
 
             Story story = storyOptional.get();
 
-//            if(story.getPublishedOrDraft()==0){
-//                throw new NotFoundException("Story not found.");
-//            }
+            if(story.getPublishedOrDraft()==0 && currentUser.getId()!=story.getUser().getId()){
+                throw new NotFoundException("Story not found./Draft");
+            }
 
             StoryDTO storyDTO = new StoryDTO();
             storyDTO.setId(story.getId());
             storyDTO.setTitle(story.getTitle());
             storyDTO.setDescription(story.getDescription());
             storyDTO.setCopyright(story.getCopyright());
-            storyDTO.setParts(story.getParts());
+            storyDTO.setParts(BigInteger.valueOf(chapterRepository.findAllByStory(story).size()));
+            storyDTO.setIsWattpadOriginal(story.getIsWattpadOriginal());
 
-            long likesLong = story.getLikes().longValue();
+            long count2 = 0;
+            for(Chapter b : story.getChapters()){
+                count2+=chapterLikeRepository.findAllByChapter(b).size();
+            }
+            long likesLong = count2;
 
             String likesInStr = "";
             if(likesLong<=1000){
@@ -81,7 +95,12 @@ public class StoryServiceImpl implements StoryService {
 
             storyDTO.setLikes(likesInStr);
 
-            long viewsLong = story.getViews().longValue();
+            long count1 = 0;
+            List<Chapter> chapters = story.getChapters();
+            for (Chapter a : chapters){
+                count1+=a.getViews();
+            }
+            long viewsLong = count1;
 
             String viewsInStr = "";
             if(viewsLong<=1000){
@@ -108,7 +127,6 @@ public class StoryServiceImpl implements StoryService {
                     viewsInStr = value+"M";
                 }
             }
-
             storyDTO.setViews(viewsInStr);
 
             storyDTO.setRating(story.getRating());
@@ -129,16 +147,37 @@ public class StoryServiceImpl implements StoryService {
             List<Chapter> characterList = story.getChapters();
             List<ChapterSimpleDTO> chapterSimpleDTOList = new ArrayList<>();
             for(Chapter x : characterList){
-                if(x.getPublishedOrDraft()==0){
+                if(x.getPublishedOrDraft()==0 && currentUser.getId()!=story.getUser().getId()){
                     continue;
                 }
 
                 ChapterSimpleDTO chapterSimpleDTO = new ChapterSimpleDTO();
                 chapterSimpleDTO.setId(x.getId());
                 chapterSimpleDTO.setTitle(x.getTitle());
+                chapterSimpleDTO.setIsPublishedOrDraft(x.getPublishedOrDraft());
+                chapterSimpleDTO.setChapterCoins(x.getCoinsAmount());
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, MMMM d yyyy");
                 chapterSimpleDTO.setPublishedDate(x.getPublishedDate().format(formatter));
+
+                List<UserWattpadOriginalStory> userWattpadOriginalStoryList = userWattpadOriginalStoryRepository.findByStoryAndUser(x.getStory(),currentUser);
+                if(userWattpadOriginalStoryList.isEmpty()){
+
+                    List<UserWattpadOriginalChapter> userWattpadOriginalChapterList = userWattpadOriginalChapterRepository.findByChapterAndUser(x,currentUser);
+                    if(userWattpadOriginalChapterList.isEmpty()){
+                        chapterSimpleDTO.setIsUnlocked(0);
+                    }
+                    else{
+                        chapterSimpleDTO.setIsUnlocked(1);
+                    }
+                }
+                else{
+                    chapterSimpleDTO.setIsUnlocked(1);
+                }
+
+                if(x.getStory().getUser().getId()==currentUser.getId()){
+                    chapterSimpleDTO.setIsUnlocked(1);
+                }
 
                 chapterSimpleDTOList.add(chapterSimpleDTO);
             }
@@ -224,6 +263,8 @@ public class StoryServiceImpl implements StoryService {
             story.setPublishedOrDraft(0);
             story.setRating(storyCreateDTO.getRating());
             story.setStatus(storyCreateDTO.getStatus());
+            story.setIsWattpadOriginal(storyCreateDTO.getIsWattpadOriginal());
+            story.setCoinsAmount(storyCreateDTO.getCoinsAmount());
 
             String mainCharacters = "";
             for (String x : storyCreateDTO.getCharacters()){
@@ -1158,7 +1199,7 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public void storyUnpublishByAdmin(long storyId) {
+    public StoryDTO storyUnpublishByAdmin(long storyId) {
 
         try{
             Optional<Story> optionalStory = storyRepository.findById((int) storyId);
@@ -1170,9 +1211,44 @@ public class StoryServiceImpl implements StoryService {
             //here must send email for author telling that admin panel of wattpad unpublished there story
             story.setPublishedOrDraft(0);
             storyRepository.save(story);
+
+            StoryDTO storyDTO = new StoryDTO();
+            storyDTO.setTitle(story.getTitle());
+            storyDTO.setUsername(story.getUser().getUsername());
+            storyDTO.setUserEmail(story.getUser().getEmail());
+            return storyDTO;
         }
         catch (NotFoundException e){
             throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean checkThisStoryRestrictedToCurrentUserOrNot(String name, long storyId) {
+
+        try{
+            User currentUser = userRepository.findByUsername(name);
+            if(currentUser==null){
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Story> optionalStory = storyRepository.findById((int) storyId);
+            if(!optionalStory.isPresent()){
+                throw new NotFoundException("Story not found.");
+            }
+            Story story = optionalStory.get();
+
+            UserBlock userBlock = userBlockRepository.findByBlockedByUserAndBlockedUser(story.getUser(),currentUser);
+            if(userBlock!=null){
+                return true;
+            }
+            else{
+                return false;
+            }
+
         }
         catch (RuntimeException e) {
             throw new RuntimeException(e);

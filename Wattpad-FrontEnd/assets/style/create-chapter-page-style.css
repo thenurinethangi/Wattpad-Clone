@@ -335,6 +335,271 @@ body {
     color: #666;
 }
 
+
+
+
+
+
+
+
+
+
+/* Sweet Alert Modern Wide & Short Dark Theme */
+.swal2-popup {
+    background: #1e1e1e !important;   /* deep black */
+    color: #f5f5f5 !important;
+    font-family: var(--primary-font-face),serif;
+    border-radius: 10px !important;
+    padding: 15px 25px !important;
+    width: 450px !important;   /* wider */
+    min-height: 140px !important; /* short height */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+}
+
+/* Title */
+.swal2-title {
+    color: #fff !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 6px !important;
+}
+
+/* Text */
+.swal2-html-container {
+    color: #aaa !important;
+    font-size: 0.93rem !important;
+    margin: 0 !important;
+}
+
+/* Buttons (modern black & white theme) */
+.swal2-styled {
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 8px 20px !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Confirm = clean white button */
+.swal2-confirm {
+    font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    background: #fff !important;
+    color: #111 !important;
+}
+
+.swal2-confirm:hover {
+    background: #e5e5e5 !important;
+}
+
+/* Cancel = dark gray button */
+.swal2-cancel {
+    font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    background: #2c2c2c !important;
+    color: #f5f5f5 !important;
+}
+
+.swal2-cancel:hover {
+    background: #444 !important;
+}
+
+/* Icons smaller + subtle */
+.swal2-icon {
+    margin: 0 auto 5px auto !important;
+    transform: scale(0.7);
+}
+
+
+
+
+
+
+/* Sweet Alert Modern Wide & Short Dark Theme for Success Message */
+.modern-swal-wide-short {
+    background: #1e1e1e !important;   /* deep black */
+    color: #f5f5f5 !important;
+    font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    border-radius: 10px !important;
+    padding: 15px 25px !important;
+    width: 450px !important;   /* wider */
+    min-height: 80px !important; /* short height for thin container */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+    text-align: center; /* Center text without buttons */
+}
+
+/* Title Style */
+.swal-title {
+    color: #fff !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 6px !important;
+}
+
+/* Text Style */
+.swal-text {
+    color: #aaa !important;
+    font-size: 0.93rem !important;
+    margin: 0 !important;
+}
+
+/* Ensure timer progress bar fits the design */
+.swal2-timer-progress-bar {
+    background: #fff !important;
+    height: 4px !important;
+}
+
+
+
+
+
+
+
+
+
+/* Sweet Alert Modern Wide & Short Dark Theme */
+.swal2-popup {
+    background: #1e1e1e !important;   /* deep black */
+    color: #f5f5f5 !important;
+    font-family: var(--primary-font-face), serif;
+    border-radius: 10px !important;
+    padding: 15px 25px !important;
+    width: 450px !important;   /* wider */
+    min-height: 140px !important; /* short height */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+}
+
+/* Title */
+.swal2-title {
+    color: #fff !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 6px !important;
+}
+
+/* Text */
+.swal2-html-container {
+    color: #aaa !important;
+    font-size: 0.93rem !important;
+    margin: 0 !important;
+}
+
+/* Input Field */
+.swal2-input {
+    background: #2c2c2c !important;
+    color: #f5f5f5 !important;
+    border: 1px solid #444 !important;
+    border-radius: 6px !important;
+    font-size: 0.95rem !important;
+    padding: 8px 12px !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    outline: none !important;
+    transition: border 0.2s ease, background 0.2s ease;
+}
+
+.swal2-input:focus {
+    border-color: #ff6122 !important;
+    background: #333 !important;
+}
+
+/* Buttons (modern black & white theme) */
+.swal2-styled {
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 8px 20px !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Confirm = clean white button */
+.swal2-confirm {
+    font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    background: #fff !important;
+    color: #111 !important;
+}
+
+.swal2-confirm:hover {
+    background: #e5e5e5 !important;
+}
+
+/* Cancel = dark gray button */
+.swal2-cancel {
+    font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    background: #2c2c2c !important;
+    color: #f5f5f5 !important;
+}
+
+.swal2-cancel:hover {
+    background: #444 !important;
+}
+
+/* Icons smaller + subtle */
+.swal2-icon {
+    margin: 0 auto 5px auto !important;
+    transform: scale(0.7);
+}
+
+/* Sweet Alert Modern Wide & Short Dark Theme for Success Message */
+.modern-swal-wide-short {
+    background: #1e1e1e !important;   /* deep black */
+    color: #f5f5f5 !important;
+    font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    border-radius: 10px !important;
+    padding: 15px 25px !important;
+    width: 450px !important;   /* wider */
+    min-height: 80px !important; /* short height for thin container */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+    text-align: center; /* Center text without buttons */
+}
+
+/* Title Style */
+.swal-title {
+    color: #fff !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 6px !important;
+}
+
+/* Text Style */
+.swal-text {
+    color: #aaa !important;
+    font-size: 0.93rem !important;
+    margin: 0 !important;
+}
+
+/* Timer Progress Bar */
+.swal2-timer-progress-bar {
+    background: #fff !important;
+    height: 4px !important;
+}
+
+/* Input field inside SweetAlert */
+.swal2-input {
+    width: 100% !important;   /* fit container */
+    max-width: 100% !important;
+    background: #2a2a2a !important;
+    border: 1px solid #444 !important;
+    border-radius: 6px !important;
+    color: #f5f5f5 !important;
+    font-size: 0.9rem !important;
+    padding: 8px 12px !important;
+    box-sizing: border-box !important; /* prevent overflow */
+    transform: translateX(-27px);
+}
+
+
+
+
+
+
+
+
+
 @media (max-width: 768px) {
     .top-header {
         padding: 0 15px;

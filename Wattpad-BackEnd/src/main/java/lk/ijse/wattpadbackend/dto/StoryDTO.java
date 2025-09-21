@@ -24,10 +24,12 @@ public class  StoryDTO {
     private String coverImagePath;
     private long userId;
     private String username;
+    private String userEmail;
     private String profilePicPath;
     private List<String> tags;
     private List<ChapterSimpleDTO> chapterSimpleDTOList;
     private int publishedOrDraft;
+    private int isWattpadOriginal;
 }
 
 

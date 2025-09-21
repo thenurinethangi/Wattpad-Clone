@@ -22,7 +22,7 @@ public interface AuthService {
 
     User loginWithEmail(@Valid UserLoginDTO userLoginDTO);
 
-    int forgotPassword(@Valid String emailOrUsername);
+    String forgotPassword(@Valid String emailOrUsername);
 
     void changePassword(@Valid ChangePasswordDTO changePasswordDTO);
 

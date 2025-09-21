@@ -82,7 +82,7 @@ async function loadAllBlockedUsers() {
                                                 <div class="user-safety-operations" style="width: 70px; height: 90px;">
                                                     <button style="transform: translateX(-130px) translateY(-25px); text-decoration: none;" data-user-id="${user.id}" class="user-safety-operation btn-no-background btn-left-icon unmute">
 <!--                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></g></svg>-->
-                                                        Unblock Sillybuttercup
+                                                        Unblock ${user.username}
                                                     </button>
                                                     <button style="transform: translateX(-130px) translateY(-70px); text-decoration: none;" data-user-id="${user.id}" class="on-report user-safety-operation btn-no-background btn-left-icon" data-username="Sillybuttercup">
 <!--                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></g></svg>-->
@@ -195,7 +195,7 @@ $(document).on('click', '.unmute', function () {
         showCancelButton: true,
         confirmButtonColor: '#d33',
         cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Yes, unmute',
+        confirmButtonText: 'Yes, unblock',
         cancelButtonText: 'Cancel',
         customClass: {
             popup: 'modern-swal',

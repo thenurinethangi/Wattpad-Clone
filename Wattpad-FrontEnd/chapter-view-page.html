@@ -82,7 +82,7 @@
             <!--b1-->
             <span class="toc-full">
                             <span class="cover cover-xxs">
-                                <img id="story-cover-image" src="https://img.wattpad.com/cover/353771202-64-k85442.jpg" alt="Story cover">
+                                <img style="object-fit: cover;" id="story-cover-image" src="https://img.wattpad.com/cover/353771202-64-k85442.jpg" alt="Story cover">
                             </span>
               <!--b2-->
                             <span class="info">
@@ -98,7 +98,7 @@
           <div id="chapters-list-container" class="dropdown-menu pull-left">
             <!--c1-->
             <div class="toc-header text-center">
-              <h6><a class="on-navigate navigate-to-story" href="">The Lost Kingdom</a></h6>
+              <h6><a class="on-navigate navigate-to-story" href="" id="story-title-02">The Lost Kingdom</a></h6>
               <small>Table of contents</small>
             </div>
             <!--c2-->
@@ -226,8 +226,14 @@
           <div class="row part-header">
             <div class="">
               <header class="panel panel-reading text-center" style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;width: 100%;">
+
+                <!--this how only the story wattpad original-->
+                <div id="wattpad-original-tag" class="supported-marker" style="color: #222; font-size: 13px; display: none;">
+                  Wattpad Original
+                </div>
+
                 <!--d1-->
-                <h1 id="chapter-title" class="h2" style="font-size: 32px; font-weight: 600; color: #222; margin: 48px 0 30px 24px;width: 100%;">introduction
+                <h1 id="chapter-title" class="h2" style="font-size: 32px; font-weight: 600; color: #222; margin: 48px 0 30px 24px; width: 100%;">introduction
                   <span class="draft-tag">(Draft)</span>
                 </h1>
                 <!--d2-->
@@ -247,7 +253,7 @@
                 </div>
 
                 <!--d3-->
-                <div class="author hidden-lg" style="margin: 10px auto 18px; font-size: 16px; font-weight: 400; width: 100%; padding-right: 20px;">
+                <div class="author hidden-lg" style="margin: 10px auto 18px; font-size: 16px; font-weight: 400; width: 100%; padding-right: 35px;">
                   <a class="on-navigate avatar avatar-sm center-block author-profile-link" href="/user/Minki__04">
                     <img id="author-profile-pic" class="on-hover" data-toggle="tooltip" data-placement="right" title="" alt="Author profile pic" src="https://img.wattpad.com/useravatar/Minki__04.32.661189.jpg" style="object-fit: cover;">
                   </a>
@@ -259,6 +265,44 @@
                   <ul class="story-extras"></ul>
                 </div>
               </header>
+            </div>
+          </div>
+        </div>
+
+        <!--coins buy-->
+        <div class="paywall-container" style="display: none;">
+          <div class="component-wrapper" id="component-storypartpaywall-37880460-%2f37880460-must-hate-the-playboy-published-chapter-6-trouble">
+            <div class="story-part-paywall">
+              <div class="lock-circle">
+                <i class="fa-solid fa-lock"></i>
+              </div>
+              <div class="cta">
+                <h2>Show your support for Shorty ❤, and continue reading this story</h2>
+                <div class="become-a-supporter">Buy this story part or the entire story. Either way, your Coins help writers earn money for the stories you love.</div>
+              </div>
+              <div class="purchase-buttons-container">
+                <button class="btn btn-primary unlock unlock-story">
+                  <span class="cost">
+                    <img src="assets/image/coin-icon%20(1).svg" alt="Coin" class="coin-icon" height="24px" width="24px">
+                    <span class="price" id="story-coins">58</span>
+                  </span>
+                  <span class="unlock-copy">
+                    <strong>Buy whole story</strong>
+                  </span>
+                </button>
+                <button class="btn btn-primary unlock unlock-part">
+                  <span class="cost"><img src="assets/image/coin-icon%20(1).svg" alt="Coin" class="coin-icon" height="24px" width="24px">
+                    <span class="price" id="chapter-coins">3</span>
+                  </span>
+                  <span class="unlock-copy">
+                    <strong>Buy this part</strong>
+                  </span>
+                </button>
+              </div>
+              <div class="more-details">
+                <p>This story has <strong>23 remaining parts</strong></p>See how Coins support your favorite writers like @notjustarandomgirl.
+                <button class="btn-link">Learn more</button>
+              </div>
             </div>
           </div>
         </div>

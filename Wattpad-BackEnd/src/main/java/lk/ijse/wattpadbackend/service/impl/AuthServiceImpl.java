@@ -29,6 +29,8 @@ public class AuthServiceImpl implements AuthService {
     private final LibraryRepository libraryRepository;
     private final ReadingListRepository readingListRepository;
     private final ModelMapper modelMapper;
+    private final RoleRepository roleRepository;
+    private final UserRoleRepository userRoleRepository;
 
     @Override
     public boolean CheckUserNameExistence(String username) {
@@ -55,6 +57,18 @@ public class AuthServiceImpl implements AuthService {
 
             User user1 = new User(userSignupDTO.getUsername(),userSignupDTO.getFullName(),userSignupDTO.getEmail(),"fakepassword",LocalDate.parse(userSignupDTO.getBirthday()),userSignupDTO.getPronouns(),1);
             User savedUser = userRepository.save(user1);
+
+            Optional<Role> optionalRole = roleRepository.findById(2);
+            if(!optionalRole.isPresent()){
+                throw new NotFoundException("Role not found.");
+            }
+            Role role = optionalRole.get();
+
+            UserRole userRole = new UserRole();
+            userRole.setUser(savedUser);
+            userRole.setRole(role);
+
+            userRoleRepository.save(userRole);
 
             //add default selected genre for user
             String[] ar = {"Romance","Werewolf","New Adult"};
@@ -96,6 +110,18 @@ public class AuthServiceImpl implements AuthService {
 
             User user1 = new User(userSignupDTO.getUsername(),userSignupDTO.getFullName(),userSignupDTO.getEmail(),userSignupDTO.getPassword(),LocalDate.parse(userSignupDTO.getBirthday()),userSignupDTO.getPronouns());
             User savedUser = userRepository.save(user1);
+
+            Optional<Role> optionalRole = roleRepository.findById(2);
+            if(!optionalRole.isPresent()){
+                throw new NotFoundException("Role not found.");
+            }
+            Role role = optionalRole.get();
+
+            UserRole userRole = new UserRole();
+            userRole.setUser(savedUser);
+            userRole.setRole(role);
+
+            userRoleRepository.save(userRole);
 
             //add default selected genre for user
             String[] ar = {"Romance","Werewolf","New Adult"};
@@ -188,7 +214,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public int forgotPassword(String emailOrUsername) {
+    public String forgotPassword(String emailOrUsername) {
 
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
 
@@ -212,7 +238,8 @@ public class AuthServiceImpl implements AuthService {
 
         //here send otp to user email
         Random random =  new Random();
-        int otp = 10000 + random.nextInt(90000);
+        String otp = String.valueOf(10000 + random.nextInt(90000));
+        otp+='-'+user.getEmail()+'-'+user.getUsername();
 
         return otp;
     }

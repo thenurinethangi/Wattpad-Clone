@@ -260,11 +260,17 @@
                 </div>
             </li>
             <li class="oAArJ">
-                <button class="_5FXgC" id="try-premium-btn">
+                <button class="_5FXgC" id="try-premium-btn" style="display: flex;">
                     <span class="ahwLl">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M9.38562 11.778L8.95363 16.0545C8.89557 16.6292 9.64434 16.8996 9.96699 16.4205L14.9043 9.08896C15.1528 8.72003 14.8884 8.2233 14.4436 8.2233H10.6144L11.0464 3.94683C11.1044 3.37214 10.3557 3.10166 10.033 3.58077L5.09567 10.9123C4.84721 11.2813 5.11159 11.778 5.55639 11.778H9.38562Z" fill="var(--ds-base-2-60)"></path></svg>
                     </span>
                     Try Premium
+                </button>
+                <button class="_5FXgC" id="premium-member" style="display: none;">
+                    <span class="ahwLl">
+                        <svg style="transform: translateY(-2.5px);" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#3b19a9" d="M4 20h16l-2-10-4 3-2-7-2 7-4-3-2 10z"/></svg>
+                    </span>
+                    Premium Member
                 </button>
             </li>
         </ul>
@@ -477,8 +483,22 @@
             </div>
             <div class="badges">
                 <h1 class="profile-name h3" aria-label="yukee07's profile">yukee07</h1>
+                <div id="verified-icon" class="user-badge" data-toggle="tooltip" data-placement="right" title="" data-original-title="Verified">
+                    <svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="#ff6122" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round">
+                        <g id="Verifier---Wireframes" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="Artboard" transform="translate(-1147.000000, -299.000000)">
+                                <path d="M1165.419,305.513 L1164.774,303.142 C1164.521,302.209 1163.792,301.48 1162.859,301.226 L1160.487,300.581 L1158.355,299.36 C1157.935,299.12 1157.467,299 1157,299 C1156.533,299 1156.065,299.12 1155.646,299.36 L1153.513,300.581 L1151.141,301.226 C1150.208,301.48 1149.48,302.208 1149.226,303.141 L1148.581,305.513 L1147.36,307.646 C1146.88,308.485 1146.88,309.515 1147.36,310.355 L1148.581,312.487 L1149.226,314.86 C1149.48,315.792 1150.209,316.521 1151.142,316.774 L1153.513,317.419 L1155.645,318.64 C1156.065,318.88 1156.533,319 1157,319 C1157.467,319 1157.935,318.88 1158.355,318.64 L1160.487,317.419 L1162.859,316.774 C1163.792,316.521 1164.521,315.792 1164.774,314.859 L1165.419,312.487 L1166.64,310.355 C1167.12,309.515 1167.12,308.485 1166.64,307.645 L1165.419,305.513 Z" id="Path" fill="#FFFFFF"></path>
+                                <path d="M1166.64,307.645 L1165.419,305.513 L1164.774,303.142 C1164.521,302.209 1163.792,301.48 1162.859,301.226 L1160.487,300.581 L1158.355,299.36 C1157.935,299.12 1157.467,299 1157,299 C1156.533,299 1156.065,299.12 1155.646,299.36 L1153.513,300.581 L1151.141,301.226 C1150.208,301.48 1149.48,302.208 1149.226,303.141 L1148.581,305.513 L1147.36,307.646 C1146.88,308.485 1146.88,309.515 1147.36,310.355 L1148.581,312.487 L1149.226,314.86 C1149.48,315.792 1150.209,316.521 1151.142,316.774 L1153.513,317.419 L1155.645,318.64 C1156.065,318.88 1156.533,319 1157,319 C1157.467,319 1157.935,318.88 1158.355,318.64 L1160.487,317.419 L1162.859,316.774 C1163.792,316.521 1164.521,315.792 1164.774,314.859 L1165.419,312.487 L1166.64,310.355 C1167.12,309.515 1167.12,308.485 1166.64,307.645 L1166.64,307.645 Z" id="Verified-Account" fill="#FF6122"></path>
+                                <path d="M1156.36061,312.705984 C1156.00858,313.098005 1155.43225,313.098005 1155.08022,312.705984 L1152.26402,309.569809 C1151.91199,309.177788 1151.91199,308.536863 1152.26402,308.144841 C1152.61604,307.75282 1153.19238,307.75282 1153.5444,308.144841 L1155.72042,310.568087 L1160.4564,305.294016 C1160.80842,304.901995 1161.38396,304.901995 1161.73598,305.294016 C1162.08801,305.686038 1162.08801,306.326963 1161.73598,306.718984 L1156.36061,312.705984 Z" id="Path" fill="#FFFFFF"></path>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
             </div>
             <p id="alias" aria-label="also known as yukee07.">@yukee07</p>
+            <!--unblock btn-->
+            <div id="unblock-btn-container" style="display: none;" class="restricted-state"><button id="unblock-btn" style="background-color: rgba(255, 255, 255, .3); border: 1px solid #eee; border-radius: 5px; padding: 0 27px; height: 37px; margin-bottom: 15px;" class="unblock-button">Unblock</button></div>
+            <div id="unmute-btn-container" style="display: none;" class="restricted-state"><button id="unmute-btn" style="background-color: rgba(255, 255, 255, .3); border: 1px solid #eee; border-radius: 5px; padding: 0 27px; height: 37px; margin-bottom: 15px;" class="unblock-button">Unmute</button></div>
             <div id="edit-name" class="hidden faded edit-profile center-block">
                 <input type="text" class="form-control" data-field="name" value="" placeholder="Full name">
             </div>
@@ -530,7 +550,7 @@
                                 <span class="hidden-xs">Edit Profile</span>
                             </button>
                             <!--follow btn-->
-                            <button role="menuitem" class="btn btn-fan btn-white  on-follow-user on-follow follow-btn">
+                            <button id="follow-btn" role="menuitem" class="btn btn-fan btn-white  on-follow-user on-follow follow-btn">
                                 <i class="fa-solid fa-user-plus" style="font-size:16px;"></i>
                                 <span class="hidden-xs truncate">Follow</span>
                             </button>
@@ -547,11 +567,11 @@
                                             <div class="user-safety-operations">
                                                 <a class="conduct-link user-safety-operation btn-no-background btn-left-icon option" href="https://support.wattpad.com/hc/en-us/articles/200774234-Code-of-Conduct" target="_blank" rel="noreferrer noopener" tabindex="0">
                                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></g></svg>
-                                                    <span class="conduct-link">Mute moonflower_9597</span>
+                                                    <span class="conduct-link">Mute User</span>
                                                 </a>
                                                 <a class="safety-portal user-safety-operation btn-no-background btn-left-icon option" href="https://safetyportal.wattpad.com/" target="_blank" rel="noreferrer noopener" tabindex="0">
                                                     <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#222222" stroke-width="0" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><path d="M7.00001 0.333252C3.31668 0.333252 0.333344 3.31659 0.333344 6.99992C0.333344 10.6833 3.31668 13.6666 7.00001 13.6666C10.6833 13.6666 13.6667 10.6833 13.6667 6.99992C13.6667 3.31659 10.6833 0.333252 7.00001 0.333252ZM1.66668 6.99992C1.66668 4.05325 4.05334 1.66659 7.00001 1.66659C8.23334 1.66659 9.36334 2.08992 10.2667 2.78992L2.79001 10.2666C2.09001 9.36325 1.66668 8.23325 1.66668 6.99992ZM7.00001 12.3333C5.76668 12.3333 4.63668 11.9099 3.73334 11.2099L11.21 3.73325C11.91 4.63659 12.3333 5.76659 12.3333 6.99992C12.3333 9.94659 9.94668 12.3333 7.00001 12.3333Z" fill="#111111"></path></g></svg>
-                                                    <span>Block moonflower_9597</span>
+                                                    <span>Block User</span>
                                                 </a>
                                                 <a class="safety-portal user-safety-operation btn-no-background btn-left-icon option" href="https://safetyportal.wattpad.com/" target="_blank" rel="noreferrer noopener" tabindex="0">
                                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class=""><g><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></g></svg>

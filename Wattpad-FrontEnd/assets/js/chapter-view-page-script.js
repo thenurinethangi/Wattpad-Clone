@@ -23,9 +23,41 @@ window.onload = function () {
 
             if (params.has("chapterId")) {
 
-                document.body.style.display = 'block';
-                document.body.style.visibility = 'visible';
-                document.body.style.opacity = 1;
+                let chapterId = params.get('chapterId');
+
+                fetch('http://localhost:8080/api/v1/chapter/check/restricted/'+chapterId, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(errData => {
+                                throw new Error(JSON.stringify(errData));
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Success:', data);
+
+                        if(data.data===true){
+                            window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-restricted-page.html';
+                        }
+                        else{
+                            document.body.style.display = 'block';
+                            document.body.style.visibility = 'visible';
+                            document.body.style.opacity = 1;
+                        }
+
+                    })
+                    .catch(error => {
+                        let response = JSON.parse(error.message);
+                        console.log(response);
+
+                    });
             }
             else {
                 window.location.href = 'login-page.html';
@@ -89,9 +121,38 @@ async function loadChapterData() {
             //top bar left
             $('#story-cover-image').attr('src', `${chapter.storyCoverImagePath}`);
             $('#story-title').text(chapter.storyTitle);
+            $('#story-title-02').text(chapter.storyTitle);
             $('#author').text('by '+chapter.username);
             $('.navigate-to-story').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-overview-page.html?storyId=${chapter.storyId}`);
             $('.chap-title').text(chapter.storyTitle);
+
+            if(chapter.isWattpadOriginal===1){
+                $('#wattpad-original-tag').css('display','block');
+            }
+            else {
+                $('#wattpad-original-tag').css('display','none');
+            }
+
+            if(chapter.isUnlocked===1){
+                $('.paywall-container').css('display','none');
+                $('#sticky-end').css('display','block');
+                $('.footer-comment').css('display','block');
+            }
+            else{
+                if(chapter.chapterCoins===0){
+                    $('.paywall-container').css('display','none');
+                    $('#sticky-end').css('display','block');
+                    $('.footer-comment').css('display','block');
+                }
+                else{
+                    $('.paywall-container').css('display','block');
+                    $('#sticky-end').css('display','none');
+                    $('.footer-comment').css('display','none');
+
+                    $('#story-coins').text(chapter.storyCoins);
+                    $('#chapter-coins').text(chapter.chapterCoins);
+                }
+            }
 
             //set all chapters - dropdown
             $('#chapters-list').empty();
@@ -102,10 +163,29 @@ async function loadChapterData() {
 
                 let singleChapter = null;
                 if(c.id==chapter.id){
-                    singleChapter = `<li style="overflow: hidden; padding: 10px 0px; font-size: 14px; font-weight: 600; color: #222; width: 100%; border-left: 4px solid #ff6122;"><a style="color: #ff6122" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${c.id}">${c.title}</a></li>`;
+                    singleChapter = `
+<li style="overflow: hidden; padding: 10px 0px; font-size: 14px; font-weight: 600; color: #222; width: 100%; border-left: 4px solid #ff6122;">
+  <a style="color: #ff6122" href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${c.id}">
+    ${c.title}
+  </a>
+  ${c.isPublishedOrDraft === 0
+                        ? `<p style="color: gray; padding-left: 10px;">Draft</p>`
+                        : ``}
+  ${chapter.chapterCoins === 0
+                        ? ``
+                        : (chapter.isUnlocked === 1
+                            ? `<i style="opacity: 0.9;" class="fa-solid fa-lock-open"></i>`
+                            : `<i style="opacity: 0.9;" class="fa-solid fa-lock"></i>`)}
+</li>
+`;
+
                 }
                 else {
-                    singleChapter = `<li style="overflow: hidden; padding: 10px 0px; font-size: 14px; font-weight: 600; color: #222; width: 100%;"><a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${c.id}">${c.title}</a></li>`;
+                    singleChapter = `<li style="overflow: hidden; padding: 10px 0px; font-size: 14px; font-weight: 600; color: #222; width: 100%;"><a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${c.id}">${c.title}</a>${c.isPublishedOrDraft===0 ? `<p style="color: gray; padding-left: 10px;">Draft</p>` : ``} ${chapter.chapterCoins === 0
+                        ? ``
+                        : (chapter.isUnlocked === 1
+                            ? `<i style="opacity: 0.9;" class="fa-solid fa-lock-open"></i>`
+                            : `<i style="opacity: 0.9;" class="fa-solid fa-lock"></i>`)}</li>`;
                 }
                 $('#chapters-list').append(singleChapter);
             }
@@ -155,6 +235,9 @@ async function loadChapterData() {
 
                 $('#media-container').append(chapterCoverMediaContainer);
             }
+            else {
+                $('#media-container').css('display','none');
+            }
 
             //stats and title
             if(chapter.isPublishedOrDraft===1){
@@ -163,10 +246,15 @@ async function loadChapterData() {
             else{
                 $('#chapter-title').html(`${chapter.title} <span style="display: inline; visibility: visible; opacity: 1; color: #c3d8dc; padding-left: 12px;" class="draft-tag">(Draft)</span>`);
             }
-            $('.reads').html(`<i class="fa-solid fa-star fa-wp-neutral-2" style="font-size: 12px;"></i> ` + chapter.views);
+            $('.reads').html(`<i class="fa-solid fa-eye" style="font-size: 12px;"></i> ` + chapter.views);
             $('.votes').html(`<i class="fa-solid fa-star fa-wp-neutral-2" style="font-size: 12px;"></i> ` + chapter.likes);
-            $('.comments').html(`<i class="fa-solid fa-star fa-wp-neutral-2" style="font-size: 12px;"></i> ` + chapter.comments);
-            $('#author-profile-pic').attr('src', `${chapter.userProfilePicPath}`);
+            $('.comments').html(`<i class="fa-solid fa-comment" style="font-size: 12px;"></i> ` + chapter.comments);
+            if(chapter.userProfilePicPath!=null){
+                $('#author-profile-pic').attr('src', `${chapter.userProfilePicPath}`);
+            }
+            else{
+                $('#author-profile-pic').attr('src', `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnFRPx77U9mERU_T1zyHcz9BOxbDQrL4Dvtg&s`);
+            }
             $('.author-profile-link').attr('href', `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${chapter.userId}`);
             $('#author-username').text(chapter.username);
 
@@ -223,27 +311,32 @@ async function loadChapterData() {
                     $('#chapter-body').append(para);
 
                 }
-                else if(paragraph.contentType==='link'){
-                    let para = `<div class="chapter-content" data-comment-count="${paragraph.commentCount}" style="margin-bottom: 30px; margin-top: 30px;">
-                                        <iframe width="100%" height="320" src="${paragraph.content}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                                        
-                                        ${paragraph.commentCount !== "0"
-                                        ? `<div class="comment-icon" data-paragraph-id="${paragraph.id}" style="position: absolute; right: 0; bottom: 0; text-align: center; width: 24px;">
-                                               <span style="position: absolute; top: -4px; right: 2px; left: 50%; transform: translate(-50%); font-size: 12px; font-weight: 700; color: #fff;">
-                                               ${paragraph.commentCount}
-                                               </span>
-                                               <i class="fa-solid fa-message" style="color: #6f6f6f; font-size: 20px;"></i>
-                                        </div>`
-                                        : `<div class="comment-icon" data-paragraph-id="${paragraph.id}" style="opacity: 0; position: absolute; right: 0; bottom: 0; text-align: center; width: 24px;">
-                                                <i class="fa-solid fa-square-plus" style="position: absolute; top: 6px; right: 2px; left: 50%; transform: translate(-50%); font-size: 10px; font-weight: 700; color: #fff;"></i>
-                                                <i class="fa-solid fa-message" style="color: #6f6f6f; font-size: 20px;"></i>
-                                           </div>
-                                        `}
-                                        
-                                       </div>`
+                else if (paragraph.contentType === 'link') {
+                    let ytUrl = paragraph.content;
+
+                    if (ytUrl.includes("youtu.be")) {
+                        const videoId = ytUrl.split("youtu.be/")[1].split("?")[0];
+                        ytUrl = `https://www.youtube.com/embed/${videoId}`;
+                    }
+
+                    else if (ytUrl.includes("watch?v=")) {
+                        const videoId = ytUrl.split("watch?v=")[1].split("&")[0];
+                        ytUrl = `https://www.youtube.com/embed/${videoId}`;
+                    }
+
+                    let para = `
+                                     <div class="chapter-content" data-comment-count="${paragraph.commentCount}" style="margin-bottom: 30px; margin-top: 30px;">
+                                             <iframe width="100%" height="320" src="${ytUrl}" 
+                                                title="YouTube video player" frameborder="0" 
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                                             </iframe>
+                                        ...
+                                        </div>`;
 
                     $('#chapter-body').append(para);
                 }
+
             }
 
         })
@@ -251,13 +344,306 @@ async function loadChapterData() {
             try {
                 let errorResponse = JSON.parse(error.message);
                 console.error('Error:', errorResponse);
+
+                if(errorResponse.status===404 && errorResponse.message==='Chapter not found./Draft'){
+                    window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-restricted-page.html';
+                }
             } catch (e) {
                 console.error('Error:', error.message);
             }
         });
+
+
+    //increase views
+    fetch('http://localhost:8080/api/v1/chapter/increase/views/'+chapterId, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+
+        });
+
+
+    //update last read chapter
+    fetch('http://localhost:8080/api/v1/chapter/increase/views/'+chapterId, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(JSON.stringify(errData));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+
+        })
+        .catch(error => {
+            let response = JSON.parse(error.message);
+            console.log(response);
+
+        });
 }
 
 // loadChapterData();
+
+
+
+//unlock story btn
+let unlockStoryBtn = $('.unlock-story')[0];
+unlockStoryBtn.addEventListener('click',function (event) {
+
+    let chapterId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("chapterId")) {
+        chapterId = params.get("chapterId");
+    }
+
+    if(chapterId==null){
+        //load chapter not found page
+        return;
+    }
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'Would you like to unlock this story?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, unlock',
+        cancelButtonText: 'Cancel',
+        customClass: {
+            popup: 'modern-swal',
+            confirmButton: 'swal2-confirm',
+            cancelButton: 'swal2-cancel'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            fetch('http://localhost:8080/api/v1/chapter/unlock/story/'+chapterId, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errData => {
+                            throw new Error(JSON.stringify(errData));
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+
+                    if(data.data===true){
+                        location.reload(true);
+                        window.location.href = window.location.href;
+
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Congratulations! You\'ve unlocked the full story. Enjoy reading!',
+                            icon: 'success',
+                            customClass: {
+                                popup: 'modern-swal-wide-short',
+                                title: 'swal-title',
+                                htmlContainer: 'swal-text'
+                            },
+                            timer: 3000,
+                            timerProgressBar: false,
+                            showConfirmButton: false
+                        });
+                    }
+                    else{
+                        window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/coins-page.html';
+
+                        Swal.fire({
+                            title: 'Fail',
+                            text: 'Insufficient coin amount!',
+                            icon: 'fail',
+                            customClass: {
+                                popup: 'modern-swal-wide-short',
+                                title: 'swal-title',
+                                htmlContainer: 'swal-text'
+                            },
+                            timer: 3000,
+                            timerProgressBar: false,
+                            showConfirmButton: false
+                        });
+                    }
+
+                })
+                .catch(error => {
+                    let response = JSON.parse(error.message);
+                    console.log(response);
+
+                    Swal.fire({
+                        title: 'Fail',
+                        text: 'Fail to unlocked the story, please try later!',
+                        icon: 'fail',
+                        customClass: {
+                            popup: 'modern-swal-wide-short',
+                            title: 'swal-title',
+                            htmlContainer: 'swal-text'
+                        },
+                        timer: 3000,
+                        timerProgressBar: false,
+                        showConfirmButton: false
+                    });
+
+                });
+        }
+        else {
+            // console.log('still activate');
+        }
+    });
+
+});
+
+
+
+
+//unlock chapter btn
+let unlockPartBtn = $('.unlock-part')[0];
+unlockPartBtn.addEventListener('click',function (event) {
+
+    let chapterId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("chapterId")) {
+        chapterId = params.get("chapterId");
+    }
+
+    if(chapterId==null){
+        //load chapter not found page
+        return;
+    }
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'Would you like to unlock this part?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, unlock',
+        cancelButtonText: 'Cancel',
+        customClass: {
+            popup: 'modern-swal',
+            confirmButton: 'swal2-confirm',
+            cancelButton: 'swal2-cancel'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            fetch('http://localhost:8080/api/v1/chapter/unlock/chapter/'+chapterId, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errData => {
+                            throw new Error(JSON.stringify(errData));
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+
+                    if(data.data===true){
+                        location.reload(true);
+                        window.location.href = window.location.href;
+
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Congratulations! You\'ve unlocked this part. Enjoy reading!',
+                            icon: 'success',
+                            customClass: {
+                                popup: 'modern-swal-wide-short',
+                                title: 'swal-title',
+                                htmlContainer: 'swal-text'
+                            },
+                            timer: 3000,
+                            timerProgressBar: false,
+                            showConfirmButton: false
+                        });
+                    }
+                    else{
+                        window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/coins-page.html';
+
+                        Swal.fire({
+                            title: 'Fail',
+                            text: 'Insufficient coin amount!',
+                            icon: 'fail',
+                            customClass: {
+                                popup: 'modern-swal-wide-short',
+                                title: 'swal-title',
+                                htmlContainer: 'swal-text'
+                            },
+                            timer: 3000,
+                            timerProgressBar: false,
+                            showConfirmButton: false
+                        });
+                    }
+
+                })
+                .catch(error => {
+                    let response = JSON.parse(error.message);
+                    console.log(response);
+
+                    Swal.fire({
+                        title: 'Fail',
+                        text: 'Fail to unlocked the part, please try later!',
+                        icon: 'fail',
+                        customClass: {
+                            popup: 'modern-swal-wide-short',
+                            title: 'swal-title',
+                            htmlContainer: 'swal-text'
+                        },
+                        timer: 3000,
+                        timerProgressBar: false,
+                        showConfirmButton: false
+                    });
+
+                });
+        }
+        else {
+            // console.log('still activate');
+        }
+    });
+
+});
 
 
 
@@ -2243,7 +2629,12 @@ function headerData() {
             const currentUser = data.data;
 
             $('.your-profile').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${currentUser.id}`);
-            $('.user-profile-pic').attr('src',`${currentUser.profilePicPath}`);
+            if(currentUser.profilePicPath!=null){
+                $('.user-profile-pic').attr('src',`${currentUser.profilePicPath}`);
+            }
+            else{
+                $('.user-profile-pic').attr('src',`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnFRPx77U9mERU_T1zyHcz9BOxbDQrL4Dvtg&s`);
+            }
 
         })
         .catch(error => {

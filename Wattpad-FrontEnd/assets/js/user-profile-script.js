@@ -38,9 +38,42 @@ window.onload = function () {
             const params = new URLSearchParams(window.location.search);
 
             if (params.has("userId")) {
-                document.body.style.display = 'block';
-                document.body.style.visibility = 'visible';
-                document.body.style.opacity = 1;
+
+                let userId = params.get('userId');
+
+                fetch('http://localhost:8080/user/check/restricted/'+userId, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(errData => {
+                                throw new Error(JSON.stringify(errData));
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Success:', data);
+
+                        if(data.data===true){
+                            window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile-restricted-page.html';
+                        }
+                        else{
+                            document.body.style.display = 'block';
+                            document.body.style.visibility = 'visible';
+                            document.body.style.opacity = 1;
+                        }
+
+                    })
+                    .catch(error => {
+                        let response = JSON.parse(error.message);
+                        console.log(response);
+
+                    });
             }
             else {
                 window.location.href = 'login-page.html';
@@ -101,6 +134,21 @@ async function loadUserData() {
             $('#reading-list-setting').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/reading-list-page.html`);
             $('.story-setting-on-navigate').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/mywork-page.html`);
 
+            if(user.isVerifiedByWattpad===0) {
+                $('#verified-icon').remove();
+            }
+
+            if(user.isBlocked===1){
+                $('#unblock-btn-container').css('display','block');
+                $('#content').css('display','none');
+                $('#follow-btn').css('display','none');
+            }
+            else if(user.isMuted===1){
+                $('#unmute-btn-container').css('display','block');
+                $('#content').css('display','none');
+                $('#follow-btn').css('display','none');
+            }
+
             if(user.profilePicPath==null){
                 console.log('profile pic is null');
                 $('#profile-pic').remove();
@@ -135,6 +183,7 @@ async function loadUserData() {
             if(user.isCurrentUser===1){
                 $('.on-follow-user.on-follow').remove();
                 $('.three-dots-btn').remove();
+                $('.num-coins').text(user.coins);
             }
             else{
                 $('.user-balance').remove();
@@ -195,6 +244,176 @@ async function loadUserData() {
             }
         });
 }
+
+
+//navigate to coin buy page
+let getCoinsBtn = $('.get-coins')[0];
+getCoinsBtn.addEventListener('click',function (event) {
+
+    window.location.href = `http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/coins-page.html`;
+});
+
+
+//unblock user
+let unblockBtn = $('#unblock-btn')[0];
+unblockBtn.addEventListener('click',function (event) {
+
+    let userId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("userId")) {
+        userId = params.get("userId");
+    }
+
+    if(userId==null){
+        //load chapter not found page
+        return;
+    }
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'Would you like to unblock this user?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, unblock',
+        cancelButtonText: 'Cancel',
+        customClass: {
+            popup: 'modern-swal',
+            confirmButton: 'swal2-confirm',
+            cancelButton: 'swal2-cancel'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            fetch(`http://localhost:8080/api/v1/user/block/remove/${userId}`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errData => { throw new Error(JSON.stringify(errData)); });
+                    }
+                    return response.json();
+
+                })
+                .then(data => {
+                    console.log("Unblock successfully:", data);
+                    location.reload();
+
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'Unblock user successfully!',
+                        icon: 'success',
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+
+                })
+                .catch(error => {
+                    let response = JSON.parse(error.message);
+                    console.log(response);
+
+                    Swal.fire({
+                        title: 'Fail',
+                        text: 'An error occur while unblocking the user, try later!',
+                        icon: 'error',
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                });
+        }
+        else {
+            // console.log('still activate');
+        }
+    });
+});
+
+
+
+
+//unblock user
+let unmuteBtn = $('#unmute-btn')[0];
+unmuteBtn.addEventListener('click',function (event) {
+
+    let userId = null;
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("userId")) {
+        userId = params.get("userId");
+    }
+
+    if(userId==null){
+        //load chapter not found page
+        return;
+    }
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'Would you like to unmute this user?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, unmute',
+        cancelButtonText: 'Cancel',
+        customClass: {
+            popup: 'modern-swal',
+            confirmButton: 'swal2-confirm',
+            cancelButton: 'swal2-cancel'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            fetch(`http://localhost:8080/api/v1/user/mute/remove/${userId}`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errData => { throw new Error(JSON.stringify(errData)); });
+                    }
+                    return response.json();
+
+                })
+                .then(data => {
+                    console.log("Unmuted successfully:", data);
+                    location.reload();
+
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'Unmute user successfully!',
+                        icon: 'success',
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+
+                })
+                .catch(error => {
+                    let response = JSON.parse(error.message);
+                    console.log(response);
+
+                    Swal.fire({
+                        title: 'Fail',
+                        text: 'An error occur while unmute the user, try later!',
+                        icon: 'error',
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                });
+        }
+        else {
+            // console.log('still activate');
+        }
+    });
+});
 
 
 
@@ -610,6 +829,7 @@ run();
 
 //follow user
 $(document).on('click', '.follow-btn', function (event) {
+
     let userId = null;
     const params = new URLSearchParams(window.location.search);
 
@@ -622,8 +842,8 @@ $(document).on('click', '.follow-btn', function (event) {
         return;
     }
 
-    fetch('http://localhost:8080/user/follow/' + userId, {
-        method: 'POST',
+    fetch('http://localhost:8080/user/check/restricted/'+userId, {
+        method: 'GET',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
@@ -640,17 +860,49 @@ $(document).on('click', '.follow-btn', function (event) {
         .then(data => {
             console.log('Success:', data);
 
-            // Replace with unfollow button
-            $(".follow-btn").replaceWith(`
+            if(data.data===true){
+                window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile-restricted-page.html';
+            }
+            else{
+
+                fetch('http://localhost:8080/user/follow/' + userId, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(errData => {
+                                throw new Error(JSON.stringify(errData));
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Success:', data);
+
+                        // Replace with unfollow button
+                        $(".follow-btn").replaceWith(`
                 <button role="menuitem" class="btn btn-fan on-follow-user on-unfollow btn-teal">
                     <i class="fa-solid fa-user-plus" style="font-size:16px;"></i>
                     <span class="hidden-xs truncate">Following</span>
                 </button>
             `);
+                    })
+                    .catch(error => {
+                        let response = JSON.parse(error.message);
+                        console.log(response);
+                    });
+
+            }
+
         })
         .catch(error => {
             let response = JSON.parse(error.message);
             console.log(response);
+
         });
 });
 
@@ -1017,8 +1269,22 @@ function headerData() {
             console.log('POST Data:', data);
             const currentUser = data.data;
 
+            if(currentUser.profilePicPath!=null){
+                $('.user-profile-pic').attr('src',`${currentUser.profilePicPath}`);
+            }
+            else{
+                $('.user-profile-pic').attr('src',`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnFRPx77U9mERU_T1zyHcz9BOxbDQrL4Dvtg&s`);
+            }
             $('.your-profile').attr('href',`http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/user-profile.html?userId=${currentUser.id}`);
-            $('.user-profile-pic').attr('src',`${currentUser.profilePicPath}`);
+
+            if(currentUser.isUserPremium===1){
+                $('#premium-member').css('display','flex');
+                $('#try-premium-btn').css('display','none');
+            }
+            else{
+                $('#premium-member').css('display','none');
+                $('#try-premium-btn').css('display','flex');
+            }
 
         })
         .catch(error => {
@@ -1155,6 +1421,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             console.log('Success:', data);
 
                             if(data.data === true) {
+                                location.reload();
                                 Swal.fire({
                                     title: 'Success',
                                     text: 'Blocked user successfully!',
@@ -1226,6 +1493,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             console.log('Success:', data);
 
                             if(data.data===true){
+                                location.reload();
                                 Swal.fire({
                                     title: 'Success',
                                     text: 'Muted user successfully!',

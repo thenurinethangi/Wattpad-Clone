@@ -14,4 +14,5 @@ public class ChapterSaveRequestDTO {
     private String chapterTitle;
     private String chapterCoverUrl;
     private List<ContentDTO> content;
+    private int coinsAmount;
 }

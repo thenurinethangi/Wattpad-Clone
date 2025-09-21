@@ -23,9 +23,41 @@ window.onload = function () {
 
             if (params.has("storyId")) {
 
-                document.body.style.display = 'block';
-                document.body.style.visibility = 'visible';
-                document.body.style.opacity = 1;
+                let storyId = params.get('storyId');
+
+                fetch('http://localhost:8080/api/v1/story/check/restricted/'+storyId, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(errData => {
+                                throw new Error(JSON.stringify(errData));
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Success:', data);
+
+                        if(data.data===true){
+                            window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-restricted-page.html';
+                        }
+                        else{
+                            document.body.style.display = 'block';
+                            document.body.style.visibility = 'visible';
+                            document.body.style.opacity = 1;
+                        }
+
+                    })
+                    .catch(error => {
+                        let response = JSON.parse(error.message);
+                        console.log(response);
+
+                    });
             }
             else {
                 window.location.href = 'login-page.html';
@@ -77,6 +109,14 @@ async function loadStoryData() {
             console.log('Success:', data);
 
             let story = data.data;
+
+            //check wattpad original or not
+            if(story.isWattpadOriginal===1){
+                $('#wattpad-original-tag').css('display','block');
+            }
+            else{
+                $('#wattpad-original-tag').css('display','none');
+            }
 
             //story cover and title
             $('#story-cover-image').attr('src', `${story.coverImagePath}`);
@@ -141,9 +181,15 @@ async function loadStoryData() {
                       <div class="a2GDZ" data-testid="new-part-icon"></div>
                       <div class="wpYp-">${c.title}</div>
                     </div>
+                    ${c.isPublishedOrDraft===0 ? `<div class="f0I9e"><span class="xnG0g">Draft</span></div>` : ``}
                     <div class="f0I9e"></div>
                   </div>
                   <div class="bSGSB">${c.publishedDate}</div>
+                  ${c.chapterCoins === 0
+                    ? ``
+                    : (c.isUnlocked === 1
+                        ? `<i style="opacity: 0.9; margin-left: 8px; transform: translateY(-2px);" class="fa-solid fa-lock-open"></i>`
+                        : `<i style="opacity: 0.9; margin-left: 8px; transform: translateY(-2px);" class="fa-solid fa-lock"></i>`)}
                 </a>
             </li>`;
 
@@ -156,6 +202,10 @@ async function loadStoryData() {
             try {
                 let errorResponse = JSON.parse(error.message);
                 console.error('Error:', errorResponse);
+
+                if(errorResponse.status===404 && errorResponse.message==='Story not found./Draft'){
+                    window.location.href = 'http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/story-restricted-page.html';
+                }
             } catch (e) {
                 console.error('Error:', error.message);
             }

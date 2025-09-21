@@ -460,6 +460,7 @@ $(document).on('click','.back-all-option',function (event) {
 
 
 
+let resendData = null;
 $(document).on('click','#signup-with-email-btn',function (event) {
 
     let email = $('#signup-email')[0].value.trim();
@@ -604,6 +605,7 @@ $(document).on('click','#signup-with-email-btn',function (event) {
         'pronouns': pronouns,
         'password': password
     };
+    resendData = data;
 
     console.log(data);
 
@@ -761,11 +763,12 @@ $(document).on('click','.verify-btn',function (event) {
 
 $(document).on('click','.resend-link ',function (event) {
 
-    fetch('http://localhost:8080/auth/email/signup/otp', {
+    fetch('http://localhost:8080/auth/email/signup/otp/'+resendData.email, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         },
+
     })
         .then(response => {
             if (!response.ok) {

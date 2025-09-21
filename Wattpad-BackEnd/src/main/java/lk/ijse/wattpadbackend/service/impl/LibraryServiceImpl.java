@@ -24,6 +24,7 @@ public class LibraryServiceImpl implements LibraryService {
     private final LibraryStoryRepository libraryStoryRepository;
     private final ChapterRepository chapterRepository;
     private final StoryRepository storyRepository;
+    private final ChapterLikeRepository chapterLikeRepository;
 
     @Override
     public List<LibraryStoryDTO> getLibraryStories(String name) {
@@ -47,7 +48,13 @@ public class LibraryServiceImpl implements LibraryService {
                 libraryStoryDTO.setStoryCoverImagePath(x.getStory().getCoverImagePath());
                 libraryStoryDTO.setTotalParts(x.getStory().getParts().longValue());
 
-                long viewsLong = x.getStory().getViews().longValue();
+                long count1 = 0;
+                List<Chapter> chapters = x.getStory().getChapters();
+                for (Chapter a : chapters){
+                    count1+=a.getViews();
+                }
+
+                long viewsLong = count1;
 
                 String viewsInStr = "";
                 if(viewsLong<=1000){
@@ -76,7 +83,12 @@ public class LibraryServiceImpl implements LibraryService {
                 }
                 libraryStoryDTO.setViews(viewsInStr);
 
-                long likesLong = x.getStory().getLikes().longValue();
+                long count2 = 0;
+                for(Chapter b : x.getStory().getChapters()){
+                    count2+=chapterLikeRepository.findAllByChapter(b).size();
+                }
+
+                long likesLong = count2;
 
                 String likesInStr = "";
                 if(likesLong<=1000){
@@ -113,7 +125,7 @@ public class LibraryServiceImpl implements LibraryService {
                 List<Chapter> chapterList = x.getStory().getChapters();
                 Long lastOpenedChapterId = null;
                 for (int i = 0; i < chapterList.size(); i++) {
-                    if(i==x.getLastOpenedPage()){
+                    if((i+1)==x.getLastOpenedPage()){
                        lastOpenedChapterId = chapterList.get(i).getId();
                     }
                 }

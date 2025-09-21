@@ -268,6 +268,7 @@
                     `;
           currentParagraph.appendChild(mediaDiv);
           localStorage.setItem("isSaved", "false");
+          $('.saved-indicator').text('Unsaved');
           addNewParagraph(); // Add a new paragraph after adding video
         } else {
           alert('Please enter a valid YouTube URL (e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ)');
@@ -300,6 +301,7 @@
                 `;
         currentParagraph.appendChild(mediaDiv);
         localStorage.setItem("isSaved", "false");
+        $('.saved-indicator').text('Unsaved');
         addNewParagraph(); // Add a new paragraph after adding image
       };
       reader.readAsDataURL(file);
@@ -323,6 +325,7 @@
     }
     mediaDiv.remove();
     localStorage.setItem("isSaved", "false");
+    $('.saved-indicator').text('Unsaved');
     updateWordCount();
   }
 
@@ -357,6 +360,7 @@
         `;
     editor.appendChild(newParagraph);
     localStorage.setItem("isSaved", "false");
+    $('.saved-indicator').text('Unsaved');
 
     // Focus on new textarea after it's added to DOM
     const newTextarea = newParagraph.querySelector('.paragraph-textarea');
@@ -399,6 +403,9 @@
 
     document.getElementById('wordCount').textContent = totalWords;
     document.getElementById('wordCountDisplay').textContent = totalWords + ' words';
+
+    localStorage.setItem("isSaved", "false");
+    $('.saved-indicator').text('unsaved');
   }
 
 

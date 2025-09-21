@@ -131,11 +131,17 @@
         </div>
       </li>
       <li class="oAArJ">
-        <button class="_5FXgC" id="try-premium-btn">
+        <button class="_5FXgC" id="try-premium-btn" style="display: flex;">
                     <span class="ahwLl">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M9.38562 11.778L8.95363 16.0545C8.89557 16.6292 9.64434 16.8996 9.96699 16.4205L14.9043 9.08896C15.1528 8.72003 14.8884 8.2233 14.4436 8.2233H10.6144L11.0464 3.94683C11.1044 3.37214 10.3557 3.10166 10.033 3.58077L5.09567 10.9123C4.84721 11.2813 5.11159 11.778 5.55639 11.778H9.38562Z" fill="var(--ds-base-2-60)"></path></svg>
                     </span>
           Try Premium
+        </button>
+        <button class="_5FXgC" id="premium-member" style="display: none;">
+                    <span class="ahwLl">
+                        <svg style="transform: translateY(-2.5px);" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#3b19a9" d="M4 20h16l-2-10-4 3-2-7-2 7-4-3-2 10z"/></svg>
+                    </span>
+          Premium Member
         </button>
       </li>
     </ul>
@@ -259,6 +265,8 @@
     </div>
     <!--a2 - story title-->
     <div class="Qm-Xt">
+      <!--only show in wattpad original-->
+      <div id="wattpad-original-tag" style="margin-bottom: 5px; display: none;" class="_1sApW"><span>Wattpad Original</span></div>
       <!--b1-->
       <div class="-ydhR">
         <div id="story-title" class="gF-N5">Revenge [Taekook] // Short story //</div>
@@ -313,19 +321,19 @@
               </div>
             </div>
           </li>
-          <li class="_0jt-y">
-            <div class="uG9U1">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--wp-neutral-31)" stroke="var(--ds-neutral-80)" stroke-width="0" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class="MAVbp"><g><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.00004 0.333344C3.33337 0.333344 0.333374 3.33334 0.333374 7.00001C0.333374 10.6667 3.33337 13.6667 7.00004 13.6667C10.6667 13.6667 13.6667 10.6667 13.6667 7.00001C13.6667 3.33334 10.6667 0.333344 7.00004 0.333344ZM7.00004 12.3333C4.06004 12.3333 1.66671 9.94001 1.66671 7.00001C1.66671 4.06001 4.06004 1.66668 7.00004 1.66668C9.94004 1.66668 12.3334 4.06001 12.3334 7.00001C12.3334 9.94001 9.94004 12.3333 7.00004 12.3333ZM7.33337 3.66668H6.33337V7.66668L9.80004 9.80001L10.3334 8.93334L7.33337 7.13334V3.66668Z" fill="#686868"></path></svg></g></svg>
-              <span class="_6picm" aria-hidden="true">Time</span>
-            </div>
-            <span class="sr-only">Time 58m</span>
-            <div aria-hidden="true" data-testid="stats-value-container">
-              <div data-tip="0 hours, 58 minutes" data-tooltip-id="story-stat-tooltip" data-tooltip-html="0 hours, 58 minutes" data-testid="tooltip">
-                <span class="sr-only">0 hours, 58 minutes</span>
-                <span class="_5TZHL ixBb9" aria-hidden="true" data-testid="stats-value">58m</span>
-              </div>
-            </div>
-          </li>
+<!--          <li class="_0jt-y">-->
+<!--            <div class="uG9U1">-->
+<!--              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(&#45;&#45;wp-neutral-31)" stroke="var(&#45;&#45;ds-neutral-80)" stroke-width="0" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round" class="MAVbp"><g><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.00004 0.333344C3.33337 0.333344 0.333374 3.33334 0.333374 7.00001C0.333374 10.6667 3.33337 13.6667 7.00004 13.6667C10.6667 13.6667 13.6667 10.6667 13.6667 7.00001C13.6667 3.33334 10.6667 0.333344 7.00004 0.333344ZM7.00004 12.3333C4.06004 12.3333 1.66671 9.94001 1.66671 7.00001C1.66671 4.06001 4.06004 1.66668 7.00004 1.66668C9.94004 1.66668 12.3334 4.06001 12.3334 7.00001C12.3334 9.94001 9.94004 12.3333 7.00004 12.3333ZM7.33337 3.66668H6.33337V7.66668L9.80004 9.80001L10.3334 8.93334L7.33337 7.13334V3.66668Z" fill="#686868"></path></svg></g></svg>-->
+<!--              <span class="_6picm" aria-hidden="true">Time</span>-->
+<!--            </div>-->
+<!--            <span class="sr-only">Time 58m</span>-->
+<!--            <div aria-hidden="true" data-testid="stats-value-container">-->
+<!--              <div data-tip="0 hours, 58 minutes" data-tooltip-id="story-stat-tooltip" data-tooltip-html="0 hours, 58 minutes" data-testid="tooltip">-->
+<!--                <span class="sr-only">0 hours, 58 minutes</span>-->
+<!--                <span class="_5TZHL ixBb9" aria-hidden="true" data-testid="stats-value">58m</span>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </li>-->
         </ul>
       </div>
       <!--b4-->

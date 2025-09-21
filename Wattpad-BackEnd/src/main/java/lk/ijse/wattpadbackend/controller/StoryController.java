@@ -1,6 +1,7 @@
 package lk.ijse.wattpadbackend.controller;
 
 import lk.ijse.wattpadbackend.dto.*;
+import lk.ijse.wattpadbackend.service.EmailService;
 import lk.ijse.wattpadbackend.service.StoryService;
 import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.List;
 public class StoryController {
 
     private final StoryService storyService;
+    private final EmailService emailService;
 
     @GetMapping
     @PreAuthorize("hasRole('USER')")
@@ -47,8 +49,9 @@ public class StoryController {
     @PreAuthorize("hasRole('USER')")
     public APIResponse getAStoryById(@PathVariable long id){
 
-        StoryDTO storyDTO = storyService.getAStoryById(id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
+        StoryDTO storyDTO = storyService.getAStoryById(auth.getName(),id);
         return new APIResponse(202,"Story data successfully loaded for story id: "+id,storyDTO);
     }
 
@@ -72,6 +75,8 @@ public class StoryController {
                                        @RequestParam("language") String language,
                                        @RequestParam("copyright") String copyright,
                                        @RequestParam("isMature") String isMature,
+                                       @RequestParam("isWattpadOriginal") int isWattpadOriginal,
+                                       @RequestParam("coinsAmount") int coinsAmount,
                                        @RequestParam("coverImageUrl") String coverImageUrl){
 
 //        boolean hasValidCoverImage = coverImage != null && !coverImage.isEmpty() && coverImage.getSize() > 0;
@@ -94,6 +99,8 @@ public class StoryController {
         storyCreateDTO.setLanguage(language);
         storyCreateDTO.setCategory(category);
         storyCreateDTO.setCoverImagePath(coverImageUrl);
+        storyCreateDTO.setIsWattpadOriginal(isWattpadOriginal);
+        storyCreateDTO.setCoinsAmount(coinsAmount);
 
 
 //        if (hasValidCoverImage) {
@@ -250,8 +257,20 @@ public class StoryController {
     @PreAuthorize("hasRole('ADMIN')")
     public APIResponse storyUnpublishByAdmin(@PathVariable long storyId){
 
-        storyService.storyUnpublishByAdmin(storyId);
+        StoryDTO storyDTO = storyService.storyUnpublishByAdmin(storyId);
+
+        emailService.sendStoryUnpublishedEmail(storyDTO.getUserEmail(),storyDTO.getUsername(), storyDTO.getTitle());
+
         return new APIResponse(202,"Successfully unpublished the story id : "+storyId, null);
+    }
+
+    @GetMapping("/check/restricted/{storyId}")
+    public APIResponse checkThisStoryRestrictedToCurrentUserOrNot(@PathVariable long storyId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean result = storyService.checkThisStoryRestrictedToCurrentUserOrNot(auth.getName(),storyId);
+        return new APIResponse(202,"Successfully checked restriction",result);
     }
 }
 

@@ -17,6 +17,58 @@
     <link rel="stylesheet" href="assets/style/variables.css">
     <link rel="stylesheet" href="assets/style/create-story-page-style.css">
     <link rel="stylesheet" href="assets/style/footer-style.css">
+    <style>
+        /* Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            border-radius: 50%;
+            left: 4px;
+            bottom: 4px;
+            background-color: var(--white-color);
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: var(--base-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .status-text {
+            font-weight: bold;
+            color: var(--base-color);
+        }
+    </style>
 </head>
 <body style="display: block; visibility: hidden; opacity: 0;">
 
@@ -87,11 +139,26 @@
                         </div>
                         <select class="form-select" name="category">
                             <option value="">Select a category</option>
-                            <option value="romance">Romance</option>
-                            <option value="fantasy">Fantasy</option>
-                            <option value="young-adult">Young Adult</option>
-                            <option value="mystery">Mystery</option>
-                            <option value="science-fiction">Science Fiction</option>
+                            <option value="New Adult">New Adult</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Contemporary Lit">Contemporary Lit</option>
+                            <option value="Fanfiction">Fanfiction</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Diverse Lit">Diverse Lit</option>
+                            <option value="Historical Fiction">Historical Fiction</option>
+                            <option value="Horror">Horror</option>
+                            <option value="Humor">Humor</option>
+                            <option value="Mystery">Mystery</option>
+                            <option value="Thriller">Thriller</option>
+                            <option value="Non-Fiction">Non-Fiction</option>
+                            <option value="Paranormal">Paranormal</option>
+                            <option value="Poetry">Poetry</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Science Fiction">Science Fiction</option>
+                            <option value="Short Story">Short Story</option>
+                            <option value="Teen Fiction">Teen Fiction</option>
+                            <option value="Werewolf">Werewolf</option>
+                            <option value="LGBTQ%2B">LGBTQ+</option>
                         </select>
                     </div>
 
@@ -170,6 +237,34 @@
                         <div class="rating-description">
                             Your story is appropriate for all audiences. The Wattpad community has the ability to rate your story Mature. For more info, please read <a href="/guidelines" class="rating-link">Wattpad's Content Guidelines</a>: <br>
                             <a href="/guidelines" class="rating-link">https://www.wattpad.com/guidelines</a>
+                        </div>
+                    </div>
+
+                    <!--wattpad original button-->
+                    <div class="form-group wattpad-original-form-group" style="padding-top: 17px; display: none;">
+                        <div class="form-label">
+                            Wattpad Original
+                            <div class="info-icon-small">i</div>
+                        </div>
+                        <div class="rating-section">
+                            <span>Wattpad Original</span>
+                            <input type="hidden" name="isMature" id="isWattpadOriginalInput" value="0">
+                            <label class="switch">
+                                <input type="checkbox" id="storyTypeToggle">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!--unlock coins-->
+                    <div class="form-group coins-form-group" style="padding-top: 15px; display: none;">
+                        <div class="form-label">
+                            Set Unlock Coins
+                            <div class="info-icon-small">i</div>
+                        </div>
+                        <div class="rating-section">
+                            <span>Coins Amount</span>
+                            <input style="width: 300px;" type="text" name="coinsAmount" class="form-input" placeholder="100"/>
                         </div>
                     </div>
                 </div>

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface StoryService {
 
-    StoryDTO getAStoryById(long id);
+    StoryDTO getAStoryById(String username, long id);
 
     CreateStoryResponseDTO createANewStory(String name, StoryCreateDTO storyCreateDTO);
 
@@ -32,5 +32,7 @@ public interface StoryService {
 
     AdminStoryResponseDTO loadStoriesForAdminBySortingCriteria(long no, AdminStoryRequestDTO adminStoryRequestDTO);
 
-    void storyUnpublishByAdmin(long storyId);
+    StoryDTO storyUnpublishByAdmin(long storyId);
+
+    boolean checkThisStoryRestrictedToCurrentUserOrNot(String name, long storyId);
 }

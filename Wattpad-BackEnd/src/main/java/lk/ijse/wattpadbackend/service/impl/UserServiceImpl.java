@@ -3,16 +3,14 @@ package lk.ijse.wattpadbackend.service.impl;
 import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.entity.*;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
-import lk.ijse.wattpadbackend.repository.ChapterLikeRepository;
-import lk.ijse.wattpadbackend.repository.FollowingRepository;
-import lk.ijse.wattpadbackend.repository.StoryRepository;
-import lk.ijse.wattpadbackend.repository.UserRepository;
+import lk.ijse.wattpadbackend.repository.*;
 import lk.ijse.wattpadbackend.service.UserService;
 import lk.ijse.wattpadbackend.util.Roles;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -26,6 +24,9 @@ public class UserServiceImpl implements UserService {
     private final FollowingRepository followingRepository;
     private final StoryRepository storyRepository;
     private final ChapterLikeRepository chapterLikeRepository;
+    private final UserPremiumRepository userPremiumRepository;
+    private final UserBlockRepository userBlockRepository;
+    private final UserMuteRepository userMuteRepository;
 
     @Override
     public String getUserProfilePic(String name) {
@@ -106,6 +107,25 @@ public class UserServiceImpl implements UserService {
             }
             else{
                 userDTO.setIsFollowedByTheCurrentUser(0);
+            }
+
+            userDTO.setIsVerifiedByWattpad(user.getIsVerifiedByWattpad());
+            userDTO.setCoins(user.getCoins());
+
+            UserBlock userBlock = userBlockRepository.findByBlockedByUserAndBlockedUser(currentUser,user);
+            if(userBlock!=null){
+                userDTO.setIsBlocked(1);
+            }
+            else{
+                userDTO.setIsBlocked(0);
+
+                UserMute userMute = userMuteRepository.findByMutedByUserAndMutedUser(currentUser,user);
+                if(userMute!=null){
+                    userDTO.setIsMuted(1);
+                }
+                else{
+                    userDTO.setIsMuted(0);
+                }
             }
 
             return userDTO;
@@ -672,6 +692,15 @@ public class UserServiceImpl implements UserService {
             userDTO.setUsername(user.getUsername());
             userDTO.setPronouns(user.getPronouns());
             userDTO.setBirthday(user.getBirthday());
+            userDTO.setIsVerifiedByWattpad(user.getIsVerifiedByWattpad());
+
+            List<UserPremium> userPremiumList = userPremiumRepository.findByUserAndExpireDateAfter(user, LocalDate.now());
+            if(!userPremiumList.isEmpty()){
+                userDTO.setIsUserPremium(1);
+            }
+            else{
+                userDTO.setIsUserPremium(0);
+            }
 
             return userDTO;
         }
@@ -1296,7 +1325,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void verifyUserByUserId(long userId) {
+    public User verifyUserByUserId(long userId) {
 
         try{
             Optional<User> optionalUser = userRepository.findById((int) userId);
@@ -1307,6 +1336,8 @@ public class UserServiceImpl implements UserService {
 
             user.setIsVerifiedByWattpad(1);
             userRepository.save(user);
+
+            return user;
         }
         catch (UserNotFoundException e){
             throw e;
@@ -1333,6 +1364,38 @@ public class UserServiceImpl implements UserService {
             }
             return userList.size();
 
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean checkThisUserProfileRestrictedToCurrentUserOrNot(String name, long userId) {
+
+        try{
+            User currentUser = userRepository.findByUsername(name);
+            if(currentUser==null){
+                throw new UserNotFoundException("Current user not found.");
+            }
+
+            Optional<User> optionalUser = userRepository.findById((int) userId);
+            if(!optionalUser.isPresent()){
+                throw new UserNotFoundException("User not found.");
+            }
+            User user = optionalUser.get();
+
+            UserBlock userBlock = userBlockRepository.findByBlockedByUserAndBlockedUser(user,currentUser);
+            if(userBlock!=null){
+                return true;
+            }
+            else{
+                return false;
+            }
+
+        }
+        catch (UserNotFoundException e){
+            throw e;
         }
         catch (RuntimeException e) {
             throw new RuntimeException(e);

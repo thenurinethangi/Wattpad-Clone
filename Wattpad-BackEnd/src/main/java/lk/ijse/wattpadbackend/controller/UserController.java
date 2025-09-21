@@ -2,6 +2,8 @@ package lk.ijse.wattpadbackend.controller;
 
 import jakarta.validation.Valid;
 import lk.ijse.wattpadbackend.dto.*;
+import lk.ijse.wattpadbackend.entity.User;
+import lk.ijse.wattpadbackend.service.EmailService;
 import lk.ijse.wattpadbackend.service.UserService;
 import lk.ijse.wattpadbackend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final EmailService emailService;
 
     @GetMapping()
     @PreAuthorize("hasRole('USER')")
@@ -211,7 +214,10 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public APIResponse verifyUserByUserId(@PathVariable long userId){
 
-        userService.verifyUserByUserId(userId);
+        User user = userService.verifyUserByUserId(userId);
+
+        emailService.sendAdminVerifiedUserEmail(user.getEmail(), user.getUsername());
+
         return new APIResponse(202,"Successfully verify user id: "+userId,null);
     }
 
@@ -221,6 +227,15 @@ public class UserController {
 
         long totalUserCount = userService.getTotalUserCount();
         return new APIResponse(202,"Successfully get total user count",totalUserCount);
+    }
+
+    @GetMapping("/check/restricted/{userId}")
+    public APIResponse checkThisUserProfileRestrictedToCurrentUserOrNot(@PathVariable long userId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean result = userService.checkThisUserProfileRestrictedToCurrentUserOrNot(auth.getName(),userId);
+        return new APIResponse(202,"Successfully checked restriction",result);
     }
 }
 

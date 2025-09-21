@@ -97,7 +97,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public void addPaymentForPremiumBuy(String name, TransactionRequestDTO transactionRequestDTO) {
+    public User addPaymentForPremiumBuy(String name, TransactionRequestDTO transactionRequestDTO) {
 
         try{
             User user = userRepository.findByUsername(name);
@@ -159,6 +159,8 @@ public class TransactionServiceImpl implements TransactionService {
                 userRepository.save(user);
             }
 
+            return user;
+
         }
         catch (UserNotFoundException e){
             throw e;
@@ -193,7 +195,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public void addPaymentForCoinsBuy(String name, TransactionRequestDTO transactionRequestDTO) {
+    public User addPaymentForCoinsBuy(String name, TransactionRequestDTO transactionRequestDTO) {
 
         try{
             User user = userRepository.findByUsername(name);
@@ -288,6 +290,8 @@ public class TransactionServiceImpl implements TransactionService {
                 user.setCoins(coins);
                 userRepository.save(user);
             }
+
+            return user;
 
         }
         catch (UserNotFoundException e){

@@ -39,4 +39,14 @@ public interface ChapterService {
     boolean checkCurrentCommentOrReplyByCurrentUser(String name, UserCommentTypeDTO userCommentTypeDTO);
 
     void deleteCommentOrReply(String name, UserCommentTypeDTO userCommentTypeDTO);
+
+    boolean checkThisChapterRestrictedToCurrentUserOrNot(String name, long chapterId);
+
+    boolean unlockStory(String name, long chapterId);
+
+    boolean unlockChapter(String name, long chapterId);
+
+    void increaseViews(String name, long chapterId);
+
+    void updateLastReadChapter(String name, long chapterId);
 }

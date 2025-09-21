@@ -38,6 +38,8 @@ public class Chapter {
     @Column(nullable = false)
     private int publishedOrDraft = 0;
 
+    private int coinsAmount = 0;
+
     @ManyToOne
     @JoinColumn(name = "story_id", nullable = false)
     private Story story;

@@ -21,7 +21,7 @@ public class Story {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
 
     private String mainCharacters;
@@ -63,6 +63,8 @@ public class Story {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     private int isWattpadOriginal = 0;
+
+    private int coinsAmount = 0;
 
     @Transient
     private long totalViews;

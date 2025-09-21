@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Purchase Successful!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Source Sans 3',serif; background-color: #f5f5f5; color: #333;">
+<table role="presentation" style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+    <!-- Header with Logo -->
+    <tr>
+        <td style="padding: 20px; text-align: center; background-color: #ffffff; border-bottom: 1px solid #e0e0e0;">
+            <img src="https://images.seeklogo.com/logo-png/47/2/wattpad-logo-png_seeklogo-479298.png" alt="Wattpad" style="width: 120px; height: auto;">
+        </td>
+    </tr>
+
+    <!-- Main Content -->
+    <tr>
+        <td style="padding: 40px 30px;">
+            <h1 style="font-size: 24px; font-weight: 650; margin: 0 0 20px; color: #333;">Coin Purchase Successful!</h1>
+            <p style="font-size: 16px; line-height: 1.5; margin: 0 0 20px; color: #666;">
+                Congratulations, [[${username}]]! Your purchase of [[${coinAmount}]] coins was successful.
+            </p>
+            <p style="font-size: 16px; line-height: 1.5; margin: 0 0 20px; color: #666;">
+                You can now unlock Wattpad Originals and enjoy premium content with your new coins.
+            </p>
+            <p style="font-size: 14px; line-height: 1.5; margin: 0 0 20px; color: #666;">
+                If you have any questions, visit our support page.
+            </p>
+        </td>
+    </tr>
+
+    <!-- Button (Link to Unlock Originals) -->
+    <tr>
+        <td style="padding: 0 30px 40px; text-align: center;">
+            <a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/originals.html" style="display: inline-block; background-color: #ff5a1f; color: #ffffff; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; font-size: 16px;">Unlock Wattpad Originals</a>
+        </td>
+    </tr>
+
+    <!-- Footer -->
+    <tr>
+        <td style="padding: 20px 30px; background-color: #f8f9fa; text-align: center; font-size: 12px; color: #999; border-top: 1px solid #e0e0e0;">
+            <p style="margin: 0 0 10px;">Wattpad Support</p>
+            <p style="margin: 0;">This message was sent to <strong th:text="${userEmail}">user@example.com</strong>. You are receiving this email because you purchased coins on Wattpad (31 Adelaide Street East, P.O. Box 656, Toronto, ON M5C 3J6). If you no longer want to receive these emails, you can <a href="#" style="color: #ff5a1f;">unsubscribe here</a>.</p>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

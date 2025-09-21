@@ -14,4 +14,7 @@ public class ChapterSimpleDTO {
     private long id;
     private String title;
     private String publishedDate;
+    private int isPublishedOrDraft;
+    private int chapterCoins;
+    private int isUnlocked;
 }

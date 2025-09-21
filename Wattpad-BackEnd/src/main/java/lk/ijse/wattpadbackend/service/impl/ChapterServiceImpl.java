@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,22 +32,31 @@ public class ChapterServiceImpl implements ChapterService {
     private final ReplyRepository replyRepository;
     private final ParagraphCommentRepository paragraphCommentRepository;
     private final ParagraphRepository paragraphRepository;
+    private final UserBlockRepository userBlockRepository;
+    private final UserWattpadOriginalStoryRepository userWattpadOriginalStoryRepository;
+    private final UserWattpadOriginalChapterRepository userWattpadOriginalChapterRepository;
+    private final LibraryRepository libraryRepository;
+    private final LibraryStoryRepository libraryStoryRepository;
 
     @Override
     public ChapterDTO getAChapterById(String username,long id) {
 
         try{
+            User currentUser = userRepository.findByUsername(username);
+            if(currentUser==null){
+                throw new UserNotFoundException("User not found.");
+            }
+
             Optional<Chapter> chapterOptional = chapterRepository.findById((int) id);
 
             if(!chapterOptional.isPresent()){
                 throw new NotFoundException("Chapter not found.");
             }
-
             Chapter chapter = chapterOptional.get();
 
-//            if(chapter.getPublishedOrDraft()==0){
-//                throw new NotFoundException("Chapter not found.");
-//            }
+            if(chapter.getPublishedOrDraft()==0 && chapter.getStory().getUser().getId()!=currentUser.getId()){
+                throw new NotFoundException("Chapter not found./Draft");
+            }
 
             ChapterDTO chapterDTO = new ChapterDTO();
 
@@ -55,7 +65,8 @@ public class ChapterServiceImpl implements ChapterService {
             chapterDTO.setCoverImagePath(chapter.getCoverImagePath());
             chapterDTO.setIsPublishedOrDraft(chapter.getPublishedOrDraft());
 
-            long likesLong = chapter.getLikes();
+            List<ChapterLike> chapterLikeList = chapterLikeRepository.findAllByChapter(chapter);
+            long likesLong = chapterLikeList.size();
 
             String likesInStr = "";
             if(likesLong<=1000){
@@ -113,7 +124,13 @@ public class ChapterServiceImpl implements ChapterService {
             }
             chapterDTO.setViews(viewsInStr);
 
-            long commentsLong = chapter.getComments();
+            List<ChapterComment> chapterCommentList = chapterCommentRepository.findAllByChapter(chapter);
+            long commentsCount = chapterCommentList.size();
+            for (Paragraph x : chapter.getParagraphs()){
+                commentsCount+=x.getParagraphComments().size();
+            }
+
+            long commentsLong = commentsCount;
 
             String commentsInStr = "";
             if(commentsLong<=1000){
@@ -145,28 +162,41 @@ public class ChapterServiceImpl implements ChapterService {
             chapterDTO.setStoryId(chapter.getStory().getId());
             chapterDTO.setStoryTitle(chapter.getStory().getTitle());
             chapterDTO.setStoryCoverImagePath(chapter.getStory().getCoverImagePath());
+            chapterDTO.setIsWattpadOriginal(chapter.getStory().getIsWattpadOriginal());
+            chapterDTO.setChapterCoins(chapter.getCoinsAmount());
+            chapterDTO.setStoryCoins(chapter.getStory().getCoinsAmount());
 
             chapterDTO.setUserId(chapter.getStory().getUser().getId());
             chapterDTO.setUsername(chapter.getStory().getUser().getUsername());
             chapterDTO.setUserProfilePicPath(chapter.getStory().getUser().getProfilePicPath());
 
-            //here must have a logic for check current user liked this chapter or not
-            User user = userRepository.findByUsername(username);
-            if(user==null){
-                throw new UserNotFoundException("User not found.");
-            }
-
             chapterDTO.setIsFromCurrentUser(0);
             long storyId = chapter.getStory().getId();
-            List<Story> storyList = storyRepository.findAllByUser(user);
+            List<Story> storyList = storyRepository.findAllByUser(currentUser);
             for (Story y : storyList) {
                 if (storyId == y.getId()) {
                     chapterDTO.setIsFromCurrentUser(1);
+                    chapterDTO.setIsUnlocked(1);
                     break;
                 }
             }
 
-            ChapterLike chapterLike = chapterLikeRepository.findByChapterAndUser(chapter,user);
+            List<UserWattpadOriginalStory> userWattpadOriginalStoryList = userWattpadOriginalStoryRepository.findByStoryAndUser(chapter.getStory(),currentUser);
+            if(userWattpadOriginalStoryList.isEmpty()){
+
+                List<UserWattpadOriginalChapter> userWattpadOriginalChapterList = userWattpadOriginalChapterRepository.findByChapterAndUser(chapter,currentUser);
+                if(userWattpadOriginalChapterList.isEmpty()){
+                    chapterDTO.setIsUnlocked(0);
+                }
+                else{
+                    chapterDTO.setIsUnlocked(1);
+                }
+            }
+            else{
+                chapterDTO.setIsUnlocked(1);
+            }
+
+            ChapterLike chapterLike = chapterLikeRepository.findByChapterAndUser(chapter,currentUser);
             if(chapterLike==null){
                 chapterDTO.setIsLiked(0);
             }
@@ -178,9 +208,13 @@ public class ChapterServiceImpl implements ChapterService {
 
             List<ChapterSimpleDTO> chapterSimpleDTOList = new ArrayList<>();
             for (Chapter x : chapterList){
+                if(x.getPublishedOrDraft()==0 && x.getStory().getUser().getId()!=currentUser.getId()){
+                    continue;
+                }
                 ChapterSimpleDTO chapterSimpleDTO = new ChapterSimpleDTO();
                 chapterSimpleDTO.setId(x.getId());
                 chapterSimpleDTO.setTitle(x.getTitle());
+                chapterSimpleDTO.setIsPublishedOrDraft(x.getPublishedOrDraft());
 
                 chapterSimpleDTOList.add(chapterSimpleDTO);
             }
@@ -877,6 +911,7 @@ public class ChapterServiceImpl implements ChapterService {
             chapter.setTitle(chapterSaveRequestDTO.getChapterTitle());
             chapter.setCoverImagePath(chapterSaveRequestDTO.getChapterCoverUrl());
             chapter.setPublishedOrDraft(1);
+            chapter.setCoinsAmount(chapterSaveRequestDTO.getCoinsAmount());
             chapterRepository.save(chapter);
 
             paragraphRepository.deleteAllByChapter(chapter);
@@ -930,6 +965,7 @@ public class ChapterServiceImpl implements ChapterService {
             chapter.setPublishedOrDraft(1);
             chapter.setTitle(chapterSaveRequestDTO.getChapterTitle());
             chapter.setCoverImagePath(chapterSaveRequestDTO.getChapterCoverUrl());
+            chapter.setCoinsAmount(chapterSaveRequestDTO.getCoinsAmount());
 
             Chapter savedChapter = chapterRepository.save(chapter);
 
@@ -1301,6 +1337,203 @@ public class ChapterServiceImpl implements ChapterService {
 
         }
         catch (NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean checkThisChapterRestrictedToCurrentUserOrNot(String name, long chapterId) {
+
+        try{
+            User currentUser = userRepository.findByUsername(name);
+            if(currentUser==null){
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Chapter> optionalChapter = chapterRepository.findById((int) chapterId);
+            if(!optionalChapter.isPresent()){
+                throw new NotFoundException("Chapter not found.");
+            }
+            Chapter chapter = optionalChapter.get();
+
+            UserBlock userBlock = userBlockRepository.findByBlockedByUserAndBlockedUser(chapter.getStory().getUser(),currentUser);
+            if(userBlock!=null){
+                return true;
+            }
+            else{
+                return false;
+            }
+
+        }
+        catch (UserNotFoundException | NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean unlockStory(String name, long chapterId) {
+
+        try {
+            User currentUser = userRepository.findByUsername(name);
+            if (currentUser == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Chapter> optionalChapter = chapterRepository.findById((int) chapterId);
+            if (!optionalChapter.isPresent()) {
+                throw new NotFoundException("Chapter not found.");
+            }
+            Chapter chapter = optionalChapter.get();
+
+            if(currentUser.getCoins()>chapter.getStory().getCoinsAmount()){
+
+                UserWattpadOriginalStory userWattpadOriginalStory = new UserWattpadOriginalStory();
+                userWattpadOriginalStory.setStory(chapter.getStory());
+                userWattpadOriginalStory.setUser(currentUser);
+
+                userWattpadOriginalStoryRepository.save(userWattpadOriginalStory);
+
+                int coins = currentUser.getCoins();
+                coins= coins-chapter.getStory().getCoinsAmount();
+                currentUser.setCoins(coins);
+                userRepository.save(currentUser);
+
+                return true;
+            }
+            else{
+                return false;
+            }
+
+        }
+        catch (UserNotFoundException | NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean unlockChapter(String name, long chapterId) {
+
+        try {
+            User currentUser = userRepository.findByUsername(name);
+            if (currentUser == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Chapter> optionalChapter = chapterRepository.findById((int) chapterId);
+            if (!optionalChapter.isPresent()) {
+                throw new NotFoundException("Chapter not found.");
+            }
+            Chapter chapter = optionalChapter.get();
+
+            if(currentUser.getCoins()>chapter.getCoinsAmount()) {
+
+                UserWattpadOriginalChapter userWattpadOriginalChapter = new UserWattpadOriginalChapter();
+                userWattpadOriginalChapter.setUser(currentUser);
+                userWattpadOriginalChapter.setChapter(chapter);
+
+                userWattpadOriginalChapterRepository.save(userWattpadOriginalChapter);
+
+                int coins = currentUser.getCoins();
+                coins= coins-chapter.getCoinsAmount();
+                currentUser.setCoins(coins);
+                userRepository.save(currentUser);
+
+                return true;
+            }
+            else{
+                return false;
+            }
+
+        }
+        catch (UserNotFoundException | NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void increaseViews(String name, long chapterId) {
+
+        try {
+            User currentUser = userRepository.findByUsername(name);
+            if (currentUser == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Chapter> optionalChapter = chapterRepository.findById((int) chapterId);
+            if (!optionalChapter.isPresent()) {
+                throw new NotFoundException("Chapter not found.");
+            }
+            Chapter chapter = optionalChapter.get();
+
+            long views = chapter.getViews();
+            views+=1;
+            chapter.setViews(views);
+            chapterRepository.save(chapter);
+        }
+        catch (UserNotFoundException | NotFoundException e){
+            throw e;
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updateLastReadChapter(String name, long chapterId) {
+
+        try {
+            User currentUser = userRepository.findByUsername(name);
+            if (currentUser == null) {
+                throw new UserNotFoundException("User not found.");
+            }
+
+            Optional<Chapter> optionalChapter = chapterRepository.findById((int) chapterId);
+            if (!optionalChapter.isPresent()) {
+                throw new NotFoundException("Chapter not found.");
+            }
+            Chapter chapter = optionalChapter.get();
+
+            Library library = libraryRepository.findByUser(currentUser);
+            if(library==null){
+                throw new NotFoundException("Library not found.");
+            }
+
+            int lastReadChapter = 1;
+            int no = 0;
+            List<Chapter> chapterList = chapterRepository.findAllByStory(chapter.getStory());
+            for (Chapter x : chapterList){
+                no++;
+                if(x.getId()==chapter.getId()){
+                    lastReadChapter = no;
+                    break;
+                }
+            }
+
+            List<LibraryStory> libraryStories = libraryStoryRepository.findAllByLibrary(library);
+            for (LibraryStory x : libraryStories){
+                if(chapter.getStory().getId()==x.getStory().getId()){
+                    x.setLastOpenedPage(lastReadChapter);
+                    x.setLastOpenedAt(LocalDateTime.now());
+                    libraryStoryRepository.save(x);
+                }
+            }
+
+        }
+        catch (UserNotFoundException | NotFoundException e){
             throw e;
         }
         catch (RuntimeException e) {

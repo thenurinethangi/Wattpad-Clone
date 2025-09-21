@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Restricted</title>
+    <link rel="icon" type="image/ico" href="assets/image/wattpad-icon-2-removebg-preview.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton+SC&family=Cinzel+Decorative:wght@400;700;900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Roboto:ital,wght@1,800&family=Rubik:ital@0;1&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --white-color: rgb(255, 255, 255);
+            --primary-font-face: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            --black-text-color: #222222;
+            --base-color: #ff6122;
+            --ligh-black: #222222;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--white-color);
+            font-family: var(--primary-font-face);
+            color: var(--black-text-color);
+        }
+
+        .restricted-container {
+            text-align: center;
+            max-width: 400px;
+            padding: 2rem;
+        }
+
+        .restricted-icon {
+            margin-bottom: 1.5rem;
+        }
+
+        .restricted-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--ligh-black);
+        }
+
+        .restricted-message {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            color: #444;
+        }
+
+        .back-btn {
+            background-color: var(--base-color);
+            color: var(--white-color);
+            border: none;
+            padding: 0.7rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #e3511b;
+        }
+    </style>
+</head>
+<body>
+<div class="restricted-container">
+    <!-- Mood/Blocked icon -->
+    <div class="restricted-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="70" height="70">
+            <circle cx="12" cy="12" r="10" fill="#ff6122"/>
+            <circle cx="9" cy="10" r="1.5" fill="#fff"/>
+            <circle cx="15" cy="10" r="1.5" fill="#fff"/>
+            <path d="M8 17c1.5-2 6.5-2 8 0" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+    </div>
+
+    <div class="restricted-title">Story Restricted</div>
+    <div class="restricted-message">
+        This story is not available to you.
+        The author has restricted access.
+    </div>
+
+    <button class="back-btn" onclick="window.location.href='http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/home-page.html'">Go Home</button>
+</div>
+</body>
+</html>
