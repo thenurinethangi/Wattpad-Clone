@@ -1,4 +1,4 @@
-Wattpad Clone – Full-Stack Web Application
+**Wattpad Clone – Full-Stack Web Application**
 
 A full-featured Wattpad clone built with Java Spring Boot, MySQL, and a responsive HTML/CSS/JS/Bootstrap frontend.
 The application replicates most of Wattpad’s core functionality and introduces advanced features such as an admin dashboard, story drafts, premium coins, and Wattpad Originals verification.
@@ -178,7 +178,8 @@ Open the frontend files in a local server or use a simple HTTP server such as li
 
 6. Demo Video
 
+
 7. Future Enhancements
-->Scheduled publishing for stories.
-->Dark mode.
-->AI-powered story recommendations.
+Scheduled publishing for stories.
+Dark mode.
+AI-powered story recommendations.
