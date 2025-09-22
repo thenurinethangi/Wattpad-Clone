@@ -86,10 +86,9 @@ Open the frontend files in a local server or use a simple HTTP server such as li
 5. Screenshots
 
 ### Landing Page
-![Login Page](screenshots/Screenshot (837).png)
+![Login Page](screenshots/landing.png)
 
-### Landing Page
-![Login Page](screenshots/Screenshot (837).png)
+
 
 
 6. Demo Video
