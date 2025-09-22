@@ -801,6 +801,7 @@ public class ChapterServiceImpl implements ChapterService {
             Story story = optionalStory.get();
 
             chapter.setTitle(chapterSaveRequestDTO.getChapterTitle());
+            chapter.setStory(story);
             chapter.setCoverImagePath(chapterSaveRequestDTO.getChapterCoverUrl());
             chapterRepository.save(chapter);
 
@@ -911,6 +912,7 @@ public class ChapterServiceImpl implements ChapterService {
             chapter.setTitle(chapterSaveRequestDTO.getChapterTitle());
             chapter.setCoverImagePath(chapterSaveRequestDTO.getChapterCoverUrl());
             chapter.setPublishedOrDraft(1);
+            chapter.setStory(story);
             chapter.setCoinsAmount(chapterSaveRequestDTO.getCoinsAmount());
             chapterRepository.save(chapter);
 

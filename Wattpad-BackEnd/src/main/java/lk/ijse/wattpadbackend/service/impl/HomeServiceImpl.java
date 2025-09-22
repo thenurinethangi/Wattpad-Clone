@@ -307,7 +307,12 @@ public class HomeServiceImpl implements HomeService {
                 storyHomeResponseDTO.setCategory(x.getCategory());
                 storyHomeResponseDTO.setCoverImagePath(x.getCoverImagePath());
 
-                long viewsLong = x.getViews().longValue();
+                long totalViews = 0;
+                for(Chapter a: x.getChapters()){
+                    totalViews+=a.getViews();
+                }
+
+                long viewsLong = totalViews;
 
                 String viewsInStr = "";
                 if(viewsLong<=1000){

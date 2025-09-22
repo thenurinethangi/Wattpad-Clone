@@ -8,6 +8,7 @@ import lk.ijse.wattpadbackend.entity.*;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
 import lk.ijse.wattpadbackend.repository.*;
 import lk.ijse.wattpadbackend.service.SearchService;
+import lk.ijse.wattpadbackend.util.Roles;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class SearchServiceImpl implements SearchService {
     private final UserRepository userRepository;
     private final ReadingListRepository readingListRepository;
     private final FollowingRepository followingRepository;
+    private final ChapterLikeRepository chapterLikeRepository;
 
     @Override
     public List<String> getTopResultForSearch(String input) {
@@ -86,9 +88,13 @@ public class SearchServiceImpl implements SearchService {
                 genreStoryDTO.setCoverImagePath(story.getCoverImagePath());
                 genreStoryDTO.setUserId(story.getUser().getId());
                 genreStoryDTO.setUsername(story.getUser().getUsername());
-                genreStoryDTO.setParts(story.getParts().longValue());
+                genreStoryDTO.setParts(story.getChapters().size());
 
-                long likesLong = story.getLikes().longValue();
+                long likesCount = 0;
+                for(Chapter x : story.getChapters()){
+                    likesCount+=chapterLikeRepository.findAllByChapter(x).size();
+                }
+                long likesLong = likesCount;
 
                 String likesInStr = "";
                 if(likesLong<=1000){
@@ -117,7 +123,12 @@ public class SearchServiceImpl implements SearchService {
                 }
                 genreStoryDTO.setLikes(likesInStr);
 
-                long viewsLong = story.getViews().longValue();
+                long viewsCount = 0;
+                for(Chapter x : story.getChapters()){
+                    viewsCount+=x.getViews();
+                }
+
+                long viewsLong = viewsCount;
 
                 String viewsInStr = "";
                 if(viewsLong<=1000){
@@ -167,9 +178,13 @@ public class SearchServiceImpl implements SearchService {
                 genreStoryDTO.setCoverImagePath(story.getCoverImagePath());
                 genreStoryDTO.setUserId(story.getUser().getId());
                 genreStoryDTO.setUsername(story.getUser().getUsername());
-                genreStoryDTO.setParts(story.getParts().longValue());
+                genreStoryDTO.setParts(story.getChapters().size());
 
-                long likesLong = story.getLikes().longValue();
+                long likesCount = 0;
+                for(Chapter x : story.getChapters()){
+                    likesCount+=chapterLikeRepository.findAllByChapter(x).size();
+                }
+                long likesLong = likesCount;
 
                 String likesInStr = "";
                 if(likesLong<=1000){
@@ -198,7 +213,12 @@ public class SearchServiceImpl implements SearchService {
                 }
                 genreStoryDTO.setLikes(likesInStr);
 
-                long viewsLong = story.getViews().longValue();
+                long viewsCount = 0;
+                for(Chapter x : story.getChapters()){
+                    viewsCount+=x.getViews();
+                }
+
+                long viewsLong = viewsCount;
 
                 String viewsInStr = "";
                 if(viewsLong<=1000){
@@ -301,7 +321,11 @@ public class SearchServiceImpl implements SearchService {
                 genreStoryDTO.setUsername(story.getUser().getUsername());
                 genreStoryDTO.setParts(story.getParts().longValue());
 
-                long likesLong = story.getLikes().longValue();
+                long likesCount = 0;
+                for(Chapter x : story.getChapters()){
+                    likesCount+=chapterLikeRepository.findAllByChapter(x).size();
+                }
+                long likesLong = likesCount;
 
                 String likesInStr = "";
                 if(likesLong<=1000){
@@ -330,7 +354,12 @@ public class SearchServiceImpl implements SearchService {
                 }
                 genreStoryDTO.setLikes(likesInStr);
 
-                long viewsLong = story.getViews().longValue();
+                long viewsCount = 0;
+                for(Chapter x : story.getChapters()){
+                    viewsCount+=x.getViews();
+                }
+
+                long viewsLong = viewsCount;
 
                 String viewsInStr = "";
                 if(viewsLong<=1000){
@@ -454,9 +483,13 @@ public class SearchServiceImpl implements SearchService {
                 genreStoryDTO.setCoverImagePath(story.getCoverImagePath());
                 genreStoryDTO.setUserId(story.getUser().getId());
                 genreStoryDTO.setUsername(story.getUser().getUsername());
-                genreStoryDTO.setParts(story.getParts().longValue());
+                genreStoryDTO.setParts(story.getChapters().size());
 
-                long likesLong = story.getLikes().longValue();
+                long likesCount = 0;
+                for(Chapter x : story.getChapters()){
+                    likesCount+=chapterLikeRepository.findAllByChapter(x).size();
+                }
+                long likesLong = likesCount;
 
                 String likesInStr = "";
                 if(likesLong<=1000){
@@ -485,7 +518,12 @@ public class SearchServiceImpl implements SearchService {
                 }
                 genreStoryDTO.setLikes(likesInStr);
 
-                long viewsLong = story.getViews().longValue();
+                long viewsCount = 0;
+                for(Chapter x : story.getChapters()){
+                    viewsCount+=x.getViews();
+                }
+
+                long viewsLong = viewsCount;
 
                 String viewsInStr = "";
                 if(viewsLong<=1000){
@@ -530,9 +568,13 @@ public class SearchServiceImpl implements SearchService {
                 genreStoryDTO.setCoverImagePath(story.getCoverImagePath());
                 genreStoryDTO.setUserId(story.getUser().getId());
                 genreStoryDTO.setUsername(story.getUser().getUsername());
-                genreStoryDTO.setParts(story.getParts().longValue());
+                genreStoryDTO.setParts(story.getChapters().size());
 
-                long likesLong = story.getLikes().longValue();
+                long likesCount = 0;
+                for(Chapter x : story.getChapters()){
+                    likesCount+=chapterLikeRepository.findAllByChapter(x).size();
+                }
+                long likesLong = likesCount;
 
                 String likesInStr = "";
                 if(likesLong<=1000){
@@ -561,7 +603,12 @@ public class SearchServiceImpl implements SearchService {
                 }
                 genreStoryDTO.setLikes(likesInStr);
 
-                long viewsLong = story.getViews().longValue();
+                long viewsCount = 0;
+                for(Chapter x : story.getChapters()){
+                    viewsCount+=x.getViews();
+                }
+
+                long viewsLong = viewsCount;
 
                 String viewsInStr = "";
                 if(viewsLong<=1000){
@@ -632,9 +679,13 @@ public class SearchServiceImpl implements SearchService {
             genreStoryDTO.setCoverImagePath(story.getCoverImagePath());
             genreStoryDTO.setUserId(story.getUser().getId());
             genreStoryDTO.setUsername(story.getUser().getUsername());
-            genreStoryDTO.setParts(story.getParts().longValue());
+            genreStoryDTO.setParts(story.getChapters().size());
 
-            long likesLong = story.getLikes().longValue();
+            long likesCount = 0;
+            for(Chapter x : story.getChapters()){
+                likesCount+=chapterLikeRepository.findAllByChapter(x).size();
+            }
+            long likesLong = likesCount;
 
             String likesInStr = "";
             if(likesLong<=1000){
@@ -663,7 +714,12 @@ public class SearchServiceImpl implements SearchService {
             }
             genreStoryDTO.setLikes(likesInStr);
 
-            long viewsLong = story.getViews().longValue();
+            long viewsCount = 0;
+            for(Chapter x : story.getChapters()){
+                viewsCount+=x.getViews();
+            }
+
+            long viewsLong = viewsCount;
 
             String viewsInStr = "";
             if(viewsLong<=1000){
@@ -1010,13 +1066,21 @@ public class SearchServiceImpl implements SearchService {
             List<User> finalSelectedUserList = new ArrayList<>();
             for (User x : userList1){
                 if(!finalSelectedUserList.contains(x)){
-                    finalSelectedUserList.add(x);
+                    for(UserRole y : x.getUserRoles()){
+                        if(y.getRole().getRole()== Roles.USER){
+                            finalSelectedUserList.add(x);
+                        }
+                    }
                 }
             }
 
             for (User x : userList2){
                 if(!finalSelectedUserList.contains(x)){
-                    finalSelectedUserList.add(x);
+                    for(UserRole y : x.getUserRoles()){
+                        if(y.getRole().getRole()== Roles.USER){
+                            finalSelectedUserList.add(x);
+                        }
+                    }
                 }
             }
 
@@ -1127,9 +1191,13 @@ public class SearchServiceImpl implements SearchService {
                 genreStoryDTO.setCoverImagePath(story.getCoverImagePath());
                 genreStoryDTO.setUserId(story.getUser().getId());
                 genreStoryDTO.setUsername(story.getUser().getUsername());
-                genreStoryDTO.setParts(story.getParts().longValue());
+                genreStoryDTO.setParts(story.getChapters().size());
 
-                long likesLong = story.getLikes().longValue();
+                long likesCount = 0;
+                for(Chapter x : story.getChapters()){
+                    likesCount+=chapterLikeRepository.findAllByChapter(x).size();
+                }
+                long likesLong = likesCount;
 
                 String likesInStr = "";
                 if(likesLong<=1000){
@@ -1158,7 +1226,12 @@ public class SearchServiceImpl implements SearchService {
                 }
                 genreStoryDTO.setLikes(likesInStr);
 
-                long viewsLong = story.getViews().longValue();
+                long viewsCount = 0;
+                for(Chapter x : story.getChapters()){
+                    viewsCount+=x.getViews();
+                }
+
+                long viewsLong = viewsCount;
 
                 String viewsInStr = "";
                 if(viewsLong<=1000){
@@ -1208,9 +1281,13 @@ public class SearchServiceImpl implements SearchService {
                 genreStoryDTO.setCoverImagePath(story.getCoverImagePath());
                 genreStoryDTO.setUserId(story.getUser().getId());
                 genreStoryDTO.setUsername(story.getUser().getUsername());
-                genreStoryDTO.setParts(story.getParts().longValue());
+                genreStoryDTO.setParts(story.getChapters().size());
 
-                long likesLong = story.getLikes().longValue();
+                long likesCount = 0;
+                for(Chapter x : story.getChapters()){
+                    likesCount+=chapterLikeRepository.findAllByChapter(x).size();
+                }
+                long likesLong = likesCount;
 
                 String likesInStr = "";
                 if(likesLong<=1000){
@@ -1239,7 +1316,12 @@ public class SearchServiceImpl implements SearchService {
                 }
                 genreStoryDTO.setLikes(likesInStr);
 
-                long viewsLong = story.getViews().longValue();
+                long viewsCount = 0;
+                for(Chapter x : story.getChapters()){
+                    viewsCount+=x.getViews();
+                }
+
+                long viewsLong = viewsCount;
 
                 String viewsInStr = "";
                 if(viewsLong<=1000){
@@ -1340,9 +1422,13 @@ public class SearchServiceImpl implements SearchService {
                 genreStoryDTO.setCoverImagePath(story.getCoverImagePath());
                 genreStoryDTO.setUserId(story.getUser().getId());
                 genreStoryDTO.setUsername(story.getUser().getUsername());
-                genreStoryDTO.setParts(story.getParts().longValue());
+                genreStoryDTO.setParts(story.getChapters().size());
 
-                long likesLong = story.getLikes().longValue();
+                long likesCount = 0;
+                for(Chapter x : story.getChapters()){
+                    likesCount+=chapterLikeRepository.findAllByChapter(x).size();
+                }
+                long likesLong = likesCount;
 
                 String likesInStr = "";
                 if(likesLong<=1000){
@@ -1371,7 +1457,12 @@ public class SearchServiceImpl implements SearchService {
                 }
                 genreStoryDTO.setLikes(likesInStr);
 
-                long viewsLong = story.getViews().longValue();
+                long viewsCount = 0;
+                for(Chapter x : story.getChapters()){
+                    viewsCount+=x.getViews();
+                }
+
+                long viewsLong = viewsCount;
 
                 String viewsInStr = "";
                 if(viewsLong<=1000){

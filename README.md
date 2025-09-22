@@ -186,7 +186,10 @@ Open the frontend files in a local server or use a simple HTTP server such as li
 ![Admin Part](screenshots/admin-8.png)
 ![Admin Part](screenshots/admin-9.png)
 
+
 ## 6. Demo Video
+
+[![Watch the demo](https://img.youtube.com/vi/nO1csOSwMHw/0.jpg)](https://youtu.be/nO1csOSwMHw)
 
 
 ## 7. Future Enhancements

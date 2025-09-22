@@ -139,7 +139,7 @@ async function loadChapterData() {
                 $('.footer-comment').css('display','block');
             }
             else{
-                if(chapter.chapterCoins===0){
+                if(chapter.chapterCoins===0 || chapter.isFromCurrentUser===1){
                     $('.paywall-container').css('display','none');
                     $('#sticky-end').css('display','block');
                     $('.footer-comment').css('display','block');
@@ -173,19 +173,20 @@ async function loadChapterData() {
                         : ``}
   ${chapter.chapterCoins === 0
                         ? ``
-                        : (chapter.isUnlocked === 1
+                        : (chapter.isWattpadOriginal=== 1 && chapter.isUnlocked === 1
                             ? `<i style="opacity: 0.9;" class="fa-solid fa-lock-open"></i>`
-                            : `<i style="opacity: 0.9;" class="fa-solid fa-lock"></i>`)}
+                            : (chapter.isWattpadOriginal=== 1 && chapter.isUnlocked === 0 ? `<i style="opacity: 0.9;" class="fa-solid fa-lock"></i>` : ``))}
 </li>
 `;
 
                 }
                 else {
-                    singleChapter = `<li style="overflow: hidden; padding: 10px 0px; font-size: 14px; font-weight: 600; color: #222; width: 100%;"><a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${c.id}">${c.title}</a>${c.isPublishedOrDraft===0 ? `<p style="color: gray; padding-left: 10px;">Draft</p>` : ``} ${chapter.chapterCoins === 0
+                    singleChapter = `<li style="overflow: hidden; padding: 10px 0px; font-size: 14px; font-weight: 600; color: #222; width: 100%;"><a href="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/chapter-view-page.html?chapterId=${c.id}">${c.title}</a>${c.isPublishedOrDraft===0 ? `<p style="color: gray; padding-left: 10px;">Draft</p>` : ``} 
+${chapter.chapterCoins === 0
                         ? ``
-                        : (chapter.isUnlocked === 1
+                        : (chapter.isWattpadOriginal=== 1 && chapter.isUnlocked === 1
                             ? `<i style="opacity: 0.9;" class="fa-solid fa-lock-open"></i>`
-                            : `<i style="opacity: 0.9;" class="fa-solid fa-lock"></i>`)}</li>`;
+                            :(chapter.isWattpadOriginal=== 1 && chapter.isUnlocked === 0 ? `<i style="opacity: 0.9;" class="fa-solid fa-lock"></i>` : ``))}</li>`;
                 }
                 $('#chapters-list').append(singleChapter);
             }
