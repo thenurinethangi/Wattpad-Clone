@@ -106,7 +106,7 @@ async function loadAllStoriesInReadingList() {
                                     </div>
                                     <!--story cover image-->
                                     <div class="lxkLC" style="width: 100px; height: 160px;">
-                                        <img style="width: 100%; height: 100%;" src="http://localhost:63342/Wattpad-Clone/Wattpad-FrontEnd/assets/image/${story.storyCoverImagePath}" alt=""/>
+                                        <img style="width: 100%; height: 100%;" src="${story.storyCoverImagePath}" alt=""/>
                                     </div>
                                     <!--story static,name,author-->
                                     <div class="rII7T pHl5J">
