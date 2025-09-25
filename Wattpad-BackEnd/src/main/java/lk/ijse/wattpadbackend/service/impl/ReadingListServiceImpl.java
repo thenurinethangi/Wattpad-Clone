@@ -22,6 +22,7 @@ public class ReadingListServiceImpl implements ReadingListService {
     private final ChapterRepository chapterRepository;
     private final ReadingListStoryRepository readingListStoryRepository;
     private final StoryRepository storyRepository;
+    private final ChapterLikeRepository chapterLikeRepository;
 
     @Override
     public ReadingListsDTO getAllReadingLists(String name) {
@@ -149,7 +150,12 @@ public class ReadingListServiceImpl implements ReadingListService {
                 dto.setStoryTitle(x.getStory().getTitle());
                 dto.setStoryCoverImagePath(x.getStory().getCoverImagePath());
 
-                long viewsLong = x.getStory().getViews().longValue();
+                int viewsCount = 0;
+                for(Chapter c : x.getStory().getChapters()){
+                    viewsCount+= (int) c.getViews();
+                }
+
+                long viewsLong = viewsCount;
 
                 String viewsInStr = "";
                 if(viewsLong<=1000){
@@ -178,7 +184,12 @@ public class ReadingListServiceImpl implements ReadingListService {
                 }
                 dto.setViews(viewsInStr);
 
-                long likesLong = x.getStory().getLikes().longValue();
+                int likeCount = 0;
+                for(Chapter c : x.getStory().getChapters()){
+                    likeCount+=chapterLikeRepository.findAllByChapter(c).size();
+                }
+
+                long likesLong = likeCount;
 
                 String likesInStr = "";
                 if(likesLong<=1000){
@@ -207,7 +218,7 @@ public class ReadingListServiceImpl implements ReadingListService {
                 }
                 dto.setLikes(likesInStr);
 
-                dto.setParts(x.getStory().getParts().longValue());
+                dto.setParts(x.getStory().getChapters().size());
                 dto.setUsername(x.getStory().getUser().getUsername());
 
                 readingListEditStoryDTOList.add(dto);
@@ -335,7 +346,12 @@ public class ReadingListServiceImpl implements ReadingListService {
                 dto.setStoryDescription(x.getStory().getDescription());
                 dto.setStoryCoverImagePath(x.getStory().getCoverImagePath());
 
-                long viewsLong = x.getStory().getViews().longValue();
+                int viewsCount = 0;
+                for(Chapter c : x.getStory().getChapters()){
+                    viewsCount+= (int) c.getViews();
+                }
+
+                long viewsLong = viewsCount;
 
                 String viewsInStr = "";
                 if(viewsLong<=1000){
@@ -364,7 +380,12 @@ public class ReadingListServiceImpl implements ReadingListService {
                 }
                 dto.setViews(viewsInStr);
 
-                long likesLong = x.getStory().getLikes().longValue();
+                int likeCount = 0;
+                for(Chapter c : x.getStory().getChapters()){
+                    likeCount+=chapterLikeRepository.findAllByChapter(c).size();
+                }
+
+                long likesLong = likeCount;
 
                 String likesInStr = "";
                 if(likesLong<=1000){
@@ -393,7 +414,7 @@ public class ReadingListServiceImpl implements ReadingListService {
                 }
                 dto.setLikes(likesInStr);
 
-                dto.setParts(x.getStory().getParts().longValue());
+                dto.setParts(x.getStory().getChapters().size());
                 dto.setUserId(x.getStory().getUser().getId());
                 dto.setUsername(x.getStory().getUser().getUsername());
 

@@ -3,9 +3,11 @@ package lk.ijse.wattpadbackend.service.impl;
 import lk.ijse.wattpadbackend.dto.GenreStoryDTO;
 import lk.ijse.wattpadbackend.dto.TagSearchCriteriaDTO;
 import lk.ijse.wattpadbackend.dto.TagSearchResponseDTO;
+import lk.ijse.wattpadbackend.entity.Chapter;
 import lk.ijse.wattpadbackend.entity.Story;
 import lk.ijse.wattpadbackend.entity.StoryTag;
 import lk.ijse.wattpadbackend.entity.Tag;
+import lk.ijse.wattpadbackend.repository.ChapterLikeRepository;
 import lk.ijse.wattpadbackend.repository.StoryRepository;
 import lk.ijse.wattpadbackend.repository.TagRepository;
 import lk.ijse.wattpadbackend.service.TagService;
@@ -22,6 +24,7 @@ public class TagServiceImpl implements TagService {
 
     private final TagRepository tagRepository;
     private final StoryRepository storyRepository;
+    private final ChapterLikeRepository chapterLikeRepository;
 
     @Override
     public TagSearchResponseDTO getAllStoriesOfSelectedTag(String tagName, TagSearchCriteriaDTO tagSearchCriteriaDTO) {
@@ -147,9 +150,14 @@ public class TagServiceImpl implements TagService {
                     }
                     genreStoryDTO.setTags(tags);
 
-                    genreStoryDTO.setParts(x.getParts().longValue());
+                    genreStoryDTO.setParts(x.getChapters().size());
 
-                    long likesLong = x.getLikes().longValue();
+                    int likeCount = 0;
+                    for(Chapter c : x.getChapters()){
+                        likeCount+=chapterLikeRepository.findAllByChapter(c).size();
+                    }
+
+                    long likesLong = likeCount;
 
                     String likesInStr = "";
                     if(likesLong<=1000){
@@ -178,7 +186,12 @@ public class TagServiceImpl implements TagService {
                     }
                     genreStoryDTO.setLikes(likesInStr);
 
-                    long viewsLong = x.getViews().longValue();
+                    int viewsCount = 0;
+                    for(Chapter c : x.getChapters()){
+                        viewsCount+= (int) c.getViews();
+                    }
+
+                    long viewsLong = viewsCount;
 
                     String viewsInStr = "";
                     if(viewsLong<=1000){

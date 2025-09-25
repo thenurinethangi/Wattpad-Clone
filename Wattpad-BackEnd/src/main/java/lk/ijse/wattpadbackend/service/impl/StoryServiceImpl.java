@@ -332,9 +332,14 @@ public class StoryServiceImpl implements StoryService {
                 dto.setStoryId(x.getId());
                 dto.setStoryTitle(x.getTitle());
                 dto.setStoryCoverImagePath(x.getCoverImagePath());
-                dto.setParts(x.getParts().longValue());
+                dto.setParts(x.getChapters().size());
 
-                long likesLong = x.getLikes().longValue();
+                int likeCount = 0;
+                for(Chapter c : x.getChapters()){
+                    likeCount+=chapterLikeRepository.findAllByChapter(c).size();
+                }
+
+                long likesLong = likeCount;
 
                 String likesInStr = "";
                 if(likesLong<=1000){
@@ -363,7 +368,12 @@ public class StoryServiceImpl implements StoryService {
                 }
                 dto.setLikes(likesInStr);
 
-                long viewsLong = x.getViews().longValue();
+                int viewsCount = 0;
+                for(Chapter c : x.getChapters()){
+                    viewsCount+= (int) c.getViews();
+                }
+
+                long viewsLong = viewsCount;
 
                 String viewsInStr = "";
                 if(viewsLong<=1000){
@@ -440,10 +450,15 @@ public class StoryServiceImpl implements StoryService {
                 dto.setStoryId(x.getId());
                 dto.setStoryTitle(x.getTitle());
                 dto.setStoryCoverImagePath(x.getCoverImagePath());
-                dto.setParts(x.getParts().longValue());
+                dto.setParts(x.getChapters().size());
                 dto.setPublishedOrDraft(x.getPublishedOrDraft());
 
-                long likesLong = x.getLikes().longValue();
+                int likeCount = 0;
+                for(Chapter c : x.getChapters()){
+                    likeCount+=chapterLikeRepository.findAllByChapter(c).size();
+                }
+
+                long likesLong = likeCount;
 
                 String likesInStr = "";
                 if(likesLong<=1000){
@@ -472,7 +487,12 @@ public class StoryServiceImpl implements StoryService {
                 }
                 dto.setLikes(likesInStr);
 
-                long viewsLong = x.getViews().longValue();
+                int viewsCount = 0;
+                for(Chapter c : x.getChapters()){
+                    viewsCount+= (int) c.getViews();
+                }
+
+                long viewsLong = viewsCount;
 
                 String viewsInStr = "";
                 if(viewsLong<=1000){

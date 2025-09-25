@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -239,10 +240,15 @@ public class UserServiceImpl implements UserService {
                     storyDTO.setCoverImagePath(x.getCoverImagePath());
                     storyDTO.setTitle(x.getTitle());
                     storyDTO.setDescription(x.getDescription());
-                    storyDTO.setParts(x.getParts());
+                    storyDTO.setParts(BigInteger.valueOf(x.getChapters().size()));
                     storyDTO.setPublishedOrDraft(x.getPublishedOrDraft());
 
-                    long likesLong = x.getLikes().longValue();
+                    int likeCount = 0;
+                    for(Chapter c : x.getChapters()){
+                        likeCount+=chapterLikeRepository.findAllByChapter(c).size();
+                    }
+
+                    long likesLong = likeCount;
 
                     String likesInStr = "";
                     if(likesLong<=1000){
@@ -271,7 +277,12 @@ public class UserServiceImpl implements UserService {
                     }
                     storyDTO.setLikes(likesInStr);
 
-                    long viewsLong = x.getViews().longValue();
+                    int viewsCount = 0;
+                    for(Chapter c : x.getChapters()){
+                        viewsCount+= (int) c.getViews();
+                    }
+
+                    long viewsLong = viewsCount;
 
                     String viewsInStr = "";
                     if(viewsLong<=1000){
@@ -496,11 +507,16 @@ public class UserServiceImpl implements UserService {
 
                     StoryDTO storyDTO = new StoryDTO();
                     storyDTO.setId(listStory.getStory().getId());
-                    storyDTO.setParts(listStory.getStory().getParts());
+                    storyDTO.setParts(BigInteger.valueOf(listStory.getStory().getChapters().size()));
                     storyDTO.setTitle(listStory.getStory().getTitle());
                     storyDTO.setCoverImagePath(listStory.getStory().getCoverImagePath());
 
-                    long likesLong = listStory.getStory().getLikes().longValue();
+                    int likeCount = 0;
+                    for(Chapter c : listStory.getStory().getChapters()){
+                        likeCount+=chapterLikeRepository.findAllByChapter(c).size();
+                    }
+
+                    long likesLong = likeCount;
 
                     String likesInStr = "";
                     if(likesLong<=1000){
@@ -529,7 +545,12 @@ public class UserServiceImpl implements UserService {
                     }
                     storyDTO.setLikes(likesInStr);
 
-                    long viewsLong = listStory.getStory().getViews().longValue();
+                    int viewsCount = 0;
+                    for(Chapter c : listStory.getStory().getChapters()){
+                        viewsCount+= (int) c.getViews();
+                    }
+
+                    long viewsLong = viewsCount;
 
                     String viewsInStr = "";
                     if(viewsLong<=1000){

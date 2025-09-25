@@ -4,10 +4,7 @@ import lk.ijse.wattpadbackend.dto.*;
 import lk.ijse.wattpadbackend.entity.*;
 import lk.ijse.wattpadbackend.exception.NotFoundException;
 import lk.ijse.wattpadbackend.exception.UserNotFoundException;
-import lk.ijse.wattpadbackend.repository.GenreRepository;
-import lk.ijse.wattpadbackend.repository.StoryRepository;
-import lk.ijse.wattpadbackend.repository.UserGenreRepository;
-import lk.ijse.wattpadbackend.repository.UserRepository;
+import lk.ijse.wattpadbackend.repository.*;
 import lk.ijse.wattpadbackend.service.GenreService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -25,6 +22,7 @@ public class GenreServiceImpl implements GenreService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final StoryRepository storyRepository;
+    private final ChapterLikeRepository chapterLikeRepository;
 
     @Override
     public List<GenreDTO> AllGenre() {
@@ -179,9 +177,14 @@ public class GenreServiceImpl implements GenreService {
                     }
                     genreStoryDTO.setTags(tags);
 
-                    genreStoryDTO.setParts(x.getParts().longValue());
+                    genreStoryDTO.setParts(x.getChapters().size());
 
-                    long likesLong = x.getLikes().longValue();
+                    int likeCount = 0;
+                    for(Chapter c : x.getChapters()){
+                        likeCount+=chapterLikeRepository.findAllByChapter(c).size();
+                    }
+
+                    long likesLong = likeCount;
 
                     String likesInStr = "";
                     if(likesLong<=1000){
@@ -210,7 +213,12 @@ public class GenreServiceImpl implements GenreService {
                     }
                     genreStoryDTO.setLikes(likesInStr);
 
-                    long viewsLong = x.getViews().longValue();
+                    int viewsCount = 0;
+                    for(Chapter c : x.getChapters()){
+                        viewsCount+= (int) c.getViews();
+                    }
+
+                    long viewsLong = viewsCount;
 
                     String viewsInStr = "";
                     if(viewsLong<=1000){
