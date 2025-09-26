@@ -93,7 +93,12 @@ spring.jpa.hibernate.ddl-auto=update
 Open the frontend files in a local server or use a simple HTTP server such as live-server.
 
 
-## 5. Screenshots
+## 5. Demo Video
+[Watch the demo(part 1)](https://youtu.be/4-81XhwVpk8?si=EZQ6kHaNbFV_OwqV)
+[Watch the demo(part 2)](https://youtu.be/-LF3zmLyBRU?si=pR6NlgsUxRsdiAXW)
+
+
+## 6. Screenshots
 
 ### Landing Page
 ![Login Page](screenshots/landing.png)
@@ -185,11 +190,6 @@ Open the frontend files in a local server or use a simple HTTP server such as li
 ![Admin Part](screenshots/admin-7.png)
 ![Admin Part](screenshots/admin-8.png)
 ![Admin Part](screenshots/admin-9.png)
-
-
-## 6. Demo Video
-[Watch the demo(part 1)](https://youtu.be/4-81XhwVpk8?si=EZQ6kHaNbFV_OwqV)
-[Watch the demo(part 2)](https://youtu.be/-LF3zmLyBRU?si=pR6NlgsUxRsdiAXW)
 
 
 ## 7. Future Enhancements
