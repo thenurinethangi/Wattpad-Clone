@@ -188,7 +188,8 @@ Open the frontend files in a local server or use a simple HTTP server such as li
 
 
 ## 6. Demo Video
-[Watch the demo](https://youtu.be/iPnyjJRmHLk?si=OI1JA6vzyoA_PuZc)
+[Watch the demo(part 1)](https://youtu.be/4-81XhwVpk8?si=EZQ6kHaNbFV_OwqV)
+[Watch the demo(part 2)](https://youtu.be/-LF3zmLyBRU?si=pR6NlgsUxRsdiAXW)
 
 
 ## 7. Future Enhancements
